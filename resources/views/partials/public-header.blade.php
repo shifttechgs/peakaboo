@@ -176,50 +176,40 @@
                 <div class="row justify-content-between align-items-center">
                     <div class="col">
                         <div class="vs-header__logo">
-                            <a href="{{ route('home') }}"><img style="height: 70px" src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo Daycare" class="logo"></a>
+                            <a href="{{ route('home') }}"><img style="height: 80px" src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo Daycare" class="logo"></a>
                         </div>
                     </div>
                     <div class="col-auto">
                         <nav class="main-menu d-none d-lg-block">
                             <ul>
                                 <li>
-                                    <a class="vs-svg-assets" href="{{ route('home') }}">
+                                    <a class="vs-svg-assets" href="{{ route('home') }}" style=" color: #0c508e">
                                         HOME
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
-                                            <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
-                                        </svg>
+
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="vs-svg-assets" href="{{ route('home') }}#programs">
+                                    <a class="vs-svg-assets" href="{{ route('home') }}#programs" style=" color: #0c508e">
                                         Programs
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
-                                            <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
-                                        </svg>
+
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="vs-svg-assets" href="{{ route('home') }}#about">
+                                    <a class="vs-svg-assets" href="{{ route('home') }}#about" style=" color: #0c508e">
                                         About
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
-                                            <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
-                                        </svg>
+
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="vs-svg-assets" href="{{ route('home') }}#fees">
+                                    <a class="vs-svg-assets" href="{{ route('home') }}#fees" style=" color: #0c508e">
                                         Fees
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
-                                            <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
-                                        </svg>
+
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="vs-svg-assets" href="{{ route('home') }}#contact">
+                                    <a class="vs-svg-assets" href="{{ route('home') }}#contact" style=" color: #0c508e">
                                         Contact
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
-                                            <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
-                                        </svg>
+
                                     </a>
                                 </li>
                             </ul>

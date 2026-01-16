@@ -32,7 +32,7 @@
 <body>
     <!-- Preloader -->
     <div class="preloader">
-        <button class="vs-btn preloaderCls">Cancel Preloader</button>
+{{--        <button class="vs-btn preloaderCls">Cancel Preloader</button>--}}
         <div class="preloader-inner">
             <img src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo Daycare">
             <span class="loader"></span>
