@@ -227,7 +227,11 @@
                     </div>
                 </div>
 
-                <form id="enrolmentForm" action="{{ route('enrol.submit') }}" method="POST" enctype="multipart/form-data">
+                <form id="enrolmentForm"
+                      action="{{ route('enrol.submit') }}"
+                      method="POST"
+                      enctype="multipart/form-data"
+                      novalidate>
                     @csrf
 
                     <!-- Step 1: Program Selection -->
@@ -252,23 +256,80 @@
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Fee Option <span class="text-danger">*</span></label>
+
                                     <div class="row g-3">
+
                                         @foreach($fees as $fee)
-                                        @if(!isset($fee['addon']))
-                                        <div class="col-md-6">
-                                            <div class="form-check border rounded-3 p-4">
-                                                <input class="form-check-input" type="radio" name="fee_option" id="fee_{{ $fee['id'] }}" value="{{ $fee['id'] }}" {{ $fee['popular'] ? 'checked' : '' }}>
-                                                <label class="form-check-label w-100" for="fee_{{ $fee['id'] }}">
-                                                    <strong>{{ $fee['name'] }}</strong>
-                                                    <span class="badge bg-primary float-end">R{{ number_format($fee['price']) }}/month</span>
-                                                    <br><small class="text-muted">{{ $fee['hours'] }}</small>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        @endif
+                                            @if(!isset($fee['addon']))
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-check border rounded-4 p-4"
+                                                         style="
+                    cursor:pointer;
+                    transition:all .2s ease;
+                 "
+                                                         onmouseover="this.style.borderColor='#0d6efd'; this.style.boxShadow='0 6px 18px rgba(13,110,253,.15)'"
+                                                         onmouseout="this.style.borderColor='#dee2e6'; this.style.boxShadow='none'"
+                                                    >
+
+                                                        <input class="form-check-input"
+                                                               type="radio"
+                                                               name="fee_option"
+                                                               id="fee_{{ $fee['id'] }}"
+                                                               value="{{ $fee['id'] }}"
+                                                               {{ $fee['popular'] ? 'checked' : '' }}
+                                                               style="margin-top:4px;"
+                                                        >
+
+                                                        <label class="form-check-label w-100 ms-2"
+                                                               for="fee_{{ $fee['id'] }}"
+                                                               style="cursor:pointer;"
+                                                        >
+
+                                                            <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        margin-bottom:6px;
+                    ">
+
+                                                                <strong style="font-size:1rem;">
+                                                                    {{ $fee['name'] }}
+                                                                </strong>
+
+                                                                <span style="
+                            background:#0d6efd;
+                            color:#fff;
+                            padding:6px 14px;
+                            border-radius:20px;
+                            font-size:.85rem;
+                            font-weight:600;
+                        ">
+                            R{{ number_format($fee['price']) }} / month
+                        </span>
+
+                                                            </div>
+
+                                                            <small style="
+                        color:#6c757d;
+                        display:block;
+                    ">
+                                                                {{ $fee['hours'] }}
+                                                            </small>
+
+                                                        </label>
+
+                                                    </div>
+
+                                                </div>
+
+                                            @endif
                                         @endforeach
+
                                     </div>
                                 </div>
+
                                 <div class="col-12">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="snack_box" id="snackBox">
@@ -682,16 +743,72 @@
 
                     <!-- Navigation Buttons -->
                     <div class="d-flex justify-content-between mt-4">
-                        <button type="button" class="btn btn-outline-secondary btn-lg px-4" id="prevBtn" style="display: none;">
+
+                        <!-- Previous -->
+                        <button type="button"
+                                id="prevBtn"
+                                style="
+            display:none;
+            padding:14px 36px;
+            border-radius:50px;
+            border:2px solid #6c757d;
+            background:transparent;
+            color:#6c757d;
+            font-weight:600;
+            font-size:.95rem;
+            transition:all .25s ease;
+        "
+                                onmouseover="this.style.background='#6c757d'; this.style.color='#fff'"
+                                onmouseout="this.style.background='transparent'; this.style.color='#6c757d'"
+                        >
                             <i class="fas fa-arrow-left me-2"></i> Previous
                         </button>
-                        <button type="button" class="pk-btn-primary btn-lg px-4 ms-auto" id="nextBtn">
+
+                        <!-- Next -->
+                        <button type="button"
+                                id="nextBtn"
+                                style="
+            padding:14px 40px;
+            border-radius:50px;
+            border:none;
+            background:#0d6efd;
+            color:#fff;
+            font-weight:600;
+            font-size:.95rem;
+            box-shadow:0 10px 25px rgba(13,110,253,.35);
+            transition:all .25s ease;
+            margin-left:auto;
+        "
+                                onmouseover="this.style.background='#084298'; this.style.transform='translateY(-2px)'"
+                                onmouseout="this.style.background='#0d6efd'; this.style.transform='translateY(0)'"
+                        >
                             Next <i class="fas fa-arrow-right ms-2"></i>
                         </button>
-                        <button type="submit" class="pk-btn-primary btn-lg px-4 ms-auto" id="submitBtn" style="display: none;">
+
+                        <!-- Submit -->
+                        <button type="submit"
+                                id="submitBtn"
+                                style="
+            display:none;
+            padding:14px 40px;
+            border-radius:50px;
+            border:none;
+            background:#198754;
+            color:#fff;
+            font-weight:600;
+            font-size:.95rem;
+            box-shadow:0 10px 25px rgba(25,135,84,.35);
+            transition:all .25s ease;
+            margin-left:auto;
+        "
+                                onmouseover="this.style.background='#146c43'; this.style.transform='translateY(-2px)'"
+                                onmouseout="this.style.background='#198754'; this.style.transform='translateY(0)'"
+                        >
                             <i class="fas fa-paper-plane me-2"></i> Submit Application
                         </button>
+
                     </div>
+
                 </form>
             </div>
         </div>
@@ -705,223 +822,158 @@
 @endsection
 
 @push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('enrolmentForm');
-    const stepContents = document.querySelectorAll('.step-content');
-    const stepItems = document.querySelectorAll('.step-item');
-    const progressBar = document.getElementById('progressBar');
-    const progressPercent = document.getElementById('progressPercent');
-    const currentStepNum = document.getElementById('currentStepNum');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const submitBtn = document.getElementById('submitBtn');
-    const autosaveIndicator = document.getElementById('autosaveIndicator');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-    let currentStep = 1;
-    const totalSteps = 7;
+            const form = document.getElementById('enrolmentForm');
+            const stepContents = document.querySelectorAll('.step-content');
+            const stepItems = document.querySelectorAll('.step-item');
+            const progressBar = document.getElementById('progressBar');
+            const progressPercent = document.getElementById('progressPercent');
+            const currentStepNum = document.getElementById('currentStepNum');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const autosaveIndicator = document.getElementById('autosaveIndicator');
 
-    // Load saved data
-    loadSavedData();
+            let currentStep = 1;
+            const totalSteps = 7;
 
-    // Second child toggle
-    document.getElementById('hasSecondChild').addEventListener('change', function() {
-        document.getElementById('secondChildFields').style.display = this.checked ? 'block' : 'none';
-    });
+            loadSavedData();
 
-    // Navigation
-    nextBtn.addEventListener('click', function() {
-        if (validateStep(currentStep)) {
-            saveProgress();
-            goToStep(currentStep + 1);
-        }
-    });
-
-    prevBtn.addEventListener('click', function() {
-        goToStep(currentStep - 1);
-    });
-
-    function goToStep(step) {
-        if (step < 1 || step > totalSteps) return;
-
-        // Update step content
-        stepContents.forEach(content => content.classList.remove('active'));
-        document.querySelector(`.step-content[data-step="${step}"]`).classList.add('active');
-
-        // Update step indicators
-        stepItems.forEach((item, index) => {
-            item.classList.remove('active');
-            if (index + 1 < step) {
-                item.classList.add('completed');
-            } else if (index + 1 === step) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('completed');
+            // Safe toggle
+            const secondChildToggle = document.getElementById('hasSecondChild');
+            if (secondChildToggle) {
+                secondChildToggle.addEventListener('change', function () {
+                    document.getElementById('secondChildFields')
+                        .style.display = this.checked ? 'block' : 'none';
+                });
             }
-        });
 
-        currentStep = step;
-
-        // Update progress bar
-        const progress = Math.round((step / totalSteps) * 100);
-        progressBar.style.width = progress + '%';
-        progressPercent.textContent = progress + '%';
-        currentStepNum.textContent = step;
-
-        // Update buttons
-        prevBtn.style.display = step > 1 ? 'block' : 'none';
-        nextBtn.style.display = step < totalSteps ? 'block' : 'none';
-        submitBtn.style.display = step === totalSteps ? 'block' : 'none';
-
-        // Generate review summary on last step
-        if (step === totalSteps) {
-            generateReviewSummary();
-        }
-
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function validateStep(step) {
-        const stepContent = document.querySelector(`.step-content[data-step="${step}"]`);
-        const requiredFields = stepContent.querySelectorAll('[required]');
-        let isValid = true;
-
-        requiredFields.forEach(field => {
-            if (!field.value.trim()) {
-                field.classList.add('is-invalid');
-                isValid = false;
-            } else {
-                field.classList.remove('is-invalid');
-            }
-        });
-
-        // Check checkboxes on consent step
-        if (step === 6) {
-            const requiredChecks = stepContent.querySelectorAll('input[type="checkbox"][required]');
-            requiredChecks.forEach(check => {
-                if (!check.checked) {
-                    check.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    check.classList.remove('is-invalid');
-                }
+            nextBtn.addEventListener('click', () => {
+                saveProgress();
+                goToStep(currentStep + 1);
             });
-        }
 
-        if (!isValid) {
-            alert('Please fill in all required fields.');
-        }
+            prevBtn.addEventListener('click', () => {
+                goToStep(currentStep - 1);
+            });
 
-        return isValid;
-    }
+            function goToStep(step) {
 
-    function saveProgress() {
-        const formData = new FormData(form);
-        const data = {};
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
-        localStorage.setItem('peekaboo_enrolment', JSON.stringify(data));
+                if (step < 1 || step > totalSteps) return;
 
-        // Show autosave indicator
-        autosaveIndicator.style.display = 'block';
-        setTimeout(() => {
-            autosaveIndicator.style.display = 'none';
-        }, 2000);
-    }
+                stepContents.forEach(c => c.classList.remove('active'));
+                document.querySelector(`.step-content[data-step="${step}"]`)
+                    ?.classList.add('active');
 
-    function loadSavedData() {
-        const saved = localStorage.getItem('peekaboo_enrolment');
-        if (saved) {
-            const data = JSON.parse(saved);
-            Object.keys(data).forEach(key => {
-                const field = form.querySelector(`[name="${key}"]`);
-                if (field) {
+                stepItems.forEach((item, index) => {
+                    item.classList.remove('active', 'completed');
+                    if (index + 1 < step) item.classList.add('completed');
+                    if (index + 1 === step) item.classList.add('active');
+                });
+
+                currentStep = step;
+
+                const progress = Math.round((step / totalSteps) * 100);
+                progressBar.style.width = progress + '%';
+                progressPercent.textContent = progress + '%';
+                currentStepNum.textContent = step;
+
+                prevBtn.style.display = step > 1 ? 'block' : 'none';
+                nextBtn.style.display = step < totalSteps ? 'block' : 'none';
+                submitBtn.style.display = step === totalSteps ? 'block' : 'none';
+
+                if (step === totalSteps) generateReviewSummary();
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function saveProgress() {
+
+                const fd = new FormData(form);
+                const data = {};
+
+                fd.forEach((value, key) => {
+
+                    // 🚫 Skip files
+                    if (value instanceof File) return;
+
+                    data[key] = value;
+                });
+
+                localStorage.setItem('peekaboo_enrolment', JSON.stringify(data));
+
+                autosaveIndicator.style.display = 'block';
+                setTimeout(() => {
+                    autosaveIndicator.style.display = 'none';
+                }, 1500);
+            }
+
+            function loadSavedData() {
+
+                const saved = localStorage.getItem('peekaboo_enrolment');
+                if (!saved) return;
+
+                const data = JSON.parse(saved);
+
+                Object.keys(data).forEach(key => {
+
+                    const field = form.querySelector(`[name="${key}"]`);
+                    if (!field) return;
+
+                    if (field.type === 'file') return;
+
                     if (field.type === 'checkbox') {
                         field.checked = data[key] === 'on' || data[key] === true;
-                    } else if (field.type === 'radio') {
-                        const radio = form.querySelector(`[name="${key}"][value="${data[key]}"]`);
+                    }
+
+                    else if (field.type === 'radio') {
+                        const radio = form.querySelector(
+                            `[name="${key}"][value="${data[key]}"]`
+                        );
                         if (radio) radio.checked = true;
-                    } else {
+                    }
+
+                    else {
                         field.value = data[key];
                     }
-                }
-            });
-        }
-    }
-
-    function generateReviewSummary() {
-        const formData = new FormData(form);
-        let html = '<div class="row g-4">';
-
-        // Program Info
-        html += `
-            <div class="col-md-6">
-                <div class="border rounded p-3">
-                    <h6 class="text-primary mb-3"><i class="fas fa-school me-2"></i>Program</h6>
-                    <p class="mb-1"><strong>Start Date:</strong> ${formData.get('start_date') || 'Not specified'}</p>
-                    <p class="mb-1"><strong>Program:</strong> ${formData.get('program') || 'Not selected'}</p>
-                    <p class="mb-0"><strong>Fee Option:</strong> ${formData.get('fee_option') || 'Not selected'}</p>
-                </div>
-            </div>
-        `;
-
-        // Child Info
-        html += `
-            <div class="col-md-6">
-                <div class="border rounded p-3">
-                    <h6 class="text-primary mb-3"><i class="fas fa-baby me-2"></i>Child</h6>
-                    <p class="mb-1"><strong>Name:</strong> ${formData.get('child_name') || 'Not provided'}</p>
-                    <p class="mb-1"><strong>DOB:</strong> ${formData.get('child_dob') || 'Not provided'}</p>
-                    <p class="mb-0"><strong>ID:</strong> ${formData.get('child_id') || 'Not provided'}</p>
-                </div>
-            </div>
-        `;
-
-        // Mother Info
-        html += `
-            <div class="col-md-6">
-                <div class="border rounded p-3">
-                    <h6 class="text-primary mb-3"><i class="fas fa-user me-2"></i>Mother/Guardian</h6>
-                    <p class="mb-1"><strong>Name:</strong> ${formData.get('mother_name') || 'Not provided'}</p>
-                    <p class="mb-1"><strong>Cell:</strong> ${formData.get('mother_cell') || 'Not provided'}</p>
-                    <p class="mb-0"><strong>Email:</strong> ${formData.get('mother_email') || 'Not provided'}</p>
-                </div>
-            </div>
-        `;
-
-        // Father Info
-        html += `
-            <div class="col-md-6">
-                <div class="border rounded p-3">
-                    <h6 class="text-primary mb-3"><i class="fas fa-user me-2"></i>Father/Guardian</h6>
-                    <p class="mb-1"><strong>Name:</strong> ${formData.get('father_name') || 'Not provided'}</p>
-                    <p class="mb-1"><strong>Cell:</strong> ${formData.get('father_cell') || 'Not provided'}</p>
-                    <p class="mb-0"><strong>Email:</strong> ${formData.get('father_email') || 'Not provided'}</p>
-                </div>
-            </div>
-        `;
-
-        html += '</div>';
-
-        document.getElementById('reviewSummary').innerHTML = html;
-    }
-
-    // Auto-save on field change
-    form.addEventListener('change', function() {
-        saveProgress();
-    });
-
-    // File upload styling
-    document.querySelectorAll('.file-upload-box input[type="file"]').forEach(input => {
-        input.addEventListener('change', function() {
-            const label = this.closest('.file-upload-box').querySelector('label');
-            if (this.files.length > 0) {
-                label.innerHTML = `<i class="fas fa-check-circle fa-2x text-success mb-2"></i><p class="mb-0">${this.files[0].name}</p>`;
+                });
             }
+
+            function generateReviewSummary() {
+
+                const fd = new FormData(form);
+                let html = '<div class="row g-4">';
+
+                html += `
+        <div class="col-md-6">
+            <div class="border rounded p-3">
+                <h6>Program</h6>
+                <p>${fd.get('start_date') || '-'}</p>
+                <p>${fd.get('program') || '-'}</p>
+                <p>${fd.get('fee_option') || '-'}</p>
+            </div>
+        </div>`;
+
+                html += `
+        <div class="col-md-6">
+            <div class="border rounded p-3">
+                <h6>Child</h6>
+                <p>${fd.get('child_name') || '-'}</p>
+                <p>${fd.get('child_dob') || '-'}</p>
+                <p>${fd.get('child_id') || '-'}</p>
+            </div>
+        </div>`;
+
+                html += '</div>';
+
+                document.getElementById('reviewSummary').innerHTML = html;
+            }
+
+            form.addEventListener('change', saveProgress);
+
         });
-    });
-});
-</script>
+    </script>
+
 @endpush

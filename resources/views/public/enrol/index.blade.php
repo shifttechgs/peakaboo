@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero -->
-<section class="py-5" style="background: linear-gradient(135deg, #B5D8EB 0%, #FFB5BA 100%); margin-top: 80px;">
+<section class="py-2" style="background: linear-gradient(135deg, #B5D8EB 0%, #FFB5BA 100%); margin-top: 10px;" data-bg-src="{{ asset('assets/img/class/class-bg.png') }}">
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
@@ -75,22 +75,63 @@
 
                 <!-- Fee Summary -->
                 <div class="bg-white rounded-4 shadow-sm p-5 mb-5">
-                    <h3 class="fw-bold mb-4"><i class="fas fa-calculator text-primary me-2"></i> Fee Options</h3>
+
+                    <h3 class="fw-bold mb-4">
+                        <i class="fas fa-calculator text-primary me-2"></i>
+                        Fee Options
+                    </h3>
 
                     <div class="row g-4">
                         @foreach($fees as $fee)
-                        @if(!isset($fee['addon']))
-                        <div class="col-md-6">
-                            <div class="border rounded-3 p-4 h-100 {{ $fee['popular'] ? 'border-primary bg-primary bg-opacity-10' : '' }}">
-                                @if($fee['popular'])
-                                <span class="badge bg-primary mb-2">Recommended</span>
-                                @endif
-                                <h5 class="fw-bold">{{ $fee['name'] }}</h5>
-                                <p class="text-muted small mb-2">{{ $fee['hours'] }}</p>
-                                <div class="h3 text-primary fw-bold">R{{ number_format($fee['price']) }}<small class="text-muted fw-normal">/month</small></div>
-                            </div>
-                        </div>
-                        @endif
+                            @if(!isset($fee['addon']))
+                                <div class="col-md-6">
+                                    <div style="
+                border-radius:16px;
+                padding:30px;
+                height:100%;
+                border: {{ $fee['popular'] ? '2px solid #0d6efd' : '1px solid #dee2e6' }};
+                background: {{ $fee['popular'] ? '#e7f1ff' : '#fff' }};
+                box-shadow:0 8px 20px rgba(0,0,0,0.05);
+                position:relative;
+                transition:all .25s ease;
+            "
+                                         onmouseover="this.style.boxShadow='0 12px 28px rgba(0,0,0,0.08)'; this.style.transform='translateY(-2px)';"
+                                         onmouseout="this.style.boxShadow='0 8px 20px rgba(0,0,0,0.05)'; this.style.transform='translateY(0)';"
+                                    >
+
+                                        @if($fee['popular'])
+                                            <span style="
+                    position:absolute;
+                    top:-12px;
+                    right:-12px;
+                    background:#0d6efd;
+                    color:#fff;
+                    padding:6px 14px;
+                    border-radius:20px;
+                    font-size:.8rem;
+                    font-weight:700;
+                    box-shadow:0 3px 10px rgba(0,0,0,0.15);
+                ">
+                    Recommended
+                </span>
+                                        @endif
+
+                                        <h5 class="fw-bold" style="margin-top: {{ $fee['popular'] ? '24px' : '0' }};">
+                                            {{ $fee['name'] }}
+                                        </h5>
+                                        <p class="text-muted small mb-2">{{ $fee['hours'] }}</p>
+                                        <div style="
+                    font-size:1.6rem;
+                    font-weight:700;
+                    color:#0d6efd;
+                ">
+                                            R{{ number_format($fee['price']) }}
+                                            <small style="font-size:.85rem; color:#6c757d; font-weight:400;">/month</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            @endif
                         @endforeach
                     </div>
 
@@ -129,15 +170,51 @@
                     </div>
                 </div>
 
-                <!-- Start Button -->
-                <div class="text-center">
-                    <a href="{{ route('enrol.form') }}" class="pk-btn-primary btn-lg px-5 py-3">
-                        <i class="fas fa-play-circle me-2"></i> Start Application
+{{--                <!-- Start Button -->--}}
+{{--                <div class="text-center">--}}
+{{--                    <a href="{{ route('enrol.form') }}" class="pk-btn-primary btn-lg px-5 py-3">--}}
+{{--                        <i class="fas fa-play-circle me-2"></i> Start Application--}}
+{{--                    </a>--}}
+{{--                    <p class="text-muted mt-3 mb-0">--}}
+{{--                        <i class="fas fa-shield-alt me-1"></i> Your data is secure and protected--}}
+{{--                    </p>--}}
+{{--                </div>--}}
+
+                <div class="text-center mt-5">
+
+                    <a href="{{ route('enrol.form') }}"
+                       style="
+            display:inline-flex;
+            align-items:center;
+            gap:12px;
+            padding:16px 42px;
+            border-radius:50px;
+            background:#0c508e;
+            color:#ffffff;
+            font-weight:600;
+            font-size:1.05rem;
+            text-decoration:none;
+            box-shadow:0 10px 25px rgba(13,110,253,.35);
+            transition:all .25s ease;
+       "
+                       onmouseover="this.style.background='#0c508e'; this.style.transform='translateY(-2px)'"
+                       onmouseout="this.style.background='#0c508e'; this.style.transform='translateY(0)'"
+                    >
+                        <span>Start Application</span>
+                        <i class="fas fa-arrow-right"></i>
                     </a>
-                    <p class="text-muted mt-3 mb-0">
-                        <i class="fas fa-shield-alt me-1"></i> Your data is secure and protected
+
+                    <p style="
+        margin-top:14px;
+        color:#6c757d;
+        font-size:.9rem;
+    ">
+                        <i class="fas fa-lock me-1"></i>
+                        Your information is secure & confidential
                     </p>
+
                 </div>
+
             </div>
         </div>
     </div>

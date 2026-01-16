@@ -3,7 +3,7 @@
 @section('title', 'Book a Tour - Peekaboo Daycare')
 
 @section('content')
-<section class="py-5" style="background: linear-gradient(135deg, #B5D8EB 0%, #FFB5BA 100%); margin-top: 80px;">
+<section class="py-5" style="background: linear-gradient(135deg, #B5D8EB 0%, #FFB5BA 100%); margin-top: 10px;" data-bg-src="{{ asset('assets/img/class/class-bg.png') }}">
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
@@ -97,10 +97,31 @@
                                 </select>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="pk-btn-primary btn-lg w-100">
-                                    <i class="fas fa-calendar-check me-2"></i> Request Tour
+                                <button type="submit"
+                                        style="
+            width:100%;
+            padding:16px 0;
+            border-radius:50px;
+            border:none;
+            background:#0c508e;
+            color:#fff;
+            font-weight:600;
+            font-size:1rem;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:10px;
+            box-shadow:0 10px 25px rgba(13,110,253,.35);
+            transition:all .25s ease;
+            cursor:pointer;
+        "
+                                        onmouseover="this.style.background='#084298'; this.style.transform='translateY(-2px)';"
+                                        onmouseout="this.style.background='#0d6efd'; this.style.transform='translateY(0)';"
+                                >
+                                    <i class="fas fa-calendar-check"></i> Request Tour
                                 </button>
                             </div>
+
                         </div>
                     </form>
                 </div>
