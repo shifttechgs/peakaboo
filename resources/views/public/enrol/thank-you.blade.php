@@ -3,72 +3,69 @@
 @section('title', 'Application Submitted - Peekaboo Daycare')
 
 @section('content')
-<section class="pk-section" style="margin-top: 100px; min-height: 80vh; display: flex; align-items: center;">
+<!-- Breadcrumb -->
+
+
+<!-- Thank You Section -->
+<section class="space">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <div class="mb-5">
-                    <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 120px; height: 120px;">
-                        <i class="fas fa-check fa-4x"></i>
-                    </div>
-                    <h1 class="display-4 fw-bold mb-3">Application Submitted!</h1>
-                    <p class="lead text-muted mb-4">Thank you for choosing Peekaboo Daycare & Preschool. We've received your application and will be in touch soon.</p>
-                </div>
+            <div class="col-xl-7 col-lg-8">
 
-                <div class="bg-white rounded-4 shadow-sm p-5 mb-5">
-                    <h4 class="mb-4">Your Application Reference</h4>
-                    <div class="bg-primary bg-opacity-10 rounded-3 p-4 mb-4">
-                        <span class="h2 text-primary fw-bold">{{ $applicationId }}</span>
-                    </div>
-                    <p class="text-muted mb-0">Please save this reference number for tracking your application status.</p>
-                </div>
+                <!-- Single Card -->
+                <div class="vs-blog blog-single">
+                    <div class="blog-content text-center" style="padding: 60px 40px;">
 
-                <div class="bg-white rounded-4 shadow-sm p-5 mb-5">
-                    <h4 class="mb-4">What Happens Next?</h4>
-                    <div class="row g-4 text-start">
-                        <div class="col-md-4">
-                            <div class="d-flex gap-3">
-                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">1</div>
-                                <div>
-                                    <h6 class="fw-bold">Email Confirmation</h6>
-                                    <small class="text-muted">You'll receive an email confirmation shortly</small>
-                                </div>
+                        <div class="mb-4">
+                            <div style="width: 80px; height: 80px; background: #10b981; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 30px;">
+                                <i class="fas fa-check" style="font-size: 40px; color: white;"></i>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="d-flex gap-3">
-                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">2</div>
-                                <div>
-                                    <h6 class="fw-bold">Application Review</h6>
-                                    <small class="text-muted">We'll review your application within 48 hours</small>
-                                </div>
-                            </div>
+
+                        <h3 class="sec-title mb-3">Thank You!</h3>
+                        <p class="sec-text mb-4">We have received your enrolment application and will be in touch within 48 hours.</p>
+
+                        @if(session('email_sent'))
+                        <div class="alert alert-success mb-4" style="border-left: 4px solid #10b981;">
+                            <i class="fas fa-check-circle me-2"></i>Our team has been notified
                         </div>
-                        <div class="col-md-4">
-                            <div class="d-flex gap-3">
-                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">3</div>
-                                <div>
-                                    <h6 class="fw-bold">We'll Contact You</h6>
-                                    <small class="text-muted">To schedule a tour and discuss next steps</small>
-                                </div>
-                            </div>
+                        @elseif(session('email_error'))
+                        <div class="alert alert-warning mb-4" style="border-left: 4px solid #ffc107;">
+                            <i class="fas fa-info-circle me-2"></i>Please call <a href="tel:0215574999">021 557 4999</a> to confirm
                         </div>
+                        @endif
+
+                        <div class="mb-4">
+                            <p style="color: #0c508e; font-weight: 600; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; margin-bottom: 10px;">Application Reference</p>
+                            <div style="background: #0c508e; color: white; padding: 20px; border-radius: 10px;">
+                                <h3 style="color: white; font-family: 'Courier New', monospace; letter-spacing: 3px; margin: 0; font-size: 28px;">{{ $applicationId }}</h3>
+                            </div>
+                            <p style="color: #777; font-size: 14px; margin-top: 10px;">Please save this reference number</p>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <p class="mb-3" style="color: #6c757d;">Questions? Contact us:</p>
+                        <div class="d-flex gap-3 justify-content-center flex-wrap">
+                            <a href="tel:0215574999" class="vs-btn">
+                                <span class="vs-btn__border"></span>
+                                <i class="fas fa-phone me-2"></i>021 557 4999
+                            </a>
+                            <a href="https://wa.me/27828989967" target="_blank" class="vs-btn style4">
+                                <span class="vs-btn__border"></span>
+                                <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                            </a>
+                        </div>
+
+                        <div class="mt-4">
+                            <a href="{{ route('home') }}" style="color: #0c508e; text-decoration: none; font-weight: 600;">
+                                <i class="fas fa-home me-2"></i>Back to Home
+                            </a>
+                        </div>
+
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <a href="{{ route('home') }}" class="pk-btn-secondary">
-                        <i class="fas fa-home me-2"></i> Back to Home
-                    </a>
-                    <a href="{{ route('enrol.status', $applicationId) }}" class="pk-btn-primary">
-                        <i class="fas fa-search me-2"></i> Track Application
-                    </a>
-                </div>
-
-                <p class="mt-5 text-muted">
-                    Questions? Contact us at <a href="tel:0215574999">021 557 4999</a> or
-                    <a href="https://wa.me/27828989967" target="_blank">WhatsApp us</a>
-                </p>
             </div>
         </div>
     </div>

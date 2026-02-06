@@ -1475,6 +1475,10 @@
       '.sideCartToggler, .sideCartTogglerTo'
     );
     const sideCart = document.querySelector('.sideCart-wrapper');
+
+    // Exit if sideCart doesn't exist on this page
+    if (!sideCart) return;
+
     const sideCartContent = sideCart.querySelector('.cart-sidebar-content');
     const closeButton = sideCart.querySelector('.cart-close-button');
     const body = document.body;

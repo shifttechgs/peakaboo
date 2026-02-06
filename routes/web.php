@@ -14,6 +14,50 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\CrmController;
 use App\Http\Controllers\Parent\PortalController as ParentPortalController;
 use App\Http\Controllers\Teacher\PortalController as TeacherPortalController;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+// TEMPORARY TEST ROUTE - DELETE AFTER TESTING
+Route::get('/test-pdf', function () {
+    $testData = [
+        'start_date' => '2026-03-01',
+        'program' => 'full-day',
+        'program_name' => 'Full Day Program',
+        'fee_option' => 'monthly',
+        'fee_option_name' => 'Monthly Payment',
+        'child_name' => 'Test Child',
+        'child_dob' => '2022-05-15',
+        'child_gender' => 'male',
+        'child_id' => '1234567890123',
+        'child_language' => 'English',
+        'mother_name' => 'Test Mother',
+        'mother_id' => '9876543210987',
+        'mother_cell' => '0821234567',
+        'mother_email' => 'test@example.com',
+        'father_name' => 'Test Father',
+        'father_id' => '1112223334445',
+        'father_cell' => '0829876543',
+        'home_address' => '123 Test Street, Cape Town',
+        'emergency_name' => 'Emergency Contact',
+        'emergency_tel' => '0821111111',
+        'doctor_name' => 'Dr. Test',
+        'doctor_tel' => '0212222222',
+        'signature' => 'Test Parent',
+        'signature_date' => '2026-02-05',
+    ];
+    $applicationId = 'APP-2026-TEST';
+    try {
+        $pdf = Pdf::loadView('pdf.enrolment-application', [
+            'data' => $testData,
+            'applicationId' => $applicationId,
+        ]);
+        return $pdf->download('test-application.pdf');
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ], 500);
+    }
+});
 
 // Public Website Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -25,6 +69,7 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'submitContact'])->name('contact.submit');
 Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
+
 
 // Enrolment Form Routes
 Route::prefix('enrol')->name('enrol.')->group(function () {

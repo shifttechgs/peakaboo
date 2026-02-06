@@ -173,58 +173,49 @@
     <div class="sticky-wrapper">
         <div class="sticky-active">
             <div class="container container--custom">
+
+
+
                 <div class="row justify-content-between align-items-center">
                     <div class="col">
-                        <div class="vs-header__logo">
-                            <a href="{{ route('home') }}"><img style="height: 80px" src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo Daycare" class="logo"></a>
+                        <div class="vs-header__logo position-relative" style="padding: 20px 0;">
+                            <a href="{{ route('home') }}">
+                                <div style="position: relative; display: inline-block;">
+                                    <img style="height: 90px; transition: transform 0.4s ease;"
+                                         src="{{ asset('assets/img/peekaboo/logo.png') }}"
+                                         alt="Peekaboo Daycare"
+                                         class="logo"
+                                         onmouseover="this.style.transform='translateY(-8px)'"
+                                         onmouseout="this.style.transform='translateY(0)'">
+
+                                    <div style="position: absolute; top: -10px; left: -15px; width: 25px; height: 25px; background: linear-gradient(135deg, #D18109, #ffa726); border-radius: 50%; animation: float 3s ease-in-out infinite;"></div>
+                                    <div style="position: absolute; top: 5px; right: -10px; width: 18px; height: 18px; background: linear-gradient(135deg, #70167E, #9c27b0); border-radius: 50%; animation: float 4s ease-in-out infinite;"></div>
+                                    <div style="position: absolute; bottom: 0; left: 10px; width: 20px; height: 20px; background: linear-gradient(135deg, #0c508e, #2196f3); border-radius: 50%; animation: float 3.5s ease-in-out infinite;"></div>
+                                    <div style="position: absolute; bottom: 15px; right: 5px; width: 15px; height: 15px; background: linear-gradient(135deg, #D18109, #ffa726); border-radius: 50%; animation: float 4.5s ease-in-out infinite;"></div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                     <div class="col-auto">
                         <nav class="main-menu d-none d-lg-block">
                             <ul>
-                                <li>
-                                    <a class="vs-svg-assets" href="{{ route('home') }}" style=" color: #0c508e">
-                                        HOME
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="vs-svg-assets" href="{{ route('home') }}#programs" style=" color: #0c508e">
-                                        Programs
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="vs-svg-assets" href="{{ route('home') }}#about" style=" color: #0c508e">
-                                        About
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="vs-svg-assets" href="{{ route('home') }}#fees" style=" color: #0c508e">
-                                        Fees
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="vs-svg-assets" href="{{ route('home') }}#contact" style=" color: #0c508e">
-                                        Contact
-
-                                    </a>
-                                </li>
+                                <li><a class="vs-svg-assets" href="{{ route('home') }}" style="color: #0c508e">HOME</a></li>
+                                <li><a class="vs-svg-assets" href="{{ route('home') }}#programs" style="color: #0c508e">Programs</a></li>
+                                <li><a class="vs-svg-assets" href="{{ route('home') }}#about" style="color: #0c508e">About</a></li>
+                                <li><a class="vs-svg-assets" href="{{ route('home') }}#fees" style="color: #0c508e">Fees</a></li>
+                                <li><a class="vs-svg-assets" href="{{ route('contact') }}" style="color: #0c508e">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
                     <div class="col-auto">
                         <div class="vs-header__action">
                             <div class="d-none d-xxl-inline-flex">
-                                <a href="{{ route('enrol.index') }}" class="vs-btn"><span class="vs-btn__border"></span>Apply Now</a>
+                                <a href="{{ route('enrol.index') }}" class="vs-btn"><span class="vs-btn__border"></span>Enrol Now</a>
                             </div>
-
                             <div class="d-none d-xxl-inline-flex">
                                 <a href="{{ route('admin.dashboard') }}" class="vs-btn"><span class="vs-btn__border"></span>Portal</a>
                             </div>
-                            <div class="d-none d-lg-inline-flex align-items-center">
+                            <div class="d-inline-flex d-lg-none align-items-center">
                                 <button class="sideMenuToggler">
                                     <svg width="31" height="23" viewBox="0 0 31 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.9165 4.5H28.4165C29.6594 4.5 30.6665 3.49292 30.6665 2.25C30.6665 1.00708 29.6594 0 28.4165 0H2.9165C1.67358 0 0.666504 1.00708 0.666504 2.25C0.666504 3.49292 1.67358 4.5 2.9165 4.5Z" fill="currentColor" />
@@ -239,7 +230,25 @@
                         </div>
                     </div>
                 </div>
+
+
+
+
+
             </div>
         </div>
     </div>
+
+    <!-- CSS Animations for decorative elements -->
+    <style>
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+    </style>
 </header>

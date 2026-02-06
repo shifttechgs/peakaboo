@@ -30,14 +30,14 @@
     @stack('styles')
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
+{{--    <!-- Preloader -->--}}
+{{--    <div class="preloader">--}}
 {{--        <button class="vs-btn preloaderCls">Cancel Preloader</button>--}}
-        <div class="preloader-inner">
-            <img src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo Daycare">
-            <span class="loader"></span>
-        </div>
-    </div>
+{{--        <div class="preloader-inner">--}}
+{{--            <img src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo Daycare">--}}
+{{--            <span class="loader"></span>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
     @include('partials.public-header')
 

@@ -55,19 +55,19 @@
                     <div class="vs-footer__widget">
                         <h3 class="vs-footer__title">Contact Info</h3>
                         <div class="vs-footer__contact">
-                            <p class="vs-footer__contact-item">
+                            <p class="vs-footer__contact-item" style="color: white">
                                 <i class="fas fa-map-marker-alt"></i>
                                 139B Humewood Drive, Parklands, 7441, Cape Town
                             </p>
-                            <p class="vs-footer__contact-item">
+                            <p class="vs-footer__contact-item" >
                                 <i class="fas fa-phone-alt"></i>
-                                <a href="tel:0215574999">021 557 4999</a> / <a href="tel:0828989967">082 898 9967</a>
+                                <a href="tel:0215574999"  style="color: white">021 557 4999</a> / <a href="tel:0828989967"  style="color: white">082 898 9967</a>
                             </p>
-                            <p class="vs-footer__contact-item">
+                            <p class="vs-footer__contact-item"  style="color: white">
                                 <i class="fas fa-envelope"></i>
-                                <a href="mailto:peekaboodaycare@telkomsa.net">peekaboodaycare@telkomsa.net</a>
+                                <a href="mailto:peekaboodaycare@telkomsa.net"  style="color: white">peekaboodaycare@telkomsa.net</a>
                             </p>
-                            <p class="vs-footer__contact-item">
+                            <p class="vs-footer__contact-item"  style="color: white">
                                 <i class="fas fa-clock"></i>
                                 Monday - Friday: 06:00 - 18:00
                             </p>
@@ -88,9 +88,8 @@
                 </div>
                 <div class="col-md-auto">
                     <ul class="vs-footer__bottom--menu">
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms & Conditions</a></li>
-                        <li><a href="#">POPIA Compliance</a></li>
+
+                        <li><a href="https://shifttechgs.com/">Designed By ShiftTech</a></li>
                     </ul>
                 </div>
             </div>

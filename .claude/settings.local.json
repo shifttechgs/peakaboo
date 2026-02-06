@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan make:mail:*)",
+      "Bash(composer require:*)",
+      "Bash(/mnt/c/wamp64_3.3.4/bin/php/php8.3.14/php.exe:*)",
+      "Bash(chmod:*)",
+      "Bash(php artisan:*)"
+    ]
+  }
+}
