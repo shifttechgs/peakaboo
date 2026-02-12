@@ -275,13 +275,337 @@
 <!-- Why Parents Choose Us Section End -->
 
 <!-- ========== MEET OUR TEACHERS SECTION ========== -->
-<section id="teachers" class="space space-extra-bottom" style="background-color: #f9f6f2; position: relative; overflow: hidden;">
+<section id="teachers" class="space space-extra-bottom">
+<style>
+/* ============================================================
+   TEACHERS SECTION — Peekaboo
+   Editorial portrait bento + infinite marquee team strip
+============================================================ */
 
-    <!-- Decorative Background Elements -->
-    <div style="position: absolute; top: 50px; right: -50px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(209, 129, 9, 0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
-    <div style="position: absolute; bottom: 100px; left: -80px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(12, 80, 142, 0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
+#teachers {
+    background-color: #f9f6f2;
+    position: relative;
+    overflow: hidden;
+}
 
-    <div class="container" style="position: relative; z-index: 2;">
+/* Ambient colour blobs */
+#teachers .t-blob {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+#teachers .t-blob--a {
+    top: -140px; right: -140px;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle at 60% 40%, rgba(209,129,9,0.10), transparent 62%);
+}
+#teachers .t-blob--b {
+    bottom: 60px; left: -160px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle at 40% 60%, rgba(12,80,142,0.08), transparent 62%);
+}
+
+/* ── PORTRAIT CARD ───────────────────────────────── */
+.t-card {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.45s cubic-bezier(0.22,0.61,0.36,1),
+                box-shadow  0.45s cubic-bezier(0.22,0.61,0.36,1);
+}
+
+/* Photo container */
+.t-card__photo {
+    position: relative;
+    display: block;
+    overflow: hidden;
+}
+.t-card--tall .t-card__photo { aspect-ratio: 3 / 4.3; }
+.t-card--mid  .t-card__photo { aspect-ratio: 3 / 3.5; }
+
+.t-card__photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.65s cubic-bezier(0.22,0.61,0.36,1);
+}
+
+/* Gradient info overlay */
+.t-card__overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 50px 20px 20px;
+    transition: padding-bottom 0.35s ease;
+}
+
+.t-card__role {
+    font-family: "Roboto", sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1.3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.78);
+    margin: 0 0 5px; display: block;
+}
+.t-card__name {
+    font-family: "Baloo 2", sans-serif;
+    font-weight: 800; color: #fff;
+    font-size: 19px; margin: 0; line-height: 1.2;
+}
+.t-card--tall .t-card__name { font-size: 22px; }
+
+.t-card__quals {
+    font-family: "Roboto", sans-serif;
+    font-size: 12px; color: rgba(255,255,255,0.65);
+    margin: 7px 0 0; display: block;
+    opacity: 0; transform: translateY(7px);
+    transition: opacity 0.35s ease 0.06s, transform 0.35s ease 0.06s;
+}
+
+/* Years badge pill */
+.t-card__badge {
+    position: absolute; top: 14px; right: 14px; z-index: 2;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 50px; padding: 4px 12px;
+    font-family: "Roboto", sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: #25283e; letter-spacing: 0.2px;
+}
+
+/* ── FULL TEAM MARQUEE ───────────────────────────── */
+.t-team-header {
+    display: flex; align-items: center; gap: 18px;
+    margin: 72px 0 22px;
+}
+.t-team-header::before,
+.t-team-header::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(74,37,89,0.2), transparent);
+}
+.t-team-label {
+    font-family: "Amatic SC", sans-serif;
+    font-size: 27px; font-weight: 700;
+    color: #4A2559; white-space: nowrap;
+}
+
+.t-marquee-wrap {
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 12px;
+}
+.t-marquee-wrap::before,
+.t-marquee-wrap::after {
+    content: ''; position: absolute;
+    top: 0; bottom: 0; width: 110px;
+    z-index: 2; pointer-events: none;
+}
+.t-marquee-wrap::before { left: 0;  background: linear-gradient(to right, #f9f6f2, transparent); }
+.t-marquee-wrap::after  { right: 0; background: linear-gradient(to left,  #f9f6f2, transparent); }
+
+.t-marquee {
+    display: flex; gap: 22px;
+    width: max-content; padding: 10px 0;
+}
+.t-marquee--fwd { animation: t-fwd 38s linear infinite; }
+.t-marquee--rev { animation: t-rev 44s linear infinite; }
+.t-marquee-wrap:hover .t-marquee { animation-play-state: paused; }
+
+@keyframes t-fwd { from { transform: translateX(0);    } to { transform: translateX(-50%); } }
+@keyframes t-rev { from { transform: translateX(-50%); } to { transform: translateX(0);    } }
+
+.t-bubble {
+    width: 170px; height: 170px;
+    border-radius: 50%; overflow: hidden; flex-shrink: 0;
+    border: 5px solid #fff;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.13);
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    cursor: pointer;
+}
+.t-bubble:hover {
+    transform: scale(1.10) translateY(-5px);
+    box-shadow: 0 14px 36px rgba(12,80,142,0.26);
+}
+.t-bubble img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.t-marquee--rev .t-bubble { width: 150px; height: 150px; }
+
+/* ── QUALIFICATIONS BANNER ───────────────────────── */
+.t-qual {
+    margin-top: 60px;
+    background: #fff; border-radius: 20px;
+    padding: 36px 44px 36px 50px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 6px 32px rgba(12,80,142,0.07);
+    border: 1px solid rgba(12,80,142,0.08);
+}
+.t-qual::before {
+    content: ''; position: absolute;
+    left: 0; top: 0; bottom: 0; width: 6px;
+    background: linear-gradient(to bottom, #0c508e 0%, #D18109 50%, #4A2559 100%);
+    border-radius: 20px 0 0 20px;
+}
+.t-qual__title {
+    font-family: "Baloo 2", sans-serif;
+    font-size: 20px; font-weight: 800;
+    color: #25283e; margin: 0 0 10px;
+}
+.t-qual__body {
+    font-family: "Roboto", sans-serif;
+    font-size: 15px; color: #5b5a7b;
+    line-height: 1.72; margin: 0;
+}
+.t-stats {
+    display: flex; align-items: center;
+    justify-content: center; flex-wrap: wrap;
+}
+.t-stat { text-align: center; padding: 8px 22px; }
+.t-stat__num {
+    font-family: "Baloo 2", sans-serif;
+    font-size: 34px; font-weight: 800;
+    color: #0c508e; line-height: 1;
+    display: block; margin-bottom: 4px;
+}
+.t-stat__label {
+    font-family: "Roboto", sans-serif;
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 1.1px; text-transform: uppercase;
+    color: #5b5a7b; display: block;
+}
+.t-stat-sep { width: 1px; height: 44px; background: rgba(12,80,142,0.12); flex-shrink: 0; }
+
+/* ── RESPONSIVE ──────────────────────────────────── */
+@media (max-width: 991px) {
+    .t-card--tall .t-card__photo,
+    .t-card--mid  .t-card__photo { aspect-ratio: 3 / 3.8; }
+    .t-qual { padding: 28px 28px 28px 38px; }
+}
+@media (max-width: 575px) {
+    .t-card--tall .t-card__photo,
+    .t-card--mid  .t-card__photo { aspect-ratio: 2 / 3; }
+    .t-card__name { font-size: 14px; }
+    .t-card--tall .t-card__name { font-size: 15px; }
+    .t-card__role { font-size: 9px; }
+    .t-card__badge { font-size: 10px; padding: 3px 9px; top: 10px; right: 10px; }
+    .t-bubble { width: 120px; height: 120px; }
+    .t-marquee--rev .t-bubble { width: 106px; height: 106px; }
+    .t-qual { padding: 22px 18px 22px 28px; }
+    .t-stat { padding: 6px 14px; }
+    .t-stat__num { font-size: 26px; }
+    .t-team-label { font-size: 22px; }
+    .t-team-header { margin-top: 52px; }
+}
+
+/* ── MANAGEMENT TRIO ─────────────────────────────── */
+.t-section-divider {
+    display: flex; align-items: center; gap: 18px;
+    margin: 0 0 28px;
+}
+.t-section-divider::before,
+.t-section-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(12,80,142,0.22), transparent);
+}
+.t-section-divider--teachers::before,
+.t-section-divider--teachers::after {
+    background: linear-gradient(90deg, transparent, rgba(74,37,89,0.2), transparent);
+}
+.t-divider-label {
+    font-family: "Amatic SC", sans-serif;
+    font-size: 26px; font-weight: 700;
+    white-space: nowrap;
+}
+.t-divider-label--mgmt    { color: #0c508e; }
+.t-divider-label--teachers { color: #4A2559; }
+
+.t-mgmt {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1fr;
+    gap: 18px;
+    align-items: end;
+    position: relative; z-index: 2;
+    padding-bottom: 14px;
+    margin-bottom: 60px;
+}
+.t-mgmt-slot { position: relative; }
+
+/* Frame colours for management */
+.t-mgmt-slot:nth-child(1) .t-card { box-shadow: -10px 10px 0 0 rgba(12,80,142,0.72); }
+.t-mgmt-slot:nth-child(2) .t-card { box-shadow:   0 12px 0 0 rgba(209,129,9,0.78); }
+.t-mgmt-slot:nth-child(3) .t-card { box-shadow:  10px 10px 0 0 rgba(74,37,89,0.72); }
+
+/* Management hover — lift + deepen frame */
+.t-mgmt-slot:nth-child(1):hover .t-card {
+    transform: translateY(-5px) translateX(3px);
+    box-shadow: -13px 14px 0 0 rgba(12,80,142,0.92), 0 22px 44px rgba(12,80,142,0.13);
+}
+.t-mgmt-slot:nth-child(2):hover .t-card {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 0 0 rgba(209,129,9,0.92), 0 22px 44px rgba(209,129,9,0.14);
+}
+.t-mgmt-slot:nth-child(3):hover .t-card {
+    transform: translateY(-5px) translateX(-3px);
+    box-shadow: 13px 14px 0 0 rgba(74,37,89,0.92), 0 22px 44px rgba(74,37,89,0.13);
+}
+
+/* Management overlay gradients — deeper, more authoritative */
+.t-mgmt-slot:nth-child(1) .t-card__overlay {
+    background: linear-gradient(to top, rgba(12,80,142,0.95) 0%, rgba(12,80,142,0.45) 42%, transparent 72%);
+}
+.t-mgmt-slot:nth-child(2) .t-card__overlay {
+    background: linear-gradient(to top, rgba(37,40,62,0.96) 0%, rgba(37,40,62,0.42) 42%, transparent 72%);
+}
+.t-mgmt-slot:nth-child(3) .t-card__overlay {
+    background: linear-gradient(to top, rgba(74,37,89,0.95) 0%, rgba(74,37,89,0.45) 42%, transparent 72%);
+}
+
+/* Shared hover interactions for management slots */
+.t-mgmt-slot:hover .t-card__photo img   { transform: scale(1.06); }
+.t-mgmt-slot:hover .t-card__overlay     { padding-bottom: 26px; }
+.t-mgmt-slot:hover .t-card__quals       { opacity: 1; transform: translateY(0); }
+
+/* Management card heights */
+.t-mgmt .t-card--tall .t-card__photo { aspect-ratio: 3 / 4.2; }
+.t-mgmt .t-card--mid  .t-card__photo { aspect-ratio: 3 / 3.7; }
+
+/* Gold badge for management */
+.t-card__badge--gold {
+    background: linear-gradient(135deg, #D18109, #f5a623);
+    color: #fff;
+}
+
+/* Responsive — management */
+@media (max-width: 575px) {
+    .t-mgmt {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+    .t-mgmt-slot:nth-child(2) {
+        grid-column: 1 / -1;
+        max-width: 240px;
+        margin: 0 auto;
+    }
+    .t-mgmt-slot:nth-child(1) .t-card,
+    .t-mgmt-slot:nth-child(2) .t-card,
+    .t-mgmt-slot:nth-child(3) .t-card { box-shadow: 0 6px 24px rgba(0,0,0,0.12); }
+    .t-mgmt-slot:nth-child(1):hover .t-card,
+    .t-mgmt-slot:nth-child(2):hover .t-card,
+    .t-mgmt-slot:nth-child(3):hover .t-card {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 36px rgba(0,0,0,0.16);
+    }
+    .t-mgmt .t-card--tall .t-card__photo,
+    .t-mgmt .t-card--mid  .t-card__photo { aspect-ratio: 2 / 3; }
+}
+</style>
+
+    <!-- Ambient blobs -->
+    <div class="t-blob t-blob--a"></div>
+    <div class="t-blob t-blob--b"></div>
+
+    <div class="container" style="position:relative;z-index:2;">
 
         <!-- Section Header -->
         <div class="row">
@@ -289,206 +613,169 @@
                 <div class="vs-title title-anime animation-style2">
                     <div class="title-anime__wrap">
                         <span class="vs-title__sub">The Heart of Peekaboo</span>
-                        <h2 class="vs-title__main">Meet Our <span>Dedicated Teachers</span></h2>
+                        <h2 class="vs-title__main">Meet Our <span>Dedicated</span> Teachers</h2>
                     </div>
                 </div>
-                <p style="color: #666; font-size: 17px; line-height: 1.7; max-width: 650px; margin: 20px auto 0;">
-                    Our qualified educators bring years of experience, genuine warmth, and a passion for early childhood development. Every teacher is vetted, trained, and committed to nurturing your child's unique potential.
+                <p style="font-family:'Roboto',sans-serif;color:#5b5a7b;font-size:16px;line-height:1.75;max-width:590px;margin:16px auto 0;">
+                    Our qualified educators bring expertise, genuine warmth, and a deep passion for early childhood development — each one chosen with care and committed to nurturing your child's unique potential.
                 </p>
             </div>
         </div>
 
-        <!-- Teachers Grid -->
-        <div class="row gy-4 gx-4 justify-content-center">
+        <!-- Management Trio -->
+        <div class="t-section-divider wow animate__fadeInUp" data-wow-delay="0.05s">
+            <span class="t-divider-label t-divider-label--mgmt">Our Leadership &amp; Management</span>
+        </div>
 
-            <!-- Teacher Card 1 -->
-            <div class="col-lg-3 col-md-6">
-                <div class="teacher-card wow animate__fadeInUp" data-wow-delay="0.15s" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.4s ease; position: relative; overflow: hidden; height: 100%;"
-                     onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 48px rgba(12,80,142,0.15)';"
-                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)';">
+        <div class="t-mgmt wow animate__fadeInUp" data-wow-delay="0.1s">
 
-                    <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(12,80,142,0.1), transparent); border-radius: 0 20px 0 100%;"></div>
-
-                    <div style="position: relative; margin-bottom: 20px; display: flex; justify-content: center;">
-                        <div style="position: relative;">
-                            <img src="{{ asset('assets/img/teachers/teacher-1.jpg') }}"
-                                 alt="Miss Sarah - Lead Preschool Teacher"
-                                 style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 5px solid #f9f6f2; box-shadow: 0 8px 24px rgba(0,0,0,0.1);"
-                                 onerror="this.src='https://ui-avatars.com/api/?name=Sarah+M&size=140&background=0c508e&color=fff&bold=true'">
-
-                            <div style="position: absolute; bottom: 5px; right: 5px; background: linear-gradient(135deg, #D18109, #ffa726); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(209,129,9,0.4); border: 3px solid white;">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="text-align: center;">
-                        <h3 style="color: #4A2559; font-size: 20px; font-weight: 700; margin-bottom: 8px;">Miss Sarah</h3>
-                        <p style="color: #0c508e; font-size: 13px; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Lead Preschool Teacher</p>
-                        <p style="color: #999; font-size: 12px; margin-bottom: 15px; line-height: 1.5;">ECD Level 5 · 12+ Years</p>
-
-                        <div style="width: 50px; height: 3px; background: linear-gradient(90deg, #0c508e, #D18109); margin: 15px auto; border-radius: 2px;"></div>
-
-                        <div style="background: #f9f6f2; padding: 12px; border-radius: 12px; border-left: 3px solid #0c508e; margin-top: 15px;">
-                            <p style="color: #666; font-size: 13px; line-height: 1.6; margin: 0; font-style: italic;">
-                                "Every child is capable of amazing things!"
-                            </p>
+            <!-- Management 1 — Left -->
+            <div class="t-mgmt-slot">
+                <div class="t-card t-card--mid">
+                    <div class="t-card__photo">
+                        <img src="{{ asset('assets/img/peekaboo_staff/2.png') }}" alt="Peekaboo Management">
+                        <span class="t-card__badge t-card__badge--gold">Management</span>
+                        <div class="t-card__overlay">
+                            <span class="t-card__role">Management</span>
+                            <h3 class="t-card__name">Peekaboo Management</h3>
+                            <span class="t-card__quals">Leading with Heart &amp; Vision</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Teacher Card 2 -->
-            <div class="col-lg-3 col-md-6">
-                <div class="teacher-card wow animate__fadeInUp" data-wow-delay="0.25s" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.4s ease; position: relative; overflow: hidden; height: 100%;"
-                     onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 48px rgba(12,80,142,0.15)';"
-                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)';">
-
-                    <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(112,22,126,0.1), transparent); border-radius: 0 20px 0 100%;"></div>
-
-                    <div style="position: relative; margin-bottom: 20px; display: flex; justify-content: center;">
-                        <div style="position: relative;">
-                            <img src="{{ asset('assets/img/teachers/teacher-2.jpg') }}"
-                                 alt="Teacher Thandi - Baby Room Specialist"
-                                 style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 5px solid #f9f6f2; box-shadow: 0 8px 24px rgba(0,0,0,0.1);"
-                                 onerror="this.src='https://ui-avatars.com/api/?name=Thandi+K&size=140&background=70167E&color=fff&bold=true'">
-
-                            <div style="position: absolute; bottom: 5px; right: 5px; background: linear-gradient(135deg, #70167E, #9c27b0); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(112,22,126,0.4); border: 3px solid white;">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="text-align: center;">
-                        <h3 style="color: #4A2559; font-size: 20px; font-weight: 700; margin-bottom: 8px;">Teacher Thandi</h3>
-                        <p style="color: #0c508e; font-size: 13px; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Baby Room Specialist</p>
-                        <p style="color: #999; font-size: 12px; margin-bottom: 15px; line-height: 1.5;">ECD Level 4 · First Aid · 8+ Years</p>
-
-                        <div style="width: 50px; height: 3px; background: linear-gradient(90deg, #70167E, #D18109); margin: 15px auto; border-radius: 2px;"></div>
-
-                        <div style="background: #f9f6f2; padding: 12px; border-radius: 12px; border-left: 3px solid #70167E; margin-top: 15px;">
-                            <p style="color: #666; font-size: 13px; line-height: 1.6; margin: 0; font-style: italic;">
-                                "I treat each baby as if they were my own."
-                            </p>
+            <!-- Management 2 — Centre (Principal / Director) -->
+            <div class="t-mgmt-slot">
+                <div class="t-card t-card--tall">
+                    <div class="t-card__photo">
+                        <img src="{{ asset('assets/img/peekaboo_staff/1.png') }}" alt="Peekaboo Director">
+                        <span class="t-card__badge t-card__badge--gold">Director</span>
+                        <div class="t-card__overlay">
+                            <span class="t-card__role">Director &amp; Principal</span>
+                            <h3 class="t-card__name">Peekaboo Director</h3>
+                            <span class="t-card__quals">Founder · ECD Champion</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Teacher Card 3 -->
-            <div class="col-lg-3 col-md-6">
-                <div class="teacher-card wow animate__fadeInUp" data-wow-delay="0.35s" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.4s ease; position: relative; overflow: hidden; height: 100%;"
-                     onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 48px rgba(12,80,142,0.15)';"
-                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)';">
-
-                    <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(209,129,9,0.1), transparent); border-radius: 0 20px 0 100%;"></div>
-
-                    <div style="position: relative; margin-bottom: 20px; display: flex; justify-content: center;">
-                        <div style="position: relative;">
-                            <img src="{{ asset('assets/img/teachers/teacher-3.jpg') }}"
-                                 alt="Miss Lerato - Grade R Teacher"
-                                 style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 5px solid #f9f6f2; box-shadow: 0 8px 24px rgba(0,0,0,0.1);"
-                                 onerror="this.src='https://ui-avatars.com/api/?name=Lerato+N&size=140&background=D18109&color=fff&bold=true'">
-
-                            <div style="position: absolute; bottom: 5px; right: 5px; background: linear-gradient(135deg, #0c508e, #1976d2); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(12,80,142,0.4); border: 3px solid white;">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="text-align: center;">
-                        <h3 style="color: #4A2559; font-size: 20px; font-weight: 700; margin-bottom: 8px;">Miss Lerato</h3>
-                        <p style="color: #0c508e; font-size: 13px; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Grade R Teacher</p>
-                        <p style="color: #999; font-size: 12px; margin-bottom: 15px; line-height: 1.5;">B.Ed Foundation · CAPS · 10+ Years</p>
-
-                        <div style="width: 50px; height: 3px; background: linear-gradient(90deg, #D18109, #0c508e); margin: 15px auto; border-radius: 2px;"></div>
-
-                        <div style="background: #f9f6f2; padding: 12px; border-radius: 12px; border-left: 3px solid #D18109; margin-top: 15px;">
-                            <p style="color: #666; font-size: 13px; line-height: 1.6; margin: 0; font-style: italic;">
-                                "Seeing them confident and ready makes it all worthwhile!"
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Teacher Card 4 - Toddler Class -->
-            <div class="col-lg-3 col-md-6">
-                <div class="teacher-card wow animate__fadeInUp" data-wow-delay="0.45s" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.4s ease; position: relative; overflow: hidden; height: 100%;"
-                     onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 48px rgba(12,80,142,0.15)';"
-                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)';">
-
-                    <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(209,129,9,0.1), transparent); border-radius: 0 20px 0 100%;"></div>
-
-                    <div style="position: relative; margin-bottom: 20px; display: flex; justify-content: center;">
-                        <div style="position: relative;">
-                            <img src="{{ asset('assets/img/teachers/teacher-4.jpg') }}"
-                                 alt="Teacher Nomsa - Toddler Class Teacher"
-                                 style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 5px solid #f9f6f2; box-shadow: 0 8px 24px rgba(0,0,0,0.1);"
-                                 onerror="this.src='https://ui-avatars.com/api/?name=Nomsa+D&size=140&background=D18109&color=fff&bold=true'">
-
-                            <div style="position: absolute; bottom: 5px; right: 5px; background: linear-gradient(135deg, #D18109, #ff9800); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(209,129,9,0.4); border: 3px solid white;">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="text-align: center;">
-                        <h3 style="color: #4A2559; font-size: 20px; font-weight: 700; margin-bottom: 8px;">Teacher Nomsa</h3>
-                        <p style="color: #0c508e; font-size: 13px; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Toddler Class Teacher</p>
-                        <p style="color: #999; font-size: 12px; margin-bottom: 15px; line-height: 1.5;">ECD Level 4 · Child Dev · 9+ Years</p>
-
-                        <div style="width: 50px; height: 3px; background: linear-gradient(90deg, #D18109, #70167E); margin: 15px auto; border-radius: 2px;"></div>
-
-                        <div style="background: #f9f6f2; padding: 12px; border-radius: 12px; border-left: 3px solid #D18109; margin-top: 15px;">
-                            <p style="color: #666; font-size: 13px; line-height: 1.6; margin: 0; font-style: italic;">
-                                "Toddlers are full of wonder! I love guiding them as they explore."
-                            </p>
+            <!-- Management 3 — Right -->
+            <div class="t-mgmt-slot">
+                <div class="t-card t-card--mid">
+                    <div class="t-card__photo">
+                        <img src="{{ asset('assets/img/peekaboo_staff/3.png') }}" alt="Peekaboo Management">
+                        <span class="t-card__badge t-card__badge--gold">Management</span>
+                        <div class="t-card__overlay">
+                            <span class="t-card__role">Management</span>
+                            <h3 class="t-card__name">Peekaboo Management</h3>
+                            <span class="t-card__quals">Operations &amp; Care Quality</span>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
+        <!-- / Management Trio -->
 
-        <!-- Teacher Qualifications Banner -->
-        <div class="row mt-5">
-            <div class="col-lg-10 mx-auto">
-                <div style="background: linear-gradient(135deg, rgba(12,80,142,0.08), rgba(209,129,9,0.08)); border-radius: 16px; padding: 30px 40px; border: 2px solid rgba(12,80,142,0.1);">
-                    <div class="row align-items-center gy-3">
-                        <div class="col-lg-8">
-                            <h4 style="color: #4A2559; font-size: 20px; font-weight: 700; margin-bottom: 10px;">Every Teacher is Qualified, Vetted & Passionate</h4>
-                            <p style="color: #666; font-size: 15px; margin: 0; line-height: 1.6;">
-                                All our educators hold recognized ECD qualifications, undergo police clearance checks, and complete ongoing professional development. Your child's safety and growth are in expert, caring hands.
-                            </p>
+        <!-- Full Team Marquee Strip -->
+        <div class="wow animate__fadeInUp" data-wow-delay="0.2s">
+
+            <div class="t-team-header">
+                <span class="t-team-label">Meet the Rest of Our Wonderful Team</span>
+            </div>
+
+            <!-- Row 1 — forward scroll (images 4–15, duplicated for seamless loop) -->
+            <div class="t-marquee-wrap">
+                <div class="t-marquee t-marquee--fwd">
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/4.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/5.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/6.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/7.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/8.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/9.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/10.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/11.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/12.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/13.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/14.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/15.png') }}" alt="Peekaboo staff member"></div>
+                    <!-- duplicate set for seamless infinite loop -->
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/4.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/5.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/6.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/7.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/8.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/9.png') }}"  alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/10.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/11.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/12.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/13.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/14.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/15.png') }}" alt="Peekaboo staff member"></div>
+                </div>
+            </div>
+
+            <!-- Row 2 — reverse scroll (images 16–27, duplicated for seamless loop) -->
+            <div class="t-marquee-wrap">
+                <div class="t-marquee t-marquee--rev">
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/16.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/17.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/18.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/19.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/20.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/21.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/22.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/23.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/24.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/25.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/26.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/27.png') }}" alt="Peekaboo staff member"></div>
+                    <!-- duplicate set for seamless infinite loop -->
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/16.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/17.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/18.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/19.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/20.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/21.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/22.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/23.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/24.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/25.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/26.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/27.png') }}" alt="Peekaboo staff member"></div>
+                </div>
+            </div>
+
+        </div>
+        <!-- / Team marquee -->
+
+        <!-- Qualifications Banner -->
+        <div class="t-qual wow animate__fadeInUp" data-wow-delay="0.25s">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-7">
+                    <h4 class="t-qual__title">Every Teacher is Qualified, Vetted &amp; Passionate</h4>
+                    <p class="t-qual__body">All our educators hold recognized ECD qualifications, undergo police clearance checks, and commit to ongoing professional development. Your child's safety and growth are in expert, caring hands.</p>
+                </div>
+                <div class="col-lg-5">
+                    <div class="t-stats">
+                        <div class="t-stat">
+                            <span class="t-stat__num">100%</span>
+                            <span class="t-stat__label">Qualified</span>
                         </div>
-                        <div class="col-lg-4 text-center text-lg-end">
-                            <div style="display: inline-flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-                                <div style="text-align: center;">
-                                    <div style="color: #0c508e; font-size: 28px; font-weight: 700; margin-bottom: 2px;">100%</div>
-                                    <div style="color: #999; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Qualified</div>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div style="color: #0c508e; font-size: 28px; font-weight: 700; margin-bottom: 2px;">100%</div>
-                                    <div style="color: #999; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Vetted</div>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div style="color: #0c508e; font-size: 28px; font-weight: 700; margin-bottom: 2px;">10+</div>
-                                    <div style="color: #999; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Avg Years</div>
-                                </div>
-                            </div>
+                        <div class="t-stat-sep"></div>
+                        <div class="t-stat">
+                            <span class="t-stat__num">100%</span>
+                            <span class="t-stat__label">Vetted</span>
+                        </div>
+                        <div class="t-stat-sep"></div>
+                        <div class="t-stat">
+                            <span class="t-stat__num">10+</span>
+                            <span class="t-stat__label">Avg. Years</span>
+                        </div>
+                        <div class="t-stat-sep"></div>
+                        <div class="t-stat">
+                            <span class="t-stat__num">27</span>
+                            <span class="t-stat__label">Staff Members</span>
                         </div>
                     </div>
                 </div>
@@ -496,6 +783,8 @@
         </div>
 
     </div>
+    <!-- /container -->
+
 </section>
 <!-- Teachers Section End -->
 
