@@ -53,7 +53,7 @@
                             </p>
                             <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-md-start mb-4 vs-hero__anim" style="flex-wrap: nowrap;">
                                 <a href="{{ route('book-tour') }}" class="vs-btn vs-hero__btn" style="white-space: nowrap;"><span class="vs-btn__border"></span>Book a Tour</a>
-                                <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20enquire%20about%20Peekaboo%20Daycare." class="vs-btn style4 vs-hero__btn" target="_blank" rel="noopener" style="white-space: nowrap;"><span class="vs-btn__border"></span>WhatsApp Us</a>
+                                <a href="{{ route('enrol.index') }}" class="vs-btn style4 vs-hero__btn" style="white-space: nowrap;"><span class="vs-btn__border"></span>Enrol Now</a>
                             </div>
 {{--                            <div class="vs-hero__trust-indicators vs-hero__anim" style="display: flex; flex-wrap: wrap; gap: 10px 15px; font-size: 13px; color: #4A2559; font-weight: 600; justify-content: center; text-align: center;">--}}
 {{--                                <span style="white-space: nowrap;"><i class="fa-solid fa-check-circle" style="color: #0c508e; margin-right: 5px;"></i>Registered Daycare</span>--}}
@@ -99,7 +99,7 @@
                             </p>
                             <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-md-start mb-4 vs-hero__anim" style="flex-wrap: nowrap;">
                                 <a href="{{ route('book-tour') }}" class="vs-btn vs-hero__btn" style="white-space: nowrap;"><span class="vs-btn__border"></span>Book a Tour</a>
-                                <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20enquire%20about%20Peekaboo%20Daycare." class="vs-btn style4 vs-hero__btn" target="_blank" rel="noopener" style="white-space: nowrap;"><span class="vs-btn__border"></span>WhatsApp Us</a>
+                                <a href="{{ route('enrol.index') }}" class="vs-btn style4 vs-hero__btn" style="white-space: nowrap;"><span class="vs-btn__border"></span>Enrol Now</a>
                             </div>
 
                             <img class="vs-hero__character vs-hero__anim" src="{{ asset('assets/img/hero/hero-character-1.png') }}" alt="Happy Child Character">
