@@ -4,6 +4,14 @@
 @section('description', 'Safe, trusted childcare for 3 months to Grade R in Parklands, Cape Town. Qualified teachers, CAPS curriculum, Christian values. Book your tour today.')
 
 @section('content')
+<style>
+/* Global 18px paragraph override for home page */
+.vs-hero__desc,
+.vs-about__text,
+.vs-service__text,
+.vs-class__text,
+.vs-class__age { font-size: 17px !important; }
+</style>
 <!-- ========== HERO SECTION ========== -->
 <section class="vs-hero overflow-hidden z-index-common parallax-wrap">
     <div class="vs-hero__ele1">
@@ -454,7 +462,7 @@
 }
 .t-qual__body {
     font-family: "Roboto", sans-serif;
-    font-size: 15px; color: #5b5a7b;
+    font-size: 17px; color: #5b5a7b;
     line-height: 1.72; margin: 0;
 }
 .t-stats {
@@ -616,7 +624,7 @@
                         <h2 class="vs-title__main">Meet Our <span>Dedicated</span> Teachers</h2>
                     </div>
                 </div>
-                <p style="font-family:'Roboto',sans-serif;color:#5b5a7b;font-size:16px;line-height:1.75;max-width:590px;margin:16px auto 0;">
+                <p style="font-family:'Roboto',sans-serif;color:#5b5a7b;font-size:17px;line-height:1.75;max-width:590px;margin:16px auto 0;">
                     Our qualified educators bring expertise, genuine warmth, and a deep passion for early childhood development — each one chosen with care and committed to nurturing your child's unique potential.
                 </p>
             </div>
@@ -937,7 +945,7 @@
                         <h2 class="vs-title__main">A Typical Day <span>at Our School</span></h2>
                     </div>
                 </div>
-                <p class="text-center mb-40" style="color: #666; font-size: 16px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                <p class="text-center mb-40" style="color: #666; font-size: 17px; max-width: 700px; margin-left: auto; margin-right: auto;">
                     From circle time to outdoor play, nutritious meals to creative activities — every moment is designed to nurture curious minds and happy hearts.
                 </p>
             </div>
@@ -1128,74 +1136,494 @@
 <!-- A Typical Day Section End -->
 
 <!-- ========== TESTIMONIALS SECTION ========== -->
-<section class="space space-extra-bottom" style="background-color: #f9f6f2;">
+<section id="testimonials" class="space space-extra-bottom" style="background-color: #f9f6f2; overflow: hidden;">
+<style>
+/* ============================================================
+   TESTIMONIALS — Halo Effect · Cognitive Fluency · Low Load
+============================================================ */
+
+/* ── GOOGLE RATING HERO ─────────────────────────────────── */
+.tr-google-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    background: white;
+    border-radius: 20px;
+    padding: 30px 44px;
+    margin-bottom: 60px;
+    box-shadow: 0 4px 28px rgba(12,80,142,0.09);
+    border: 1px solid rgba(12,80,142,0.07);
+    max-width: 740px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.tr-google-brand {
+    display: flex; align-items: center; gap: 12px;
+}
+.tr-google-brand svg { width: 34px; height: 34px; flex-shrink: 0; }
+.tr-google-brand__label {
+    font-family: "Roboto", sans-serif;
+    font-size: 17px; font-weight: 700;
+    color: #25283e; letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+.tr-g-sep {
+    width: 1px; height: 48px;
+    background: rgba(12,80,142,0.12);
+    flex-shrink: 0;
+}
+.tr-google-score {
+    display: flex; flex-direction: column; align-items: center;
+}
+.tr-google-score__num {
+    font-family: "Baloo 2", sans-serif;
+    font-size: 46px; font-weight: 800;
+    color: #0c508e; line-height: 1;
+}
+.tr-google-score__stars {
+    display: flex; gap: 4px; margin: 4px 0 5px;
+}
+.tr-google-score__stars i { color: #FFC107; font-size: 15px; }
+.tr-google-score__label {
+    font-family: "Roboto", sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: #bbb; letter-spacing: 0.8px; text-transform: uppercase;
+    white-space: nowrap;
+}
+.tr-google-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #0c508e; color: white;
+    padding: 13px 24px; border-radius: 50px;
+    font-family: "Roboto", sans-serif;
+    font-size: 13px; font-weight: 700;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+.tr-google-cta:hover { background: #0a3f70; color: white; transform: translateY(-2px); }
+
+/* ── MARQUEE ─────────────────────────────────────────────── */
+.tr-marquee-wrap {
+    overflow: hidden;
+    position: relative;
+    padding: 12px 0;
+}
+.tr-marquee-wrap::before,
+.tr-marquee-wrap::after {
+    content: ''; position: absolute;
+    top: 0; bottom: 0; width: 160px;
+    z-index: 2; pointer-events: none;
+}
+.tr-marquee-wrap::before { left: 0;  background: linear-gradient(to right, #f9f6f2, transparent); }
+.tr-marquee-wrap::after  { right: 0; background: linear-gradient(to left,  #f9f6f2, transparent); }
+.tr-marquee {
+    display: flex; gap: 22px;
+    width: max-content;
+    animation: tr-scroll 56s linear infinite;
+}
+.tr-marquee-wrap:hover .tr-marquee { animation-play-state: paused; }
+@keyframes tr-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+/* ── REVIEW CARD ─────────────────────────────────────────── */
+.tr-card {
+    background: white;
+    border-radius: 18px;
+    padding: 26px 26px 22px;
+    width: 340px; flex-shrink: 0;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+    border: 1px solid rgba(12,80,142,0.06);
+    display: flex; flex-direction: column;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.tr-marquee-wrap:hover .tr-card:hover {
+    box-shadow: 0 12px 36px rgba(12,80,142,0.14);
+    transform: translateY(-4px);
+}
+.tr-card__head {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+.tr-card__g { width: 26px; height: 26px; flex-shrink: 0; }
+.tr-card__stars { display: flex; gap: 3px; }
+.tr-card__stars i { color: #FFC107; font-size: 13px; }
+.tr-card__quote {
+    font-family: "Roboto", sans-serif;
+    font-size: 18px; color: #555; line-height: 1.75;
+    flex-grow: 1; margin-bottom: 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.tr-card__reviewer {
+    display: flex; align-items: center; gap: 12px;
+    border-top: 1px solid #f0ecec; padding-top: 15px;
+}
+.tr-card__avatar {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 800; font-size: 16px;
+    font-family: "Baloo 2", sans-serif;
+}
+.tr-av--1 { background: linear-gradient(135deg, #0c508e, #1a7fcf); }
+.tr-av--2 { background: linear-gradient(135deg, #D18109, #f5a623); }
+.tr-av--3 { background: linear-gradient(135deg, #4A2559, #7a3d93); }
+.tr-av--4 { background: linear-gradient(135deg, #0c508e, #4A2559); }
+.tr-av--5 { background: linear-gradient(135deg, #D18109, #4A2559); }
+.tr-av--6 { background: linear-gradient(135deg, #1a7fcf, #4A2559); }
+.tr-av--7 { background: linear-gradient(135deg, #7a3d93, #D18109); }
+.tr-card__name {
+    font-family: "Roboto", sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: #25283e; display: block; margin-bottom: 2px;
+}
+.tr-card__meta {
+    font-family: "Roboto", sans-serif;
+    font-size: 11.5px; color: #bbb;
+}
+
+/* ── SECTION FOOTER ──────────────────────────────────────── */
+.tr-footer {
+    display: flex; align-items: center;
+    justify-content: center; gap: 20px;
+    flex-wrap: wrap; margin-top: 50px;
+}
+.tr-footer__sep { width: 1px; height: 26px; background: rgba(12,80,142,0.14); flex-shrink: 0; }
+.tr-footer__link {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: "Roboto", sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: #0c508e; text-decoration: none;
+    transition: color 0.2s ease;
+}
+.tr-footer__link:hover { color: #D18109; }
+.tr-footer__hint {
+    font-family: "Roboto", sans-serif;
+    font-size: 12px; color: #ccc;
+    font-style: italic;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 767px) {
+    .tr-google-hero { padding: 22px 24px; gap: 22px; }
+    .tr-g-sep { display: none; }
+    .tr-google-score__num { font-size: 36px; }
+    .tr-card { width: 280px; padding: 20px 20px 18px; }
+    .tr-marquee-wrap::before,
+    .tr-marquee-wrap::after { width: 60px; }
+}
+</style>
+
     <div class="container">
+
+        <!-- Section Header -->
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <div class="vs-title text-center title-anime animation-style2 mb-50">
                     <div class="title-anime__wrap">
                         <span class="vs-title__sub">What Parents Say</span>
-                        <h2 class="vs-title__main">Trusted by Families Across <span>Table View & Beyond </span></h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row gy-4 justify-content-center">
-            <div class="col-lg-6 col-md-6 d-flex">
-                <div class="vs-testimonial wow animate__fadeInUp" data-wow-delay="0.25s" style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); display: flex; flex-direction: column; width: 100%;">
-                    <div style="margin-bottom: 15px;">
-                        <i class="fa-solid fa-star" style="color: #FFC107;"></i>
-                        <i class="fa-solid fa-star" style="color: #FFC107;"></i>
-                        <i class="fa-solid fa-star" style="color: #FFC107;"></i>
-                        <i class="fa-solid fa-star" style="color: #FFC107;"></i>
-                        <i class="fa-solid fa-star" style="color: #FFC107;"></i>
-                    </div>
-                    <p style="color: #666; font-size: 15px; line-height: 1.7; margin-bottom: 20px; flex-grow: 1;">
-                        "Best Daycare and School in the area. Babies to Grade R. They offer so much more than child care. Most of the staff have been on staff for over 10 years, low staff churn is always a good indicator of a well run business. But this is like family, well run but so caring and always going the extra mile for the little ones. They have a packed year of events, and activities for kids all ages. They also offer a wide range of extra murals. Two amazing annual events is the sports day and concert. They do kiddies picnics and sleep overs too. Thank you Peekaboo"
-                    </p>
-                    <div>
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #0c508e, #D18109); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px;">
-                                M
-                            </div>
-                            <div>
-                                <strong style="color: #4A2559; display: block;">Melissa Ingram</strong>
-                                <span style="color: #999; font-size: 13px;">Local Guide · 24 reviews · 24 photos</span>
-                            </div>
-                        </div>
-                        <span style="color: #999; font-size: 13px; font-style: italic;">Posted a month ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 d-flex">
-                <div class="vs-testimonial wow animate__fadeInUp" data-wow-delay="0.35s" style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); display: flex; flex-direction: column; width: 100%;">
-                    <div style="margin-bottom: 15px;">
-                        <i class="fa-solid fa-star" style="color: #FFC107;"></i>
-                        <i class="fa-solid fa-star" style="color: #FFC107;"></i>
-                        <i class="fa-solid fa-star" style="color: #FFC107;"></i>
-                        <i class="fa-solid fa-star" style="color: #FFC107;"></i>
-                        <i class="fa-solid fa-star" style="color: #FFC107;"></i>
-                    </div>
-                    <p style="color: #666; font-size: 15px; line-height: 1.7; margin-bottom: 20px; flex-grow: 1;">
-                        "When my daughter started at the school, the teachers went the extra mile with helping me transition her into the school. They are always eager to answer any questions and are so sweet to the children. If I have to send my daughter somewhere for the day, I'm glad it's here. Raising children takes a village and this is my village."
-                    </p>
-                    <div>
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #0c508e, #D18109); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px;">
-                                S
-                            </div>
-                            <div>
-                                <strong style="color: #4A2559; display: block;">Sandy Jenkins</strong>
-                                <span style="color: #999; font-size: 13px;">2 reviews</span>
-                            </div>
-                        </div>
-                        <span style="color: #999; font-size: 13px; font-style: italic;">Posted a month ago</span>
+                        <h2 class="vs-title__main">Trusted by Families Across <span>Table View & Beyond</span></h2>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Google Rating Hero — Halo Effect anchor -->
+        <div class="tr-google-hero wow animate__fadeInUp" data-wow-delay="0.2s">
+            <div class="tr-google-brand">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                <span class="tr-google-brand__label">Google Reviews</span>
+            </div>
+            <div class="tr-g-sep"></div>
+            <div class="tr-google-score">
+                <span class="tr-google-score__num">4.9</span>
+                <div class="tr-google-score__stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <span class="tr-google-score__label">Based on Google reviews</span>
+            </div>
+            <div class="tr-g-sep"></div>
+            <a href="https://www.google.com/search?sca_esv=5dca0e6f8aa8611e&sxsrf=ANbL-n7wDfh_6uMUfIMccbvfDLI1jjISag:1771527867832&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOeTyk0RCu9d8OIuf4nt1ozXztnLQSNeeATznJNbg46WhDYPFuSQtGgk3Wh_GidGJbtfj9IN-RFQteMMTFNWerPrP9D2H3S2Qy0VzjFG6ULO5Q19Syg%3D%3D&q=Peekaboo+Daycare+%26+Preschool+Reviews&sa=X&ved=2ahUKEwi5i5bKn-aSAxVXUGcHHYmoDY0Q0bkNegQIOxAH&biw=1440&bih=778&dpr=2" target="_blank" rel="noopener" class="tr-google-cta">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Read all reviews
+            </a>
+        </div>
+
+    </div><!-- /container — marquee is full-width -->
+
+    <!-- ── Marquee strip ── -->
+    <div class="tr-marquee-wrap">
+        <div class="tr-marquee">
+
+            {{-- ── SET 1 (7 cards) ── --}}
+
+            {{-- Melissa Ingram --}}
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"Best Daycare and School in the area. Babies to Grade R. They offer so much more than child care. Most of the staff have been on staff for over 10 years — low staff churn is always a good indicator of a well run business. But this is like family, well run but so caring and always going the extra mile for the little ones."</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--1">M</div>
+                    <div>
+                        <span class="tr-card__name">Melissa Ingram</span>
+                        <span class="tr-card__meta">Local Guide · 24 reviews · a month ago</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Dominique Warr --}}
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"Peekaboo is more than a daycare — it's truly a family. Both my children have been there since they were 9 months old and the teachers and management have helped me navigate being a mom, through thick and thin. I would highly recommend."</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--2">D</div>
+                    <div>
+                        <span class="tr-card__name">Dominique Warr</span>
+                        <span class="tr-card__meta">Local Guide · 6 reviews · 3 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Kelly Fortune --}}
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"Friday old school, Monday Peekaboo — her transition was seamless. The family vibe, friendly faces, and staff who've been together for YEARS is all a parent can ask for. Most days I get waved goodbye, tear-free. At times she even cries to stay — that says it all!"</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--3">K</div>
+                    <div>
+                        <span class="tr-card__name">Kelly Fortune</span>
+                        <span class="tr-card__meta">2 reviews · 3 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Sandy Jenkins --}}
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"When my daughter started, the teachers went the extra mile helping us transition. They are always eager to answer any questions and are so sweet to the children. Raising children takes a village — and this is my village."</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--4">S</div>
+                    <div>
+                        <span class="tr-card__name">Sandy Jenkins</span>
+                        <span class="tr-card__meta">2 reviews · a month ago</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Ingrid Martheze --}}
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"The best Daycare and pre-school in the area! The staff are incredible, kind and caring, and the teachers always go above and beyond! Highly recommend to anyone!"</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--5">I</div>
+                    <div>
+                        <span class="tr-card__name">Ingrid Martheze</span>
+                        <span class="tr-card__meta">1 review · 3 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Anandi Piek --}}
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"After an unfortunate experience elsewhere, we found Peekaboo — best decision we ever made. From the office ladies to the class teachers, friendliness is always visible. The classes are stunning and the playground is any child's dream. Honestly could not be happier!"</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--6">A</div>
+                    <div>
+                        <span class="tr-card__name">Anandi Piek</span>
+                        <span class="tr-card__meta">Local Guide · 26 reviews · 2 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Loren Williamson --}}
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"Really an amazing daycare! Friendly staff. We were so worried about our little one adjusting to crèche, but she did perfectly fine with the help of the lovely staff. Best decision we ever made. Will highly recommend."</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--7">L</div>
+                    <div>
+                        <span class="tr-card__name">Loren Williamson</span>
+                        <span class="tr-card__meta">2 reviews · a day ago</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Prosper Tinarwo --}}
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"We couldn't have asked for a better daycare. It's affordable, welcoming, and the environment is warm and nurturing. The staff are truly incredible — caring, attentive, and professional. You can tell they genuinely love what they do. Highly recommended for any parent looking for a safe and supportive place for their child."</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--1">P</div>
+                    <div>
+                        <span class="tr-card__name">Prosper Tinarwo</span>
+                        <span class="tr-card__meta">2 reviews · 1 photo · 10 minutes ago</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- ── SET 2 — duplicate for seamless infinite loop ── --}}
+
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"Best Daycare and School in the area. Babies to Grade R. They offer so much more than child care. Most of the staff have been on staff for over 10 years — low staff churn is always a good indicator of a well run business. But this is like family, well run but so caring and always going the extra mile for the little ones."</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--1">M</div>
+                    <div>
+                        <span class="tr-card__name">Melissa Ingram</span>
+                        <span class="tr-card__meta">Local Guide · 24 reviews · a month ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"Peekaboo is more than a daycare — it's truly a family. Both my children have been there since they were 9 months old and the teachers and management have helped me navigate being a mom, through thick and thin. I would highly recommend."</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--2">D</div>
+                    <div>
+                        <span class="tr-card__name">Dominique Warr</span>
+                        <span class="tr-card__meta">Local Guide · 6 reviews · 3 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"Friday old school, Monday Peekaboo — her transition was seamless. The family vibe, friendly faces, and staff who've been together for YEARS is all a parent can ask for. Most days I get waved goodbye, tear-free. At times she even cries to stay — that says it all!"</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--3">K</div>
+                    <div>
+                        <span class="tr-card__name">Kelly Fortune</span>
+                        <span class="tr-card__meta">2 reviews · 3 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"When my daughter started, the teachers went the extra mile helping us transition. They are always eager to answer any questions and are so sweet to the children. Raising children takes a village — and this is my village."</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--4">S</div>
+                    <div>
+                        <span class="tr-card__name">Sandy Jenkins</span>
+                        <span class="tr-card__meta">2 reviews · a month ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"The best Daycare and pre-school in the area! The staff are incredible, kind and caring, and the teachers always go above and beyond! Highly recommend to anyone!"</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--5">I</div>
+                    <div>
+                        <span class="tr-card__name">Ingrid Martheze</span>
+                        <span class="tr-card__meta">1 review · 3 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"After an unfortunate experience elsewhere, we found Peekaboo — best decision we ever made. From the office ladies to the class teachers, friendliness is always visible. The classes are stunning and the playground is any child's dream. Honestly could not be happier!"</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--6">A</div>
+                    <div>
+                        <span class="tr-card__name">Anandi Piek</span>
+                        <span class="tr-card__meta">Local Guide · 26 reviews · 2 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"Really an amazing daycare! Friendly staff. We were so worried about our little one adjusting to crèche, but she did perfectly fine with the help of the lovely staff. Best decision we ever made. Will highly recommend."</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--7">L</div>
+                    <div>
+                        <span class="tr-card__name">Loren Williamson</span>
+                        <span class="tr-card__meta">2 reviews · a day ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tr-card">
+                <div class="tr-card__head">
+                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                </div>
+                <p class="tr-card__quote">"We couldn't have asked for a better daycare. It's affordable, welcoming, and the environment is warm and nurturing. The staff are truly incredible — caring, attentive, and professional. You can tell they genuinely love what they do. Highly recommended for any parent looking for a safe and supportive place for their child."</p>
+                <div class="tr-card__reviewer">
+                    <div class="tr-card__avatar tr-av--1">P</div>
+                    <div>
+                        <span class="tr-card__name">Prosper Tinarwo</span>
+                        <span class="tr-card__meta">2 reviews · 1 photo · 10 minutes ago</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
+    <!-- /marquee -->
+
+
+
 </section>
 <!-- Testimonials Section End -->
 
@@ -1214,7 +1642,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
-                    <p class="text-center mb-40" style="color: #666; font-size: 16px; line-height: 1.7;">
+                    <p class="text-center mb-40" style="color: #666; font-size: 17px; line-height: 1.7;">
                         We believe in transparent, fair pricing with no hidden fees. Our fees cover nutritious meals, educational materials, and all daily activities.
                     </p>
                     <div class="text-center">
@@ -1252,12 +1680,12 @@
                 <div class="accordion accordion-flush" id="faqAccordion">
                     <div class="accordion-item wow animate__fadeInUp" data-wow-delay="0.15s" style="border: 1px solid #e8e2d8; border-radius: 10px; margin-bottom: 15px; overflow: hidden;">
                         <h3 class="accordion-header" id="faq1">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1Content" aria-expanded="true" aria-controls="faq1Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 16px;">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1Content" aria-expanded="true" aria-controls="faq1Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 17px;">
                                 What are your operating hours?
                             </button>
                         </h3>
                         <div id="faq1Content" class="accordion-collapse collapse show" aria-labelledby="faq1" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666;">
+                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666; font-size: 17px;">
                                 We're open Monday to Friday from 06:00 to 18:00. We understand that working parents need flexible hours, and we're here to support you.
                             </div>
                         </div>
@@ -1265,12 +1693,12 @@
 
                     <div class="accordion-item wow animate__fadeInUp" data-wow-delay="0.25s" style="border: 1px solid #e8e2d8; border-radius: 10px; margin-bottom: 15px; overflow: hidden;">
                         <h3 class="accordion-header" id="faq2">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2Content" aria-expanded="false" aria-controls="faq2Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 16px;">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2Content" aria-expanded="false" aria-controls="faq2Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 17px;">
                                 What safety protocols do you have in place?
                             </button>
                         </h3>
                         <div id="faq2Content" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666;">
+                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666; font-size: 17px;">
                                 Your child's safety is our priority. We have 24/7 CCTV monitoring, controlled access entry, qualified first-aid trained staff, secure outdoor play areas, and strict pick-up/drop-off protocols.
                             </div>
                         </div>
@@ -1278,12 +1706,12 @@
 
                     <div class="accordion-item wow animate__fadeInUp" data-wow-delay="0.35s" style="border: 1px solid #e8e2d8; border-radius: 10px; margin-bottom: 15px; overflow: hidden;">
                         <h3 class="accordion-header" id="faq3">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3Content" aria-expanded="false" aria-controls="faq3Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 16px;">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3Content" aria-expanded="false" aria-controls="faq3Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 17px;">
                                 Are meals provided?
                             </button>
                         </h3>
                         <div id="faq3Content" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666;">
+                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666; font-size: 17px;">
                                 Yes! We provide nutritious, balanced meals and snacks prepared fresh daily on-site. Our menu is designed to be healthy, varied, and child-friendly. Special dietary requirements can be accommodated.
                             </div>
                         </div>
@@ -1291,12 +1719,12 @@
 
                     <div class="accordion-item wow animate__fadeInUp" data-wow-delay="0.45s" style="border: 1px solid #e8e2d8; border-radius: 10px; margin-bottom: 15px; overflow: hidden;">
                         <h3 class="accordion-header" id="faq4">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4Content" aria-expanded="false" aria-controls="faq4Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 16px;">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4Content" aria-expanded="false" aria-controls="faq4Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 17px;">
                                 How do I register my child?
                             </button>
                         </h3>
                         <div id="faq4Content" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666;">
+                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666; font-size: 17px;">
                                 Registration is simple. First, book a tour to visit our facilities and meet our team. Then, complete the online application form or contact us directly. We'll guide you through the enrollment process and answer any questions you have.
                             </div>
                         </div>
@@ -1304,12 +1732,12 @@
 
                     <div class="accordion-item wow animate__fadeInUp" data-wow-delay="0.55s" style="border: 1px solid #e8e2d8; border-radius: 10px; margin-bottom: 15px; overflow: hidden;">
                         <h3 class="accordion-header" id="faq5">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5Content" aria-expanded="false" aria-controls="faq5Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 16px;">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5Content" aria-expanded="false" aria-controls="faq5Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 17px;">
                                 Is your curriculum aligned with CAPS?
                             </button>
                         </h3>
                         <div id="faq5Content" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666;">
+                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666; font-size: 17px;">
                                 Absolutely. Our preschool and Grade R programs are fully aligned with the CAPS curriculum, ensuring your child is academically prepared and confident when they start Grade 1.
                             </div>
                         </div>

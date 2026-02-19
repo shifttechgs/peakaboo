@@ -9,7 +9,7 @@
             font-weight: 600;
             color: #4A2559;
             margin-bottom: 8px;
-            font-size: 0.95rem;
+            font-size: 17px;
             display: block;
         }
 
@@ -18,7 +18,7 @@
             padding: 12px 16px;
             border: 2px solid #e0e0e0;
             transition: all 0.3s ease;
-            font-size: 0.95rem;
+            font-size: 17px;
             background: white;
             width: 100%;
         }
@@ -124,7 +124,7 @@
                     <i class="fas fa-calendar-check me-2"></i>SCHEDULE YOUR VISIT
                 </span>
                 <h1 class="fw-bold mb-3" style="color: #4A2559; font-size: 2.5rem; line-height: 1.2;">See Why Families Choose Peekaboo</h1>
-                <p class="mb-0" style="color: #2d3748; font-size: 1.1rem; line-height: 1.6;">Tour our facilities, meet our qualified teachers, and see our learning programs in action.</p>
+                <p class="mb-0" style="color: #2d3748; font-size: 17px; line-height: 1.6;">Tour our facilities, meet our qualified teachers, and see our learning programs in action.</p>
             </div>
             <div class="col-lg-6">
                 <div style="position: relative; max-width: 450px; margin: 0 auto;">
@@ -311,7 +311,7 @@
                             <div class="blog-content">
                                 <h4 class="blog-title" style="color: #4A2559; font-weight: 700;">Tour Information</h4>
                                 <div class="checklist">
-                                    <ul style="list-style: none; padding: 0;">
+                                    <ul style="list-style: none; padding: 0; font-size: 17px;">
                                         <li style="margin-bottom: 12px;"><i class="far fa-check-circle" style="color: #0c508e; margin-right: 10px;"></i> 30-45 minute facility tour</li>
                                         <li style="margin-bottom: 12px;"><i class="far fa-check-circle" style="color: #0c508e; margin-right: 10px;"></i> Meet our qualified teachers</li>
                                         <li style="margin-bottom: 12px;"><i class="far fa-check-circle" style="color: #0c508e; margin-right: 10px;"></i> See classrooms in action</li>
@@ -326,7 +326,7 @@
                         <div class="vs-blog blog-single">
                             <div class="blog-content text-center">
                                 <h5 class="mb-3" style="color: #4A2559; font-weight: 700;">Need Help?</h5>
-                                <p class="mb-4" style="font-size: 14px; color: #6c757d;">Call us directly to schedule your tour</p>
+                                <p class="mb-4" style="font-size: 17px; color: #6c757d;">Call us directly to schedule your tour</p>
                                 <a href="tel:0215574999" class="vs-btn mb-3" style="display: inline-block; width: 100%;">
                                     <span class="vs-btn__border"></span>
                                     <i class="fas fa-phone me-2"></i>021 557 4999

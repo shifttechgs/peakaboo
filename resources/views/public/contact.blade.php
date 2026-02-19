@@ -4,6 +4,13 @@
 @section('description', 'Safe, trusted childcare for 3 months to Grade R in Parklands, Cape Town. Qualified teachers, CAPS curriculum, Christian values. Book your tour today.')
 
 @section('content')
+<style>
+.contact-info,
+.address-info__content,
+.address-info__content a,
+.form-style2 .form-control,
+.form-style2 textarea { font-size: 17px !important; }
+</style>
     <!-- Breadcrumb -->
     <div class="breadcrumb-wrapper z-index-common overflow-hidden">
         <div class="vs-balls vs-balls--screen" data-balls-bottom="-6px" data-balls-color="#ffffff"></div>

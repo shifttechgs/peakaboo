@@ -45,8 +45,8 @@
                             <ul class="vs-footer__menu--list">
                                 <li><a href="{{ route('enrol.index') }}">Apply Now</a></li>
                                 <li><a href="{{ route('book-tour') }}">Book a Tour</a></li>
-                                <li><a href="{{ route('admin.dashboard') }}">Admin Portal</a></li>
-                                <li><a href="{{ route('teacher.dashboard') }}">Teacher Portal</a></li>
+{{--                                <li><a href="{{ route('admin.dashboard') }}">Admin Portal</a></li>--}}
+{{--                                <li><a href="{{ route('teacher.dashboard') }}">Teacher Portal</a></li>--}}
                             </ul>
                         </div>
                     </div>

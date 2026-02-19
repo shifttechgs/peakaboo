@@ -3,6 +3,9 @@
 @section('title', 'Enrol Your Child - Peekaboo Daycare')
 
 @section('content')
+<style>
+.text-muted { font-size: 17px !important; }
+</style>
 <!-- Hero -->
 <section class="py-2" style="background: linear-gradient(135deg, #B5D8EB 0%, #FFB5BA 100%); margin-top: 10px; position: relative; overflow: hidden;">
     <img src="{{ asset('assets/img/elements/service-ele-1.svg') }}" alt="decorative element" style="position: absolute; left: -50px; bottom: -20px; width: 150px; opacity: 0.3;">
@@ -14,7 +17,7 @@
                     <i class="fas fa-heart me-2"></i>Join Our Peekaboo Family
                 </span>
                 <h1 class="fw-bold mb-3" style="color: #4A2559; font-size: 2.5rem;">Begin Your Child's Journey</h1>
-                <p class="mb-4" style="color: #2d3748; font-size: 1.5rem;">Complete our simple online application in just 10 minutes. Your information is saved automatically.</p>
+                <p class="mb-4" style="color: #2d3748; font-size: 17px;">Complete our simple online application in just 10 minutes. Your information is saved automatically.</p>
                 <a href="{{ route('enrol.form') }}" class="vs-btn" style="display: inline-flex; align-items: center; gap: 10px;">
                     <span class="vs-btn__border"></span>
                     <i class="fas fa-paper-plane"></i>Start Application Now
@@ -197,7 +200,7 @@
                         <span class="vs-btn__border"></span>
                         <i class="fas fa-paper-plane me-2"></i>Start Application
                     </a>
-                    <p style="margin-top: 20px; color: #666; font-size: 1rem;">
+                    <p style="margin-top: 20px; color: #666; font-size: 17px;">
                         <i class="fas fa-lock me-2" style="color: #0c508e;"></i>
                         Your information is secure & confidential
                     </p>
