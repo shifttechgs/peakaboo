@@ -267,15 +267,28 @@
             <div class="d-flex align-items-center gap-4">
                 @yield('header-actions')
                 <div class="dropdown">
-                    <div class="d-flex align-items-center gap-2 cursor-pointer" data-bs-toggle="dropdown" style="cursor: pointer;">
-                        <img src="{{ asset('assets/img/testimonial/testi-1-1.jpg') }}" alt="User" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                    <div class="d-flex align-items-center gap-2" data-bs-toggle="dropdown" style="cursor: pointer;">
+                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold" style="width: 38px; height: 38px; font-size: 14px; flex-shrink: 0;">
+                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        </div>
+                        <div class="d-none d-md-block">
+                            <div class="fw-semibold" style="font-size: 14px; line-height: 1.2;">{{ auth()->user()->name }}</div>
+                            <div class="text-muted" style="font-size: 12px;">{{ ucfirst(auth()->user()->getRoleNames()->first() ?? 'User') }}</div>
+                        </div>
                         <i class="fas fa-chevron-down text-muted"></i>
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="{{ route('home') }}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>

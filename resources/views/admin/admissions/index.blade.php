@@ -6,194 +6,281 @@
 <div class="page-title d-flex justify-content-between align-items-start">
     <div>
         <h1>Admissions</h1>
-        <p>Manage applications and enrollments</p>
+        <p>Manage enrolment applications</p>
     </div>
 </div>
 
-<!-- Stats -->
-<div class="row g-4 mb-4">
-    <div class="col-md-3">
-        <div class="stat-card bg-warning bg-opacity-10">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="value text-warning">{{ collect($applications)->where('status', 'pending')->count() }}</div>
-                    <div class="label">Pending Review</div>
-                </div>
-                <i class="fas fa-clock fa-2x text-warning opacity-50"></i>
+{{-- Stats --}}
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md">
+        <a href="{{ route('admin.admissions.index', ['status' => 'pending']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value text-warning">{{ $stats['pending'] }}</div>
+                <div class="label">Pending</div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-md-3">
-        <div class="stat-card bg-success bg-opacity-10">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="value text-success">{{ collect($applications)->where('status', 'approved')->count() }}</div>
-                    <div class="label">Approved</div>
-                </div>
-                <i class="fas fa-check-circle fa-2x text-success opacity-50"></i>
+    <div class="col-6 col-md">
+        <a href="{{ route('admin.admissions.index', ['status' => 'under_review']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value text-info">{{ $stats['under_review'] }}</div>
+                <div class="label">Under Review</div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-md-3">
-        <div class="stat-card bg-info bg-opacity-10">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="value text-info">{{ collect($applications)->where('status', 'waiting_list')->count() }}</div>
-                    <div class="label">Waiting List</div>
-                </div>
-                <i class="fas fa-list fa-2x text-info opacity-50"></i>
+    <div class="col-6 col-md">
+        <a href="{{ route('admin.admissions.index', ['status' => 'approved']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value text-success">{{ $stats['approved'] }}</div>
+                <div class="label">Approved</div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-md-3">
-        <div class="stat-card bg-danger bg-opacity-10">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="value text-danger">{{ collect($applications)->where('status', 'rejected')->count() }}</div>
-                    <div class="label">Rejected</div>
-                </div>
-                <i class="fas fa-times-circle fa-2x text-danger opacity-50"></i>
+    <div class="col-6 col-md">
+        <a href="{{ route('admin.admissions.index', ['status' => 'waitlist']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value text-secondary">{{ $stats['waitlist'] }}</div>
+                <div class="label">Waitlist</div>
             </div>
-        </div>
+        </a>
+    </div>
+    <div class="col-6 col-md">
+        <a href="{{ route('admin.admissions.index', ['status' => 'rejected']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value text-danger">{{ $stats['rejected'] }}</div>
+                <div class="label">Rejected</div>
+            </div>
+        </a>
     </div>
 </div>
 
-<!-- Filters -->
+{{-- Filters --}}
 <div class="admin-table mb-4">
     <div class="p-4">
-        <div class="row g-3 align-items-end">
-            <div class="col-md-3">
-                <label class="form-label small fw-semibold">Status</label>
-                <select class="form-select">
-                    <option value="">All Statuses</option>
-                    <option value="pending">Pending</option>
-                    <option value="approved">Approved</option>
-                    <option value="waiting_list">Waiting List</option>
-                    <option value="rejected">Rejected</option>
-                </select>
+        <form method="GET" action="{{ route('admin.admissions.index') }}">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">Status</label>
+                    <select name="status" class="form-select form-select-sm">
+                        <option value="">All Statuses</option>
+                        @foreach(\App\Models\Application::STATUS_LABELS as $val => $label)
+                            <option value="{{ $val }}" {{ request('status') === $val ? 'selected' : '' }}>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">Program</label>
+                    <select name="program" class="form-select form-select-sm">
+                        <option value="">All Programs</option>
+                        @foreach(\App\Models\Application::PROGRAMS as $val => $label)
+                            <option value="{{ $val }}" {{ request('program') === $val ? 'selected' : '' }}>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small fw-semibold">Search</label>
+                    <input type="text" name="search" class="form-control form-control-sm"
+                           placeholder="Child name, parent name, email, reference…"
+                           value="{{ request('search') }}">
+                </div>
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-admin btn-admin-primary btn-sm flex-grow-1">
+                        <i class="fas fa-search me-1"></i> Filter
+                    </button>
+                    @if(request()->hasAny(['status','program','search']))
+                        <a href="{{ route('admin.admissions.index') }}" class="btn btn-outline-secondary btn-sm">✕</a>
+                    @endif
+                </div>
             </div>
-            <div class="col-md-3">
-                <label class="form-label small fw-semibold">Program</label>
-                <select class="form-select">
-                    <option value="">All Programs</option>
-                    <option value="baby-room">Baby Room</option>
-                    <option value="toddlers">Toddlers</option>
-                    <option value="preschool">Preschool</option>
-                    <option value="grade-r">Grade R</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label small fw-semibold">Source</label>
-                <select class="form-select">
-                    <option value="">All Sources</option>
-                    <option value="website">Website</option>
-                    <option value="facebook">Facebook</option>
-                    <option value="whatsapp">WhatsApp</option>
-                    <option value="referral">Referral</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-admin btn-admin-primary w-100">
-                    <i class="fas fa-filter me-2"></i> Apply Filters
-                </button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
-<!-- Applications Table -->
+{{-- Applications Table --}}
 <div class="admin-table">
     <div class="table-responsive">
         <table class="table">
             <thead>
                 <tr>
                     <th>Reference</th>
-                    <th>Child Details</th>
+                    <th>Child</th>
                     <th>Parent</th>
                     <th>Program</th>
-                    <th>Fee Option</th>
-                    <th>Source</th>
+                    <th>Start Date</th>
                     <th>Documents</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($applications as $app)
+                @forelse($applications as $app)
                 <tr>
                     <td>
-                        <code class="fw-bold">{{ $app['id'] }}</code>
-                        <div class="small text-muted">{{ date('d M Y', strtotime($app['submitted_at'])) }}</div>
+                        <code class="text-primary fw-bold">{{ $app->reference }}</code>
+                        <div class="small text-muted">{{ $app->created_at->format('d M Y') }}</div>
                     </td>
                     <td>
-                        <div class="fw-semibold">{{ $app['child_name'] }}</div>
-                        <div class="small text-muted">DOB: {{ date('d M Y', strtotime($app['child_dob'])) }}</div>
+                        <div class="fw-semibold">{{ $app->child_name }}</div>
+                        <small class="text-muted">DOB: {{ $app->child_dob->format('d M Y') }}</small><br>
+                        <span class="badge bg-light text-dark" style="font-size:0.7rem;">{{ $app->program_name }}</span>
                     </td>
                     <td>
-                        <div>{{ $app['parent_name'] }}</div>
-                        <div class="small">
-                            <a href="tel:{{ $app['parent_phone'] }}" class="text-muted">{{ $app['parent_phone'] }}</a>
-                        </div>
+                        <div>{{ $app->mother_name }}</div>
+                        <small><a href="tel:{{ $app->mother_cell }}" class="text-muted">{{ $app->mother_cell }}</a></small><br>
+                        <small><a href="mailto:{{ $app->mother_email }}" class="text-muted">{{ $app->mother_email }}</a></small>
                     </td>
-                    <td>{{ $app['program'] }}</td>
-                    <td>{{ $app['fee_option'] }}</td>
                     <td>
-                        @if($app['source'] == 'Facebook')
-                        <span class="badge bg-primary"><i class="fab fa-facebook me-1"></i> Facebook</span>
-                        @elseif($app['source'] == 'WhatsApp')
-                        <span class="badge bg-success"><i class="fab fa-whatsapp me-1"></i> WhatsApp</span>
-                        @elseif($app['source'] == 'Website')
-                        <span class="badge bg-info"><i class="fas fa-globe me-1"></i> Website</span>
+                        <div>{{ $app->program_name }}</div>
+                        <small class="text-muted">{{ ucfirst($app->fee_option) }}</small>
+                    </td>
+                    <td>{{ $app->start_date->format('d M Y') }}</td>
+                    <td>
+                        @php $docCount = $app->documentsCount(); @endphp
+                        @if($docCount >= 3)
+                            <span class="text-success fw-semibold"><i class="fas fa-check-circle me-1"></i>{{ $docCount }}/4</span>
+                        @elseif($docCount > 0)
+                            <span class="text-warning"><i class="fas fa-exclamation-circle me-1"></i>{{ $docCount }}/4</span>
                         @else
-                        <span class="badge bg-secondary"><i class="fas fa-user-friends me-1"></i> {{ $app['source'] }}</span>
+                            <span class="text-danger"><i class="fas fa-times-circle me-1"></i>None</span>
                         @endif
                     </td>
                     <td>
-                        @if($app['documents_complete'])
-                        <span class="text-success"><i class="fas fa-check-circle"></i> Complete</span>
-                        @else
-                        <span class="text-warning"><i class="fas fa-exclamation-circle"></i> Pending</span>
+                        @php
+                            $badgeClass = match($app->status) {
+                                'pending'      => 'bg-warning text-dark',
+                                'under_review' => 'bg-info',
+                                'approved'     => 'bg-success',
+                                'waitlist'     => 'bg-secondary',
+                                'rejected'     => 'bg-danger',
+                                default        => 'bg-secondary',
+                            };
+                        @endphp
+                        <span class="badge {{ $badgeClass }}">{{ $app->statusLabel() }}</span>
+                        @if($app->invited_at)
+                            <div class="small text-muted mt-1"><i class="fas fa-paper-plane me-1"></i>Invited</div>
                         @endif
                     </td>
-                    <td><span class="status-badge status-{{ $app['status'] }}">{{ ucfirst(str_replace('_', ' ', $app['status'])) }}</span></td>
                     <td>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                                Actions
+                        <div class="d-flex gap-1 flex-wrap">
+                            <a href="{{ route('admin.admissions.show', $app->id) }}"
+                               class="btn btn-sm btn-outline-primary">View</a>
+
+                            @if($app->isActionable())
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                    Action
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <form action="{{ route('admin.admissions.approve', $app->id) }}" method="POST">
+                                            @csrf
+                                            <button class="dropdown-item text-success"><i class="fas fa-check me-2"></i>Approve</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="{{ route('admin.admissions.waitlist', $app->id) }}" method="POST">
+                                            @csrf
+                                            <button class="dropdown-item text-info"><i class="fas fa-clock me-2"></i>Waitlist</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger" data-bs-toggle="modal"
+                                                data-bs-target="#rejectModal{{ $app->id }}">
+                                            <i class="fas fa-times me-2"></i>Reject
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            @endif
+
+                            @if($app->status === 'approved' && !$app->invited_at)
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#inviteModal{{ $app->id }}">
+                                <i class="fas fa-paper-plane me-1"></i>Invite
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('admin.admissions.show', $app['id']) }}"><i class="fas fa-eye me-2"></i> View Details</a></li>
-                                @if($app['status'] == 'pending')
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form action="{{ route('admin.admissions.approve', $app['id']) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item text-success"><i class="fas fa-check me-2"></i> Approve</button>
-                                    </form>
-                                </li>
-                                <li>
-                                    <form action="{{ route('admin.admissions.waitlist', $app['id']) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item text-info"><i class="fas fa-list me-2"></i> Add to Waitlist</button>
-                                    </form>
-                                </li>
-                                <li>
-                                    <form action="{{ route('admin.admissions.reject', $app['id']) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item text-danger"><i class="fas fa-times me-2"></i> Reject</button>
-                                    </form>
-                                </li>
-                                @endif
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="mailto:{{ $app['parent_email'] }}"><i class="fas fa-envelope me-2"></i> Email Parent</a></li>
-                                <li><a class="dropdown-item" href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $app['parent_phone']) }}" target="_blank"><i class="fab fa-whatsapp me-2"></i> WhatsApp</a></li>
-                            </ul>
+                            @endif
                         </div>
                     </td>
                 </tr>
-                @endforeach
+
+                {{-- Reject Modal --}}
+                @if($app->isActionable())
+                <div class="modal fade" id="rejectModal{{ $app->id }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-danger"><i class="fas fa-times-circle me-2"></i>Reject Application</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form action="{{ route('admin.admissions.reject', $app->id) }}" method="POST">
+                                @csrf
+                                <div class="modal-body">
+                                    <p class="text-muted small">Rejecting application for <strong>{{ $app->child_name }}</strong>.</p>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold small">Reason (optional, saved to notes)</label>
+                                        <textarea name="reason" class="form-control" rows="3" placeholder="e.g. No capacity for the requested start date…"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-sm btn-danger">Confirm Rejection</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                {{-- Invite Modal --}}
+                @if($app->status === 'approved' && !$app->invited_at)
+                <div class="modal fade" id="inviteModal{{ $app->id }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i class="fas fa-paper-plane me-2 text-primary"></i>Send Portal Invitation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form action="{{ route('admin.admissions.invite', $app->id) }}" method="POST">
+                                @csrf
+                                <div class="modal-body">
+                                    <p class="text-muted small mb-3">
+                                        An email will be sent to the parent with a link to set up their portal account.
+                                        The link expires in <strong>7 days</strong>.
+                                    </p>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold small">Parent Email</label>
+                                        <input type="email" name="email" class="form-control"
+                                               value="{{ $app->mother_email }}" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-paper-plane me-1"></i> Send Invitation
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @empty
+                <tr>
+                    <td colspan="8" class="text-center text-muted py-5">
+                        <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
+                        No applications found.
+                    </td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
+
+    @if($applications->hasPages())
+    <div class="p-4 border-top">
+        {{ $applications->links() }}
+    </div>
+    @endif
 </div>
 @endsection

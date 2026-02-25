@@ -150,28 +150,7 @@
                         <div class="vs-blog blog-single">
                             <div class="blog-content">
 
-                                @if(session('success'))
-                                <div class="alert alert-success">
-                                    <i class="fas fa-check-circle me-2"></i>
-                                    <strong>Thank you!</strong> {{ session('success') }}
-
-                                    @if(session('booking_id'))
-                                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(16,185,129,0.3);">
-                                        <strong>Your Booking Reference:</strong> <span style="font-family: 'Courier New', monospace; font-weight: 700;">{{ session('booking_id') }}</span>
-                                    </div>
-                                    @endif
-
-                                    @if(session('email_sent'))
-                                    <div style="margin-top: 8px; color: #065f46; font-size: 0.9rem;">
-                                        <i class="fas fa-check-circle me-1"></i>Our team has been notified
-                                    </div>
-                                    @elseif(session('email_error'))
-                                    <div style="margin-top: 8px; color: #d97706; font-size: 0.9rem;">
-                                        <i class="fas fa-info-circle me-1"></i>Please call us at <a href="tel:0215574999" style="color: #d97706; text-decoration: underline;">021 557 4999</a> to confirm
-                                    </div>
-                                    @endif
-                                </div>
-                                @endif
+                                {{-- Success handled via modal below --}}
 
                                 @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -344,4 +323,66 @@
         </div>
     </div>
 </section>
+@if(session('success'))
+<div class="modal fade" id="bookingConfirmModal" tabindex="-1" aria-labelledby="bookingConfirmLabel" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:440px;">
+        <div class="modal-content" style="border:none;border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.15);">
+
+            <!-- Header: solid purple -->
+            <div style="background:#093d6b;padding:36px 32px 28px;text-align:center;">
+                <div style="width:56px;height:56px;background:#D18109;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+                    <i class="fas fa-check" style="color:white;font-size:1.3rem;"></i>
+                </div>
+                <h4 id="bookingConfirmLabel" style="font-family:'Baloo 2',sans-serif;color:white;font-weight:800;font-size:1.4rem;margin:0 0 6px;">Tour Request Received!</h4>
+                <p style="color:rgba(255,255,255,0.65);font-size:0.88rem;margin:0;">We'll confirm your appointment within 24 hours</p>
+            </div>
+
+            <!-- Body: white -->
+            <div style="background:white;padding:28px 32px 32px;">
+
+                @if(session('booking_id'))
+                <!-- Reference -->
+                <div style="background:#093d6b;border-radius:12px;padding:16px 20px;text-align:center;margin-bottom:24px;">
+                    <div style="font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;">Booking Reference</div>
+                    <div style="font-family:'Courier New',monospace;font-size:1.5rem;font-weight:700;color:#D18109;letter-spacing:3px;">{{ session('booking_id') }}</div>
+                </div>
+                @endif
+
+                <!-- Steps -->
+                <div style="margin-bottom:24px;">
+                    <div style="display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #f0edf2;">
+                        <div style="width:8px;height:8px;border-radius:50%;background:#D18109;flex-shrink:0;"></div>
+                        <span style="color:#4a4a5a;font-size:0.9rem;">Confirmation email sent to you</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #f0edf2;">
+                        <div style="width:8px;height:8px;border-radius:50%;background:#D18109;flex-shrink:0;"></div>
+                        <span style="color:#4a4a5a;font-size:0.9rem;">Our team has been notified</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:12px;padding:9px 0;">
+                        <div style="width:8px;height:8px;border-radius:50%;background:#D18109;flex-shrink:0;"></div>
+                        <span style="color:#4a4a5a;font-size:0.9rem;">We'll call to confirm your date &amp; time</span>
+                    </div>
+                </div>
+
+                <!-- Button: solid blue -->
+                <button type="button" data-bs-dismiss="modal"
+                        style="width:100%;padding:14px;border:none;border-radius:10px;background:#0c508e;color:white;font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;"
+                        onmouseover="this.style.background='#093d6b'" onmouseout="this.style.background='#0c508e'">
+                    Perfect, thank you!
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new bootstrap.Modal(document.getElementById('bookingConfirmModal'), { backdrop: 'static' }).show();
+    });
+</script>
+@endpush
+@endif
+
 @endsection

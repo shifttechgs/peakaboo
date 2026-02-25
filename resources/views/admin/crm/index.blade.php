@@ -1,158 +1,160 @@
 @extends('layouts.admin')
 
-@section('title', 'CRM')
+@section('title', 'CRM & Leads')
 
 @section('content')
-<div class="page-title">
-    <h1>CRM & Leads</h1>
-    <p>Manage enquiries and convert leads to enrollments</p>
+<div class="page-title d-flex justify-content-between align-items-center">
+    <div>
+        <h1>CRM & Leads</h1>
+        <p>Manage enquiries and convert leads to enrolments</p>
+    </div>
+    <a href="{{ route('admin.crm.leads') }}" class="btn btn-admin btn-admin-primary">
+        <i class="fas fa-list me-2"></i> All Leads
+    </a>
 </div>
 
-<!-- Stats -->
-<div class="row g-4 mb-4">
-    <div class="col-md-3">
-        <div class="stat-card bg-primary bg-opacity-10">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="value text-primary">{{ collect($leads)->where('status', 'new')->count() }}</div>
-                    <div class="label">New Leads</div>
-                </div>
-                <i class="fas fa-user-plus fa-2x text-primary opacity-50"></i>
+{{-- Pipeline Cards --}}
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3 col-xl">
+        <a href="{{ route('admin.crm.leads', ['status' => 'new']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value text-primary">{{ $stats['new'] }}</div>
+                <div class="label">New</div>
+                <div class="mt-2"><span class="badge bg-primary">new</span></div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-md-3">
-        <div class="stat-card bg-warning bg-opacity-10">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="value text-warning">{{ collect($leads)->where('status', 'contacted')->count() }}</div>
-                    <div class="label">In Progress</div>
-                </div>
-                <i class="fas fa-comment-dots fa-2x text-warning opacity-50"></i>
+    <div class="col-6 col-md-3 col-xl">
+        <a href="{{ route('admin.crm.leads', ['status' => 'contacted']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value text-warning">{{ $stats['contacted'] }}</div>
+                <div class="label">Contacted</div>
+                <div class="mt-2"><span class="badge bg-warning text-dark">contacted</span></div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-md-3">
-        <div class="stat-card bg-success bg-opacity-10">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="value text-success">{{ collect($leads)->where('status', 'tour_booked')->count() }}</div>
-                    <div class="label">Tours Booked</div>
-                </div>
-                <i class="fas fa-calendar-check fa-2x text-success opacity-50"></i>
+    <div class="col-6 col-md-3 col-xl">
+        <a href="{{ route('admin.crm.leads', ['status' => 'tour_scheduled']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value text-info">{{ $stats['tour_scheduled'] }}</div>
+                <div class="label">Tour Scheduled</div>
+                <div class="mt-2"><span class="badge bg-info">scheduled</span></div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-md-3">
-        <div class="stat-card bg-info bg-opacity-10">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="value text-info">{{ collect($leads)->where('status', 'converted')->count() }}</div>
-                    <div class="label">Converted</div>
-                </div>
-                <i class="fas fa-check-circle fa-2x text-info opacity-50"></i>
+    <div class="col-6 col-md-3 col-xl">
+        <a href="{{ route('admin.crm.leads', ['status' => 'tour_completed']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value" style="color:#6f42c1;">{{ $stats['tour_completed'] }}</div>
+                <div class="label">Tour Done</div>
+                <div class="mt-2"><span class="badge" style="background:#6f42c1;">completed</span></div>
             </div>
-        </div>
+        </a>
     </div>
-</div>
-
-<!-- Filters -->
-<div class="admin-table mb-4">
-    <div class="p-4">
-        <div class="row g-3 align-items-end">
-            <div class="col-md-3">
-                <label class="form-label small fw-semibold">Status</label>
-                <select class="form-select">
-                    <option value="">All Statuses</option>
-                    <option value="new">New</option>
-                    <option value="contacted">Contacted</option>
-                    <option value="tour_booked">Tour Booked</option>
-                    <option value="converted">Converted</option>
-                    <option value="lost">Lost</option>
-                </select>
+    <div class="col-6 col-md-3 col-xl">
+        <a href="{{ route('admin.crm.leads', ['status' => 'converted']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value text-success">{{ $stats['converted'] }}</div>
+                <div class="label">Converted</div>
+                <div class="mt-2"><span class="badge bg-success">converted</span></div>
             </div>
-            <div class="col-md-3">
-                <label class="form-label small fw-semibold">Source</label>
-                <select class="form-select">
-                    <option value="">All Sources</option>
-                    <option value="website">Website</option>
-                    <option value="facebook">Facebook</option>
-                    <option value="whatsapp">WhatsApp</option>
-                    <option value="referral">Referral</option>
-                </select>
+        </a>
+    </div>
+    <div class="col-6 col-md-3 col-xl">
+        <a href="{{ route('admin.crm.leads', ['status' => 'waitlist']) }}" class="text-decoration-none">
+            <div class="stat-card text-center">
+                <div class="value text-secondary">{{ $stats['waitlist'] }}</div>
+                <div class="label">Waitlist</div>
+                <div class="mt-2"><span class="badge bg-secondary">waitlist</span></div>
             </div>
-            <div class="col-md-3">
-                <label class="form-label small fw-semibold">Date Range</label>
-                <input type="date" class="form-control">
+        </a>
+    </div>
+    <div class="col-6 col-md-3 col-xl">
+        <a href="{{ route('admin.crm.leads', ['status' => 'new']) }}" class="text-decoration-none">
+            <div class="stat-card text-center border border-danger border-opacity-25">
+                <div class="value text-danger">{{ $stats['overdue'] }}</div>
+                <div class="label">Overdue (&gt;3 days)</div>
+                <div class="mt-2"><span class="badge bg-danger">overdue</span></div>
             </div>
-            <div class="col-md-3">
-                <button class="btn btn-admin btn-admin-primary w-100">
-                    <i class="fas fa-filter me-2"></i> Apply Filters
-                </button>
-            </div>
-        </div>
+        </a>
     </div>
 </div>
 
-<!-- Leads Table -->
+{{-- Recent Leads --}}
 <div class="admin-table">
+    <div class="p-4 pb-2 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">Recent Leads</h5>
+        <a href="{{ route('admin.crm.leads') }}" class="btn btn-sm btn-outline-secondary">View All →</a>
+    </div>
     <div class="table-responsive">
         <table class="table">
             <thead>
                 <tr>
-                    <th>Date</th>
+                    <th>Reference</th>
                     <th>Name</th>
-                    <th>Contact</th>
                     <th>Child Age</th>
                     <th>Source</th>
                     <th>Status</th>
-                    <th>Last Contact</th>
-                    <th>Actions</th>
+                    <th>Submitted</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($leads as $lead)
+                @forelse($recent as $lead)
                 <tr>
+                    <td><code>{{ $lead->reference }}</code></td>
                     <td>
-                        <div class="fw-semibold">{{ date('d M Y', strtotime($lead['created_at'])) }}</div>
-                        <small class="text-muted">{{ date('H:i', strtotime($lead['created_at'])) }}</small>
+                        <div class="fw-semibold">{{ $lead->name }}</div>
+                        <small class="text-muted">{{ $lead->email }}</small>
                     </td>
-                    <td class="fw-semibold">{{ $lead['name'] }}</td>
+                    <td><span class="badge bg-light text-dark">{{ $lead->child_age }}</span></td>
                     <td>
-                        <div>{{ $lead['phone'] }}</div>
-                        <small class="text-muted">{{ $lead['email'] }}</small>
-                    </td>
-                    <td>{{ $lead['child_age'] }}</td>
-                    <td>
-                        @if($lead['source'] == 'Facebook')
-                        <span class="badge bg-primary"><i class="fab fa-facebook me-1"></i> Facebook</span>
-                        @elseif($lead['source'] == 'WhatsApp')
-                        <span class="badge bg-success"><i class="fab fa-whatsapp me-1"></i> WhatsApp</span>
-                        @elseif($lead['source'] == 'Website')
-                        <span class="badge bg-info"><i class="fas fa-globe me-1"></i> Website</span>
+                        @if($lead->source)
+                            @php
+                                $sourceBadge = match($lead->source) {
+                                    'google'    => 'bg-danger',
+                                    'facebook'  => 'bg-primary',
+                                    'instagram' => 'bg-warning text-dark',
+                                    'referral'  => 'bg-success',
+                                    default     => 'bg-secondary',
+                                };
+                            @endphp
+                            <span class="badge {{ $sourceBadge }}">{{ ucfirst($lead->source) }}</span>
                         @else
-                        <span class="badge bg-secondary"><i class="fas fa-user-friends me-1"></i> {{ $lead['source'] }}</span>
+                            <span class="text-muted small">—</span>
                         @endif
                     </td>
-                    <td><span class="status-badge status-{{ $lead['status'] }}">{{ ucfirst(str_replace('_', ' ', $lead['status'])) }}</span></td>
-                    <td>{{ $lead['last_contact'] }}</td>
                     <td>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                                Actions
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i> View Details</a></li>
-                                <li><a class="dropdown-item" href="mailto:{{ $lead['email'] }}"><i class="fas fa-envelope me-2"></i> Email</a></li>
-                                <li><a class="dropdown-item" href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $lead['phone']) }}" target="_blank"><i class="fab fa-whatsapp me-2"></i> WhatsApp</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-success" href="#"><i class="fas fa-check me-2"></i> Mark as Converted</a></li>
-                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-times me-2"></i> Mark as Lost</a></li>
-                            </ul>
-                        </div>
+                        @php
+                            $statusBadge = match($lead->status) {
+                                'new'            => 'bg-primary',
+                                'contacted'      => 'bg-warning text-dark',
+                                'tour_scheduled' => 'bg-info',
+                                'tour_completed' => '',
+                                'converted'      => 'bg-success',
+                                'waitlist'       => 'bg-secondary',
+                                'lost'           => 'bg-danger',
+                                default          => 'bg-secondary',
+                            };
+                            $statusStyle = $lead->status === 'tour_completed' ? 'background:#6f42c1;color:white;' : '';
+                        @endphp
+                        <span class="badge {{ $statusBadge }}" style="{{ $statusStyle }}">
+                            {{ ucwords(str_replace('_', ' ', $lead->status)) }}
+                        </span>
+                    </td>
+                    <td><small class="text-muted">{{ $lead->created_at->format('d M Y') }}</small></td>
+                    <td>
+                        <a href="{{ route('admin.crm.leads.show', $lead->id) }}" class="btn btn-sm btn-outline-primary">View →</a>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="7" class="text-center text-muted py-5">
+                        <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
+                        No leads yet. They'll appear here when tour bookings are submitted.
+                    </td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

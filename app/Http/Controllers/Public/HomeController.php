@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Data\MockData;
+use App\Mail\BookingReceivedMail;
 use App\Mail\ContactFormMail;
 use App\Mail\TourBookingMail;
+use App\Models\Lead;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -127,41 +130,77 @@ class HomeController extends Controller
             'source' => 'nullable|string|max:100',
         ]);
 
-        // Generate unique booking ID
-        $bookingId = 'TOUR-' . date('Y') . '-' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+        // Generate sequential reference
+        $year      = date('Y');
+        $nextNum   = Lead::whereYear('created_at', $year)->count() + 1;
+        $reference = 'TOUR-' . $year . '-' . str_pad($nextNum, 3, '0', STR_PAD_LEFT);
 
-        // Send email to admin
+        // Persist lead to database
+        $lead = Lead::create([
+            'reference'      => $reference,
+            'name'           => $validated['name'],
+            'email'          => $validated['email'],
+            'phone'          => $validated['phone'],
+            'child_name'     => $validated['child_name'],
+            'child_nickname' => $validated['child_nickname'] ?? null,
+            'child_age'      => $validated['child_age'],
+            'preferred_date' => $validated['preferred_date'],
+            'preferred_time' => $validated['preferred_time'],
+            'message'        => $validated['message'] ?? null,
+            'source'         => $validated['source'] ?? null,
+            'status'         => 'new',
+        ]);
+
+        // Auto-create follow-up task for admin
+        try {
+            Task::create([
+                'title'      => "Follow up with {$lead->name} — tour on {$lead->preferred_date->format('d M')}",
+                'due_date'   => $lead->preferred_date->subDay(),
+                'lead_id'    => $lead->id,
+                'created_by' => 1,
+            ]);
+        } catch (\Exception $e) {
+            \Log::warning('Auto-task creation failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
+        }
+
+        // Send admin notification email
         $emailSent = false;
         $emailError = null;
 
         try {
             \Log::info('Attempting to send tour booking email', [
-                'booking_id' => $bookingId,
-                'to_email' => config('mail.contact_email'),
+                'booking_id' => $reference,
+                'to_email'   => config('mail.contact_email'),
             ]);
 
             Mail::to(config('mail.contact_email'))
-                ->send(new TourBookingMail($validated, $bookingId));
+                ->send(new TourBookingMail($validated, $reference));
 
             $emailSent = true;
-            \Log::info('Tour booking email sent successfully', ['booking_id' => $bookingId]);
+            \Log::info('Tour booking email sent successfully', ['booking_id' => $reference]);
 
         } catch (\Exception $e) {
-            // Log detailed error
             \Log::error('Failed to send tour booking email', [
-                'booking_id' => $bookingId,
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'booking_id' => $reference,
+                'error'      => $e->getMessage(),
+                'trace'      => $e->getTraceAsString(),
             ]);
             $emailError = $e->getMessage();
         }
 
+        // Send acknowledgement to lead
+        try {
+            Mail::to($lead->email)->send(new BookingReceivedMail($lead));
+        } catch (\Exception $e) {
+            \Log::error('BookingReceivedMail failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
+        }
+
         return redirect()->route('book-tour')
             ->with([
-                'success' => 'Tour booking request received! We will contact you within 24 hours to confirm your appointment.',
-                'booking_id' => $bookingId,
-                'email_sent' => $emailSent,
-                'email_error' => $emailError
+                'success'     => 'Tour booking request received! We will contact you within 24 hours to confirm your appointment.',
+                'booking_id'  => $reference,
+                'email_sent'  => $emailSent,
+                'email_error' => $emailError,
             ]);
     }
 }

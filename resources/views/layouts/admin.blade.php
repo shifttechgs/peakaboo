@@ -385,7 +385,10 @@
                 <div class="nav-item">
                     <a href="{{ route('admin.crm.index') }}" class="nav-link {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
                         <i class="fas fa-funnel-dollar"></i> CRM / Leads
-                        <span class="badge bg-info">4</span>
+                        @php $newLeadsCount = \App\Models\Lead::where('status', 'new')->count(); @endphp
+                        @if($newLeadsCount > 0)
+                            <span class="badge bg-info ms-auto">{{ $newLeadsCount }}</span>
+                        @endif
                     </a>
                 </div>
                 <div class="nav-item">
@@ -402,6 +405,20 @@
                 <div class="nav-item">
                     <a href="{{ route('admin.staff.index') }}" class="nav-link {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}">
                         <i class="fas fa-chalkboard-teacher"></i> Staff & Classes
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                        <i class="fas fa-users-cog"></i> Users & Access
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('admin.tasks.index') }}" class="nav-link {{ request()->routeIs('admin.tasks.*') ? 'active' : '' }}">
+                        <i class="fas fa-tasks"></i> Tasks
+                        @php $pendingTaskCount = \App\Models\Task::where('completed', false)->count(); @endphp
+                        @if($pendingTaskCount > 0)
+                            <span class="badge bg-warning text-dark ms-auto">{{ $pendingTaskCount }}</span>
+                        @endif
                     </a>
                 </div>
             </div>
@@ -485,10 +502,12 @@
 
                 <div class="dropdown">
                     <div class="user-dropdown" data-bs-toggle="dropdown">
-                        <img src="{{ asset('assets/img/team/team-1-1.jpg') }}" alt="Admin">
+                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold" style="width: 38px; height: 38px; font-size: 14px; flex-shrink: 0;">
+                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        </div>
                         <div class="d-none d-md-block">
-                            <div class="fw-semibold">Sarah van der Merwe</div>
-                            <small class="text-muted">Principal</small>
+                            <div class="fw-semibold">{{ auth()->user()->name }}</div>
+                            <small class="text-muted">{{ ucfirst(auth()->user()->getRoleNames()->first() ?? 'User') }}</small>
                         </div>
                         <i class="fas fa-chevron-down ms-2 text-muted"></i>
                     </div>
@@ -496,7 +515,14 @@
                         <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
                         <li><a class="dropdown-item" href="{{ route('admin.settings.index') }}"><i class="fas fa-cog me-2"></i> Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="{{ route('home') }}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>

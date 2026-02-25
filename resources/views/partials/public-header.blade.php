@@ -212,9 +212,9 @@
                             <div class="d-none d-xxl-inline-flex">
                                 <a href="{{ route('enrol.index') }}" class="vs-btn"><span class="vs-btn__border"></span>Enrol Now</a>
                             </div>
-{{--                            <div class="d-none d-xxl-inline-flex">--}}
-{{--                                <a href="{{ route('admin.dashboard') }}" class="vs-btn"><span class="vs-btn__border"></span>Portal</a>--}}
-{{--                            </div>--}}
+                            <div class="d-none d-xxl-inline-flex">
+                                <a href="{{ route('admin.dashboard') }}" class="vs-btn"><span class="vs-btn__border"></span>Portal</a>
+                            </div>
 {{--                            <div class="d-inline-flex d-lg-none align-items-center">--}}
 {{--                                <button class="sideMenuToggler">--}}
 {{--                                    <svg width="31" height="23" viewBox="0 0 31 23" fill="none" xmlns="http://www.w3.org/2000/svg">--}}

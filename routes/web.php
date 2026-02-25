@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\InvitationController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\EnrolmentController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -12,8 +15,11 @@ use App\Http\Controllers\Admin\CommunicationController;
 use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\CrmController;
+use App\Http\Controllers\Admin\TasksController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Parent\PortalController as ParentPortalController;
 use App\Http\Controllers\Teacher\PortalController as TeacherPortalController;
+use App\Http\Controllers\Child\PortalController as ChildPortalController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 // TEMPORARY TEST ROUTE - DELETE AFTER TESTING
@@ -70,7 +76,6 @@ Route::post('/contact', [HomeController::class, 'submitContact'])->name('contact
 Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
 
-
 // Enrolment Form Routes
 Route::prefix('enrol')->name('enrol.')->group(function () {
     Route::get('/', [EnrolmentController::class, 'index'])->name('index');
@@ -85,8 +90,28 @@ Route::prefix('enrol')->name('enrol.')->group(function () {
 Route::get('/book-tour', [HomeController::class, 'bookTour'])->name('book-tour');
 Route::post('/book-tour', [HomeController::class, 'submitTour'])->name('book-tour.submit');
 
-// Admin Dashboard Routes
-Route::prefix('admin')->name('admin.')->group(function () {
+// ─── Auth Routes ─────────────────────────────────────────────────────────────
+
+// Guest-only auth routes
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
+
+    Route::get('/forgot-password', [PasswordResetController::class, 'showForgot'])->name('password.request');
+    Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('password.email');
+    Route::get('/reset-password/{token}', [PasswordResetController::class, 'showReset'])->name('password.reset');
+    Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
+
+    Route::get('/register/accept/{token}', [InvitationController::class, 'accept'])->name('invitation.accept');
+    Route::post('/register/accept/{token}', [InvitationController::class, 'register'])->name('invitation.register');
+});
+
+// Logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
+
+// ─── Admin Routes ─────────────────────────────────────────────────────────────
+
+Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -98,6 +123,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/{id}/reject', [AdmissionsController::class, 'reject'])->name('reject');
         Route::post('/{id}/waitlist', [AdmissionsController::class, 'waitlist'])->name('waitlist');
         Route::post('/{id}/notes', [AdmissionsController::class, 'addNotes'])->name('notes');
+        Route::post('/{id}/invite', [AdmissionsController::class, 'sendInvite'])->name('invite');
+        Route::get('/{id}/document/{type}', [AdmissionsController::class, 'downloadDocument'])->name('document');
     });
 
     // CRM / Leads
@@ -107,6 +134,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/leads/{id}', [CrmController::class, 'showLead'])->name('leads.show');
         Route::post('/leads/{id}/status', [CrmController::class, 'updateLeadStatus'])->name('leads.status');
         Route::post('/leads/{id}/notes', [CrmController::class, 'addLeadNotes'])->name('leads.notes');
+        Route::post('/leads/{id}/notify-tour', [CrmController::class, 'notifyTour'])->name('leads.notify-tour');
+        Route::post('/leads/{id}/start-enrol', [CrmController::class, 'startEnrol'])->name('leads.start-enrol');
+        Route::post('/leads/{id}/waitlist', [CrmController::class, 'addToWaitlist'])->name('leads.waitlist');
+    });
+
+    // Tasks
+    Route::prefix('tasks')->name('tasks.')->group(function () {
+        Route::get('/', [TasksController::class, 'index'])->name('index');
+        Route::post('/', [TasksController::class, 'store'])->name('store');
+        Route::patch('/{task}/toggle', [TasksController::class, 'toggle'])->name('toggle');
+        Route::delete('/{task}', [TasksController::class, 'destroy'])->name('destroy');
     });
 
     // Parents / Children
@@ -153,6 +191,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/attendance', [ReportsController::class, 'attendance'])->name('attendance');
     });
 
+    // Users & Access
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/',              [UsersController::class, 'index'])->name('index');
+        Route::get('/create',        [UsersController::class, 'create'])->name('create');
+        Route::post('/',             [UsersController::class, 'store'])->name('store');
+        Route::get('/{user}/edit',   [UsersController::class, 'edit'])->name('edit');
+        Route::put('/{user}',        [UsersController::class, 'update'])->name('update');
+        Route::delete('/{user}',     [UsersController::class, 'destroy'])->name('destroy');
+        Route::post('/{id}/restore', [UsersController::class, 'restore'])->name('restore');
+        Route::delete('/{id}/force', [UsersController::class, 'forceDelete'])->name('force-delete');
+    });
+
     // Settings
     Route::prefix('settings')->name('settings.')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('index');
@@ -163,8 +213,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 });
 
-// Parent Portal Routes
-Route::prefix('parent')->name('parent.')->group(function () {
+// ─── Parent Portal Routes ─────────────────────────────────────────────────────
+
+Route::middleware(['auth', 'role:parent|admin|super_admin'])->prefix('parent')->name('parent.')->group(function () {
     Route::get('/', [ParentPortalController::class, 'index'])->name('dashboard');
     Route::get('/children', [ParentPortalController::class, 'children'])->name('children');
     Route::get('/children/{id}', [ParentPortalController::class, 'childDetail'])->name('children.show');
@@ -186,8 +237,9 @@ Route::prefix('parent')->name('parent.')->group(function () {
     Route::post('/profile/update', [ParentPortalController::class, 'updateProfile'])->name('profile.update');
 });
 
-// Teacher Portal Routes
-Route::prefix('teacher')->name('teacher.')->group(function () {
+// ─── Teacher Portal Routes ────────────────────────────────────────────────────
+
+Route::middleware(['auth', 'role:teacher|admin|super_admin'])->prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/', [TeacherPortalController::class, 'index'])->name('dashboard');
     Route::get('/attendance', [TeacherPortalController::class, 'attendance'])->name('attendance');
     Route::post('/attendance/mark', [TeacherPortalController::class, 'markAttendance'])->name('attendance.mark');
@@ -199,4 +251,13 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/gallery', [TeacherPortalController::class, 'gallery'])->name('gallery');
     Route::post('/gallery/upload', [TeacherPortalController::class, 'uploadPhoto'])->name('gallery.upload');
     Route::get('/profile', [TeacherPortalController::class, 'profile'])->name('profile');
+});
+
+// ─── Child Portal Routes ──────────────────────────────────────────────────────
+
+Route::middleware(['auth', 'role:child|admin|super_admin'])->prefix('child')->name('child.')->group(function () {
+    Route::get('/', [ChildPortalController::class, 'index'])->name('dashboard');
+    Route::get('/schedule', [ChildPortalController::class, 'schedule'])->name('schedule');
+    Route::get('/gallery', [ChildPortalController::class, 'gallery'])->name('gallery');
+    Route::get('/updates', [ChildPortalController::class, 'updates'])->name('updates');
 });
