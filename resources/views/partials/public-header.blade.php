@@ -188,10 +188,10 @@
                                          onmouseover="this.style.transform='translateY(-8px)'"
                                          onmouseout="this.style.transform='translateY(0)'">
 
-                                    <div style="position: absolute; top: -10px; left: -15px; width: 25px; height: 25px; background: linear-gradient(135deg, #D18109, #ffa726); border-radius: 50%; animation: float 3s ease-in-out infinite;"></div>
-                                    <div style="position: absolute; top: 5px; right: -10px; width: 18px; height: 18px; background: linear-gradient(135deg, #70167E, #9c27b0); border-radius: 50%; animation: float 4s ease-in-out infinite;"></div>
-                                    <div style="position: absolute; bottom: 0; left: 10px; width: 20px; height: 20px; background: linear-gradient(135deg, #0c508e, #2196f3); border-radius: 50%; animation: float 3.5s ease-in-out infinite;"></div>
-                                    <div style="position: absolute; bottom: 15px; right: 5px; width: 15px; height: 15px; background: linear-gradient(135deg, #D18109, #ffa726); border-radius: 50%; animation: float 4.5s ease-in-out infinite;"></div>
+                                    <div class="pb-logo-dot" style="top: -10px; left: -15px; width: 25px; height: 25px; background: var(--color-warm); animation-duration: 3s;"></div>
+                                    <div class="pb-logo-dot" style="top: 5px; right: -10px; width: 18px; height: 18px; background: var(--color-accent); animation-duration: 4s;"></div>
+                                    <div class="pb-logo-dot" style="bottom: 0; left: 10px; width: 20px; height: 20px; background: var(--color-primary); animation-duration: 3.5s;"></div>
+                                    <div class="pb-logo-dot" style="bottom: 15px; right: 5px; width: 15px; height: 15px; background: var(--color-warm); animation-duration: 4.5s;"></div>
                                 </div>
                             </a>
                         </div>
@@ -199,21 +199,19 @@
                     <div class="col-auto">
                         <nav class="main-menu d-none d-lg-block">
                             <ul>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}" style="color: #0c508e">HOME</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}#programs" style="color: #0c508e">Programs</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}#about" style="color: #0c508e">About</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}#fees" style="color: #0c508e">Fees</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('contact') }}" style="color: #0c508e">Contact</a></li>
+                                <li><a class="vs-svg-assets" href="{{ route('home') }}" style="color: var(--color-text, #0E2A46)">HOME</a></li>
+                                <li><a class="vs-svg-assets" href="{{ route('home') }}#programs" style="color: var(--color-text, #0E2A46)">Programs</a></li>
+                                <li><a class="vs-svg-assets" href="{{ route('home') }}#about" style="color: var(--color-text, #0E2A46)">About</a></li>
+                                <li><a class="vs-svg-assets" href="{{ route('home') }}#fees" style="color: var(--color-text, #0E2A46)">Fees</a></li>
+                                <li><a class="vs-svg-assets" href="{{ route('contact') }}" style="color: var(--color-text, #0E2A46)">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
                     <div class="col-auto">
                         <div class="vs-header__action">
-                            <div class="d-none d-xxl-inline-flex">
-                                <a href="{{ route('enrol.index') }}" class="vs-btn"><span class="vs-btn__border"></span>Enrol Now</a>
-                            </div>
-                            <div class="d-none d-xxl-inline-flex">
-                                <a href="{{ route('admin.dashboard') }}" class="vs-btn"><span class="vs-btn__border"></span>Portal</a>
+                            <div class="d-none d-xl-inline-flex gap-2">
+                                <a href="{{ route('book-tour') }}" class="pb-header-btn pb-header-btn--outline">Book a Tour</a>
+                                <a href="{{ route('enrol.index') }}" class="pb-header-btn pb-header-btn--primary">Enrol Now</a>
                             </div>
 {{--                            <div class="d-inline-flex d-lg-none align-items-center">--}}
 {{--                                <button class="sideMenuToggler">--}}
@@ -239,16 +237,58 @@
         </div>
     </div>
 
-    <!-- CSS Animations for decorative elements -->
     <style>
-        @keyframes twinkle {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
-
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
+        }
+        .pb-logo-dot {
+            position: absolute;
+            border-radius: 50%;
+            animation: float ease-in-out infinite;
+            opacity: 0.85;
+        }
+
+        /* ── Tighten header container ── */
+        .vs-header .container--custom {
+            --vs-main-container: 1280px;
+        }
+
+        /* ── Header CTA buttons ── */
+        .pb-header-btn {
+            display: inline-block;
+            padding: 0 28px;
+            height: 46px;
+            line-height: 42px;
+            border-radius: var(--radius-pill, 999px);
+            font-family: var(--font-body, 'Sora', sans-serif);
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .pb-header-btn--primary {
+            background: var(--color-primary, #0077B6);
+            color: #fff;
+            border-color: var(--color-primary, #0077B6);
+        }
+        .pb-header-btn--primary:hover {
+            background: var(--color-primary-dk, #0c508e);
+            border-color: var(--color-primary-dk, #0c508e);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .pb-header-btn--outline {
+            background: transparent;
+            color: var(--color-text, #0E2A46);
+            border-color: var(--color-primary, #0077B6);
+        }
+        .pb-header-btn--outline:hover {
+            background: var(--color-primary, #0077B6);
+            color: #fff;
+            transform: translateY(-2px);
         }
     </style>
 </header>

@@ -224,6 +224,53 @@
   });
 
   /**************************************
+   ***** 03b. Edunity Testimonial Swiper *****
+   **************************************/
+  if (document.querySelector('.ed-testimonial-active')) {
+    new Swiper('.ed-testimonial-active', {
+      speed: 1500,
+      loop: true,
+      slidesPerView: 3,
+      spaceBetween: 50,
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: '.ed-testimonial-next',
+        prevEl: '.ed-testimonial-prev',
+      },
+      breakpoints: {
+        1400: { slidesPerView: 3 },
+        1200: { slidesPerView: 3 },
+        992:  { slidesPerView: 2 },
+        768:  { slidesPerView: 1 },
+        576:  { slidesPerView: 1 },
+        0:    { slidesPerView: 1 },
+      },
+    });
+  }
+
+  // Edunity Team Swiper
+  if (document.querySelector('.ed-team-active')) {
+    new Swiper('.ed-team-active', {
+      speed: 1000,
+      loop: true,
+      slidesPerView: 3,
+      spaceBetween: 30,
+      autoplay: {
+        delay: 4500,
+        disableOnInteraction: false,
+      },
+      breakpoints: {
+        1200: { slidesPerView: 3 },
+        992:  { slidesPerView: 2 },
+        0:    { slidesPerView: 1 },
+      },
+    });
+  }
+
+  /**************************************
    ***** 04. Swiper Connected Nav With Thumbs for Shop Details Page *****
    **************************************/
   const shopThumbs = document.querySelector('.myShopSwiperThumbs');
@@ -842,6 +889,11 @@
       $(this).removeAttr('data-bg-src').addClass('background-image');
     });
   }
+
+  // data-background (Edunity template pattern)
+  $('[data-background]').each(function () {
+    $(this).css('background-image', 'url(' + $(this).attr('data-background') + ')');
+  });
 
   /**************************************
    ***** 18. Skill Progressbar - Intersection Observer *****

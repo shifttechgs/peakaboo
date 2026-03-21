@@ -1,0 +1,1132 @@
+/*
+ * edunity-hero.css
+ * Extracted verbatim from Edunity main.css + custom-animation.css
+ * Only hero-2 section CSS — no conflicts with peekaboo base styles
+ */
+
+/* ── Edunity CSS variable aliases (map to Peekaboo palette) ─── */
+:root {
+  --it-ff-heading:      var(--font-heading, 'Epilogue', sans-serif);
+  --it-ff-body:         var(--font-body, 'Sora', sans-serif);
+  --it-common-white:    #ffffff;
+  --it-common-black:    #0E2A46;
+  --it-common-black-3:  #17254E;
+  --it-common-black-2:  #4D5756;
+  --it-grey-5:          #FFF8F0;
+  --it-theme-5:         #00BEAE;   /* teal  */
+  --it-theme-6:         #FF9E0E;   /* amber */
+  --it-theme-7:         #FF9500;   /* orange (primary button) → override to Peekaboo blue */
+  --it-theme-7:         #0077B6;   /* Peekaboo primary — override orange with our blue */
+}
+
+/* ── WOW.js animated class (main.js uses animateClass:'wow-animated') ── */
+.wow-animated {
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+}
+
+/* ── Utility classes (Edunity main.css lines 177–384) ─────────── */
+.fix        { overflow: hidden; }
+.p-relative { position: relative; }
+.z-index    { position: relative; z-index: 2; }
+.z-index-3  { position: relative; z-index: 3; }
+
+/* ── Keyframes — EXACT Edunity values (lines 956–1500) ─────────── */
+@keyframes itswing {
+  0%   { -webkit-transform: rotate(6deg);  transform: rotate(6deg); }
+  100% { -webkit-transform: rotate(-6deg); transform: rotate(-6deg); }
+}
+@keyframes itswing-2 {
+  0%   { -webkit-transform: rotate(2deg);  transform: rotate(2deg); }
+  100% { -webkit-transform: rotate(-2deg); transform: rotate(-2deg); }
+}
+@keyframes zoom2 {
+  0%   { transform: scale(0.9); }
+  50%  { transform: scale(1);   }
+  100% { transform: scale(0.9); }
+}
+@keyframes ittranslateX2 {
+  0%   { -webkit-transform: translateX(-30px); transform: translateX(-30px); }
+  100% { -webkit-transform: translateX(20px);  transform: translateX(20px); }
+}
+@keyframes moving {
+  0%   { transform: translateY(0px);  }
+  50%  { transform: translateY(-20px);}
+  100% { transform: translateY(0px);  }
+}
+/* Ripple rings for video button: expands from centre outward, then fades */
+@keyframes borderanimate2 {
+  0%   { transform: translate(-50%, -50%) scale(1);   }
+  60%  { opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+}
+@-webkit-keyframes jumpTwo {
+  0%   { -webkit-transform: translate3d(0, 0, 0);   transform: translate3d(0, 0, 0); }
+  40%  { -webkit-transform: translate3d(0, 20px, 0); transform: translate3d(0, 20px, 0); }
+  100% { -webkit-transform: translate3d(0, 0, 0);   transform: translate3d(0, 0, 0); }
+}
+@keyframes jumpTwo {
+  0%   { transform: translate3d(0, 0, 0);   }
+  40%  { transform: translate3d(0, 20px, 0); }
+  100% { transform: translate3d(0, 0, 0);   }
+}
+
+/* ── ed-slider-title (Edunity lines 4075–4125) ─────────────────── */
+.ed-slider-title {
+  font-weight: 700;
+  font-size: 60px;
+  text-transform: capitalize;
+  color: var(--it-common-black-3);
+  line-height: 1.2;
+  font-family: var(--it-ff-heading);
+}
+@media only screen and (min-width: 1400px) and (max-width: 1599px) {
+  .ed-slider-title { font-size: 54px; }
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .ed-slider-title { font-size: 48px; }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .ed-slider-title { font-size: 48px; }
+  .ed-slider-title br { display: none; }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-slider-title { font-size: 46px; }
+  .ed-slider-title br { display: none; }
+}
+@media (max-width: 767px) {
+  .ed-slider-title { font-size: 35px; }
+  .ed-slider-title br { display: none; }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .ed-slider-title { font-size: 44px; }
+}
+.ed-slider-title i {
+  font-style: normal;
+  color: var(--it-theme-7);   /* primary colour */
+}
+
+/* ── ed-btn-radius — pill CTA button (Edunity lines 849–873) ───── */
+.ed-btn-radius {
+  display: inline-block;
+  padding: 0 35px;
+  height: 59px;
+  line-height: 59px;
+  position: relative;
+  transition: 0.3s;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: capitalize;
+  color: var(--it-common-white);
+  background-color: var(--it-theme-7);
+  border-radius: 60px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ed-btn-radius:hover {
+  color: var(--it-common-white);
+  background-color: var(--color-primary-dk, #0c508e);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0,119,182,.35);
+}
+
+/* Outline variant — secondary CTA */
+.ed-btn-radius--outline {
+  background-color: transparent;
+  color: var(--it-common-black, #0E2A46);
+  border: 2px solid var(--it-theme-7, #0077B6);
+}
+.ed-btn-radius--outline:hover {
+  background-color: var(--it-theme-7, #0077B6);
+  color: var(--it-common-white);
+  border-color: var(--it-theme-7, #0077B6);
+}
+.ed-btn-radius--outline i {
+  margin-right: 6px;
+}
+
+/* ── ed-slider-3-video — play button with ripple rings ──────────── */
+.ed-slider-3-video {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+}
+.ed-slider-3-video span {
+  height: 54px;
+  width: 54px;
+  line-height: 54px;
+  background-color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  color: var(--it-theme-7);
+  margin-right: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,.10);
+}
+.ed-slider-3-video span i {
+  display: inline-block;
+  padding-left: 3px;
+  font-size: 14px;
+}
+.ed-slider-3-video a {
+  color: var(--it-common-black);
+  text-decoration: none;
+  font-family: var(--it-ff-body);
+  font-weight: 700;
+  font-size: 14px;
+}
+.ed-slider-3-video a:hover { color: var(--it-theme-7); }
+
+/* hero-2 override: teal button, teal ripple rings */
+.ed-hero-2-content .ed-slider-3-video span {
+  background-color: var(--it-theme-5);  /* #00BEAE teal */
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0,190,174,.28);
+}
+.ed-hero-2-content .ed-slider-3-video span::before {
+  position: absolute;
+  content: "";
+  left: 50%;
+  top: 50%;
+  width: 60%;
+  height: 60%;
+  transform: scale(1.5);
+  border: 1px solid rgba(0, 190, 174, 0.3);
+  animation: borderanimate2 2s linear infinite;
+  z-index: -1;
+  border-radius: 50%;
+}
+.ed-hero-2-content .ed-slider-3-video span::after {
+  position: absolute;
+  content: "";
+  left: 50%;
+  top: 50%;
+  width: 80%;
+  height: 80%;
+  background-color: rgba(0, 190, 174, 0.3);
+  animation: borderanimate2 2s linear infinite;
+  z-index: -1;
+  border-radius: 50%;
+}
+.ed-hero-2-content .ed-slider-3-video span i {
+  color: var(--it-common-white);
+}
+.ed-hero-2-content .ed-slider-3-video a {
+  color: var(--it-common-black);
+}
+
+/* ── Generic floating badges (Edunity lines 4935–4994) ──────────── */
+.ed-hero-thumb-student {
+  position: absolute;
+  top: 8%;
+  left: 5%;
+  border-radius: 1000px;
+  padding: 15px 40px;
+  display: inline-block;
+  box-shadow: 0 0 20px 0 rgba(2, 52, 117, 0.15);
+  background: #fff;
+  animation: jumpTwo 3s infinite linear;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-hero-thumb-student { left: 12%; }
+}
+.ed-hero-thumb-student > span {
+  font-weight: 500;
+  font-size: 25px;
+  text-align: start;
+  margin-right: 20px;
+  color: var(--it-common-black-3);
+  font-family: var(--it-ff-heading);
+}
+.ed-hero-thumb-student > span i {
+  font-style: normal;
+  color: var(--it-theme-7);   /* primary */
+}
+.ed-hero-thumb-courses {
+  position: absolute;
+  bottom: 6%;
+  right: -20%;
+  padding: 18px 50px;
+  text-align: start;
+  background: #fff;
+  border-radius: 50px;
+  box-shadow: 0 0 20px 0 rgba(19, 39, 66, 0.15);
+  animation: ittranslateX2 4s infinite alternate;
+}
+@media only screen and (min-width: 1600px) and (max-width: 1800px),
+       only screen and (min-width: 1400px) and (max-width: 1599px) {
+  .ed-hero-thumb-courses { right: -15%; }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-hero-thumb-courses { right: 4%; }
+}
+.ed-hero-thumb-courses i {
+  font-weight: 700;
+  font-size: 34px;
+  text-transform: capitalize;
+  color: var(--it-theme-6);   /* amber */
+  font-style: normal;
+  display: block;
+  line-height: 1.1;
+  font-family: var(--it-ff-heading);
+}
+.ed-hero-thumb-courses span {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--it-common-black-2);
+}
+
+/* ── ed-hero-2 section — EXACT Edunity source (lines 4996–5273) ── */
+.ed-hero-2-bg {
+  background-color: #FFF8F0;
+  padding-top: 60px;
+  padding-bottom: 45px;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px),
+       only screen and (min-width: 992px) and (max-width: 1199px) {
+  .ed-hero-2-bg { padding: 0; }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-hero-2-bg { padding: 120px 0; }
+}
+@media (max-width: 767px) {
+  .ed-hero-2-bg { padding-top: 80px; padding-bottom: 100px; }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
+  .ed-hero-2-content { padding-bottom: 70px; }
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px),
+       only screen and (min-width: 992px) and (max-width: 1199px) {
+  .ed-hero-2-content p br { display: none; }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
+  .ed-hero-2-content p { font-size: 15px; }
+  .ed-hero-2-content p br { display: none; }
+}
+@media (max-width: 767px) {
+  .ed-hero-2-button { flex-wrap: wrap; }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .ed-hero-2-button { flex-wrap: nowrap; }
+}
+.ed-hero-2-button .ed-btn-radius { margin-right: 28px; }
+@media (max-width: 767px) {
+  .ed-hero-2-button .ed-btn-radius { margin-bottom: 25px; }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .ed-hero-2-button .ed-btn-radius { margin-bottom: 0; }
+}
+
+/* image thumbs */
+.ed-hero-2-thumb {
+  position: relative;
+  display: inline-block;
+}
+.ed-hero-2-thumb img {
+  border-radius: 0 0 38% 38%;
+  max-width: none;   /* defeat style.css img { max-width:100% } */
+  width: auto;
+  display: block;
+}
+/* Enforce natural dimensions so blobs align correctly */
+.ed-hero-2-thumb.style-1 img { width: 303px; }
+.ed-hero-2-thumb.style-2 img { width: 418px; }
+.ed-hero-2-thumb::after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 50%;
+  width: 303px;
+  height: 386px;
+  z-index: -1;
+  transform: translateX(-50%);
+  background-color: var(--color-warm, #D18109);
+  border-radius: 40% 0 40% 40%;
+}
+.ed-hero-2-thumb.style-1 { margin-left: -15px; }
+@media (max-width: 767px) {
+  .ed-hero-2-thumb.style-1 { margin-left: 0; }
+  .ed-hero-2-thumb.style-1 img { width: 220px; }
+  .ed-hero-2-thumb.style-2 img { width: 303px; }
+}
+
+.ed-hero-2-thumb.style-2 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: -15px;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .ed-hero-2-thumb.style-2 { margin-right: -178px; }
+}
+@media (max-width: 767px) { .ed-hero-2-thumb.style-2 { margin-right: 0; } }
+.ed-hero-2-thumb.style-2::after {
+  background-color: var(--color-primary, #0077B6);
+  border-radius: 40% 40% 40% 0%;
+}
+
+/* right image column */
+.ed-hero-2-right {
+  transform: translateX(10px);
+  padding-bottom: 240px;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .ed-hero-2-right { transform: translateX(10px) scale(0.8); }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .ed-hero-2-right { transform: translateX(-70px) scale(0.7); }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-hero-2-right { transform: translateX(0px); margin: 0 17px; }
+}
+@media (max-width: 767px) {
+  .ed-hero-2-right { transform: translateX(0px); padding-bottom: 450px; }
+}
+
+/* badge overrides scoped to hero-2 */
+.ed-hero-2-right .ed-hero-thumb-student {
+  bottom: 40px;
+  top: auto;
+  left: -10%;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-hero-2-right .ed-hero-thumb-student { left: 10%; }
+}
+.ed-hero-2-right .ed-hero-thumb-student span i {
+  color: var(--it-theme-5);   /* teal */
+}
+.ed-hero-2-right .ed-hero-thumb-courses {
+  bottom: auto;
+  top: 11%;
+  right: 7%;
+  animation: ittranslateX2 3s infinite alternate;
+}
+.ed-hero-2-right .ed-hero-thumb-courses i {
+  color: var(--it-theme-6);   /* amber */
+}
+
+/* shapes */
+.ed-hero-2-shape-1 {
+  position: absolute; top: 3%; left: -1%;
+  z-index: -1;
+  animation: itswing-2 3s forwards infinite alternate;
+  transform-origin: bottom left;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .ed-hero-2-shape-1 { top: 0%; left: -5.5%; }
+  .ed-hero-2-shape-1 img { transform: scale(0.6); }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .ed-hero-2-shape-1 { left: -7%; }
+  .ed-hero-2-shape-1 img { transform: scale(0.6); }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
+  .ed-hero-2-shape-1 { display: none; }
+}
+.ed-hero-2-shape-2 {
+  position: absolute; top: 6%; right: -4%;
+  z-index: -1;
+  animation: zoom2 3s infinite;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .ed-hero-2-shape-2 img { transform: scale(0.6); }
+}
+.ed-hero-2-shape-3 {
+  position: absolute; bottom: 9%; right: 57%;
+  z-index: -1;
+  animation: ittranslateX2 4s infinite alternate;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .ed-hero-2-shape-3 img { transform: scale(0.6); }
+}
+.ed-hero-2-shape-4 {
+  position: absolute; bottom: 10%; right: 4%;
+  animation: moving 7s linear infinite;
+  z-index: -1;
+}
+.ed-hero-2-shape-5 {
+  position: absolute; top: 16%; right: 54%;
+  animation: moving 11s linear infinite;
+  z-index: -1;
+}
+.ed-hero-2-shape-6 {
+  position: absolute; top: -1%; left: 7%;
+  animation: itswing 0.9s forwards infinite alternate;
+  transform-origin: bottom right;
+  z-index: -1;
+}
+
+/* ── Peekaboo-only additions (badge pill + trust row) ──────────── */
+.pb-hero-enrol-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--color-primary, #0077B6);
+  color: #fff;
+  font-family: var(--font-body, 'Sora', sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 7px 18px;
+  border-radius: 999px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 16px rgba(0,119,182,.26);
+}
+.pb-hero-enrol-pill i { font-size: 10px; }
+
+.pb-hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+.pb-hero-trust__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body, 'Sora', sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--it-common-black, #0E2A46);
+  background: rgba(0,119,182,0.08);
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: background 0.3s;
+}
+.pb-hero-trust__item:hover {
+  background: rgba(0,119,182,0.14);
+}
+.pb-hero-trust__item i {
+  color: #0077B6;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+@media (max-width: 767px) {
+  .pb-hero-trust { gap: 8px; }
+  .pb-hero-trust__item { font-size: 12px; padding: 6px 12px; }
+}
+
+/* ── Stacking-context isolation — prevents z:-1 shapes leaking      ── */
+/* ── into the sticky header above                                   ── */
+.ed-hero-2-area {
+  isolation: isolate;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ABOUT SECTION — it-about-5-area / ed-about-4-wrap
+   Exact Edunity main.css lines 2929–2994, 4854–4935, 6654–7100
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Additional keyframes ── */
+@keyframes itleftright {
+  0%  { transform: translate(0); }
+  to  { transform: translate(-20px); }
+}
+@keyframes ittranslateY2 {
+  0%   { transform: translateY(-30px); }
+  100% { transform: translateY(20px); }
+}
+@keyframes rotate2 {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Spacing utilities live in edunity-spacing.css */
+
+/* ── Section subtitle ── */
+.it-section-subtitle-5 {
+  font-size: 18px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--it-theme-7);
+  margin-bottom: 10px;
+  display: inline-block;
+  font-family: var(--it-ff-body);
+}
+.it-section-subtitle-5.orange { color: var(--it-theme-7); }
+.it-section-subtitle-5 i { margin-right: 5px; margin-left: 5px; }
+
+/* ── Section heading ── */
+.ed-section-title {
+  font-size: 45px;
+  font-weight: 700;
+  font-family: var(--it-ff-heading);
+  text-transform: capitalize;
+  margin-bottom: 0;
+  line-height: 1.3;
+  color: var(--it-common-black-3);
+}
+.ed-section-title.orange span { color: var(--it-theme-7); }
+@media only screen and (min-width: 1400px) and (max-width: 1599px) { .ed-section-title { font-size: 42px; } }
+@media only screen and (min-width: 1200px) and (max-width: 1399px) { .ed-section-title { font-size: 38px; } }
+@media only screen and (min-width: 992px) and (max-width: 1199px),
+       only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-section-title { font-size: 33px; }
+  .ed-section-title br { display: none; }
+}
+@media (max-width: 767px) {
+  .ed-section-title { font-size: 27px; }
+  .ed-section-title br { display: none; }
+}
+
+/* ── About section wrapper ── */
+.it-about-5-area {
+  background-color: #fff;
+  padding-top: 100px;
+}
+
+/* ── Background decorative shapes ── */
+.it-about-5-shape-4 {
+  position: absolute;
+  right: 136px;
+  bottom: 115px;
+  animation: rotate2 12s linear infinite;
+}
+.ed-about-4-wrap .it-about-5-shape-4 {
+  right: auto;
+  bottom: auto;
+  top: 4%;
+  left: 3%;
+  animation: ittranslateY2 4s infinite alternate;
+}
+.ed-about-4-wrap .it-about-5-shape-5 {
+  position: absolute;
+  bottom: 15%;
+  right: 0;
+  animation: itswing-2 3s forwards infinite alternate;
+  transform-origin: bottom right;
+}
+
+/* ── Image thumb wrapper ── */
+.ed-hero-thumb-wrap {
+  margin-right: 75px;
+}
+@media only screen and (min-width: 1400px) and (max-width: 1599px) { .ed-hero-thumb-wrap { transform: scale(0.93); } }
+@media only screen and (min-width: 992px) and (max-width: 1199px)  { .ed-hero-thumb-wrap { transform: scale(0.8); } }
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-hero-thumb-wrap { margin: 0 55px; margin-bottom: 90px; }
+}
+@media (max-width: 767px) {
+  .ed-hero-thumb-wrap { margin-bottom: 90px; margin-right: 0; margin-left: 0; }
+}
+
+/* ── Main image ── */
+.ed-hero-thumb-main { display: inline-block; }
+.ed-hero-thumb-main img { border-radius: 100px; max-width: none; }
+@media only screen and (min-width: 1200px) and (max-width: 1399px) { .ed-hero-thumb-main { transform: translateX(40px); } }
+@media only screen and (min-width: 992px) and (max-width: 1199px)  { .ed-hero-thumb-main { transform: translateX(60px); } }
+
+/* ── Small overlapping image ── */
+.ed-hero-thumb-sm { position: absolute; top: 36%; left: 8%; }
+.ed-hero-thumb-sm img { border-radius: 100px; max-width: none; }
+@media only screen and (min-width: 1200px) and (max-width: 1399px) { .ed-hero-thumb-sm { left: -3%; } }
+@media only screen and (min-width: 992px) and (max-width: 1199px)  { .ed-hero-thumb-sm { left: -18%; } }
+@media (max-width: 767px) { .ed-hero-thumb-sm { margin-top: 40px; position: static; } }
+
+/* ── Thumb decorative shapes ── */
+.ed-hero-thumb-shape-1 { position: absolute; top: 7px; left: -7px; z-index: -1; }
+@media (max-width: 767px) { .ed-hero-thumb-shape-1 { display: none; } }
+.ed-hero-thumb-shape-2 {
+  position: absolute; top: 0%; right: 2%; z-index: -1;
+  animation: zoom2 7s infinite;
+}
+.ed-hero-thumb-shape-3 {
+  position: absolute; top: 31%; left: 6%; z-index: -1;
+  animation: moving 9s linear infinite;
+}
+.ed-hero-thumb-shape-4 {
+  position: absolute; bottom: -4%; right: 5%; z-index: -1;
+  animation: moving 14s linear infinite;
+}
+
+/* ── ed-about-4-wrap position overrides ── */
+.ed-about-4-wrap .ed-hero-thumb-wrap { margin-right: 75px; }
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-about-4-wrap .ed-hero-thumb-wrap { margin: 0 55px; margin-bottom: 90px; }
+}
+@media (max-width: 767px) {
+  .ed-about-4-wrap .ed-hero-thumb-wrap { margin-bottom: 90px; margin-right: 0; margin-left: 0; }
+}
+.ed-about-4-wrap .ed-hero-thumb-sm    { left: 0; }
+.ed-about-4-wrap .ed-hero-thumb-shape-2 { top: 0%; right: 2%; }
+.ed-about-4-wrap .ed-hero-thumb-student { left: 0; }
+.ed-about-4-wrap .ed-hero-thumb-student span i { color: var(--it-theme-6); }
+.ed-about-4-wrap .it-about-5-right { margin-left: -35px; }
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
+  .ed-about-4-wrap .it-about-5-right { margin-left: 0; }
+}
+
+/* ── Right column text ── */
+.it-about-5-title-box { padding-bottom: 10px; }
+.it-about-5-text {
+  color: var(--it-common-black-2);
+  font-family: var(--it-ff-body);
+  line-height: 1.8;
+}
+
+/* ── Feature list — base ── */
+.it-about-5-list ul {
+  padding: 11px 25px;
+  display: inline-block;
+  background-color: var(--color-card, #F5F6F8);
+  border-radius: 5px;
+  margin: 0;
+}
+.it-about-5-list ul li {
+  list-style-type: none;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 32px;
+  text-transform: capitalize;
+  padding-left: 25px;
+  position: relative;
+  color: #191659;
+  display: inline-block;
+}
+.it-about-5-list ul li:not(:last-child) { padding-right: 45px; }
+.it-about-5-list ul li i { color: var(--it-theme-7); position: absolute; top: 6px; left: 0; }
+
+/* ── ed-about-4-wrap list overrides ── */
+.ed-about-4-wrap .it-about-5-list ul {
+  display: inline-block;
+  padding: 0;
+  background-color: transparent;
+}
+.ed-about-4-wrap .it-about-5-list ul li {
+  display: block;
+  font-size: 17px;
+  font-weight: 500;
+  text-transform: capitalize;
+  padding: 11px 25px 11px 55px;
+  position: relative;
+  color: var(--color-text, #0E2A46);
+  background-color: var(--color-card, #F5F6F8);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) { .ed-about-4-wrap .it-about-5-list ul li { font-size: 15px; } }
+@media only screen and (min-width: 992px) and (max-width: 1199px)  { .ed-about-4-wrap .it-about-5-list ul li { font-size: 12px; } }
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
+  .ed-about-4-wrap .it-about-5-list ul li { font-size: 15px; }
+}
+.ed-about-4-wrap .it-about-5-list ul li i {
+  color: var(--color-primary, #0077B6);
+  position: absolute;
+  top: 18px;
+  left: 25px;
+}
+.ed-about-4-wrap .it-about-5-list.list-style-2 { margin-left: -55px; }
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
+  .ed-about-4-wrap .it-about-5-list.list-style-2 { margin-left: 0; }
+}
+
+/* ── CTA button wrapper ── */
+.it-feature-button { margin-top: 30px; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   VIDEO SECTION — ed-video-area / ed-video-bg / ed-video-wrap
+   Exact Edunity main.css lines 7531–7597
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.ed-video-bg {
+  background-repeat: no-repeat;
+}
+.ed-video-area {
+  padding-top: 160px;
+  padding-bottom: 120px;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-video-area { padding: 100px 0; }
+}
+@media (max-width: 767px) {
+  .ed-video-area { padding: 80px 0; }
+}
+
+.ed-video-wrap {
+  position: relative;
+  height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50px;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) { .ed-video-wrap { height: 370px; } }
+@media only screen and (min-width: 768px) and (max-width: 991px)  { .ed-video-wrap { height: 350px; } }
+@media only screen and (min-width: 576px) and (max-width: 767px)  { .ed-video-wrap { height: 330px; } }
+@media (max-width: 767px) { .ed-video-wrap { height: 300px; border-radius: 28px; } }
+
+.ed-video-wrap::after {
+  position: absolute;
+  content: "";
+  top: 0; left: 0;
+  height: 100%; width: 100%;
+  background-color: rgba(14, 42, 70, 0.3);
+  border-radius: 50px;
+}
+@media (max-width: 767px) { .ed-video-wrap::after { border-radius: 28px; } }
+
+.ed-video-wrap .it-video-play-wrap { margin-right: 0; }
+
+.ed-video-wrap .it-video-play a {
+  height: 104px;
+  width: 104px;
+  line-height: 104px;
+  color: var(--it-theme-6);
+  font-size: 14px;
+}
+
+/* play button */
+.it-video-play-wrap {
+  position: relative;
+  z-index: 2;
+}
+.it-video-play a.play {
+  height: 80px;
+  width: 80px;
+  line-height: 80px;
+  border-radius: 50%;
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  color: var(--it-theme-6);
+  background-color: var(--it-common-white);
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+.it-video-play a.play:hover { transform: scale(1.08); }
+.it-video-play a.play i { display: inline-block; padding-left: 4px; }
+.it-video-play a.play::after {
+  position: absolute; content: "";
+  left: 50%; top: 50%;
+  width: 60%; height: 60%;
+  transform: scale(1.5);
+  border: 1px solid rgba(255,255,255,0.47);
+  animation: borderanimate2 2s linear infinite;
+  z-index: -1; border-radius: 50%;
+}
+.it-video-play a.play::before {
+  position: absolute; content: "";
+  left: 50%; top: 50%;
+  width: 80%; height: 80%;
+  background-color: rgba(255,255,255,0.47);
+  animation: borderanimate2 2s linear infinite;
+  z-index: -1; border-radius: 50%;
+}
+
+/* video section shapes */
+.ed-video-shape-1 {
+  position: absolute;
+  top: 35%; left: 4%;
+  animation: zoom2 7s infinite;
+  z-index: 1;
+}
+.ed-video-shape-2 {
+  position: absolute;
+  top: 10%; right: 7%;
+  animation: rotate2 15s linear infinite;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TESTIMONIAL SECTION — ed-testimonial (Edunity main.css lines 9776–9853)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* section subtitle */
+.it-section-subtitle-5 {
+  font-size: 18px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+.it-section-subtitle-5.orange { color: var(--it-theme-7); }
+.it-section-subtitle-5 i { margin-right: 5px; margin-left: 5px; }
+
+/* section title */
+.ed-section-title {
+  font-size: 45px;
+  font-weight: 700;
+  text-transform: capitalize;
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+@media only screen and (min-width: 1400px) and (max-width: 1599px) {
+  .ed-section-title { font-size: 42px; }
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .ed-section-title { font-size: 38px; }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .ed-section-title { font-size: 36px; }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ed-section-title { font-size: 32px; }
+}
+@media (max-width: 767px) {
+  .ed-section-title { font-size: 28px; }
+}
+
+/* base item */
+.ed-testimonial-item {
+  padding: 30px;
+  padding-right: 46px;
+  border: 1px solid var(--it-common-black-3);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.ed-testimonial-author-box h5 {
+  font-weight: 700;
+  font-size: 20px;
+}
+.ed-testimonial-author-box span {
+  font-size: 17px;
+  color: var(--it-theme-1, #666);
+}
+.ed-testimonial-ratting {
+  margin-bottom: 5px;
+}
+.ed-testimonial-ratting i {
+  font-size: 14px;
+  color: #FC6441;
+}
+.ed-testimonial-text {
+  flex-grow: 1;
+}
+.ed-testimonial-text p {
+  font-size: 16px;
+  line-height: 1.7;
+}
+.ed-testimonial-active {
+  padding: 30px;
+  margin: -30px;
+}
+.ed-testimonial-author {
+  flex-shrink: 0;
+}
+.ed-testimonial-author img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* style-2 overrides */
+.ed-testimonial-style-2 .ed-testimonial-item {
+  border-radius: 10px;
+  border: 2px dashed var(--it-theme-7);
+}
+.ed-testimonial-style-2 .ed-testimonial-author-box h5 {
+  font-size: 17px;
+  margin-bottom: 0;
+}
+.ed-testimonial-style-2 .ed-testimonial-author-box span {
+  font-size: 13px;
+}
+
+/* style-3 overrides */
+.ed-testimonial-style-3 .ed-testimonial-item {
+  border: 2px dashed var(--it-theme-7);
+}
+.ed-testimonial-style-3 .ed-testimonial-author-box span {
+  color: var(--it-theme-5);
+}
+.ed-testimonial-style-3 .ed-testimonial-ratting i {
+  color: var(--it-theme-7);
+}
+.ed-testimonial-style-3 .ed-testimonial-shape-1 {
+  position: absolute;
+  top: 4%;
+  right: 0;
+  animation: zoom2 13s infinite;
+}
+.ed-testimonial-style-3 .ed-testimonial-shape-2 {
+  position: absolute;
+  bottom: 23%;
+  left: 5%;
+  animation: ittranslateY2 4s infinite alternate;
+}
+@media only screen and (min-width: 1600px) and (max-width: 1800px) {
+  .ed-testimonial-style-3 .ed-testimonial-shape-2 {
+    bottom: 3%;
+  }
+}
+
+/* testimonial navigation arrows */
+.ed-testimonial-nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+@media (max-width: 1199px) {
+  .ed-testimonial-nav { justify-content: center; margin-top: 10px; }
+}
+.ed-testimonial-nav button {
+  font-size: 24px;
+  height: 52px;
+  width: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--color-primary, #0077B6);
+  color: var(--color-primary, #0077B6);
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.ed-testimonial-nav button:hover {
+  color: #fff;
+  background-color: var(--color-primary, #0077B6);
+}
+
+/* initial avatar circles */
+.ed-testimonial-initial {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 20px;
+  font-family: var(--font-heading, 'Epilogue', sans-serif);
+  flex-shrink: 0;
+}
+
+/* equal-height slides */
+.ed-testimonial-active .swiper-wrapper {
+  align-items: stretch;
+}
+.ed-testimonial-active .swiper-slide {
+  height: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FUNFACT SECTION — ed-funfact-area / ed-funfact-wrap
+   Exact Edunity main.css lines 8015–8270
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.ed-funfact-area {
+  background-color: #fff;
+  padding-bottom: 90px;
+}
+.ed-funfact-wrap { position: relative; }
+
+.ed-funfact-shape-1 {
+  position: absolute;
+  top: -19%; right: 7%;
+  z-index: -1;
+  animation: rotate2 4s linear infinite;
+}
+
+/* funfact item */
+.it-funfact-item { text-align: center; }
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
+  .it-funfact-item { margin-bottom: 30px; }
+}
+
+/* border divider between items */
+.ed-funfact-wrap .it-funfact-item.border-style-1 { position: relative; }
+.ed-funfact-wrap .it-funfact-item.border-style-1::after {
+  position: absolute; content: "";
+  top: 50%; right: -5%;
+  width: 1px; height: 162px;
+  transform: translateY(-50%);
+  border: 1px dashed #0E2A46;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
+  .ed-funfact-wrap .it-funfact-item.border-style-1::after { display: none; }
+}
+
+/* icon circle */
+.it-funfact-icon { margin-bottom: 30px; }
+.it-funfact-icon span {
+  height: 78px; width: 78px;
+  line-height: 89px;
+  text-align: center;
+  display: inline-block;
+  background-color: var(--it-common-white);
+  color: var(--it-common-black);
+  font-size: 38px;
+  border-radius: 50%;
+}
+.ed-funfact-wrap .it-funfact-icon span {
+  background-color: #FC9F0B;
+  position: relative;
+  margin: 10px;
+  margin-bottom: 0;
+}
+.ed-funfact-wrap .it-funfact-icon span::after {
+  position: absolute; content: "";
+  top: 0; left: 0;
+  height: 100%; width: 100%;
+  border-radius: 50%;
+  border: 1px dashed #0E2A46;
+  transform: scale(1.25);
+}
+
+/* counter number */
+.it-funfact-content { line-height: 0; }
+.it-funfact-content h6 {
+  font-size: 39px; font-weight: 700;
+  line-height: 1;
+  color: var(--it-common-black);
+  font-family: var(--it-ff-heading);
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+.ed-funfact-wrap .it-funfact-content h6 { margin-bottom: 10px; }
+@media only screen and (min-width: 1200px) and (max-width: 1399px) { .it-funfact-content h6 { font-size: 35px; } }
+@media only screen and (min-width: 992px) and (max-width: 1199px)  { .it-funfact-content h6 { font-size: 30px; } }
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) { .it-funfact-content h6 { font-size: 35px; } }
+@media only screen and (min-width: 576px) and (max-width: 767px) { .it-funfact-content h6 { font-size: 29px; margin-bottom: 5px; } }
+.it-funfact-content h6 i { font-style: normal; }
+
+/* label */
+.it-funfact-content span {
+  font-size: 17px; font-weight: 400;
+  line-height: 1;
+  text-transform: capitalize;
+  color: var(--it-common-black);
+  font-family: var(--it-ff-body);
+}
+.ed-funfact-wrap .it-funfact-content span { font-size: 21px; font-weight: 500; }
+@media only screen and (min-width: 1200px) and (max-width: 1399px) { .it-funfact-content span { font-size: 14px; } }
+@media only screen and (min-width: 992px) and (max-width: 1199px)  { .it-funfact-content span { font-size: 11px; } }
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) { .it-funfact-content span { font-size: 14px; } }
+@media only screen and (min-width: 576px) and (max-width: 767px) { .it-funfact-content span { font-size: 12px; } }
+
+/* ── container-3 (Edunity max-width: 1350px) ── */
+@media (min-width: 1400px) {
+  .container-3 { max-width: 1350px; }
+}
+
+/* ── Edunity spacing utilities (only the ones we actually use)
+   NOTE: do NOT use edunity-spacing.css — it overrides Bootstrap 5
+   .mt-5, .pt-5 etc. and breaks the whole site                    ── */
+.pt-160 { padding-top: 160px; }
+.pb-120 { padding-bottom: 120px; }
+.pb-90  { padding-bottom: 90px; }
+.mb-30  { margin-bottom: 30px; }
+@media (max-width: 767px) {
+  .pt-160 { padding-top: 80px; }
+  .pb-120 { padding-bottom: 60px; }
+  .pb-90  { padding-bottom: 50px; }
+}

@@ -4,384 +4,1307 @@
 @section('description', 'Safe, trusted childcare for 3 months to Grade R in Parklands, Cape Town. Qualified teachers, CAPS curriculum, Christian values. Book your tour today.')
 
 @section('content')
-<style>
-/* Global 18px paragraph override for home page */
-.vs-hero__desc,
-.vs-about__text,
-.vs-service__text,
-.vs-class__text,
-.vs-class__age { font-size: 17px !important; }
-</style>
-<!-- ========== HERO SECTION ========== -->
-<section class="vs-hero overflow-hidden z-index-common parallax-wrap">
-    <div class="vs-hero__ele1">
-        <img class="parallax-element" src="{{ asset('assets/img/hero/h1-ele-1-1.svg') }}" alt="decorative element">
-    </div>
-    <div class="swiper vs-hero__active--zoom">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div class="vs-hero__bg vs-hero__bg--zoom" data-bg-src="{{ asset('assets/img/hero/banner-1-1.jpg') }}"></div>
-                <div class="container container--custom">
-                    <div class="vs-hero__content">
-                        <div class="vs-hero__shape" style="  display: flex; flex-direction: column; justify-content: center;">
-                            <div class="vs-hero__shape--bg vs-hero__anim" data-bg-src="{{ asset('assets/img/hero/hero-shape-1.svg') }}" ></div><br><br>
-                            <span class="vs-hero__title--sub vs-hero__anim"
-                                  style="
-        background: #0c508e;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 25px;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 600;
-        font-size: 14px;
-       box-shadow: 0 4px 15px rgba(209, 129, 9, 0.4);
+<!-- ========== HERO SECTION ==========
+     All CSS lives in assets/css/edunity-hero.css (exact Edunity source)
+     HTML mirrors index-4-one-page.html structure with Peekaboo content
+========================================= -->
 
-        width: fit-content;
-        white-space: nowrap;
-      ">
+<section class="ed-hero-2-area ed-hero-2-bg fix p-relative" id="home">
 
-    Now Enrolling for 2026
-</span>
+  {{-- Decorative background shapes (animated, z-index:-1) --}}
+  <div class="ed-hero-2-shape-1">
+    <img src="{{ asset('assets/img/hero/shape-2-1.png') }}" alt="">
+  </div>
+  <div class="ed-hero-2-shape-2 d-none d-md-block">
+    <img src="{{ asset('assets/img/hero/shape-2-2.png') }}" alt="">
+  </div>
+  <div class="ed-hero-2-shape-3">
+    <img src="{{ asset('assets/img/hero/shape-2-4.png') }}" alt="">
+  </div>
+  <div class="ed-hero-2-shape-4">
+    <img src="{{ asset('assets/img/hero/shape-2-3.png') }}" alt="">
+  </div>
+  <div class="ed-hero-2-shape-5">
+    <img src="{{ asset('assets/img/hero/shape-2-3.png') }}" alt="">
+  </div>
 
-                            <h3 class="vs-hero__title--main vs-hero__anim">
-                                Where Learning Feels<span> Safe & Happy.</span>
-                            </h3>
-                            <p class="vs-hero__desc vs-hero__anim">
-                                Trusted care for children aged 3 months to Grade R in the heart of Parklands
-                            </p>
-                            <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-md-start mb-4 vs-hero__anim" style="flex-wrap: nowrap;">
-                                <a href="{{ route('book-tour') }}" class="vs-btn vs-hero__btn" style="white-space: nowrap;"><span class="vs-btn__border"></span>Book a Tour</a>
-                                <a href="{{ route('enrol.index') }}" class="vs-btn style4 vs-hero__btn" style="white-space: nowrap;"><span class="vs-btn__border"></span>Enrol Now</a>
-                            </div>
-{{--                            <div class="vs-hero__trust-indicators vs-hero__anim" style="display: flex; flex-wrap: wrap; gap: 10px 15px; font-size: 13px; color: #4A2559; font-weight: 600; justify-content: center; text-align: center;">--}}
-{{--                                <span style="white-space: nowrap;"><i class="fa-solid fa-check-circle" style="color: #0c508e; margin-right: 5px;"></i>Registered Daycare</span>--}}
-{{--                                <span style="white-space: nowrap;"><i class="fa-solid fa-check-circle" style="color: #0c508e; margin-right: 5px;"></i>CAPS Aligned</span>--}}
-{{--                                <span style="white-space: nowrap;"><i class="fa-solid fa-check-circle" style="color: #0c508e; margin-right: 5px;"></i>{{ date('Y') - 2010 }}+ Years Experience</span>--}}
-{{--                            </div>--}}
-                            <img class="vs-hero__character vs-hero__anim" src="{{ asset('assets/img/hero/hero-character-1.png') }}" alt="Happy Child Character">
-                        </div>
-                    </div>
-                </div>
+  <div class="container">
+    <div class="row align-items-center">
+
+      {{-- ── Left: Content ── --}}
+      <div class="col-xxl-6 col-xl-5 col-lg-6">
+        <div class="ed-hero-2-content">
+
+          {{-- Peekaboo enrolment pill (above title) --}}
+          <span class="pb-hero-enrol-pill wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".1s">
+            <i class="fa-solid fa-star"></i> Now Enrolling for 2026
+          </span>
+
+          {{-- Main heading — exact Edunity structure, pb-5 spacing --}}
+          <h1 class="ed-slider-title pb-5 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".3s">
+            Where Learning <br>
+            Feels Safe & Happy.
+          </h1>
+
+          {{-- Lead paragraph --}}
+          <div class="ed-hero-2-text mb-30 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".5s">
+            <p>Trusted care for children aged 3 months to Grade R,<br>
+              in the heart of Parklands, Cape Town.</p>
+          </div>
+
+          {{-- CTA row --}}
+          <div class="ed-hero-2-button-wrapper wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".7s">
+            <div class="ed-hero-2-button d-flex align-items-center flex-wrap">
+
+              <a class="ed-btn-radius" href="{{ route('enrol.index') }}">
+                Enrol Now
+              </a>
+
+              <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('book-tour') }}">
+                <i class="fa-regular fa-calendar-check"></i> Book a Tour
+              </a>
+
             </div>
-            <div class="swiper-slide">
-                <div class="vs-hero__bg vs-hero__bg--zoom" data-bg-src="{{ asset('assets/img/hero/banner-1-2.jpg') }}"></div>
-                <div class="container container--custom">
-                    <div class="vs-hero__content">
-                        <div class="vs-hero__shape" style="  display: flex; flex-direction: column; justify-content: center;">
-                            <div class="vs-hero__shape--bg vs-hero__anim" data-bg-src="{{ asset('assets/img/hero/hero-shape-1.svg') }}" ></div><br><br>
-                            <span class="vs-hero__title--sub vs-hero__anim"
-                                  style="
-        background: #0c508e;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 25px;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 600;
-        font-size: 14px;
-       box-shadow: 0 4px 15px rgba(209, 129, 9, 0.4);
+          </div>
 
-        width: fit-content;
-        white-space: nowrap;
-      ">
+          {{-- Trust checkmarks (Peekaboo-specific, styled in edunity-hero.css) --}}
+          <div class="pb-hero-trust wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".9s">
+            <span class="pb-hero-trust__item">
+              <i class="fa-solid fa-circle-check"></i> Registered Daycare
+            </span>
+            <span class="pb-hero-trust__item">
+              <i class="fa-solid fa-circle-check"></i> CAPS Aligned
+            </span>
+            <span class="pb-hero-trust__item">
+              <i class="fa-solid fa-circle-check"></i> {{ date('Y') - 2010 }}+ Years Experience
+            </span>
+          </div>
 
-    Now Enrolling for 2026
-</span>
-
-                            <h3 class="vs-hero__title--main vs-hero__anim">
-                                Give Your Child a <span>Confident</span> Start.
-                            </h3>
-                            <p class="vs-hero__desc vs-hero__anim">
-                                From Baby Room to Grade R — every stage nurtured with care in Parklands
-                            </p>
-                            <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-md-start mb-4 vs-hero__anim" style="flex-wrap: nowrap;">
-                                <a href="{{ route('book-tour') }}" class="vs-btn vs-hero__btn" style="white-space: nowrap;"><span class="vs-btn__border"></span>Book a Tour</a>
-                                <a href="{{ route('enrol.index') }}" class="vs-btn style4 vs-hero__btn" style="white-space: nowrap;"><span class="vs-btn__border"></span>Enrol Now</a>
-                            </div>
-
-                            <img class="vs-hero__character vs-hero__anim" src="{{ asset('assets/img/hero/hero-character-1.png') }}" alt="Happy Child Character">
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-        <div class="vs-hero__direction">
-            <div class="vs-swiper-button-next" aria-label="Next slide">
-                <i class="fa-solid fa-arrow-right"></i>
-            </div>
-            <div class="vs-swiper-button-prev" aria-label="Previous slide">
-                <i class="fa-solid fa-arrow-left"></i>
-            </div>
+      </div>{{-- /col Left --}}
+
+      {{-- ── Right: Images + floating badges (exact Edunity structure) ── --}}
+      <div class="col-xxl-6 col-xl-7 col-lg-6">
+        <div class="ed-hero-2-right p-relative">
+
+          {{-- Main image (left, larger) — orange blob via ::after --}}
+          <div class="ed-hero-2-thumb style-1">
+            <img src="{{ asset('assets/img/hero/thumb-2-1.png') }}"
+                 alt="Happy child at Peekaboo Daycare">
+          </div>
+
+          {{-- Secondary image (right, smaller, absolute bottom-right) — teal blob --}}
+          <div class="ed-hero-2-thumb style-2">
+            <img src="{{ asset('assets/img/hero/thumb-2-2.png') }}"
+                 alt="Learning at Peekaboo">
+          </div>
+
+          {{-- Floating badge: family count — bottom-left, jumpTwo bob --}}
+          <div class="ed-hero-thumb-student d-none d-md-flex align-items-center">
+            <span><i>150+</i><br>Happy Families</span>
+            <img src="{{ asset('assets/img/hero/student.png') }}" alt="">
+          </div>
+
+          {{-- Floating badge: Google rating — top-right, ittranslateX2 drift --}}
+          <div class="ed-hero-thumb-courses d-none d-md-block">
+            <i>4.9 <span style="color:#FC9F0B;font-size:16px;letter-spacing:1px;">&#9733;&#9733;&#9733;&#9733;<span style="opacity:0.4;">&#9733;</span></span></i>
+            <span>Google Rating</span>
+          </div>
+
+          {{-- Inner decorative shape (swings, inside image area) --}}
+          <div class="ed-hero-2-shape-6">
+            <img src="{{ asset('assets/img/hero/shape-2-5.png') }}" alt="">
+          </div>
+
         </div>
+      </div>{{-- /col Right --}}
+
     </div>
-    <div class="vs-balls vs-balls--screen" data-balls-bottom="-6px" data-balls-color="#f6f1e4"></div>
+  </div>
+
 </section>
 <!-- Hero End -->
 
-<!-- ========== SAFETY & PEACE OF MIND SECTION ========== -->
-<section class="vs-service--area animation-active z-index-common space overflow-hidden" data-bg-src="{{ asset('assets/img/service/service-bg.png') }}">
-    <img src="{{ asset('assets/img/elements/service-ele-1.svg') }}" alt="decorative element" class="vs-service--ele1 wow animate__fadeInLeft" data-wow-delay="0.25s">
-    <img src="{{ asset('assets/img/elements/service-ele-2.svg') }}" alt="decorative element" class="vs-service--ele2 wow animate__fadeInRight" data-wow-delay="0.45s">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="vs-title text-center title-anime animation-style2">
-                    <div class="title-anime__wrap">
-                        <span class="vs-title__sub">Your Peace of Mind Matters</span>
-                        <h2 class="vs-title__main">Keeping Your Child <span>Safe & Happy</span></h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row gx-3 gy-4 justify-content-center mt-4">
-            <div class="col-lg-3 col-md-6 d-flex">
-                <div class="vs-service wow animate__fadeInUp" data-wow-delay="0.25s" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                    <div class="vs-service__figure">
-                        <div class="vs-service__image--link">
-                            <img class="vs-service__image" src="{{ asset('assets/img/service/s-1-2.jpg') }}" alt="Secure Premises">
-                        </div>
-                    </div>
-                    <div class="vs-service__content" style="flex-grow: 1; display: flex; flex-direction: column;">
-                        <div class="vs-service__header">
-                            <span class="vs-service__icon">
-                                <img src="{{ asset('assets/img/icons/service-icon-1-2.svg') }}" alt="security icon">
-                            </span>
-                        </div>
-                        <h3 class="vs-service__heading">Secure Premises</h3>
-                        <p class="vs-service__text" style="flex-grow: 1;">CCTV surveillance and controlled access so you know your child is safe every moment of the day.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 d-flex">
-                <div class="vs-service wow animate__fadeInUp" data-wow-delay="0.35s" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                    <div class="vs-service__figure">
-                        <div class="vs-service__image--link">
-                            <img class="vs-service__image" src="{{ asset('assets/img/service/s-1-1.jpg') }}" alt="Qualified Teachers">
-                        </div>
-                    </div>
-                    <div class="vs-service__content" style="flex-grow: 1; display: flex; flex-direction: column;">
-                        <div class="vs-service__header">
-                            <span class="vs-service__icon">
-                                <img src="{{ asset('assets/img/icons/service-icon-1-1.svg') }}" alt="teacher icon">
-                            </span>
-                        </div>
-                        <h3 class="vs-service__heading">Qualified & Vetted Teachers</h3>
-                        <p class="vs-service__text" style="flex-grow: 1;">Trained ECD professionals who are background-checked and passionate about early childhood development.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 d-flex">
-                <div class="vs-service wow animate__fadeInUp" data-wow-delay="0.45s" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                    <div class="vs-service__figure">
-                        <div class="vs-service__image--link">
-                            <img class="vs-service__image" src="{{ asset('assets/img/service/s-1-4.jpg') }}" alt="Healthy Meals">
-                        </div>
-                    </div>
-                    <div class="vs-service__content" style="flex-grow: 1; display: flex; flex-direction: column;">
-                        <div class="vs-service__header">
-                            <span class="vs-service__icon">
-                                <img src="{{ asset('assets/img/icons/service-icon-1-3.svg') }}" alt="nutrition icon">
-                            </span>
-                        </div>
-                        <h3 class="vs-service__heading">Healthy Meals Daily</h3>
-                        <p class="vs-service__text" style="flex-grow: 1;">Nutritious, balanced meals prepared fresh on-site — one less thing for busy parents to worry about.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 d-flex">
-                <div class="vs-service wow animate__fadeInUp" data-wow-delay="0.55s" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                    <div class="vs-service__figure">
-                        <div class="vs-service__image--link">
-                            <img class="vs-service__image" src="{{ asset('assets/img/service/s-1-3.jpg') }}" alt="Parent Communication">
-                        </div>
-                    </div>
-                    <div class="vs-service__content" style="flex-grow: 1; display: flex; flex-direction: column;">
-                        <div class="vs-service__header">
-                            <span class="vs-service__icon">
-                                <img src="{{ asset('assets/img/icons/service-icon-1-3.svg') }}" alt="communication icon">
-                            </span>
-                        </div>
-                        <h3 class="vs-service__heading">Daily Parent Updates</h3>
-                        <p class="vs-service__text" style="flex-grow: 1;">Stay connected with real-time updates, photos, and messages about your child's day and progress.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Safety & Peace of Mind Section End -->
-
-<!-- ========== WHY PARENTS CHOOSE US SECTION ========== -->
-<section id="about" class="vs-about--section space space-extra-bottom z-index-common parallax-wrap overflow-hidden" data-bg-src="{{ asset('assets/img/about/vs-about-h1-bg.png') }}">
-    <img src="{{ asset('assets/img/about/vs-about-h1-ele-4.png') }}" alt="decorative element" class="vs-about--ele1 wow animate__fadeInUp" data-wow-delay="0.35s">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-30 wow animate__fadeInUp" data-wow-delay="0.25s">
-                <div class="vs-about--image">
-                    <div class="vs-about--image__figure1 wow animate__fadeInUp" data-wow-delay="0.25s">
-                        <img src="{{ asset('assets/img/about/vs-about-h1-1.jpg') }}" alt="Children learning at Peekaboo" width="198" height="214" loading="lazy">
-                    </div>
-                    <div class="vs-about--image__figure2 wow animate__fadeInUp" data-wow-delay="0.35s">
-                        <img src="{{ asset('assets/img/about/vs-about-h1-2.jpg') }}" alt="Happy children playing" width="400" height="461" loading="lazy">
-                    </div>
-                    <div class="vs-about--image__ele1 parallax-element" data-move="80">
-                        <img src="{{ asset('assets/img/about/vs-about-h1-ele-1.svg') }}" alt="decorative element">
-                    </div>
-                    <div class="vs-about--image__ele2 parallax-element" data-move="50">
-                        <img src="{{ asset('assets/img/about/vs-about-h1-ele-2.svg') }}" alt="decorative element">
-                    </div>
-                    <div class="vs-about--image__ele3 wow animate__zoomIn" data-wow-delay="0.55s"></div>
-                    <div class="vs-about--yoe">
-                        <span class="vs-about--yoe__number">
-                            {{ date('Y') - 2010 }}+
-                        </span>
-                        <span class="vs-about--yoe__text">years of experience</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 mb-30 wow animate__fadeInUp" data-wow-delay="0.45s">
-                <div class="vs-about--right">
-                    <div class="vs-title title-anime animation-style2">
-                        <div class="title-anime__wrap">
-                            <span class="vs-title__sub">Why Parents Choose Us</span>
-                            <h2 class="vs-title__main">
-                                What Makes <span>Peekaboo</span> Different
-                            </h2>
-                        </div>
-                    </div>
-                    <div class="vs-about--story">
-                        <p class="vs-about__text vs-text mb-25">Since 2010, we've been more than just a daycare — we're a trusted partner in your child's early years, offering peace of mind and a foundation for lifelong learning.</p>
-                        <ul class="mb-35" style="list-style: none !important; padding-left: 0; margin-left: 0;">
-                            <li style="margin-bottom: 20px; list-style: none !important;">
-                                <h3 class="vs-service__heading" style="display: block; margin-bottom: 5px;"><i class="fa-solid fa-heart" style="color: #0c508e; margin-right: 8px;"></i> Small Class Sizes</h3>
-
-                                <span style="color: #666;">Your child receives individual attention and care, not lost in a crowd.</span>
-                            </li>
-                            <li style="margin-bottom: 20px; list-style: none !important;">
-                                <h3 class="vs-service__heading" style="display: block; margin-bottom: 5px;"><i class="fa-solid fa-graduation-cap" style="color: #0c508e; margin-right: 8px;"></i>CAPS Curriculum</h3>
-                                <span style="color: #666;">School readiness you can trust — your child will start Grade 1 confident and prepared.</span>
-                            </li>
-                            <li style="margin-bottom: 20px; list-style: none !important;">
-                                <h3 class="vs-service__heading" style="display: block; margin-bottom: 5px;"><i class="fa-solid fa-palette" style="color: #0c508e; margin-right: 8px;"></i>Play-Based Learning</h3>
-                                <span style="color: #666;">Joyful learning through creativity, exploration, and discovery — childhood as it should be.</span>
-                            </li>
-                            <li style="margin-bottom: 20px; list-style: none !important;">
-                                <h3 class="vs-service__heading" style="display: block; margin-bottom: 5px;"><i class="fa-solid fa-calendar-check" style="color: #0c508e; margin-right: 8px;"></i>Structured Routines</h3>
-                                <span style="color: #666;">Children thrive on predictability — our daily routines create stability and comfort.</span>
-                            </li>
-                        </ul>
-                        <a href="{{ route('book-tour') }}" class="vs-btn"><span class="vs-btn__border"></span>Book a Tour</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Why Parents Choose Us Section End -->
-
-<!-- ========== MEET OUR TEACHERS SECTION ========== -->
-<section id="teachers" class="space space-extra-bottom">
+<!-- ========== TRUST STRIP — Infinite Scroll Marquee ========== -->
+<div id="safety" class="pb-trust">
 <style>
 /* ============================================================
-   TEACHERS SECTION — Peekaboo
-   Editorial portrait bento + infinite marquee team strip
+   TRUST STRIP — Premium edge-to-edge marquee
+============================================================ */
+.pb-trust {
+    background: linear-gradient(135deg, #0a2540 0%, #0E2A46 40%, #0c3a5e 100%);
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 3px solid rgba(0,119,182,0.3);
+}
+.pb-trust::before,
+.pb-trust::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 100px;
+    z-index: 2;
+    pointer-events: none;
+}
+.pb-trust::before {
+    left: 0;
+    background: linear-gradient(to right, #0E2A46, transparent);
+}
+.pb-trust::after {
+    right: 0;
+    background: linear-gradient(to left, #0c3a5e, transparent);
+}
+
+.pb-trust__track {
+    display: flex;
+    width: max-content;
+    animation: trust-scroll 32s linear infinite;
+}
+.pb-trust__track:hover { animation-play-state: paused; }
+
+@keyframes trust-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+.pb-trust__item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 24px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    position: relative;
+}
+.pb-trust__icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(0,119,182,0.25);
+    border: 1px solid rgba(0,119,182,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    color: #5bb8f5;
+    flex-shrink: 0;
+    transition: transform 0.3s, background 0.3s;
+}
+.pb-trust__item:hover .pb-trust__icon {
+    transform: scale(1.08);
+    background: rgba(0,119,182,0.4);
+}
+.pb-trust__body {
+    display: flex;
+    flex-direction: column;
+}
+.pb-trust__stat {
+    font-family: var(--font-heading);
+    font-size: 17px; font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+}
+.pb-trust__label {
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+/* Separator */
+.pb-trust__sep {
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    flex-shrink: 0;
+}
+.pb-trust__sep-line {
+    width: 1px; height: 28px;
+    background: rgba(255,255,255,0.1);
+}
+</style>
+
+    <div class="pb-trust__track">
+        <!-- Set 1 -->
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-shield-halved"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">24/7</span>
+                <span class="pb-trust__label">CCTV &amp; Secure Access</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-chalkboard-user"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">100%</span>
+                <span class="pb-trust__label">Qualified &amp; Vetted Staff</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-apple-whole"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">Fresh Daily</span>
+                <span class="pb-trust__label">Healthy Meals On-Site</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-comments"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">Daily Updates</span>
+                <span class="pb-trust__label">Photos &amp; Progress Reports</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-star"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">4.9 ★</span>
+                <span class="pb-trust__label">Google Reviews</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-heart"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">150+</span>
+                <span class="pb-trust__label">Happy Families</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <!-- Set 2 (duplicate for seamless loop) -->
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-shield-halved"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">24/7</span>
+                <span class="pb-trust__label">CCTV &amp; Secure Access</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-chalkboard-user"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">100%</span>
+                <span class="pb-trust__label">Qualified &amp; Vetted Staff</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-apple-whole"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">Fresh Daily</span>
+                <span class="pb-trust__label">Healthy Meals On-Site</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-comments"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">Daily Updates</span>
+                <span class="pb-trust__label">Photos &amp; Progress Reports</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-star"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">4.9 ★</span>
+                <span class="pb-trust__label">Google Reviews</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+        <div class="pb-trust__item">
+            <span class="pb-trust__icon"><i class="fa-solid fa-heart"></i></span>
+            <span class="pb-trust__body">
+                <span class="pb-trust__stat">150+</span>
+                <span class="pb-trust__label">Happy Families</span>
+            </span>
+        </div>
+        <span class="pb-trust__sep"><span class="pb-trust__sep-line"></span></span>
+    </div>
+</div>
+<!-- Trust Strip End -->
+
+<!-- ========== WHY PARENTS CHOOSE US SECTION ========== -->
+<!-- ========== ABOUT / WHY PARENTS CHOOSE US ==========
+     Layout mirrors Edunity index-4 .it-about-5-area / .ed-about-4-wrap
+     CSS lives in assets/css/edunity-hero.css
+======================================================== -->
+<div id="about" class="it-about-5-area fix ed-about-4-wrap p-relative pb-120">
+
+  {{-- Animated background shapes --}}
+  <div class="it-about-5-shape-4 d-none d-md-block">
+    <img src="{{ asset('assets/img/about/shape-5-4.png') }}" alt="">
+  </div>
+  <div class="it-about-5-shape-5 d-none d-xl-block">
+    <img src="{{ asset('assets/img/about/shape-4-4.png') }}" alt="">
+  </div>
+
+  <div class="container">
+    <div class="row align-items-center">
+
+      {{-- Left: stacked image column --}}
+      <div class="col-xl-6 col-lg-6 wow itfadeLeft" data-wow-duration=".9s" data-wow-delay=".5s">
+        <div class="ed-hero-thumb-wrap text-center text-md-end p-relative">
+
+          {{-- Main portrait image --}}
+          <div class="ed-hero-thumb-main p-relative">
+            <img src="{{ asset('assets/img/about/about-4-1.png') }}" alt="Children at Peekaboo Daycare">
+            <div class="ed-hero-thumb-shape-1 d-none d-md-block">
+              <img src="{{ asset('assets/img/about/shape-4-1.png') }}" alt="">
+            </div>
+          </div>
+
+          {{-- Overlapping small image --}}
+          <div class="ed-hero-thumb-sm p-relative">
+            <img src="{{ asset('assets/img/about/about-4-2.png') }}" alt="Happy children at Peekaboo">
+            <div class="ed-hero-thumb-shape-1">
+              <img src="{{ asset('assets/img/about/shape-4-2.png') }}" alt="">
+            </div>
+          </div>
+
+          {{-- Animated decorative shapes --}}
+          <div class="ed-hero-thumb-shape-2">
+            <img src="{{ asset('assets/img/about/shape-4-3.png') }}" alt="">
+          </div>
+          <div class="ed-hero-thumb-shape-3">
+            <img src="{{ asset('assets/img/hero/shape-1-2.png') }}" alt="">
+          </div>
+          <div class="ed-hero-thumb-shape-4">
+            <img src="{{ asset('assets/img/hero/shape-1-3.png') }}" alt="">
+          </div>
+
+          {{-- Floating badge --}}
+          <div class="ed-hero-thumb-student d-none d-md-flex align-items-center">
+            <span><i>{{ date('Y') - 2010 }}+</i><br>Years of Care</span>
+            <img src="{{ asset('assets/img/hero/student.png') }}" alt="">
+          </div>
+
+        </div>
+      </div>
+
+      {{-- Right: text content --}}
+      <div class="col-xl-6 col-lg-6 wow itfadeRight" data-wow-duration=".9s" data-wow-delay=".7s">
+        <div class="it-about-5-right">
+
+          <div class="it-about-5-title-box pb-10">
+            <span class="it-section-subtitle-5 orange">
+              <i class="fa-light fa-book"></i> Why Parents Choose Us
+            </span>
+            <h4 class="ed-section-title orange">
+              It's our passion to care for <br> children at <span>Peekaboo.</span>
+            </h4>
+          </div>
+
+          <div class="it-about-5-text mb-30">
+            <p>Since 2010, we've been more than just a daycare — a trusted partner in your child's early years, offering peace of mind and a foundation for lifelong learning.</p>
+          </div>
+
+          <div class="it-about-5-content">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6">
+                <div class="it-about-5-list list-style-1 mb-20">
+                  <ul>
+                    <li><i class="fa-sharp fa-solid fa-circle-check"></i>Qualified Educators</li>
+                    <li><i class="fa-sharp fa-solid fa-circle-check"></i>Safety &amp; Security</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6">
+                <div class="it-about-5-list list-style-2 mb-20">
+                  <ul>
+                    <li><i class="fa-sharp fa-solid fa-circle-check"></i>Play-Based Learning</li>
+                    <li><i class="fa-sharp fa-solid fa-circle-check"></i>Homelike Environment</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="it-feature-button">
+            <a class="ed-btn-radius" href="{{ route('book-tour') }}">
+              Book a Tour
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Why Parents Choose Us Section End -->
+
+<!-- ========== PROGRAMS & AGE GROUPS SECTION ========== -->
+<section id="programs" class="pb-programs">
+<style>
+/* ============================================================
+   PROGRAMS — pb-programs
+============================================================ */
+.pb-programs {
+    background-color: var(--color-surface);
+    padding: 100px 0 110px;
+    position: relative;
+    overflow: hidden;
+}
+.pb-programs__sub {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--color-warm);
+    display: block; margin-bottom: 12px;
+}
+.pb-programs__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(30px, 4vw, 46px); font-weight: 900;
+    color: var(--color-text); line-height: 1.1; margin-bottom: 0;
+}
+.pb-programs__heading span { color: var(--color-primary); }
+
+/* Card */
+.pb-prog-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    height: 100%;
+    display: flex; flex-direction: column;
+    transition: transform 0.38s cubic-bezier(0.22,0.61,0.36,1),
+                box-shadow 0.38s cubic-bezier(0.22,0.61,0.36,1);
+}
+.pb-prog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Coloured top accent bar */
+.pb-prog-card__bar {
+    height: 5px; width: 100%;
+    flex-shrink: 0;
+}
+
+/* Photo */
+.pb-prog-card__photo {
+    position: relative; height: 220px; overflow: hidden;
+}
+.pb-prog-card__photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.55s ease;
+}
+.pb-prog-card:hover .pb-prog-card__photo img { transform: scale(1.06); }
+
+/* Age pill */
+.pb-prog-card__age-pill {
+    position: absolute; bottom: 14px; left: 14px;
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 700;
+    color: #fff; letter-spacing: 0.3px;
+    backdrop-filter: blur(4px);
+}
+
+/* Body */
+.pb-prog-card__body {
+    padding: 24px 24px 20px;
+    flex-grow: 1; display: flex; flex-direction: column;
+}
+.pb-prog-card__icon-wrap {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 14px; flex-shrink: 0;
+}
+.pb-prog-card__icon-wrap i { font-size: 22px; color: #fff; }
+.pb-prog-card__title {
+    font-family: var(--font-heading);
+    font-size: 21px; font-weight: 900;
+    color: var(--color-text); margin-bottom: 10px;
+}
+.pb-prog-card__desc {
+    font-family: var(--font-body);
+    font-size: 14px; color: var(--color-text-muted);
+    line-height: 1.72; flex-grow: 1; margin-bottom: 20px;
+}
+.pb-prog-card__ratio {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 700;
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid currentColor;
+    margin-bottom: 20px;
+}
+.pb-prog-card__cta {
+    display: block; text-align: center;
+    font-family: var(--font-heading); font-size: 14px; font-weight: 800;
+    color: #fff; padding: 12px 24px;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    transition: filter 0.25s ease, transform 0.25s ease;
+    margin-top: auto;
+}
+.pb-prog-card__cta:hover { filter: brightness(1.10); transform: translateY(-2px); color: #fff; }
+
+/* Per-card colours */
+.pb-prog-card--blue  .pb-prog-card__bar    { background: var(--color-primary); }
+.pb-prog-card--blue  .pb-prog-card__age-pill { background: rgba(0,119,182,0.80); }
+.pb-prog-card--blue  .pb-prog-card__icon-wrap { background: var(--color-primary); }
+.pb-prog-card--blue  .pb-prog-card__ratio  { color: var(--color-primary); }
+.pb-prog-card--blue  .pb-prog-card__cta    { background: var(--color-primary); }
+
+.pb-prog-card--warm  .pb-prog-card__bar    { background: var(--color-warm); }
+.pb-prog-card--warm  .pb-prog-card__age-pill { background: rgba(209,129,9,0.80); }
+.pb-prog-card--warm  .pb-prog-card__icon-wrap { background: var(--color-warm); }
+.pb-prog-card--warm  .pb-prog-card__ratio  { color: var(--color-warm); }
+.pb-prog-card--warm  .pb-prog-card__cta    { background: var(--color-warm); }
+
+.pb-prog-card--accent .pb-prog-card__bar   { background: var(--color-accent); }
+.pb-prog-card--accent .pb-prog-card__age-pill { background: rgba(112,22,126,0.80); }
+.pb-prog-card--accent .pb-prog-card__icon-wrap { background: var(--color-accent); }
+.pb-prog-card--accent .pb-prog-card__ratio { color: var(--color-accent); }
+.pb-prog-card--accent .pb-prog-card__cta   { background: var(--color-accent); }
+
+.pb-prog-card--green .pb-prog-card__bar    { background: var(--color-success); }
+.pb-prog-card--green .pb-prog-card__age-pill { background: rgba(46,125,50,0.80); }
+.pb-prog-card--green .pb-prog-card__icon-wrap { background: var(--color-success); }
+.pb-prog-card--green .pb-prog-card__ratio  { color: var(--color-success); }
+.pb-prog-card--green .pb-prog-card__cta    { background: var(--color-success); }
+</style>
+
+    <div class="container">
+        <!-- Section Header -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5 wow itfadeUp">
+                <span class="pb-programs__sub">Programs &amp; Age Groups</span>
+                <h2 class="pb-programs__heading">The Right Program for <span>Your Child's Age</span></h2>
+            </div>
+        </div>
+
+        <!-- Cards row -->
+        <div class="row gx-4 gy-4">
+
+            <!-- Baby Room -->
+            <div class="col-lg-3 col-md-6 d-flex wow itfadeUp" data-wow-delay="0.10s">
+                <div class="pb-prog-card pb-prog-card--blue w-100">
+                    <div class="pb-prog-card__bar"></div>
+                    <div class="pb-prog-card__photo">
+                        <img src="{{ asset('assets/img/class/class-1-1.jpg') }}" alt="Baby Room" loading="lazy">
+                        <span class="pb-prog-card__age-pill">0 – 18 months</span>
+                    </div>
+                    <div class="pb-prog-card__body">
+                        <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-baby"></i></div>
+                        <h3 class="pb-prog-card__title">Baby Room</h3>
+                        <p class="pb-prog-card__desc">Your baby's first safe space away from home — loving care, sensory development, and nurturing routines designed for the youngest explorers.</p>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:4 ratio</span>
+                        <a href="{{ route('enrol.index') }}" class="pb-prog-card__cta">Enrol Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toddlers -->
+            <div class="col-lg-3 col-md-6 d-flex wow itfadeUp" data-wow-delay="0.20s">
+                <div class="pb-prog-card pb-prog-card--warm w-100">
+                    <div class="pb-prog-card__bar"></div>
+                    <div class="pb-prog-card__photo">
+                        <img src="{{ asset('assets/img/class/class-details-big-image-1.jpg') }}" alt="Toddlers" loading="lazy">
+                        <span class="pb-prog-card__age-pill">18 months – 3 years</span>
+                    </div>
+                    <div class="pb-prog-card__body">
+                        <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-child-reaching"></i></div>
+                        <h3 class="pb-prog-card__title">Toddlers</h3>
+                        <p class="pb-prog-card__desc">Active exploration in a safe environment — building confidence, language, and social skills through purposeful play and gentle guidance.</p>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:6 ratio</span>
+                        <a href="{{ route('enrol.index') }}" class="pb-prog-card__cta">Enrol Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preschool -->
+            <div class="col-lg-3 col-md-6 d-flex wow itfadeUp" data-wow-delay="0.30s">
+                <div class="pb-prog-card pb-prog-card--accent w-100">
+                    <div class="pb-prog-card__bar"></div>
+                    <div class="pb-prog-card__photo">
+                        <img src="{{ asset('assets/img/class/class-1-3.jpg') }}" alt="Preschool" loading="lazy">
+                        <span class="pb-prog-card__age-pill">3 – 4 years</span>
+                    </div>
+                    <div class="pb-prog-card__body">
+                        <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-palette"></i></div>
+                        <h3 class="pb-prog-card__title">Preschool</h3>
+                        <p class="pb-prog-card__desc">Building independence and curiosity — creative learning, problem-solving, and early literacy skills that spark a lifelong love of discovery.</p>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:8 ratio</span>
+                        <a href="{{ route('enrol.index') }}" class="pb-prog-card__cta">Enrol Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grade R -->
+            <div class="col-lg-3 col-md-6 d-flex wow itfadeUp" data-wow-delay="0.40s">
+                <div class="pb-prog-card pb-prog-card--green w-100">
+                    <div class="pb-prog-card__bar"></div>
+                    <div class="pb-prog-card__photo">
+                        <img src="{{ asset('assets/img/class/class-1-4.jpg') }}" alt="Grade R" loading="lazy">
+                        <span class="pb-prog-card__age-pill">5 – 6 years</span>
+                    </div>
+                    <div class="pb-prog-card__body">
+                        <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <h3 class="pb-prog-card__title">Grade R</h3>
+                        <p class="pb-prog-card__desc">Fully prepared for big school — CAPS-aligned curriculum, confidence-building, and a deep love for learning that lasts a lifetime.</p>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:10 ratio</span>
+                        <a href="{{ route('enrol.index') }}" class="pb-prog-card__cta">Enrol Now</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Programs Section End -->
+
+<!-- ========== FEES SECTION ========== -->
+<section id="fees" class="pb-fees">
+<style>
+/* ============================================================
+   FEES — pb-fees
+============================================================ */
+.pb-fees {
+    background-color: #fff;
+    padding: 100px 0 110px;
+    position: relative;
+    overflow: hidden;
+}
+.pb-fees__sub {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--color-warm);
+    display: block; margin-bottom: 12px;
+}
+.pb-fees__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(30px, 4vw, 46px); font-weight: 900;
+    color: var(--color-text); line-height: 1.1; margin-bottom: 0;
+}
+.pb-fees__heading span { color: var(--color-primary); }
+
+/* Card */
+.pb-fee-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 40px 32px 36px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    height: 100%;
+    display: flex; flex-direction: column;
+    transition: transform 0.32s ease, box-shadow 0.32s ease;
+}
+.pb-fee-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+}
+.pb-fee-card--popular {
+    border: 2px solid var(--color-primary);
+}
+.pb-fee-card__badge {
+    position: absolute;
+    top: -16px; left: 50%; transform: translateX(-50%);
+    background: var(--color-primary); color: #fff;
+    font-family: var(--font-heading); font-size: 12px; font-weight: 800;
+    padding: 5px 20px; border-radius: var(--radius-pill);
+    white-space: nowrap; letter-spacing: 0.5px;
+}
+.pb-fee-card__title {
+    font-family: var(--font-heading);
+    font-size: 18px; font-weight: 800;
+    color: var(--color-text-muted);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 20px; text-align: center;
+}
+.pb-fee-card__price-wrap {
+    text-align: center; margin-bottom: 28px;
+}
+.pb-fee-card__price {
+    font-family: var(--font-heading);
+    font-size: 52px; font-weight: 900;
+    color: var(--color-primary); line-height: 1;
+}
+.pb-fee-card__price-period {
+    font-family: var(--font-body);
+    font-size: 14px; color: var(--color-text-muted);
+    display: block; margin-top: 4px;
+}
+.pb-fee-card__divider {
+    height: 1px; background: #eef0f2; margin-bottom: 24px;
+}
+.pb-fee-card__features {
+    list-style: none; padding: 0; margin: 0 0 28px;
+    flex-grow: 1;
+}
+.pb-fee-card__features li {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-family: var(--font-body);
+    font-size: 14px; color: var(--color-text-muted);
+    margin-bottom: 12px; line-height: 1.5;
+}
+.pb-fee-card__features li i {
+    color: var(--color-primary); font-size: 15px;
+    flex-shrink: 0; margin-top: 1px;
+}
+
+.pb-fee-card__cta-solid {
+    display: block; text-align: center;
+    font-family: var(--font-heading); font-size: 15px; font-weight: 800;
+    background: var(--color-primary); color: #fff;
+    padding: 14px 28px; border-radius: var(--radius-pill);
+    text-decoration: none;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+    box-shadow: 0 5px 18px rgba(0,119,182,0.28);
+}
+.pb-fee-card__cta-solid:hover {
+    background: var(--color-primary-dk); color: #fff;
+    transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,119,182,0.36);
+}
+.pb-fee-card__cta-outline {
+    display: block; text-align: center;
+    font-family: var(--font-heading); font-size: 15px; font-weight: 700;
+    background: transparent; color: var(--color-primary);
+    padding: 13px 28px; border-radius: var(--radius-pill);
+    border: 2px solid var(--color-primary);
+    text-decoration: none;
+    transition: background 0.25s, color 0.25s, transform 0.25s;
+}
+.pb-fee-card__cta-outline:hover {
+    background: var(--color-primary); color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Footer note */
+.pb-fees__note {
+    font-family: var(--font-body);
+    font-size: 14px; color: var(--color-text);
+    text-align: center; margin-top: 40px;
+    background: #F5F6F8;
+    padding: 18px 28px;
+    border-radius: 12px;
+    display: inline-block;
+}
+.pb-fees__note-wrap { text-align: center; }
+.pb-fees__note a {
+    color: #25D366; font-weight: 700; text-decoration: none;
+}
+.pb-fees__note a:hover { text-decoration: underline; }
+</style>
+
+    <div class="container">
+        <!-- Section Header -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5 wow itfadeUp">
+                <span class="pb-fees__sub">Investment in Your Child's Future</span>
+                <h2 class="pb-fees__heading">Transparent <span>Pricing</span></h2>
+            </div>
+        </div>
+
+        <!-- Pricing cards -->
+        <div class="row gx-4 gy-5 justify-content-center">
+
+            <!-- Half Day -->
+            <div class="col-lg-4 col-md-6 d-flex wow itfadeUp" data-wow-delay="0.10s">
+                <div class="pb-fee-card w-100">
+                    <h3 class="pb-fee-card__title">Half Day</h3>
+                    <div class="pb-fee-card__price-wrap">
+                        <span class="pb-fee-card__price">R3,800</span>
+                        <span class="pb-fee-card__price-period">per month</span>
+                    </div>
+                    <div class="pb-fee-card__divider"></div>
+                    <ul class="pb-fee-card__features">
+                        <li><i class="fa-solid fa-circle-check"></i> Qualified teachers</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Nutritious meals included</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Safe, supervised environment</li>
+                        <li><i class="fa-solid fa-circle-check"></i> 06:00–12:00 (babies–3yr)</li>
+                        <li><i class="fa-solid fa-circle-check"></i> 06:00–13:00 (4yr–Gr.R)</li>
+                    </ul>
+                    <a href="{{ route('book-tour') }}" class="pb-fee-card__cta-outline">Book a Tour</a>
+                </div>
+            </div>
+
+            <!-- Full Day — popular -->
+            <div class="col-lg-4 col-md-6 d-flex wow itfadeUp" data-wow-delay="0.20s">
+                <div class="pb-fee-card pb-fee-card--popular w-100">
+                    <div class="pb-fee-card__badge">Most Popular</div>
+                    <h3 class="pb-fee-card__title" style="color:var(--color-primary);">Full Day</h3>
+                    <div class="pb-fee-card__price-wrap">
+                        <span class="pb-fee-card__price">R4,200</span>
+                        <span class="pb-fee-card__price-period">per month</span>
+                    </div>
+                    <div class="pb-fee-card__divider"></div>
+                    <ul class="pb-fee-card__features">
+                        <li><i class="fa-solid fa-circle-check"></i> All Half Day features</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Extended afternoon hours</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Afternoon activities &amp; rest</li>
+                        <li><i class="fa-solid fa-circle-check"></i> 06:00–18:00 all age groups</li>
+                    </ul>
+                    <a href="{{ route('enrol.index') }}" class="pb-fee-card__cta-solid">Enrol Now</a>
+                </div>
+            </div>
+
+            <!-- Snack Box add-on -->
+            <div class="col-lg-4 col-md-6 d-flex wow itfadeUp" data-wow-delay="0.30s">
+                <div class="pb-fee-card w-100">
+                    <h3 class="pb-fee-card__title">Snack Box</h3>
+                    <div class="pb-fee-card__price-wrap">
+                        <span class="pb-fee-card__price" style="font-size:40px;">R400</span>
+                        <span class="pb-fee-card__price-period">per month · add-on</span>
+                    </div>
+                    <div class="pb-fee-card__divider"></div>
+                    <ul class="pb-fee-card__features">
+                        <li><i class="fa-solid fa-circle-check"></i> Morning snack included</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Afternoon snack included</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Nutritionist approved menu</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Add to any package</li>
+                    </ul>
+                    <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20ask%20about%20the%20Snack%20Box%20add-on." class="pb-fee-card__cta-outline" target="_blank" rel="noopener">Ask About This</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer note -->
+        <div class="pb-fees__note-wrap wow itfadeUp" data-wow-delay="0.35s">
+            <p class="pb-fees__note">
+                <i class="fa-solid fa-info-circle" style="color:var(--color-primary);margin-right:6px;"></i>
+                Registration Fee: <strong>R500 (non-refundable)</strong> &nbsp;·&nbsp;
+                <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20ask%20about%20fees%20and%20registration." target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chat to us on WhatsApp</a>
+            </p>
+        </div>
+
+    </div>
+</section>
+<!-- Fees Section End -->
+
+<!-- ========== VIDEO SECTION ==========
+     Layout mirrors Edunity ed-video-area / ed-video-bg
+     CSS lives in assets/css/edunity-hero.css
+======================================== -->
+<div class="ed-video-area fix ed-video-bg p-relative pt-160 pb-120"
+     data-background="{{ asset('assets/img/video/bg-4-3.jpg') }}">
+
+  <div class="ed-video-shape-1">
+    <img src="{{ asset('assets/img/video/shape-4-1.png') }}" alt="">
+  </div>
+  <div class="ed-video-shape-2">
+    <img src="{{ asset('assets/img/video/shape-4-2.png') }}" alt="">
+  </div>
+
+  <div class="container container-3">
+    <div class="row">
+      <div class="col-xl-12 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".3s">
+        <div class="ed-video-wrap"
+             data-background="{{ asset('assets/img/video/bg-4-2.jpg') }}">
+          <div class="it-video-play-wrap">
+            <div class="it-video-play">
+              <a class="popup-video play" href="https://www.youtube.com/watch?v=PO_fBTkoznc">
+                <i class="fas fa-play"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Video Section End -->
+
+<!-- ========== FUNFACT SECTION ==========
+     Layout mirrors Edunity ed-funfact-area / ed-funfact-wrap
+     CSS lives in assets/css/edunity-hero.css
+========================================= -->
+<div class="ed-funfact-area ed-funfact-wrap p-relative pb-90">
+
+  <div class="ed-funfact-shape-1 d-none d-xl-block">
+    <img src="{{ asset('assets/img/about/shape-1-5.png') }}" alt="">
+  </div>
+
+  <div class="container container-3">
+    <div class="row">
+
+      <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".1s">
+        <div class="it-funfact-item text-center border-style-1">
+          <div class="it-funfact-icon mb-30">
+            <span><i class="flaticon-teacher"></i></span>
+          </div>
+          <div class="it-funfact-content">
+            <h6><i class="purecounter" data-purecounter-duration="1" data-purecounter-end="150">0</i>+</h6>
+            <span>Happy Families</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".3s">
+        <div class="it-funfact-item text-center border-style-1">
+          <div class="it-funfact-icon mb-30">
+            <span><i class="flaticon-class"></i></span>
+          </div>
+          <div class="it-funfact-content">
+            <h6><i class="purecounter" data-purecounter-duration="1" data-purecounter-end="{{ date('Y') - 2010 }}">0</i>+</h6>
+            <span>Years Experience</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".5s">
+        <div class="it-funfact-item text-center border-style-1">
+          <div class="it-funfact-icon mb-30">
+            <span><i class="flaticon-completed-task"></i></span>
+          </div>
+          <div class="it-funfact-content">
+            <h6><i class="purecounter" data-purecounter-duration="1" data-purecounter-end="27">0</i></h6>
+            <span>Staff Members</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".7s">
+        <div class="it-funfact-item text-center">
+          <div class="it-funfact-icon mb-30">
+            <span><i class="flaticon-customer-review"></i></span>
+          </div>
+          <div class="it-funfact-content">
+            <h6>4.9 ★</h6>
+            <span>Google Rating</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Funfact Section End -->
+
+<!-- ========== TESTIMONIALS SECTION ========== -->
+<div id="testimonials" class="it-testimonial-area ed-testimonial-style-2 ed-testimonial-style-3 pb-120 fix p-relative" style="padding-top: 110px; background-color: #F0EDE8;">
+   <div class="ed-testimonial-shape-1">
+      <img src="{{ asset('assets/img/testimonial/shape-4-1.png') }}" alt="">
+   </div>
+   <div class="ed-testimonial-shape-2 d-none d-xxl-block">
+      <img src="{{ asset('assets/img/testimonial/shape-5-3.png') }}" alt="">
+   </div>
+   <div class="container container-3">
+      <div class="it-testimonial-title-wrap" style="margin-bottom: 60px;">
+         <div class="row align-items-end">
+            <div class="col-lg-6">
+               <div class="it-testimonial-title-box">
+                  <span class="pb-fees__sub">Testimonials</span>
+                  <h4 class="ed-section-title">What Parents Say</h4>
+               </div>
+            </div>
+            <div class="col-lg-6">
+               <div class="ed-testimonial-nav">
+                   <button class="ed-testimonial-prev">
+                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path d="M9.57031 5.92969L3.50031 11.9997L9.57031 18.0697" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                           <path d="M20.5 12H3.67" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                       </svg>
+                   </button>
+                   <button class="ed-testimonial-next">
+                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path d="M14.4297 5.92969L20.4997 11.9997L14.4297 18.0697" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                           <path d="M3.5 12H20.33" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                       </svg>
+                   </button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-xl-12">
+            <div class="ed-testimonial-wrapper p-relative">
+               <div class="swiper-container ed-testimonial-active">
+                  <div class="swiper-wrapper">
+
+                     <!-- Melissa Ingram -->
+                     <div class="swiper-slide">
+                        <div class="ed-testimonial-item p-relative">
+                           <div class="ed-testimonial-ratting">
+                              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                           </div>
+                           <div class="ed-testimonial-text">
+                              <p>"Best Daycare and School in the area. They offer so much more than child care. Most of the staff have been on staff for over 10 years — low staff churn is always a good indicator of a well run business."</p>
+                           </div>
+                           <div class="ed-testimonial-author-box d-flex align-items-center">
+                              <div class="ed-testimonial-author ed-testimonial-initial mr-15" style="background:linear-gradient(135deg,#0077B6,#1a7fcf);">M</div>
+                              <div>
+                                 <h5>Melissa Ingram</h5>
+                                 <span>Local Guide · 24 reviews</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Dominique Warr -->
+                     <div class="swiper-slide">
+                        <div class="ed-testimonial-item p-relative">
+                           <div class="ed-testimonial-ratting">
+                              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                           </div>
+                           <div class="ed-testimonial-text">
+                              <p>"Peekaboo is more than a daycare — it's truly a family. Both my children have been there since they were 9 months old and the teachers and management have helped me navigate being a mom, through thick and thin."</p>
+                           </div>
+                           <div class="ed-testimonial-author-box d-flex align-items-center">
+                              <div class="ed-testimonial-author ed-testimonial-initial mr-15" style="background:linear-gradient(135deg,#D18109,#f5a623);">D</div>
+                              <div>
+                                 <h5>Dominique Warr</h5>
+                                 <span>Local Guide · 6 reviews</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Kelly Fortune -->
+                     <div class="swiper-slide">
+                        <div class="ed-testimonial-item p-relative">
+                           <div class="ed-testimonial-ratting">
+                              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                           </div>
+                           <div class="ed-testimonial-text">
+                              <p>"The family vibe, friendly faces, and staff who've been together for YEARS is all a parent can ask for. Most days I get waved goodbye, tear-free. At times she even cries to stay — that says it all!"</p>
+                           </div>
+                           <div class="ed-testimonial-author-box d-flex align-items-center">
+                              <div class="ed-testimonial-author ed-testimonial-initial mr-15" style="background:linear-gradient(135deg,#70167E,#9c2aac);">K</div>
+                              <div>
+                                 <h5>Kelly Fortune</h5>
+                                 <span>2 reviews</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Sandy Jenkins -->
+                     <div class="swiper-slide">
+                        <div class="ed-testimonial-item p-relative">
+                           <div class="ed-testimonial-ratting">
+                              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                           </div>
+                           <div class="ed-testimonial-text">
+                              <p>"When my daughter started, the teachers went the extra mile helping us transition. They are always eager to answer any questions and are so sweet to the children. Raising children takes a village — and this is my village."</p>
+                           </div>
+                           <div class="ed-testimonial-author-box d-flex align-items-center">
+                              <div class="ed-testimonial-author ed-testimonial-initial mr-15" style="background:linear-gradient(135deg,#0077B6,#70167E);">S</div>
+                              <div>
+                                 <h5>Sandy Jenkins</h5>
+                                 <span>2 reviews</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Ingrid Martheze -->
+                     <div class="swiper-slide">
+                        <div class="ed-testimonial-item p-relative">
+                           <div class="ed-testimonial-ratting">
+                              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                           </div>
+                           <div class="ed-testimonial-text">
+                              <p>"The best Daycare and pre-school in the area! The staff are incredible, kind and caring, and the teachers always go above and beyond! Highly recommend to anyone!"</p>
+                           </div>
+                           <div class="ed-testimonial-author-box d-flex align-items-center">
+                              <div class="ed-testimonial-author ed-testimonial-initial mr-15" style="background:linear-gradient(135deg,#D18109,#70167E);">I</div>
+                              <div>
+                                 <h5>Ingrid Martheze</h5>
+                                 <span>1 review</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Anandi Piek -->
+                     <div class="swiper-slide">
+                        <div class="ed-testimonial-item p-relative">
+                           <div class="ed-testimonial-ratting">
+                              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                           </div>
+                           <div class="ed-testimonial-text">
+                              <p>"After an unfortunate experience elsewhere, we found Peekaboo — best decision we ever made. The classes are stunning and the playground is any child's dream. Honestly could not be happier!"</p>
+                           </div>
+                           <div class="ed-testimonial-author-box d-flex align-items-center">
+                              <div class="ed-testimonial-author ed-testimonial-initial mr-15" style="background:linear-gradient(135deg,#1a7fcf,#70167E);">A</div>
+                              <div>
+                                 <h5>Anandi Piek</h5>
+                                 <span>Local Guide · 26 reviews</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Loren Williamson -->
+                     <div class="swiper-slide">
+                        <div class="ed-testimonial-item p-relative">
+                           <div class="ed-testimonial-ratting">
+                              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                           </div>
+                           <div class="ed-testimonial-text">
+                              <p>"Really an amazing daycare! Friendly staff. We were so worried about our little one adjusting to crèche, but she did perfectly fine with the help of the lovely staff. Best decision we ever made."</p>
+                           </div>
+                           <div class="ed-testimonial-author-box d-flex align-items-center">
+                              <div class="ed-testimonial-author ed-testimonial-initial mr-15" style="background:linear-gradient(135deg,#9c2aac,#D18109);">L</div>
+                              <div>
+                                 <h5>Loren Williamson</h5>
+                                 <span>2 reviews</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Prosper Tinarwo -->
+                     <div class="swiper-slide">
+                        <div class="ed-testimonial-item p-relative">
+                           <div class="ed-testimonial-ratting">
+                              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                           </div>
+                           <div class="ed-testimonial-text">
+                              <p>"We couldn't have asked for a better daycare. It's affordable, welcoming, and the environment is warm and nurturing. The staff are truly incredible — caring, attentive, and professional."</p>
+                           </div>
+                           <div class="ed-testimonial-author-box d-flex align-items-center">
+                              <div class="ed-testimonial-author ed-testimonial-initial mr-15" style="background:linear-gradient(135deg,#2E7D32,#0077B6);">P</div>
+                              <div>
+                                 <h5>Prosper Tinarwo</h5>
+                                 <span>2 reviews · 1 photo</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Testimonials Section End -->
+
+<!-- ========== MEET OUR TEACHERS SECTION ========== -->
+<section id="teachers" class="pb-teachers">
+<style>
+/* ============================================================
+   TEACHERS SECTION — Peekaboo (Edunity-inspired)
 ============================================================ */
 
 #teachers {
-    background-color: #f9f6f2;
+    background-color: #fff;
+    padding: 110px 0 100px;
     position: relative;
     overflow: hidden;
 }
+.pb-teachers__sub {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--color-warm);
+    display: block; margin-bottom: 12px;
+}
+.pb-teachers__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(30px, 4vw, 46px); font-weight: 900;
+    color: var(--color-text); line-height: 1.1; margin-bottom: 20px;
+}
+.pb-teachers__heading span { color: var(--color-primary); }
+.pb-teachers__lead {
+    font-family: var(--font-body);
+    color: var(--color-text-muted); font-size: 17px;
+    line-height: 1.75; max-width: 590px; margin: 0 auto;
+}
 
-/* Ambient colour blobs */
-#teachers .t-blob {
+/* Decorative shape */
+.pb-teachers__shape {
     position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
+    top: 4%; right: -1%;
     z-index: 0;
+    animation: itswing-2 3s forwards infinite alternate;
+    transform-origin: bottom right;
 }
-#teachers .t-blob--a {
-    top: -140px; right: -140px;
-    width: 520px; height: 520px;
-    background: radial-gradient(circle at 60% 40%, rgba(209,129,9,0.10), transparent 62%);
-}
-#teachers .t-blob--b {
-    bottom: 60px; left: -160px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle at 40% 60%, rgba(12,80,142,0.08), transparent 62%);
+@keyframes itswing-2 {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(5deg); }
 }
 
-/* ── PORTRAIT CARD ───────────────────────────────── */
-.t-card {
-    position: relative;
-    border-radius: 22px;
+/* ── EDUNITY-STYLE TEAM CARD ─────────────────────── */
+.ed-team-item {
+    padding: 10px;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 0 30px 0 rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+.ed-team-item:hover {
+    box-shadow: 0 8px 40px 0 rgba(0,0,0,0.12);
+    transform: translateY(-4px);
+}
+.ed-team-item:hover .ed-team-thumb img {
+    transform: scale(1.08);
+}
+.ed-team-thumb {
+    border-radius: 5px 5px 0 0;
     overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.45s cubic-bezier(0.22,0.61,0.36,1),
-                box-shadow  0.45s cubic-bezier(0.22,0.61,0.36,1);
 }
-
-/* Photo container */
-.t-card__photo {
+.ed-team-thumb img {
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+    transition: transform 0.5s ease;
+}
+.ed-team-content {
+    padding: 20px 15px 15px;
     position: relative;
+}
+.ed-team-author-box {
+    text-align: center;
+}
+.ed-team-title {
+    font-family: var(--font-heading);
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+.ed-team-author-box span {
+    font-family: var(--font-body);
+    color: var(--color-warm);
+    font-size: 14px;
+}
+.ed-team-author-box .ed-team-quals {
     display: block;
-    overflow: hidden;
-}
-.t-card--tall .t-card__photo { aspect-ratio: 3 / 4.3; }
-.t-card--mid  .t-card__photo { aspect-ratio: 3 / 3.5; }
-
-.t-card__photo img {
-    width: 100%; height: 100%;
-    object-fit: cover; display: block;
-    transition: transform 0.65s cubic-bezier(0.22,0.61,0.36,1);
+    font-family: var(--font-body);
+    color: var(--color-text-muted);
+    font-size: 12px;
+    margin-top: 4px;
 }
 
-/* Gradient info overlay */
-.t-card__overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+/* Swiper navigation arrows */
+.ed-team-arrow-box {
     display: flex;
-    flex-direction: column;
     justify-content: flex-end;
-    padding: 50px 20px 20px;
-    transition: padding-bottom 0.35s ease;
+    align-items: center;
+    gap: 15px;
 }
-
-.t-card__role {
-    font-family: "Roboto", sans-serif;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 1.3px; text-transform: uppercase;
-    color: rgba(255,255,255,0.78);
-    margin: 0 0 5px; display: block;
+.ed-team-arrow-box button {
+    font-size: 24px;
+    height: 52px;
+    width: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    cursor: pointer;
 }
-.t-card__name {
-    font-family: "Baloo 2", sans-serif;
-    font-weight: 800; color: #fff;
-    font-size: 19px; margin: 0; line-height: 1.2;
-}
-.t-card--tall .t-card__name { font-size: 22px; }
-
-.t-card__quals {
-    font-family: "Roboto", sans-serif;
-    font-size: 12px; color: rgba(255,255,255,0.65);
-    margin: 7px 0 0; display: block;
-    opacity: 0; transform: translateY(7px);
-    transition: opacity 0.35s ease 0.06s, transform 0.35s ease 0.06s;
-}
-
-/* Years badge pill */
-.t-card__badge {
-    position: absolute; top: 14px; right: 14px; z-index: 2;
-    background: rgba(255,255,255,0.94);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 50px; padding: 4px 12px;
-    font-family: "Roboto", sans-serif;
-    font-size: 11px; font-weight: 700;
-    color: #25283e; letter-spacing: 0.2px;
+.ed-team-arrow-box button:hover {
+    color: #fff;
+    background-color: var(--color-primary);
 }
 
 /* ── FULL TEAM MARQUEE ───────────────────────────── */
@@ -395,9 +1318,10 @@
     background: linear-gradient(90deg, transparent, rgba(74,37,89,0.2), transparent);
 }
 .t-team-label {
-    font-family: "Amatic SC", sans-serif;
-    font-size: 27px; font-weight: 700;
-    color: #4A2559; white-space: nowrap;
+    font-family: var(--font-body);
+    font-size: 18px; font-weight: 600;
+    color: var(--color-text); white-space: nowrap;
+    letter-spacing: 0.5px;
 }
 
 .t-marquee-wrap {
@@ -411,8 +1335,8 @@
     top: 0; bottom: 0; width: 110px;
     z-index: 2; pointer-events: none;
 }
-.t-marquee-wrap::before { left: 0;  background: linear-gradient(to right, #f9f6f2, transparent); }
-.t-marquee-wrap::after  { right: 0; background: linear-gradient(to left,  #f9f6f2, transparent); }
+.t-marquee-wrap::before { left: 0;  background: linear-gradient(to right, #fff, transparent); }
+.t-marquee-wrap::after  { right: 0; background: linear-gradient(to left,  #fff, transparent); }
 
 .t-marquee {
     display: flex; gap: 22px;
@@ -456,13 +1380,13 @@
     border-radius: 20px 0 0 20px;
 }
 .t-qual__title {
-    font-family: "Baloo 2", sans-serif;
+    font-family: var(--font-heading);
     font-size: 20px; font-weight: 800;
-    color: #25283e; margin: 0 0 10px;
+    color: var(--color-text); margin: 0 0 10px;
 }
 .t-qual__body {
-    font-family: "Roboto", sans-serif;
-    font-size: 17px; color: #5b5a7b;
+    font-family: var(--font-body);
+    font-size: 16px; color: var(--color-text-muted);
     line-height: 1.72; margin: 0;
 }
 .t-stats {
@@ -471,222 +1395,109 @@
 }
 .t-stat { text-align: center; padding: 8px 22px; }
 .t-stat__num {
-    font-family: "Baloo 2", sans-serif;
-    font-size: 34px; font-weight: 800;
-    color: #0c508e; line-height: 1;
+    font-family: var(--font-heading);
+    font-size: 34px; font-weight: 900;
+    color: var(--color-primary); line-height: 1;
     display: block; margin-bottom: 4px;
 }
 .t-stat__label {
-    font-family: "Roboto", sans-serif;
+    font-family: var(--font-body);
     font-size: 10.5px; font-weight: 700;
     letter-spacing: 1.1px; text-transform: uppercase;
-    color: #5b5a7b; display: block;
+    color: var(--color-text-muted); display: block;
 }
 .t-stat-sep { width: 1px; height: 44px; background: rgba(12,80,142,0.12); flex-shrink: 0; }
 
 /* ── RESPONSIVE ──────────────────────────────────── */
 @media (max-width: 991px) {
-    .t-card--tall .t-card__photo,
-    .t-card--mid  .t-card__photo { aspect-ratio: 3 / 3.8; }
     .t-qual { padding: 28px 28px 28px 38px; }
+    .ed-team-arrow-box { display: none; }
 }
 @media (max-width: 575px) {
-    .t-card--tall .t-card__photo,
-    .t-card--mid  .t-card__photo { aspect-ratio: 2 / 3; }
-    .t-card__name { font-size: 14px; }
-    .t-card--tall .t-card__name { font-size: 15px; }
-    .t-card__role { font-size: 9px; }
-    .t-card__badge { font-size: 10px; padding: 3px 9px; top: 10px; right: 10px; }
     .t-bubble { width: 120px; height: 120px; }
     .t-marquee--rev .t-bubble { width: 106px; height: 106px; }
     .t-qual { padding: 22px 18px 22px 28px; }
     .t-stat { padding: 6px 14px; }
     .t-stat__num { font-size: 26px; }
-    .t-team-label { font-size: 22px; }
+    .t-team-label { font-size: 15px; }
     .t-team-header { margin-top: 52px; }
-}
-
-/* ── MANAGEMENT TRIO ─────────────────────────────── */
-.t-section-divider {
-    display: flex; align-items: center; gap: 18px;
-    margin: 0 0 28px;
-}
-.t-section-divider::before,
-.t-section-divider::after {
-    content: ''; flex: 1; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(12,80,142,0.22), transparent);
-}
-.t-section-divider--teachers::before,
-.t-section-divider--teachers::after {
-    background: linear-gradient(90deg, transparent, rgba(74,37,89,0.2), transparent);
-}
-.t-divider-label {
-    font-family: "Amatic SC", sans-serif;
-    font-size: 26px; font-weight: 700;
-    white-space: nowrap;
-}
-.t-divider-label--mgmt    { color: #0c508e; }
-.t-divider-label--teachers { color: #4A2559; }
-
-.t-mgmt {
-    display: grid;
-    grid-template-columns: 1fr 1.3fr 1fr;
-    gap: 18px;
-    align-items: end;
-    position: relative; z-index: 2;
-    padding-bottom: 14px;
-    margin-bottom: 60px;
-}
-.t-mgmt-slot { position: relative; }
-
-/* Frame colours for management */
-.t-mgmt-slot:nth-child(1) .t-card { box-shadow: -10px 10px 0 0 rgba(12,80,142,0.72); }
-.t-mgmt-slot:nth-child(2) .t-card { box-shadow:   0 12px 0 0 rgba(209,129,9,0.78); }
-.t-mgmt-slot:nth-child(3) .t-card { box-shadow:  10px 10px 0 0 rgba(74,37,89,0.72); }
-
-/* Management hover — lift + deepen frame */
-.t-mgmt-slot:nth-child(1):hover .t-card {
-    transform: translateY(-5px) translateX(3px);
-    box-shadow: -13px 14px 0 0 rgba(12,80,142,0.92), 0 22px 44px rgba(12,80,142,0.13);
-}
-.t-mgmt-slot:nth-child(2):hover .t-card {
-    transform: translateY(-5px);
-    box-shadow: 0 16px 0 0 rgba(209,129,9,0.92), 0 22px 44px rgba(209,129,9,0.14);
-}
-.t-mgmt-slot:nth-child(3):hover .t-card {
-    transform: translateY(-5px) translateX(-3px);
-    box-shadow: 13px 14px 0 0 rgba(74,37,89,0.92), 0 22px 44px rgba(74,37,89,0.13);
-}
-
-/* Management overlay gradients — deeper, more authoritative */
-.t-mgmt-slot:nth-child(1) .t-card__overlay {
-    background: linear-gradient(to top, rgba(12,80,142,0.95) 0%, rgba(12,80,142,0.45) 42%, transparent 72%);
-}
-.t-mgmt-slot:nth-child(2) .t-card__overlay {
-    background: linear-gradient(to top, rgba(37,40,62,0.96) 0%, rgba(37,40,62,0.42) 42%, transparent 72%);
-}
-.t-mgmt-slot:nth-child(3) .t-card__overlay {
-    background: linear-gradient(to top, rgba(74,37,89,0.95) 0%, rgba(74,37,89,0.45) 42%, transparent 72%);
-}
-
-/* Shared hover interactions for management slots */
-.t-mgmt-slot:hover .t-card__photo img   { transform: scale(1.06); }
-.t-mgmt-slot:hover .t-card__overlay     { padding-bottom: 26px; }
-.t-mgmt-slot:hover .t-card__quals       { opacity: 1; transform: translateY(0); }
-
-/* Management card heights */
-.t-mgmt .t-card--tall .t-card__photo { aspect-ratio: 3 / 4.2; }
-.t-mgmt .t-card--mid  .t-card__photo { aspect-ratio: 3 / 3.7; }
-
-/* Gold badge for management */
-.t-card__badge--gold {
-    background: linear-gradient(135deg, #D18109, #f5a623);
-    color: #fff;
-}
-
-/* Responsive — management */
-@media (max-width: 575px) {
-    .t-mgmt {
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-    }
-    .t-mgmt-slot:nth-child(2) {
-        grid-column: 1 / -1;
-        max-width: 240px;
-        margin: 0 auto;
-    }
-    .t-mgmt-slot:nth-child(1) .t-card,
-    .t-mgmt-slot:nth-child(2) .t-card,
-    .t-mgmt-slot:nth-child(3) .t-card { box-shadow: 0 6px 24px rgba(0,0,0,0.12); }
-    .t-mgmt-slot:nth-child(1):hover .t-card,
-    .t-mgmt-slot:nth-child(2):hover .t-card,
-    .t-mgmt-slot:nth-child(3):hover .t-card {
-        transform: translateY(-4px);
-        box-shadow: 0 14px 36px rgba(0,0,0,0.16);
-    }
-    .t-mgmt .t-card--tall .t-card__photo,
-    .t-mgmt .t-card--mid  .t-card__photo { aspect-ratio: 2 / 3; }
+    .ed-team-title { font-size: 17px; }
 }
 </style>
 
-    <!-- Ambient blobs -->
-    <div class="t-blob t-blob--a"></div>
-    <div class="t-blob t-blob--b"></div>
+    <!-- Decorative swinging shape -->
+    <div class="pb-teachers__shape d-none d-md-block">
+        <img src="{{ asset('assets/img/about/shape-4-4.png') }}" alt="">
+    </div>
 
     <div class="container" style="position:relative;z-index:2;">
 
-        <!-- Section Header -->
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center mb-5">
-                <div class="vs-title title-anime animation-style2">
-                    <div class="title-anime__wrap">
-                        <span class="vs-title__sub">The Heart of Peekaboo</span>
-                        <h2 class="vs-title__main">Meet Our <span>Dedicated</span> Teachers</h2>
-                    </div>
-                </div>
-                <p style="font-family:'Roboto',sans-serif;color:#5b5a7b;font-size:17px;line-height:1.75;max-width:590px;margin:16px auto 0;">
-                    Our qualified educators bring expertise, genuine warmth, and a deep passion for early childhood development — each one chosen with care and committed to nurturing your child's unique potential.
-                </p>
+        <!-- Section Header with Swiper Arrows -->
+        <div class="row align-items-center mb-5 wow itfadeUp">
+            <div class="col-xl-6">
+                <span class="pb-teachers__sub">The Heart of Peekaboo</span>
+                <h2 class="pb-teachers__heading">Meet Our <span>Dedicated</span> Teachers</h2>
+            </div>
+            <div class="col-xl-6">
             </div>
         </div>
 
-        <!-- Management Trio -->
-        <div class="t-section-divider wow animate__fadeInUp" data-wow-delay="0.05s">
-            <span class="t-divider-label t-divider-label--mgmt">Our Leadership &amp; Management</span>
-        </div>
-
-        <div class="t-mgmt wow animate__fadeInUp" data-wow-delay="0.1s">
-
-            <!-- Management 1 — Left -->
-            <div class="t-mgmt-slot">
-                <div class="t-card t-card--mid">
-                    <div class="t-card__photo">
-                        <img src="{{ asset('assets/img/peekaboo_staff/2.png') }}" alt="Peekaboo Management">
-                        <span class="t-card__badge t-card__badge--gold">Management</span>
-                        <div class="t-card__overlay">
-                            <span class="t-card__role">Management</span>
-                            <h3 class="t-card__name">Peekaboo Management</h3>
-                            <span class="t-card__quals">Leading with Heart &amp; Vision</span>
+        <!-- Management Team — Edunity-style Swiper Carousel -->
+        <div class="ed-team-wrapper wow itfadeUp" data-wow-delay="0.1s">
+            <div class="swiper-container ed-team-active">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 — Director -->
+                    <div class="swiper-slide">
+                        <div class="ed-team-item">
+                            <div class="ed-team-thumb fix">
+                                <img src="{{ asset('assets/img/peekaboo_staff/1.png') }}" alt="Peekaboo Director">
+                            </div>
+                            <div class="ed-team-content">
+                                <div class="ed-team-author-box">
+                                    <h4 class="ed-team-title">Peekaboo Director</h4>
+                                    <span>Director &amp; Principal</span>
+                                    <span class="ed-team-quals">Founder · ECD Champion</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 — Management -->
+                    <div class="swiper-slide">
+                        <div class="ed-team-item">
+                            <div class="ed-team-thumb fix">
+                                <img src="{{ asset('assets/img/peekaboo_staff/2.png') }}" alt="Peekaboo Management">
+                            </div>
+                            <div class="ed-team-content">
+                                <div class="ed-team-author-box">
+                                    <h4 class="ed-team-title">Peekaboo Management</h4>
+                                    <span>Management</span>
+                                    <span class="ed-team-quals">Leading with Heart &amp; Vision</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 — Management -->
+                    <div class="swiper-slide">
+                        <div class="ed-team-item">
+                            <div class="ed-team-thumb fix">
+                                <img src="{{ asset('assets/img/peekaboo_staff/3.png') }}" alt="Peekaboo Management">
+                            </div>
+                            <div class="ed-team-content">
+                                <div class="ed-team-author-box">
+                                    <h4 class="ed-team-title">Peekaboo Management</h4>
+                                    <span>Management</span>
+                                    <span class="ed-team-quals">Operations &amp; Care Quality</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Management 2 — Centre (Principal / Director) -->
-            <div class="t-mgmt-slot">
-                <div class="t-card t-card--tall">
-                    <div class="t-card__photo">
-                        <img src="{{ asset('assets/img/peekaboo_staff/1.png') }}" alt="Peekaboo Director">
-                        <span class="t-card__badge t-card__badge--gold">Director</span>
-                        <div class="t-card__overlay">
-                            <span class="t-card__role">Director &amp; Principal</span>
-                            <h3 class="t-card__name">Peekaboo Director</h3>
-                            <span class="t-card__quals">Founder · ECD Champion</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Management 3 — Right -->
-            <div class="t-mgmt-slot">
-                <div class="t-card t-card--mid">
-                    <div class="t-card__photo">
-                        <img src="{{ asset('assets/img/peekaboo_staff/3.png') }}" alt="Peekaboo Management">
-                        <span class="t-card__badge t-card__badge--gold">Management</span>
-                        <div class="t-card__overlay">
-                            <span class="t-card__role">Management</span>
-                            <h3 class="t-card__name">Peekaboo Management</h3>
-                            <span class="t-card__quals">Operations &amp; Care Quality</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-        <!-- / Management Trio -->
+        <!-- / Management Team -->
 
         <!-- Full Team Marquee Strip -->
-        <div class="wow animate__fadeInUp" data-wow-delay="0.2s">
+        <div class="wow itfadeUp" data-wow-delay="0.2s">
 
             <div class="t-team-header">
                 <span class="t-team-label">Meet the Rest of Our Wonderful Team</span>
@@ -758,7 +1569,7 @@
         <!-- / Team marquee -->
 
         <!-- Qualifications Banner -->
-        <div class="t-qual wow animate__fadeInUp" data-wow-delay="0.25s">
+        <div class="t-qual wow itfadeUp" data-wow-delay="0.25s">
             <div class="row align-items-center gy-4">
                 <div class="col-lg-7">
                     <h4 class="t-qual__title">Every Teacher is Qualified, Vetted &amp; Passionate</h4>
@@ -796,526 +1607,170 @@
 </section>
 <!-- Teachers Section End -->
 
-<!-- ========== PROGRAMS & AGE GROUPS SECTION ========== -->
-<section id="programs" class="vs-class--area space-extra-top space-extra-bottom z-index-common overflow-hidden" data-bg-src="{{ asset('assets/img/class/class-bg.png') }}">
-    <div class="vs-class--ele1 vs-x-anim">
-        <img src="{{ asset('assets/img/class/class-ele1.png') }}" alt="decorative element">
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="vs-title text-center title-anime animation-style2">
-                    <div class="title-anime__wrap">
-                        <span class="vs-title__sub">Programs & Age Groups</span>
-                        <h2 class="vs-title__main">The Right Program for <span>Your Child's Age</span></h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="z-index-common">
-            <div class="vs-carousel vs-carousel--class swiper" data-xl="4" data-lg="3" data-autoplay="false" data-loop="true" data-autoplay-delay="6000" data-nav-next="#swiper-button-next" data-nav-prev="#swiper-button-prev">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide wow animate__fadeInUp" data-wow-delay="0.25s">
-                        <div class="vs-class">
-                            <div class="vs-class__figure">
-                                <div class="vs-class__figure--link">
-                                    <img class="vs-class__figure--img" src="{{ asset('assets/img/class/class-1-1.jpg') }}" alt="Baby Room Program">
-                                    <div class="vs-class__icon--wrap">
-                                        <span class="vs-class__icon vs-class__icon--color1">
-                                            <img src="{{ asset('assets/img/icons/h1-class-icon-1.svg') }}" alt="Baby icon">
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="vs-class__content">
-                                <h3 class="vs-class__heading">Baby Room</h3>
-                                <p class="vs-class__age" style="color: #0c508e; font-weight: 600; font-size: 14px; margin-bottom: 10px;">3 – 18 months</p>
-                                <p class="vs-class__text">
-                                    Your baby's first safe space away from home — loving care, sensory development, and nurturing routines.
-                                </p>
-                            </div>
-                            <div class="vs-class__bottom">
-                                <a href="{{ route('home') }}#contact" class="vs-class__link" aria-label="Learn more about Baby Room">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide wow animate__fadeInUp" data-wow-delay="0.45s">
-                        <div class="vs-class">
-                            <div class="vs-class__figure">
-                                <div class="vs-class__figure--link">
-                                    <img class="vs-class__figure--img" src="{{ asset('assets/img/class/class-1-2.jpg') }}" alt="Toddler Program">
-                                    <div class="vs-class__icon--wrap">
-                                        <span class="vs-class__icon vs-class__icon--color2">
-                                            <img src="{{ asset('assets/img/icons/h1-class-icon-2.svg') }}" alt="Toddler icon">
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="vs-class__content">
-                                <h3 class="vs-class__heading">Toddlers</h3>
-                                <p class="vs-class__age" style="color: #0c508e; font-weight: 600; font-size: 14px; margin-bottom: 10px;">18 months – 3 years</p>
-                                <p class="vs-class__text">
-                                    Active exploration in a safe environment — building confidence, language, and social skills through play.
-                                </p>
-                            </div>
-                            <div class="vs-class__bottom">
-                                <a href="{{ route('home') }}#contact" class="vs-class__link" aria-label="Learn more about Toddler Program">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide wow animate__fadeInUp" data-wow-delay="0.65s">
-                        <div class="vs-class">
-                            <div class="vs-class__figure">
-                                <div class="vs-class__figure--link">
-                                    <img class="vs-class__figure--img" src="{{ asset('assets/img/class/class-1-3.jpg') }}" alt="Preschool Program">
-                                    <div class="vs-class__icon--wrap">
-                                        <span class="vs-class__icon vs-class__icon--color3">
-                                            <img src="{{ asset('assets/img/icons/h1-class-icon-3.svg') }}" alt="Preschool icon">
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="vs-class__content">
-                                <h3 class="vs-class__heading">Preschool</h3>
-                                <p class="vs-class__age" style="color: #0c508e; font-weight: 600; font-size: 14px; margin-bottom: 10px;">3 – 4 years</p>
-                                <p class="vs-class__text">
-                                    Building independence and curiosity — creative learning, problem-solving, and early literacy skills.
-                                </p>
-                            </div>
-                            <div class="vs-class__bottom">
-                                <a href="{{ route('home') }}#contact" class="vs-class__link" aria-label="Learn more about Preschool Program">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide wow animate__fadeInUp" data-wow-delay="0.85s">
-                        <div class="vs-class">
-                            <div class="vs-class__figure">
-                                <div class="vs-class__figure--link">
-                                    <img class="vs-class__figure--img" src="{{ asset('assets/img/class/class-1-4.jpg') }}" alt="Grade R Program">
-                                    <div class="vs-class__icon--wrap">
-                                        <span class="vs-class__icon vs-class__icon--color4">
-                                            <img src="{{ asset('assets/img/icons/h1-class-icon-4.svg') }}" alt="Grade R icon">
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="vs-class__content">
-                                <h3 class="vs-class__heading">Grade R</h3>
-                                <p class="vs-class__age" style="color: #0c508e; font-weight: 600; font-size: 14px; margin-bottom: 10px;">4 – 5 years</p>
-                                <p class="vs-class__text">
-                                    Fully prepared for big school — CAPS-aligned curriculum, confidence, and a love for learning.
-                                </p>
-                            </div>
-                            <div class="vs-class__bottom">
-                                <a href="{{ route('home') }}#contact" class="vs-class__link" aria-label="Learn more about Grade R Program">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center pt-50">
-                <button id="swiper-button-prev" class="vs-slider__button" aria-label="Previous program">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
-                <button id="swiper-button-next" class="vs-slider__button" aria-label="Next program">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Programs & Age Groups Section End -->
-
 <!-- ========== A TYPICAL DAY AT PEEKABOO SECTION ========== -->
-<section id="gallery" class="vs-gallery--area space space-extra-bottom overflow-hidden">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="vs-title text-center title-anime animation-style2">
-                    <div class="title-anime__wrap">
-                        <span class="vs-title__sub">Daily Life at Peekaboo</span>
-                        <h2 class="vs-title__main">A Typical Day <span>at Our School</span></h2>
-                    </div>
-                </div>
-                <p class="text-center mb-40" style="color: #666; font-size: 17px; max-width: 700px; margin-left: auto; margin-right: auto;">
-                    From circle time to outdoor play, nutritious meals to creative activities — every moment is designed to nurture curious minds and happy hearts.
-                </p>
-            </div>
-        </div>
-
-        <!-- Gallery Tabs -->
-        <div class="row">
-            <div class="col-12">
-                <ul class="nav nav-tabs justify-content-center mb-40" id="galleryTabs" role="tablist" style="border: none; gap: 15px;">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-gallery" type="button" role="tab" aria-controls="all-gallery" aria-selected="true" style="background: #0c508e; color: white; border: none; border-radius: 25px; padding: 10px 25px; font-weight: 600;">All</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="learning-tab" data-bs-toggle="tab" data-bs-target="#learning-gallery" type="button" role="tab" aria-controls="learning-gallery" aria-selected="false" style="background: #f6f1e4; color: #4A2559; border: none; border-radius: 25px; padding: 10px 25px; font-weight: 600;">Learning</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="play-tab" data-bs-toggle="tab" data-bs-target="#play-gallery" type="button" role="tab" aria-controls="play-gallery" aria-selected="false" style="background: #f6f1e4; color: #4A2559; border: none; border-radius: 25px; padding: 10px 25px; font-weight: 600;">Play</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="creative-tab" data-bs-toggle="tab" data-bs-target="#creative-gallery" type="button" role="tab" aria-controls="creative-gallery" aria-selected="false" style="background: #f6f1e4; color: #4A2559; border: none; border-radius: 25px; padding: 10px 25px; font-weight: 600;">Creative</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="events-tab" data-bs-toggle="tab" data-bs-target="#events-gallery" type="button" role="tab" aria-controls="events-gallery" aria-selected="false" style="background: #f6f1e4; color: #4A2559; border: none; border-radius: 25px; padding: 10px 25px; font-weight: 600;">Events</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Tab Content -->
-        <div class="tab-content" id="galleryTabContent">
-            <!-- All Tab -->
-            <div class="tab-pane fade show active" id="all-gallery" role="tabpanel" aria-labelledby="all-tab">
-                <div class="vs-gallery--row">
-                    <div class="vs-gallery vs-gallery--col1 wow animate__fadeInUp" data-wow-delay="0.25s">
-                        <div class="vs-gallery__figure">
-                            <div class="vs-gallery__image--link">
-                                <img class="vs-gallery__image" src="{{ asset('assets/img/gallery/gallery-h1-1-1.jpg') }}" alt="Circle time learning activities" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="vs-gallery__hover">
-                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-1.jpg') }}" class="vs-gallery__icon popup-image" aria-label="View circle time image">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <span class="vs-gallery__cate">Learning</span>
-                            <h4 class="vs-gallery__heading">Circle Time</h4>
-                        </div>
-                    </div>
-                    <div class="vs-gallery vs-gallery--col2 wow animate__fadeInUp" data-wow-delay="0.35s">
-                        <div class="vs-gallery__figure">
-                            <div class="vs-gallery__image--link">
-                                <img class="vs-gallery__image" src="{{ asset('assets/img/gallery/gallery-h1-1-2.jpg') }}" alt="Children playing outdoors" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="vs-gallery__hover">
-                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-2.jpg') }}" class="vs-gallery__icon popup-image" aria-label="View outdoor play image">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <span class="vs-gallery__cate">Play</span>
-                            <h4 class="vs-gallery__heading">Outdoor Fun</h4>
-                        </div>
-                    </div>
-                    <div class="vs-gallery vs-gallery--col3 wow animate__fadeInUp" data-wow-delay="0.45s">
-                        <div class="vs-gallery__figure">
-                            <div class="vs-gallery__image--link">
-                                <img class="vs-gallery__image" src="{{ asset('assets/img/gallery/gallery-h1-1-3.jpg') }}" alt="Arts and crafts activities" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="vs-gallery__hover">
-                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-3.jpg') }}" class="vs-gallery__icon popup-image" aria-label="View arts and crafts image">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <span class="vs-gallery__cate">Creative</span>
-                            <h4 class="vs-gallery__heading">Arts & Crafts</h4>
-                        </div>
-                    </div>
-                    <div class="vs-gallery vs-gallery--col4 wow animate__fadeInUp" data-wow-delay="0.55s">
-                        <div class="vs-gallery__figure">
-                            <div class="vs-gallery__image--link">
-                                <img class="vs-gallery__image" src="{{ asset('assets/img/gallery/gallery-h1-1-4.jpg') }}" alt="Special events and celebrations" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="vs-gallery__hover">
-                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-4.jpg') }}" class="vs-gallery__icon popup-image" aria-label="View special events image">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <span class="vs-gallery__cate">Events</span>
-                            <h4 class="vs-gallery__heading">Special Days</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Learning Tab -->
-            <div class="tab-pane fade" id="learning-gallery" role="tabpanel" aria-labelledby="learning-tab">
-                <div class="vs-gallery--row">
-                    <div class="vs-gallery vs-gallery--col1 wow animate__fadeInUp" data-wow-delay="0.25s">
-                        <div class="vs-gallery__figure">
-                            <div class="vs-gallery__image--link">
-                                <img class="vs-gallery__image" src="{{ asset('assets/img/gallery/gallery-h1-1-1.jpg') }}" alt="Circle time learning activities" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="vs-gallery__hover">
-                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-1.jpg') }}" class="vs-gallery__icon popup-image" aria-label="View circle time image">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <span class="vs-gallery__cate">Learning</span>
-                            <h4 class="vs-gallery__heading">Circle Time</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Play Tab -->
-            <div class="tab-pane fade" id="play-gallery" role="tabpanel" aria-labelledby="play-tab">
-                <div class="vs-gallery--row">
-                    <div class="vs-gallery vs-gallery--col2 wow animate__fadeInUp" data-wow-delay="0.25s">
-                        <div class="vs-gallery__figure">
-                            <div class="vs-gallery__image--link">
-                                <img class="vs-gallery__image" src="{{ asset('assets/img/gallery/gallery-h1-1-2.jpg') }}" alt="Children playing outdoors" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="vs-gallery__hover">
-                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-2.jpg') }}" class="vs-gallery__icon popup-image" aria-label="View outdoor play image">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <span class="vs-gallery__cate">Play</span>
-                            <h4 class="vs-gallery__heading">Outdoor Fun</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Creative Tab -->
-            <div class="tab-pane fade" id="creative-gallery" role="tabpanel" aria-labelledby="creative-tab">
-                <div class="vs-gallery--row">
-                    <div class="vs-gallery vs-gallery--col3 wow animate__fadeInUp" data-wow-delay="0.25s">
-                        <div class="vs-gallery__figure">
-                            <div class="vs-gallery__image--link">
-                                <img class="vs-gallery__image" src="{{ asset('assets/img/gallery/gallery-h1-1-3.jpg') }}" alt="Arts and crafts activities" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="vs-gallery__hover">
-                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-3.jpg') }}" class="vs-gallery__icon popup-image" aria-label="View arts and crafts image">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <span class="vs-gallery__cate">Creative</span>
-                            <h4 class="vs-gallery__heading">Arts & Crafts</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Events Tab -->
-            <div class="tab-pane fade" id="events-gallery" role="tabpanel" aria-labelledby="events-tab">
-                <div class="vs-gallery--row">
-                    <div class="vs-gallery vs-gallery--col4 wow animate__fadeInUp" data-wow-delay="0.25s">
-                        <div class="vs-gallery__figure">
-                            <div class="vs-gallery__image--link">
-                                <img class="vs-gallery__image" src="{{ asset('assets/img/gallery/gallery-h1-1-4.jpg') }}" alt="Special events and celebrations" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="vs-gallery__hover">
-                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-4.jpg') }}" class="vs-gallery__icon popup-image" aria-label="View special events image">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <span class="vs-gallery__cate">Events</span>
-                            <h4 class="vs-gallery__heading">Special Days</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<style>
-/* Tab Active State */
-#galleryTabs .nav-link.active {
-    background: #0c508e !important;
-    color: white !important;
-}
-#galleryTabs .nav-link:not(.active):hover {
-    background: #D18109 !important;
-    color: white !important;
-}
-</style>
-
-<!-- A Typical Day Section End -->
-
-<!-- ========== TESTIMONIALS SECTION ========== -->
-<section id="testimonials" class="space space-extra-bottom" style="background-color: #f9f6f2; overflow: hidden;">
+<section id="gallery" class="pb-daily">
 <style>
 /* ============================================================
-   TESTIMONIALS — Halo Effect · Cognitive Fluency · Low Load
+   DAILY LIFE SECTION — Peekaboo (Premium Timeline)
 ============================================================ */
-
-/* ── GOOGLE RATING HERO ─────────────────────────────────── */
-.tr-google-hero {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 32px;
-    flex-wrap: wrap;
-    background: white;
-    border-radius: 20px;
-    padding: 30px 44px;
-    margin-bottom: 60px;
-    box-shadow: 0 4px 28px rgba(12,80,142,0.09);
-    border: 1px solid rgba(12,80,142,0.07);
-    max-width: 740px;
-    margin-left: auto;
-    margin-right: auto;
-}
-.tr-google-brand {
-    display: flex; align-items: center; gap: 12px;
-}
-.tr-google-brand svg { width: 34px; height: 34px; flex-shrink: 0; }
-.tr-google-brand__label {
-    font-family: "Roboto", sans-serif;
-    font-size: 17px; font-weight: 700;
-    color: #25283e; letter-spacing: -0.2px;
-    white-space: nowrap;
-}
-.tr-g-sep {
-    width: 1px; height: 48px;
-    background: rgba(12,80,142,0.12);
-    flex-shrink: 0;
-}
-.tr-google-score {
-    display: flex; flex-direction: column; align-items: center;
-}
-.tr-google-score__num {
-    font-family: "Baloo 2", sans-serif;
-    font-size: 46px; font-weight: 800;
-    color: #0c508e; line-height: 1;
-}
-.tr-google-score__stars {
-    display: flex; gap: 4px; margin: 4px 0 5px;
-}
-.tr-google-score__stars i { color: #FFC107; font-size: 15px; }
-.tr-google-score__label {
-    font-family: "Roboto", sans-serif;
-    font-size: 11px; font-weight: 700;
-    color: #bbb; letter-spacing: 0.8px; text-transform: uppercase;
-    white-space: nowrap;
-}
-.tr-google-cta {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #0c508e; color: white;
-    padding: 13px 24px; border-radius: 50px;
-    font-family: "Roboto", sans-serif;
-    font-size: 13px; font-weight: 700;
-    text-decoration: none; white-space: nowrap;
-    transition: background 0.25s ease, transform 0.25s ease;
-}
-.tr-google-cta:hover { background: #0a3f70; color: white; transform: translateY(-2px); }
-
-/* ── MARQUEE ─────────────────────────────────────────────── */
-.tr-marquee-wrap {
-    overflow: hidden;
+.pb-daily {
+    background-color: var(--color-surface);
+    padding: 110px 0 100px;
     position: relative;
-    padding: 12px 0;
-}
-.tr-marquee-wrap::before,
-.tr-marquee-wrap::after {
-    content: ''; position: absolute;
-    top: 0; bottom: 0; width: 160px;
-    z-index: 2; pointer-events: none;
-}
-.tr-marquee-wrap::before { left: 0;  background: linear-gradient(to right, #f9f6f2, transparent); }
-.tr-marquee-wrap::after  { right: 0; background: linear-gradient(to left,  #f9f6f2, transparent); }
-.tr-marquee {
-    display: flex; gap: 22px;
-    width: max-content;
-    animation: tr-scroll 56s linear infinite;
-}
-.tr-marquee-wrap:hover .tr-marquee { animation-play-state: paused; }
-@keyframes tr-scroll {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-}
-
-/* ── REVIEW CARD ─────────────────────────────────────────── */
-.tr-card {
-    background: white;
-    border-radius: 18px;
-    padding: 26px 26px 22px;
-    width: 340px; flex-shrink: 0;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.07);
-    border: 1px solid rgba(12,80,142,0.06);
-    display: flex; flex-direction: column;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-.tr-marquee-wrap:hover .tr-card:hover {
-    box-shadow: 0 12px 36px rgba(12,80,142,0.14);
-    transform: translateY(-4px);
-}
-.tr-card__head {
-    display: flex; align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-}
-.tr-card__g { width: 26px; height: 26px; flex-shrink: 0; }
-.tr-card__stars { display: flex; gap: 3px; }
-.tr-card__stars i { color: #FFC107; font-size: 13px; }
-.tr-card__quote {
-    font-family: "Roboto", sans-serif;
-    font-size: 18px; color: #555; line-height: 1.75;
-    flex-grow: 1; margin-bottom: 18px;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.tr-card__reviewer {
-    display: flex; align-items: center; gap: 12px;
-    border-top: 1px solid #f0ecec; padding-top: 15px;
+.pb-daily__sub {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--color-warm);
+    display: block; margin-bottom: 12px;
 }
-.tr-card__avatar {
-    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+.pb-daily__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(30px, 4vw, 46px); font-weight: 900;
+    color: var(--color-text); line-height: 1.1; margin-bottom: 18px;
+}
+.pb-daily__heading span { color: var(--color-primary); }
+.pb-daily__lead {
+    font-family: var(--font-body);
+    color: var(--color-text-muted); font-size: 17px;
+    line-height: 1.75; max-width: 620px; margin: 0 auto;
+}
+
+/* ── Timeline connector ── */
+.pb-daily__timeline {
+    position: relative;
+    margin-top: 60px;
+}
+.pb-daily__timeline::before {
+    content: '';
+    position: absolute;
+    top: 40px; left: 50%;
+    transform: translateX(-50%);
+    width: 2px; height: calc(100% - 80px);
+    background: linear-gradient(to bottom, var(--color-primary), var(--color-warm), var(--color-accent));
+    opacity: 0.2;
+    display: none;
+}
+
+/* ── Activity card ── */
+.pb-daily__card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.pb-daily__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+/* Image area */
+.pb-daily__thumb {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+}
+.pb-daily__thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.55s cubic-bezier(0.22,0.61,0.36,1);
+}
+.pb-daily__card:hover .pb-daily__thumb img {
+    transform: scale(1.06);
+}
+
+/* Time badge */
+.pb-daily__time {
+    position: absolute;
+    top: 14px; left: 14px;
+    background: var(--color-primary);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 700;
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 10px rgba(0,119,182,0.3);
+}
+
+/* Zoom icon */
+.pb-daily__zoom {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(6px);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--color-text); font-size: 14px;
+    opacity: 0; transform: scale(0.8);
+    transition: opacity 0.3s, transform 0.3s, background 0.3s;
+    text-decoration: none;
+}
+.pb-daily__card:hover .pb-daily__zoom {
+    opacity: 1; transform: scale(1);
+}
+.pb-daily__zoom:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+/* Content area */
+.pb-daily__body {
+    padding: 22px 24px 26px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.pb-daily__tag {
+    font-family: var(--font-body);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--color-warm);
+    margin-bottom: 8px; display: block;
+}
+.pb-daily__title {
+    font-family: var(--font-heading);
+    font-size: 20px; font-weight: 800;
+    color: var(--color-text);
+    margin: 0 0 8px; line-height: 1.2;
+}
+.pb-daily__desc {
+    font-family: var(--font-body);
+    font-size: 14px; color: var(--color-text-muted);
+    line-height: 1.7; margin: 0;
+    flex: 1;
+}
+
+/* ── Step number badge ── */
+.pb-daily__step {
+    position: absolute;
+    bottom: 14px; left: 14px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 800;
     display: flex; align-items: center; justify-content: center;
-    color: white; font-weight: 800; font-size: 16px;
-    font-family: "Baloo 2", sans-serif;
-}
-.tr-av--1 { background: linear-gradient(135deg, #0c508e, #1a7fcf); }
-.tr-av--2 { background: linear-gradient(135deg, #D18109, #f5a623); }
-.tr-av--3 { background: linear-gradient(135deg, #4A2559, #7a3d93); }
-.tr-av--4 { background: linear-gradient(135deg, #0c508e, #4A2559); }
-.tr-av--5 { background: linear-gradient(135deg, #D18109, #4A2559); }
-.tr-av--6 { background: linear-gradient(135deg, #1a7fcf, #4A2559); }
-.tr-av--7 { background: linear-gradient(135deg, #7a3d93, #D18109); }
-.tr-card__name {
-    font-family: "Roboto", sans-serif;
-    font-size: 13px; font-weight: 700;
-    color: #25283e; display: block; margin-bottom: 2px;
-}
-.tr-card__meta {
-    font-family: "Roboto", sans-serif;
-    font-size: 11.5px; color: #bbb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* ── SECTION FOOTER ──────────────────────────────────────── */
-.tr-footer {
-    display: flex; align-items: center;
-    justify-content: center; gap: 20px;
-    flex-wrap: wrap; margin-top: 50px;
+/* ── Responsive ── */
+@media (max-width: 991px) {
+    .pb-daily__title { font-size: 18px; }
+    .pb-daily__body { padding: 18px 20px 22px; }
 }
-.tr-footer__sep { width: 1px; height: 26px; background: rgba(12,80,142,0.14); flex-shrink: 0; }
-.tr-footer__link {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-family: "Roboto", sans-serif;
-    font-size: 13px; font-weight: 700;
-    color: #0c508e; text-decoration: none;
-    transition: color 0.2s ease;
-}
-.tr-footer__link:hover { color: #D18109; }
-.tr-footer__hint {
-    font-family: "Roboto", sans-serif;
-    font-size: 12px; color: #ccc;
-    font-style: italic;
-}
-
-/* ── RESPONSIVE ──────────────────────────────────────────── */
-@media (max-width: 767px) {
-    .tr-google-hero { padding: 22px 24px; gap: 22px; }
-    .tr-g-sep { display: none; }
-    .tr-google-score__num { font-size: 36px; }
-    .tr-card { width: 280px; padding: 20px 20px 18px; }
-    .tr-marquee-wrap::before,
-    .tr-marquee-wrap::after { width: 60px; }
+@media (max-width: 575px) {
+    .pb-daily__thumb { aspect-ratio: 16 / 9; }
+    .pb-daily__title { font-size: 17px; }
+    .pb-daily__desc { font-size: 13px; }
 }
 </style>
 
@@ -1323,468 +1778,721 @@
 
         <!-- Section Header -->
         <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="vs-title text-center title-anime animation-style2 mb-50">
-                    <div class="title-anime__wrap">
-                        <span class="vs-title__sub">What Parents Say</span>
-                        <h2 class="vs-title__main">Trusted by Families Across <span>Table View & Beyond</span></h2>
-                    </div>
-                </div>
+            <div class="col-lg-7 mx-auto text-center wow itfadeUp">
+                <span class="pb-daily__sub">Daily Life at Peekaboo</span>
+                <h2 class="pb-daily__heading">A Typical Day <span>at Our School</span></h2>
+                <p class="pb-daily__lead">From circle time to outdoor play, nutritious meals to creative activities — every moment is designed to nurture curious minds and happy hearts.</p>
             </div>
         </div>
 
-        <!-- Google Rating Hero — Halo Effect anchor -->
-        <div class="tr-google-hero wow animate__fadeInUp" data-wow-delay="0.2s">
-            <div class="tr-google-brand">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                </svg>
-                <span class="tr-google-brand__label">Google Reviews</span>
-            </div>
-            <div class="tr-g-sep"></div>
-            <div class="tr-google-score">
-                <span class="tr-google-score__num">4.9</span>
-                <div class="tr-google-score__stars">
-                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star-half-stroke"></i>
-                </div>
-                <span class="tr-google-score__label">Based on Google reviews</span>
-            </div>
-            <div class="tr-g-sep"></div>
-            <a href="https://www.google.com/search?sca_esv=5dca0e6f8aa8611e&sxsrf=ANbL-n7wDfh_6uMUfIMccbvfDLI1jjISag:1771527867832&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOeTyk0RCu9d8OIuf4nt1ozXztnLQSNeeATznJNbg46WhDYPFuSQtGgk3Wh_GidGJbtfj9IN-RFQteMMTFNWerPrP9D2H3S2Qy0VzjFG6ULO5Q19Syg%3D%3D&q=Peekaboo+Daycare+%26+Preschool+Reviews&sa=X&ved=2ahUKEwi5i5bKn-aSAxVXUGcHHYmoDY0Q0bkNegQIOxAH&biw=1440&bih=778&dpr=2" target="_blank" rel="noopener" class="tr-google-cta">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> Read all reviews
-            </a>
-        </div>
+        <!-- Activity Cards -->
+        <div class="pb-daily__timeline">
+            <div class="row g-4 wow itfadeUp" data-wow-delay="0.1s">
 
-    </div><!-- /container — marquee is full-width -->
-
-    <!-- ── Marquee strip ── -->
-    <div class="tr-marquee-wrap">
-        <div class="tr-marquee">
-
-            {{-- ── SET 1 (7 cards) ── --}}
-
-            {{-- Melissa Ingram --}}
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"Best Daycare and School in the area. Babies to Grade R. They offer so much more than child care. Most of the staff have been on staff for over 10 years — low staff churn is always a good indicator of a well run business. But this is like family, well run but so caring and always going the extra mile for the little ones."</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--1">M</div>
-                    <div>
-                        <span class="tr-card__name">Melissa Ingram</span>
-                        <span class="tr-card__meta">Local Guide · 24 reviews · a month ago</span>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Dominique Warr --}}
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"Peekaboo is more than a daycare — it's truly a family. Both my children have been there since they were 9 months old and the teachers and management have helped me navigate being a mom, through thick and thin. I would highly recommend."</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--2">D</div>
-                    <div>
-                        <span class="tr-card__name">Dominique Warr</span>
-                        <span class="tr-card__meta">Local Guide · 6 reviews · 3 days ago</span>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Kelly Fortune --}}
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"Friday old school, Monday Peekaboo — her transition was seamless. The family vibe, friendly faces, and staff who've been together for YEARS is all a parent can ask for. Most days I get waved goodbye, tear-free. At times she even cries to stay — that says it all!"</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--3">K</div>
-                    <div>
-                        <span class="tr-card__name">Kelly Fortune</span>
-                        <span class="tr-card__meta">2 reviews · 3 days ago</span>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Sandy Jenkins --}}
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"When my daughter started, the teachers went the extra mile helping us transition. They are always eager to answer any questions and are so sweet to the children. Raising children takes a village — and this is my village."</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--4">S</div>
-                    <div>
-                        <span class="tr-card__name">Sandy Jenkins</span>
-                        <span class="tr-card__meta">2 reviews · a month ago</span>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Ingrid Martheze --}}
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"The best Daycare and pre-school in the area! The staff are incredible, kind and caring, and the teachers always go above and beyond! Highly recommend to anyone!"</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--5">I</div>
-                    <div>
-                        <span class="tr-card__name">Ingrid Martheze</span>
-                        <span class="tr-card__meta">1 review · 3 days ago</span>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Anandi Piek --}}
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"After an unfortunate experience elsewhere, we found Peekaboo — best decision we ever made. From the office ladies to the class teachers, friendliness is always visible. The classes are stunning and the playground is any child's dream. Honestly could not be happier!"</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--6">A</div>
-                    <div>
-                        <span class="tr-card__name">Anandi Piek</span>
-                        <span class="tr-card__meta">Local Guide · 26 reviews · 2 days ago</span>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Loren Williamson --}}
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"Really an amazing daycare! Friendly staff. We were so worried about our little one adjusting to crèche, but she did perfectly fine with the help of the lovely staff. Best decision we ever made. Will highly recommend."</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--7">L</div>
-                    <div>
-                        <span class="tr-card__name">Loren Williamson</span>
-                        <span class="tr-card__meta">2 reviews · a day ago</span>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Prosper Tinarwo --}}
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"We couldn't have asked for a better daycare. It's affordable, welcoming, and the environment is warm and nurturing. The staff are truly incredible — caring, attentive, and professional. You can tell they genuinely love what they do. Highly recommended for any parent looking for a safe and supportive place for their child."</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--1">P</div>
-                    <div>
-                        <span class="tr-card__name">Prosper Tinarwo</span>
-                        <span class="tr-card__meta">2 reviews · 1 photo · 10 minutes ago</span>
-                    </div>
-                </div>
-            </div>
-
-            {{-- ── SET 2 — duplicate for seamless infinite loop ── --}}
-
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"Best Daycare and School in the area. Babies to Grade R. They offer so much more than child care. Most of the staff have been on staff for over 10 years — low staff churn is always a good indicator of a well run business. But this is like family, well run but so caring and always going the extra mile for the little ones."</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--1">M</div>
-                    <div>
-                        <span class="tr-card__name">Melissa Ingram</span>
-                        <span class="tr-card__meta">Local Guide · 24 reviews · a month ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"Peekaboo is more than a daycare — it's truly a family. Both my children have been there since they were 9 months old and the teachers and management have helped me navigate being a mom, through thick and thin. I would highly recommend."</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--2">D</div>
-                    <div>
-                        <span class="tr-card__name">Dominique Warr</span>
-                        <span class="tr-card__meta">Local Guide · 6 reviews · 3 days ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"Friday old school, Monday Peekaboo — her transition was seamless. The family vibe, friendly faces, and staff who've been together for YEARS is all a parent can ask for. Most days I get waved goodbye, tear-free. At times she even cries to stay — that says it all!"</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--3">K</div>
-                    <div>
-                        <span class="tr-card__name">Kelly Fortune</span>
-                        <span class="tr-card__meta">2 reviews · 3 days ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"When my daughter started, the teachers went the extra mile helping us transition. They are always eager to answer any questions and are so sweet to the children. Raising children takes a village — and this is my village."</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--4">S</div>
-                    <div>
-                        <span class="tr-card__name">Sandy Jenkins</span>
-                        <span class="tr-card__meta">2 reviews · a month ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"The best Daycare and pre-school in the area! The staff are incredible, kind and caring, and the teachers always go above and beyond! Highly recommend to anyone!"</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--5">I</div>
-                    <div>
-                        <span class="tr-card__name">Ingrid Martheze</span>
-                        <span class="tr-card__meta">1 review · 3 days ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"After an unfortunate experience elsewhere, we found Peekaboo — best decision we ever made. From the office ladies to the class teachers, friendliness is always visible. The classes are stunning and the playground is any child's dream. Honestly could not be happier!"</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--6">A</div>
-                    <div>
-                        <span class="tr-card__name">Anandi Piek</span>
-                        <span class="tr-card__meta">Local Guide · 26 reviews · 2 days ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"Really an amazing daycare! Friendly staff. We were so worried about our little one adjusting to crèche, but she did perfectly fine with the help of the lovely staff. Best decision we ever made. Will highly recommend."</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--7">L</div>
-                    <div>
-                        <span class="tr-card__name">Loren Williamson</span>
-                        <span class="tr-card__meta">2 reviews · a day ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tr-card">
-                <div class="tr-card__head">
-                    <svg class="tr-card__g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    <div class="tr-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                </div>
-                <p class="tr-card__quote">"We couldn't have asked for a better daycare. It's affordable, welcoming, and the environment is warm and nurturing. The staff are truly incredible — caring, attentive, and professional. You can tell they genuinely love what they do. Highly recommended for any parent looking for a safe and supportive place for their child."</p>
-                <div class="tr-card__reviewer">
-                    <div class="tr-card__avatar tr-av--1">P</div>
-                    <div>
-                        <span class="tr-card__name">Prosper Tinarwo</span>
-                        <span class="tr-card__meta">2 reviews · 1 photo · 10 minutes ago</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- /marquee -->
-
-
-
-</section>
-<!-- Testimonials Section End -->
-
-<section id="fees" class="space" data-bg-src="{{ asset('assets/img/bg/breadcrumb-bg-1.jpg') }}">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="vs-title text-center title-anime animation-style2 mb-50">
-                    <div class="title-anime__wrap">
-                        <span class="vs-title__sub" style="color: whitesmoke">Investment in Your Child's Future</span>
-                        <h2 class="vs-title__main" style="color: white">Transparent <span>Pricing</span></h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
-                    <p class="text-center mb-40" style="color: #666; font-size: 17px; line-height: 1.7;">
-                        We believe in transparent, fair pricing with no hidden fees. Our fees cover nutritious meals, educational materials, and all daily activities.
-                    </p>
-                    <div class="text-center">
-                        <p style="color: #4A2559; font-size: 17px; margin-bottom: 25px;">
-                            <i class="fa-solid fa-info-circle" style="color: #0c508e; margin-right: 8px;"></i>
-                            Fee structure varies by age group and program. Contact us for detailed pricing and registration information.
-                        </p>
-                        <div class="d-flex gap-3 justify-content-center flex-wrap">
-                            <a href="{{ route('book-tour') }}" class="vs-btn"><span class="vs-btn__border"></span>Book a Tour</a>
-                            <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20ask%20about%20fees%20and%20registration." class="vs-btn style4" target="_blank" rel="noopener"><span class="vs-btn__border"></span>Ask About Fees</a>
+                <!-- Card 1 — Morning Arrival -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="pb-daily__card">
+                        <div class="pb-daily__thumb">
+                            <img src="{{ asset('assets/img/gallery/gallery-h1-1-1.jpg') }}" alt="Circle time learning" loading="lazy">
+                            <span class="pb-daily__time">06:00 – 08:00</span>
+                            <span class="pb-daily__step">1</span>
+                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-1.jpg') }}" class="pb-daily__zoom popup-image" aria-label="View image"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        </div>
+                        <div class="pb-daily__body">
+                            <span class="pb-daily__tag">Morning</span>
+                            <h4 class="pb-daily__title">Welcome &amp; Circle Time</h4>
+                            <p class="pb-daily__desc">Warm welcomes, morning songs, calendar activities and setting intentions for a wonderful day of learning together.</p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Card 2 — Learning Time -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="pb-daily__card">
+                        <div class="pb-daily__thumb">
+                            <img src="{{ asset('assets/img/gallery/gallery-h1-1-3.jpg') }}" alt="Arts and crafts" loading="lazy">
+                            <span class="pb-daily__time">08:00 – 11:00</span>
+                            <span class="pb-daily__step">2</span>
+                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-3.jpg') }}" class="pb-daily__zoom popup-image" aria-label="View image"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        </div>
+                        <div class="pb-daily__body">
+                            <span class="pb-daily__tag">Learning</span>
+                            <h4 class="pb-daily__title">Creative Arts &amp; Lessons</h4>
+                            <p class="pb-daily__desc">Age-appropriate curriculum activities including literacy, numeracy, arts and crafts, and sensory exploration.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 — Outdoor Play -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="pb-daily__card">
+                        <div class="pb-daily__thumb">
+                            <img src="{{ asset('assets/img/gallery/gallery-h1-1-2.jpg') }}" alt="Outdoor play" loading="lazy">
+                            <span class="pb-daily__time">11:00 – 13:00</span>
+                            <span class="pb-daily__step">3</span>
+                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-2.jpg') }}" class="pb-daily__zoom popup-image" aria-label="View image"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        </div>
+                        <div class="pb-daily__body">
+                            <span class="pb-daily__tag">Active Play</span>
+                            <h4 class="pb-daily__title">Outdoor Fun &amp; Lunch</h4>
+                            <p class="pb-daily__desc">Free play on our safe outdoor equipment, followed by nutritious meals prepared fresh on-site by our kitchen team.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 — Afternoon -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="pb-daily__card">
+                        <div class="pb-daily__thumb">
+                            <img src="{{ asset('assets/img/gallery/gallery-h1-1-4.jpg') }}" alt="Special events" loading="lazy">
+                            <span class="pb-daily__time">13:00 – 18:00</span>
+                            <span class="pb-daily__step">4</span>
+                            <a href="{{ asset('assets/img/gallery/gallery-h1-1-4.jpg') }}" class="pb-daily__zoom popup-image" aria-label="View image"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        </div>
+                        <div class="pb-daily__body">
+                            <span class="pb-daily__tag">Afternoon</span>
+                            <h4 class="pb-daily__title">Rest, Play &amp; Pickup</h4>
+                            <p class="pb-daily__desc">Nap time for little ones, story sessions, free play and enrichment activities until parents collect.</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+
     </div>
 </section>
-<!-- Fees Section End -->
+<!-- A Typical Day Section End -->
+
 
 <!-- ========== FAQ SECTION ========== -->
-<section id="faq" class="space space-extra-bottom">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="vs-title text-center title-anime animation-style2 mb-50">
-                    <div class="title-anime__wrap">
-                        <span class="vs-title__sub">Questions? We Have Answers</span>
-                        <h2 class="vs-title__main">Frequently Asked <span>Questions</span></h2>
+<section id="faq" class="pb-faq">
+<style>
+/* ============================================================
+   FAQ SECTION — Peekaboo (Premium Split Layout)
+============================================================ */
+.pb-faq {
+    background-color: #fff;
+    padding: 110px 0 100px;
+    position: relative;
+    overflow: hidden;
+}
+.pb-faq__shape {
+    position: absolute;
+    bottom: 5%; left: -2%;
+    z-index: 0;
+    animation: itswing-2 3s forwards infinite alternate;
+    transform-origin: top left;
+    opacity: 0.6;
+}
+
+/* ── Left column ── */
+.pb-faq__sub {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--color-warm);
+    display: block; margin-bottom: 12px;
+}
+.pb-faq__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(30px, 4vw, 42px); font-weight: 900;
+    color: var(--color-text); line-height: 1.1; margin-bottom: 18px;
+}
+.pb-faq__heading span { color: var(--color-primary); }
+.pb-faq__lead {
+    font-family: var(--font-body);
+    color: var(--color-text-muted); font-size: 16px;
+    line-height: 1.75; margin-bottom: 36px;
+}
+
+/* Contact prompt card */
+.pb-faq__contact {
+    background: var(--color-surface);
+    border-radius: 16px;
+    padding: 28px 30px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+.pb-faq__contact-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+}
+.pb-faq__contact-title {
+    font-family: var(--font-body);
+    font-size: 17px; font-weight: 700;
+    color: var(--color-text); margin: 0 0 6px;
+}
+.pb-faq__contact-text {
+    font-family: var(--font-body);
+    font-size: 14px; color: var(--color-text-muted);
+    line-height: 1.6; margin: 0 0 14px;
+}
+.pb-faq__contact-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 700;
+    color: #fff;
+    background: var(--color-whatsapp, #25D366);
+    padding: 10px 22px;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    transition: background 0.3s, transform 0.3s;
+    margin-top: 4px;
+}
+.pb-faq__contact-link:hover {
+    background: #1ebd5a;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* ── Accordion ── */
+.pb-faq__item {
+    background: #fff;
+    border: 1px solid #eaeef3;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.pb-faq__item:has(.accordion-button:not(.collapsed)) {
+    border-color: var(--color-primary);
+    box-shadow: 0 6px 24px rgba(0,119,182,0.08);
+}
+
+.pb-faq .accordion .accordion-button.pb-faq__btn {
+    font-family: var(--font-body) !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    color: var(--color-text) !important;
+    background: #fff !important;
+    padding: 20px 24px;
+    box-shadow: none !important;
+    gap: 14px;
+    border-radius: 14px;
+}
+.pb-faq .accordion .accordion-button.pb-faq__btn:not(.collapsed) {
+    color: var(--color-primary) !important;
+    background: #fff !important;
+}
+
+/* Icon circle */
+.pb-faq .accordion-button .pb-faq__icon {
+    width: 34px !important; height: 34px !important;
+    min-width: 34px;
+    border-radius: 50% !important;
+    background: var(--color-surface) !important;
+    display: inline-flex !important; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.3s, color 0.3s;
+}
+.pb-faq .accordion-button .pb-faq__icon i {
+    font-size: 13px !important;
+    color: var(--color-primary) !important;
+    transition: color 0.3s;
+    line-height: 1;
+}
+.pb-faq .accordion-button:not(.collapsed) .pb-faq__icon {
+    background: var(--color-primary) !important;
+}
+.pb-faq .accordion-button:not(.collapsed) .pb-faq__icon i {
+    color: #fff !important;
+}
+
+/* Override Bootstrap accordion arrow */
+.pb-faq .accordion .accordion-button.pb-faq__btn::after {
+    background-image: none !important;
+    content: '\f078' !important;
+    font-family: 'Font Awesome 6 Pro' !important;
+    font-weight: 900 !important;
+    font-size: 12px !important;
+    color: var(--color-text-muted);
+    width: auto; height: auto;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.pb-faq .accordion .accordion-button.pb-faq__btn:not(.collapsed)::after {
+    content: '\f077' !important;
+    color: var(--color-primary);
+    transform: none;
+}
+
+.pb-faq__body {
+    font-family: var(--font-body);
+    font-size: 15px; color: var(--color-text-muted);
+    line-height: 1.8;
+    padding: 0 24px 22px 72px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 991px) {
+    .pb-faq__contact { margin-bottom: 40px; }
+}
+@media (max-width: 575px) {
+    .pb-faq__btn { font-size: 15px; padding: 16px 18px; gap: 10px; }
+    .pb-faq__body { padding: 0 18px 18px 62px; font-size: 14px; }
+    .pb-faq__icon { width: 30px; height: 30px; }
+    .pb-faq__icon i { font-size: 11px; }
+}
+</style>
+
+    <!-- Decorative shape -->
+    <div class="pb-faq__shape d-none d-lg-block">
+        <img src="{{ asset('assets/img/about/ed-shape-3-1.png') }}" alt="">
+    </div>
+
+    <div class="container" style="position:relative;z-index:2;">
+        <div class="row gy-5">
+
+            <!-- Left Column — Heading + Contact Card -->
+            <div class="col-lg-5 wow itfadeUp">
+                <span class="pb-faq__sub">Got Questions?</span>
+                <h2 class="pb-faq__heading">Frequently Asked <span>Questions</span></h2>
+                <p class="pb-faq__lead">Everything you need to know about Peekaboo — answered clearly and honestly. Can't find what you're looking for? Reach out directly.</p>
+
+                <div class="pb-faq__contact">
+                    <div class="pb-faq__contact-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div>
+                        <h4 class="pb-faq__contact-title">Still Have Questions?</h4>
+                        <p class="pb-faq__contact-text">Our friendly team is always happy to chat. Book a tour or send us a message — we'd love to hear from you.</p>
+                        <a href="https://wa.me/27832730498?text=Hi%20Peekaboo%2C%20I%20have%20a%20question" class="pb-faq__contact-link" target="_blank" rel="noopener">
+                            <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp <i class="fa-solid fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="accordion accordion-flush" id="faqAccordion">
-                    <div class="accordion-item wow animate__fadeInUp" data-wow-delay="0.15s" style="border: 1px solid #e8e2d8; border-radius: 10px; margin-bottom: 15px; overflow: hidden;">
-                        <h3 class="accordion-header" id="faq1">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1Content" aria-expanded="true" aria-controls="faq1Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 17px;">
-                                What are your operating hours?
+
+            <!-- Right Column — Accordion -->
+            <div class="col-lg-7">
+                <div class="accordion" id="faqAccordion">
+
+                    <div class="pb-faq__item wow itfadeUp" data-wow-delay="0.05s">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button pb-faq__btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq1Content" aria-expanded="true" aria-controls="faq1Content">
+                                <span class="pb-faq__icon"><i class="fa-solid fa-clock"></i></span> What are your operating hours?
                             </button>
                         </h3>
-                        <div id="faq1Content" class="accordion-collapse collapse show" aria-labelledby="faq1" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666; font-size: 17px;">
-                                We're open Monday to Friday from 06:00 to 18:00. We understand that working parents need flexible hours, and we're here to support you.
+                        <div id="faq1Content" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="pb-faq__body">
+                                We're open Monday to Friday from <strong>06:00 to 18:00</strong>. We understand that working parents need flexible hours, and we're here to support you every step of the way.
                             </div>
                         </div>
                     </div>
 
-                    <div class="accordion-item wow animate__fadeInUp" data-wow-delay="0.25s" style="border: 1px solid #e8e2d8; border-radius: 10px; margin-bottom: 15px; overflow: hidden;">
-                        <h3 class="accordion-header" id="faq2">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2Content" aria-expanded="false" aria-controls="faq2Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 17px;">
-                                What safety protocols do you have in place?
+                    <div class="pb-faq__item wow itfadeUp" data-wow-delay="0.1s">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed pb-faq__btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq2Content" aria-expanded="false" aria-controls="faq2Content">
+                                <span class="pb-faq__icon"><i class="fa-solid fa-shield-halved"></i></span> What safety protocols do you have in place?
                             </button>
                         </h3>
-                        <div id="faq2Content" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666; font-size: 17px;">
-                                Your child's safety is our priority. We have 24/7 CCTV monitoring, controlled access entry, qualified first-aid trained staff, secure outdoor play areas, and strict pick-up/drop-off protocols.
+                        <div id="faq2Content" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="pb-faq__body">
+                                Your child's safety is our priority. We have <strong>24/7 CCTV monitoring</strong>, controlled access entry, qualified first-aid trained staff, secure outdoor play areas, and strict pick-up/drop-off protocols.
                             </div>
                         </div>
                     </div>
 
-                    <div class="accordion-item wow animate__fadeInUp" data-wow-delay="0.35s" style="border: 1px solid #e8e2d8; border-radius: 10px; margin-bottom: 15px; overflow: hidden;">
-                        <h3 class="accordion-header" id="faq3">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3Content" aria-expanded="false" aria-controls="faq3Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 17px;">
-                                Are meals provided?
+                    <div class="pb-faq__item wow itfadeUp" data-wow-delay="0.15s">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed pb-faq__btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq3Content" aria-expanded="false" aria-controls="faq3Content">
+                                <span class="pb-faq__icon"><i class="fa-solid fa-utensils"></i></span> Are meals provided?
                             </button>
                         </h3>
-                        <div id="faq3Content" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666; font-size: 17px;">
-                                Yes! We provide nutritious, balanced meals and snacks prepared fresh daily on-site. Our menu is designed to be healthy, varied, and child-friendly. Special dietary requirements can be accommodated.
+                        <div id="faq3Content" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="pb-faq__body">
+                                Yes! We provide <strong>nutritious, balanced meals and snacks</strong> prepared fresh daily on-site. Our menu is healthy, varied, and child-friendly. Special dietary requirements can be accommodated.
                             </div>
                         </div>
                     </div>
 
-                    <div class="accordion-item wow animate__fadeInUp" data-wow-delay="0.45s" style="border: 1px solid #e8e2d8; border-radius: 10px; margin-bottom: 15px; overflow: hidden;">
-                        <h3 class="accordion-header" id="faq4">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4Content" aria-expanded="false" aria-controls="faq4Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 17px;">
-                                How do I register my child?
+                    <div class="pb-faq__item wow itfadeUp" data-wow-delay="0.2s">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed pb-faq__btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq4Content" aria-expanded="false" aria-controls="faq4Content">
+                                <span class="pb-faq__icon"><i class="fa-solid fa-pen-to-square"></i></span> How do I register my child?
                             </button>
                         </h3>
-                        <div id="faq4Content" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666; font-size: 17px;">
-                                Registration is simple. First, book a tour to visit our facilities and meet our team. Then, complete the online application form or contact us directly. We'll guide you through the enrollment process and answer any questions you have.
+                        <div id="faq4Content" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="pb-faq__body">
+                                Registration is simple. <strong>Book a tour</strong> to visit our facilities and meet our team, then complete the online enrolment form. We'll guide you through the entire process and answer any questions you have.
                             </div>
                         </div>
                     </div>
 
-                    <div class="accordion-item wow animate__fadeInUp" data-wow-delay="0.55s" style="border: 1px solid #e8e2d8; border-radius: 10px; margin-bottom: 15px; overflow: hidden;">
-                        <h3 class="accordion-header" id="faq5">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5Content" aria-expanded="false" aria-controls="faq5Content" style="background: white; color: #4A2559; font-weight: 600; padding: 20px 25px; font-size: 17px;">
-                                Is your curriculum aligned with CAPS?
+                    <div class="pb-faq__item wow itfadeUp" data-wow-delay="0.25s">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed pb-faq__btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq5Content" aria-expanded="false" aria-controls="faq5Content">
+                                <span class="pb-faq__icon"><i class="fa-solid fa-graduation-cap"></i></span> Is your curriculum aligned with CAPS?
                             </button>
                         </h3>
-                        <div id="faq5Content" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body" style="padding: 20px 25px; background: #fdfcfa; color: #666; font-size: 17px;">
-                                Absolutely. Our preschool and Grade R programs are fully aligned with the CAPS curriculum, ensuring your child is academically prepared and confident when they start Grade 1.
+                        <div id="faq5Content" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="pb-faq__body">
+                                Absolutely. Our Preschool and Grade R programs are <strong>fully aligned with the CAPS curriculum</strong>, ensuring your child is academically prepared and confident when they start Grade 1.
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
+
         </div>
     </div>
 </section>
 <!-- FAQ Section End -->
 
 <!-- ========== FINAL CTA SECTION ========== -->
-<section id="contact" class="vs-cta--area space-extra-top space-extra-bottom parallax-wrap" data-bg-src="{{ asset('assets/img/bg/breadcrumb-bg-2.jpg') }}" style="background-size: cover; background-position: center;">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <div class="vs-title text-center title-anime animation-style2 mb-30">
-                    <div class="title-anime__wrap">
-                        <span class="vs-title__sub text-white" style="opacity: 0.95;">Start Their Journey Today</span>
-                        <h2 class="vs-title__main text-white">Give Your Child a <span>Confident Start</span></h2>
+<section id="contact" class="pb-cta">
+<style>
+/* ============================================================
+   CTA SECTION — Peekaboo (On-brand Split Layout)
+============================================================ */
+.pb-cta {
+    background: var(--color-surface);
+    padding: 110px 0 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ── Left column — copy ── */
+.pb-cta__sub {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--color-warm);
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 14px;
+}
+.pb-cta__sub::before {
+    content: '';
+    width: 28px; height: 2px;
+    background: var(--color-warm);
+}
+.pb-cta__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(30px, 4vw, 46px); font-weight: 900;
+    color: var(--color-text); line-height: 1.1;
+    margin-bottom: 18px;
+}
+.pb-cta__heading span { color: var(--color-primary); }
+.pb-cta__lead {
+    font-family: var(--font-body);
+    font-size: 16px; line-height: 1.8;
+    color: var(--color-text-muted);
+    margin-bottom: 32px; max-width: 480px;
+}
+
+/* Trust indicators */
+.pb-cta__trust {
+    display: flex; flex-wrap: wrap; gap: 20px;
+    margin-bottom: 36px;
+}
+.pb-cta__trust-item {
+    display: flex; align-items: center; gap: 10px;
+}
+.pb-cta__trust-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(0,119,182,0.08);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-primary); font-size: 16px;
+    flex-shrink: 0;
+}
+.pb-cta__trust-text {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.3;
+}
+
+/* Buttons */
+.pb-cta__buttons {
+    display: flex; flex-wrap: wrap; gap: 14px;
+}
+.pb-cta__btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 700;
+    background: var(--color-primary); color: #fff;
+    padding: 16px 34px; border-radius: var(--radius-pill);
+    text-decoration: none; border: none;
+    transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s;
+    box-shadow: 0 4px 18px rgba(0,119,182,0.25);
+}
+.pb-cta__btn-primary:hover {
+    background: var(--color-primary-dk); color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,119,182,0.35);
+}
+.pb-cta__btn-secondary {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 600;
+    background: #fff; color: var(--color-text);
+    padding: 16px 34px; border-radius: var(--radius-pill);
+    border: 2px solid #e2e6ea;
+    text-decoration: none;
+    transition: all 0.28s ease;
+}
+.pb-cta__btn-secondary:hover {
+    border-color: var(--color-primary); color: var(--color-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 18px rgba(0,119,182,0.1);
+}
+
+/* ── Right column — action card ── */
+.pb-cta__card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 44px 40px;
+    position: relative;
+}
+.pb-cta__card-badge {
+    position: absolute;
+    top: -14px; right: 24px;
+    background: var(--color-warm);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 7px 20px;
+    border-radius: var(--radius-pill);
+    animation: pulse-badge 2s ease-in-out infinite;
+}
+@keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+.pb-cta__card-title {
+    font-family: var(--font-heading);
+    font-size: 24px; font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 10px;
+}
+.pb-cta__card-desc {
+    font-family: var(--font-body);
+    font-size: 16px; color: var(--color-text-muted);
+    line-height: 1.7; margin-bottom: 28px;
+}
+
+/* Contact rows inside card */
+.pb-cta__card-contacts {
+    display: flex; flex-direction: column;
+    gap: 12px; margin-bottom: 28px;
+}
+.pb-cta__card-contact {
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none;
+    padding: 12px 16px;
+    background: var(--color-surface);
+    border-radius: 12px;
+    transition: background 0.25s, transform 0.25s;
+}
+.pb-cta__card-contact:hover {
+    background: rgba(0,119,182,0.05);
+    transform: translateX(4px);
+}
+.pb-cta__card-contact-icon {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+}
+.pb-cta__card-contact-icon--whatsapp { background: #25D366; }
+.pb-cta__card-contact-icon--location { background: var(--color-warm); }
+.pb-cta__card-contact-label {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase; letter-spacing: 1px;
+    display: block; margin-bottom: 3px;
+}
+.pb-cta__card-contact-value {
+    font-family: var(--font-heading);
+    font-size: 17px; font-weight: 700;
+    color: var(--color-text);
+    display: block;
+}
+.pb-cta__card-btn {
+    display: block; width: 100%; text-align: center;
+    font-family: var(--font-body); font-size: 16px; font-weight: 700;
+    background: var(--color-primary); color: #fff;
+    padding: 16px; border-radius: var(--radius-pill);
+    text-decoration: none; border: none;
+    transition: background 0.28s;
+}
+.pb-cta__card-btn:hover {
+    background: var(--color-primary-dk); color: #fff;
+}
+.pb-cta__card-btn i { margin-right: 6px; }
+
+/* Decorative shape */
+.pb-cta__shape {
+    position: absolute;
+    top: 6%; right: -1%;
+    z-index: 0;
+    animation: itswing-2 3s forwards infinite alternate;
+    transform-origin: bottom right;
+    opacity: 0.5;
+}
+
+/* ── Responsive ── */
+@media (max-width: 991px) {
+    .pb-cta__card { margin-top: 50px; }
+    .pb-cta__lead { max-width: 100%; }
+}
+@media (max-width: 575px) {
+    .pb-cta { padding: 80px 0; }
+    .pb-cta__card { padding: 28px 22px; }
+    .pb-cta__trust { gap: 16px; }
+    .pb-cta__buttons { flex-direction: column; }
+    .pb-cta__btn-primary,
+    .pb-cta__btn-secondary { justify-content: center; width: 100%; }
+}
+</style>
+
+    <!-- Decorative shape -->
+    <div class="pb-cta__shape d-none d-lg-block">
+        <img src="{{ asset('assets/img/about/shape-4-4.png') }}" alt="">
+    </div>
+
+    <div class="container" style="position:relative;z-index:2;">
+        <div class="row gy-5 align-items-center">
+
+            <!-- Left Column — Copy + Trust + Buttons -->
+            <div class="col-lg-6 wow itfadeUp">
+                <span class="pb-cta__sub">Start Their Journey Today</span>
+                <h2 class="pb-cta__heading">Give Your Child a <span>Confident Start</span> in Life</h2>
+                <p class="pb-cta__lead">Every child deserves a safe, nurturing place to learn and grow. Secure your child's place at Peekaboo — where every day is an adventure in learning.</p>
+
+                <div class="pb-cta__trust">
+                    <div class="pb-cta__trust-item">
+                        <div class="pb-cta__trust-icon"><i class="fa-solid fa-shield-check"></i></div>
+                        <span class="pb-cta__trust-text">Licensed &amp;<br>Registered</span>
+                    </div>
+                    <div class="pb-cta__trust-item">
+                        <div class="pb-cta__trust-icon"><i class="fa-solid fa-star"></i></div>
+                        <span class="pb-cta__trust-text">4.9 Google<br>Rating</span>
+                    </div>
+                    <div class="pb-cta__trust-item">
+                        <div class="pb-cta__trust-icon"><i class="fa-solid fa-users"></i></div>
+                        <span class="pb-cta__trust-text">150+ Happy<br>Families</span>
                     </div>
                 </div>
-                <p class="text-white mb-40" style="font-size: 17px; line-height: 1.7; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    Every child deserves a safe, nurturing place to learn and grow. Limited spaces available for 2026 — secure your child's place at Peekaboo today.
-                </p>
-                <div class="d-flex gap-3 justify-content-center flex-wrap mb-4">
-                    <a href="{{ route('book-tour') }}" class="vs-btn"><span class="vs-btn__border"></span>Schedule a Visit</a>
-                    <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20enquire%20about%20Peekaboo%20Daycare." class="vs-btn style4" target="_blank" rel="noopener"><span class="vs-btn__border"></span>Talk to Our Team</a>
-                </div>
-                <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px; color: white; font-size: 14px;">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-phone" style="font-size: 18px;"></i>
-                        <a href="tel:0215574999" style="color: white; text-decoration: none;">021 557 4999</a>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-mobile-alt" style="font-size: 18px;"></i>
-                        <a href="tel:0828989967" style="color: white; text-decoration: none;">082 898 9967</a>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-map-marker-alt" style="font-size: 18px;"></i>
-                        <span>139B Humewood Drive, Parklands</span>
-                    </div>
+
+                <div class="pb-cta__buttons">
+                    <a href="{{ route('book-tour') }}" class="pb-cta__btn-primary">
+                        <i class="fa-regular fa-calendar-check"></i> Book a Tour
+                    </a>
+                    <a href="{{ route('enrol.index') }}" class="pb-cta__btn-secondary">
+                        <i class="fa-solid fa-pen-to-square"></i> Enrol Now
+                    </a>
                 </div>
             </div>
+
+            <!-- Right Column — Action Card -->
+            <div class="col-lg-5 offset-lg-1 wow itfadeUp" data-wow-delay="0.15s">
+                <div class="pb-cta__card">
+                    <span class="pb-cta__card-badge">Limited Spaces 2026</span>
+                    <h3 class="pb-cta__card-title">Get in Touch With Us</h3>
+                    <p class="pb-cta__card-desc">Have questions? Reach out anytime — our friendly team is ready to help you through the enrolment process.</p>
+
+                    <div class="pb-cta__card-contacts">
+                        <a href="tel:0215574999" class="pb-cta__card-contact">
+                            <span class="pb-cta__card-contact-icon"><i class="fa-solid fa-phone"></i></span>
+                            <span>
+                                <span class="pb-cta__card-contact-label">Call Us</span>
+                                <span class="pb-cta__card-contact-value">021 557 4999</span>
+                            </span>
+                        </a>
+                        <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20enquire%20about%20Peekaboo%20Daycare." target="_blank" rel="noopener" class="pb-cta__card-contact">
+                            <span class="pb-cta__card-contact-icon pb-cta__card-contact-icon--whatsapp"><i class="fa-brands fa-whatsapp"></i></span>
+                            <span>
+                                <span class="pb-cta__card-contact-label">WhatsApp</span>
+                                <span class="pb-cta__card-contact-value">082 898 9967</span>
+                            </span>
+                        </a>
+                        <span class="pb-cta__card-contact">
+                            <span class="pb-cta__card-contact-icon pb-cta__card-contact-icon--location"><i class="fa-solid fa-location-dot"></i></span>
+                            <span>
+                                <span class="pb-cta__card-contact-label">Visit Us</span>
+                                <span class="pb-cta__card-contact-value">139B Humewood Dr, Parklands</span>
+                            </span>
+                        </span>
+                    </div>
+
+                    <a href="{{ route('book-tour') }}" class="pb-cta__card-btn">
+                        <i class="fa-regular fa-calendar-check"></i> Book a Tour
+                    </a>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
 <!-- Final CTA Section End -->
 
+<!-- ========== MAP ========== -->
+<div class="pb-map" id="location">
+<style>
+.pb-map iframe {
+    width: 100%;
+    height: 400px;
+    border: 0;
+    display: block;
+    filter: saturate(0.8) contrast(1.05);
+}
+@media (max-width: 767px) {
+    .pb-map iframe { height: 280px; }
+}
+</style>
+    <iframe src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=139B%20Humewood%20Drive,%20Parklands,%20Cape%20Town&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</div>
+<!-- Map End -->
+
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ── data-background handler (mirrors Edunity main.js) ────────────
+    document.querySelectorAll('[data-background]').forEach(function(el) {
+        el.style.backgroundImage = 'url(' + el.getAttribute('data-background') + ')';
+    });
+
+    // ── PureCounter init ─────────────────────────────────────────────
+    if (typeof PureCounter !== 'undefined') {
+        new PureCounter();
+    }
+
+    // ── Testimonials Swiper ──────────────────────────────
+    if (document.querySelector('.pb-testi-slider')) {
+        var testiSwiper = new Swiper('.pb-testi-slider', {
+            slidesPerView: 1,
+            spaceBetween: 24,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '#testiPagination',
+                clickable: true,
+            },
+            breakpoints: {
+                576: { slidesPerView: 1, spaceBetween: 20 },
+                768: { slidesPerView: 2, spaceBetween: 22 },
+                992: { slidesPerView: 3, spaceBetween: 24 },
+            },
+        });
+    }
+});
+</script>
+@endpush

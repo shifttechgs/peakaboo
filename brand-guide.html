@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peekaboo — Brand Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: #f8f8f8;
+    color: #0E2A46;
+    line-height: 1.6;
+  }
+
+  /* ── Layout ── */
+  .brand-wrap { max-width: 1200px; margin: 0 auto; padding: 60px 32px 100px; }
+  section { margin-bottom: 80px; }
+  .section-label {
+    font-family: 'Sora', sans-serif;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2.5px;
+    color: #0077B6; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 32px; font-weight: 800;
+    color: #0E2A46; margin-bottom: 40px;
+  }
+
+  /* ── Hero header ── */
+  .brand-hero {
+    background: #0E2A46;
+    padding: 80px 32px;
+    text-align: center;
+    margin-bottom: 80px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .brand-hero::before {
+    content: '';
+    position: absolute; top: -50%; right: -20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,119,182,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .brand-hero::after {
+    content: '';
+    position: absolute; bottom: -40%; left: -15%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(209,129,9,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .brand-hero * { position: relative; z-index: 1; }
+  .brand-hero h1 {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 48px; font-weight: 800;
+    color: #fff; margin-bottom: 12px;
+  }
+  .brand-hero h1 span { color: #0077B6; }
+  .brand-hero p {
+    font-size: 16px; color: rgba(255,255,255,0.6);
+    max-width: 500px; margin: 0 auto;
+  }
+  .brand-hero .version {
+    display: inline-block;
+    background: rgba(0,119,182,0.2);
+    color: #0077B6;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 999px;
+    margin-bottom: 24px;
+  }
+
+  /* ── Color swatches ── */
+  .palette-group { margin-bottom: 48px; }
+  .palette-group-title {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: #0E2A46; margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #F5F6F8;
+  }
+  .swatches { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .swatch {
+    width: 180px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.2s;
+  }
+  .swatch:hover { transform: translateY(-4px); }
+  .swatch-color {
+    height: 110px;
+    display: flex; align-items: flex-end;
+    padding: 12px 16px;
+  }
+  .swatch-color span {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 3px 8px; border-radius: 6px;
+  }
+  .swatch-info { padding: 14px 16px; }
+  .swatch-name {
+    font-weight: 700; font-size: 13px;
+    color: #0E2A46; margin-bottom: 2px;
+  }
+  .swatch-hex {
+    font-size: 12px; color: #6b7280;
+    font-family: 'Courier New', monospace;
+  }
+  .swatch-role {
+    font-size: 11px; color: #6b7280;
+    margin-top: 6px; line-height: 1.4;
+  }
+
+  /* Light text on dark swatches */
+  .swatch--dark .swatch-color span { background: rgba(255,255,255,0.2); color: #fff; }
+  .swatch--light .swatch-color span { background: rgba(0,0,0,0.08); color: #0E2A46; }
+  .swatch--light .swatch-color { border-bottom: 1px solid #eee; }
+
+  /* Large hero swatch */
+  .swatch--hero {
+    width: 100%; max-width: 380px;
+  }
+  .swatch--hero .swatch-color { height: 160px; }
+
+  /* ── Typography specimen ── */
+  .type-specimen { margin-bottom: 36px; }
+  .type-row {
+    display: flex; align-items: baseline; gap: 32px;
+    padding: 24px 0;
+    border-bottom: 1px solid #F5F6F8;
+  }
+  .type-meta {
+    width: 200px; flex-shrink: 0;
+  }
+  .type-meta-label {
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: #0077B6; margin-bottom: 4px;
+  }
+  .type-meta-detail {
+    font-size: 12px; color: #6b7280;
+  }
+  .type-sample { flex: 1; }
+
+  /* ── Spacing & radius demos ── */
+  .radius-demos { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-end; }
+  .radius-demo {
+    text-align: center;
+  }
+  .radius-box {
+    width: 80px; height: 80px;
+    background: #0077B6;
+    margin: 0 auto 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 11px; font-weight: 600;
+  }
+  .radius-label { font-size: 12px; color: #6b7280; }
+  .radius-value { font-size: 11px; color: #0E2A46; font-weight: 700; font-family: 'Courier New', monospace; }
+
+  /* ── Section rhythm demo ── */
+  .rhythm-demo { display: flex; gap: 0; border-radius: 16px; overflow: hidden; }
+  .rhythm-block {
+    flex: 1; padding: 40px 24px; text-align: center;
+    min-height: 180px;
+    display: flex; flex-direction: column; justify-content: center; gap: 12px;
+  }
+  .rhythm-card {
+    width: 80%; max-width: 200px; margin: 0 auto;
+    padding: 16px; border-radius: 12px;
+    font-size: 12px; font-weight: 600;
+  }
+  .rhythm-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ── Button specimens ── */
+  .btn-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 32px; }
+  .btn-specimen {
+    display: inline-block;
+    padding: 0 35px; height: 56px; line-height: 56px;
+    border-radius: 60px;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    cursor: pointer; border: 2px solid transparent;
+    transition: all 0.3s;
+  }
+  .btn--primary { background: #0077B6; color: #fff; border-color: #0077B6; }
+  .btn--primary:hover { background: #0c508e; border-color: #0c508e; transform: translateY(-2px); }
+  .btn--outline { background: transparent; color: #0E2A46; border-color: #0077B6; }
+  .btn--outline:hover { background: #0077B6; color: #fff; }
+  .btn--warm { background: #D18109; color: #fff; border-color: #D18109; }
+  .btn--warm:hover { background: #b06e07; border-color: #b06e07; transform: translateY(-2px); }
+  .btn--dark { background: #0E2A46; color: #fff; border-color: #0E2A46; }
+  .btn--dark:hover { background: #17254E; transform: translateY(-2px); }
+
+  /* ── Gradient bar ── */
+  .gradient-row { display: flex; gap: 20px; flex-wrap: wrap; }
+  .gradient-card {
+    flex: 1; min-width: 250px;
+    border-radius: 16px; overflow: hidden;
+    background: #fff;
+  }
+  .gradient-bar { height: 80px; }
+  .gradient-info { padding: 16px; }
+  .gradient-name { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+  .gradient-css { font-size: 11px; color: #6b7280; font-family: 'Courier New', monospace; word-break: break-all; }
+  .gradient-use { font-size: 11px; color: #6b7280; margin-top: 6px; }
+
+  /* ── Contrast checker ── */
+  .contrast-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .contrast-card {
+    border-radius: 12px; padding: 24px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .contrast-big { font-family: 'Epilogue', sans-serif; font-size: 24px; font-weight: 700; }
+  .contrast-body { font-size: 14px; opacity: 0.85; }
+  .contrast-ratio {
+    font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 6px;
+    align-self: flex-start; margin-top: 8px;
+  }
+  .contrast-pass { background: rgba(46,125,50,0.15); color: #2E7D32; }
+  .contrast-fail { background: rgba(220,53,69,0.15); color: #dc3545; }
+
+  /* ── Do / Don't ── */
+  .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .do-card, .dont-card {
+    border-radius: 16px; padding: 28px;
+    background: #fff;
+  }
+  .do-card { border-top: 4px solid #2E7D32; }
+  .dont-card { border-top: 4px solid #dc3545; }
+  .do-card h4, .dont-card h4 {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 16px; font-weight: 700; margin-bottom: 16px;
+  }
+  .do-card h4 { color: #2E7D32; }
+  .dont-card h4 { color: #dc3545; }
+  .do-card ul, .dont-card ul { list-style: none; padding: 0; }
+  .do-card li, .dont-card li {
+    font-size: 13px; padding: 6px 0;
+    padding-left: 24px; position: relative;
+    color: #4D5756;
+  }
+  .do-card li::before { content: '✓'; position: absolute; left: 0; color: #2E7D32; font-weight: 700; }
+  .dont-card li::before { content: '✗'; position: absolute; left: 0; color: #dc3545; font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .brand-hero h1 { font-size: 32px; }
+    .swatches { gap: 12px; }
+    .swatch { width: calc(50% - 6px); }
+    .swatch--hero { max-width: 100%; }
+    .type-row { flex-direction: column; gap: 8px; }
+    .type-meta { width: 100%; }
+    .do-dont { grid-template-columns: 1fr; }
+    .rhythm-demo { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="brand-wrap">
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <div class="brand-hero">
+    <span class="version">Brand Design System v1.0</span>
+    <h1>Peekaboo <span>Daycare</span></h1>
+    <p>A comprehensive design system for building consistent, premium experiences across all touchpoints.</p>
+  </div>
+
+  <!-- ═══════════════ COLORS ═══════════════ -->
+  <section>
+    <div class="section-label">01 — Color Palette</div>
+    <div class="section-title">Colors</div>
+
+    <!-- Primary -->
+    <div class="palette-group">
+      <div class="palette-group-title">Primary</div>
+      <div class="swatches">
+        <div class="swatch swatch--hero swatch--dark">
+          <div class="swatch-color" style="background:#0077B6"><span>Primary</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Ocean Blue</div>
+            <div class="swatch-hex">#0077B6</div>
+            <div class="swatch-role">CTAs, links, active states, key accents. The core of the brand.</div>
+          </div>
+        </div>
+        <div class="swatch swatch--dark">
+          <div class="swatch-color" style="background:#0c508e"><span>Primary Dark</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Deep Blue</div>
+            <div class="swatch-hex">#0c508e</div>
+            <div class="swatch-role">Hover states, pressed buttons</div>
+          </div>
+        </div>
+        <div class="swatch swatch--dark">
+          <div class="swatch-color" style="background:#0E2A46"><span>Darkest</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Navy</div>
+            <div class="swatch-hex">#0E2A46</div>
+            <div class="swatch-role">Headings, footer, high-contrast text</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary -->
+    <div class="palette-group">
+      <div class="palette-group-title">Secondary</div>
+      <div class="swatches">
+        <div class="swatch swatch--dark">
+          <div class="swatch-color" style="background:#D18109"><span>Warm</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Golden Amber</div>
+            <div class="swatch-hex">#D18109</div>
+            <div class="swatch-role">Highlights, badges, warmth accents</div>
+          </div>
+        </div>
+        <div class="swatch swatch--dark">
+          <div class="swatch-color" style="background:#70167E"><span>Accent</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Royal Purple</div>
+            <div class="swatch-hex">#70167E</div>
+            <div class="swatch-role">Sparingly — logo, special elements</div>
+          </div>
+        </div>
+        <div class="swatch swatch--dark">
+          <div class="swatch-color" style="background:#2E7D32"><span>Success</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Forest Green</div>
+            <div class="swatch-hex">#2E7D32</div>
+            <div class="swatch-role">Confirmations, WhatsApp, positive</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Neutrals -->
+    <div class="palette-group">
+      <div class="palette-group-title">Neutrals</div>
+      <div class="swatches">
+        <div class="swatch swatch--dark">
+          <div class="swatch-color" style="background:#0E2A46"><span>Text</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Dark Navy</div>
+            <div class="swatch-hex">#0E2A46</div>
+            <div class="swatch-role">All headings, primary text</div>
+          </div>
+        </div>
+        <div class="swatch swatch--dark">
+          <div class="swatch-color" style="background:#4D5756"><span>Body</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Slate Gray</div>
+            <div class="swatch-hex">#4D5756</div>
+            <div class="swatch-role">Paragraphs, descriptions</div>
+          </div>
+        </div>
+        <div class="swatch swatch--light">
+          <div class="swatch-color" style="background:#6b7280"><span style="color:#fff">Muted</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Cool Gray</div>
+            <div class="swatch-hex">#6b7280</div>
+            <div class="swatch-role">Captions, labels, meta text</div>
+          </div>
+        </div>
+        <div class="swatch swatch--light">
+          <div class="swatch-color" style="background:#F9F6F2"><span>Surface</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Warm Cream</div>
+            <div class="swatch-hex">#F9F6F2</div>
+            <div class="swatch-role">Alternating section backgrounds</div>
+          </div>
+        </div>
+        <div class="swatch swatch--light">
+          <div class="swatch-color" style="background:#F5F6F8"><span>Card BG</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Soft Gray</div>
+            <div class="swatch-hex">#F5F6F8</div>
+            <div class="swatch-role">Cards on white sections</div>
+          </div>
+        </div>
+        <div class="swatch swatch--light">
+          <div class="swatch-color" style="background:#FFFFFF; border: 1px solid #eee;"><span>White</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Pure White</div>
+            <div class="swatch-hex">#FFFFFF</div>
+            <div class="swatch-role">Cards on cream sections, base bg</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Functional -->
+    <div class="palette-group">
+      <div class="palette-group-title">Functional</div>
+      <div class="swatches">
+        <div class="swatch swatch--dark">
+          <div class="swatch-color" style="background:#dc3545"><span>Error</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Error Red</div>
+            <div class="swatch-hex">#dc3545</div>
+            <div class="swatch-role">Form errors, destructive actions</div>
+          </div>
+        </div>
+        <div class="swatch swatch--light">
+          <div class="swatch-color" style="background:#ffc107"><span>Warning</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Warning Amber</div>
+            <div class="swatch-hex">#ffc107</div>
+            <div class="swatch-role">Warnings, attention states</div>
+          </div>
+        </div>
+        <div class="swatch swatch--dark">
+          <div class="swatch-color" style="background:#25D366"><span>WhatsApp</span></div>
+          <div class="swatch-info">
+            <div class="swatch-name">WA Green</div>
+            <div class="swatch-hex">#25D366</div>
+            <div class="swatch-role">WhatsApp links & buttons</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TYPOGRAPHY ═══════════════ -->
+  <section>
+    <div class="section-label">02 — Typography</div>
+    <div class="section-title">Type System</div>
+
+    <div class="type-specimen">
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-label">H1 — Hero</div>
+          <div class="type-meta-detail">Epilogue / 60px / 700<br>Color: #0E2A46</div>
+        </div>
+        <div class="type-sample" style="font-family:'Epilogue',sans-serif; font-size:52px; font-weight:700; color:#0E2A46; line-height:1.15;">
+          Where Learning<br>Feels Safe & Happy.
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-label">H2 — Section Title</div>
+          <div class="type-meta-detail">Epilogue / 45px / 700<br>Color: #0E2A46</div>
+        </div>
+        <div class="type-sample" style="font-family:'Epilogue',sans-serif; font-size:40px; font-weight:700; color:#0E2A46; line-height:1.25;">
+          Programs & Age Groups
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-label">H3 — Card Title</div>
+          <div class="type-meta-detail">Epilogue / 22px / 700<br>Color: #0E2A46</div>
+        </div>
+        <div class="type-sample" style="font-family:'Epilogue',sans-serif; font-size:22px; font-weight:700; color:#0E2A46;">
+          Baby Room — 3 to 18 Months
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-label">Subtitle</div>
+          <div class="type-meta-detail">Sora / 18px / 400 uppercase<br>Color: #0077B6</div>
+        </div>
+        <div class="type-sample" style="font-family:'Sora',sans-serif; font-size:18px; font-weight:400; color:#0077B6; text-transform:uppercase; letter-spacing:1px;">
+          ★ Our Programs ★
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-label">Body</div>
+          <div class="type-meta-detail">Sora / 16px / 400<br>Color: #4D5756</div>
+        </div>
+        <div class="type-sample" style="font-family:'Sora',sans-serif; font-size:16px; font-weight:400; color:#4D5756; line-height:1.8;">
+          Trusted care for children aged 3 months to Grade R, in the heart of Parklands, Cape Town. Our qualified teachers nurture every child with patience, creativity, and Christian values.
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-label">Body Lead</div>
+          <div class="type-meta-detail">Sora / 17px / 400<br>Color: #4D5756</div>
+        </div>
+        <div class="type-sample" style="font-family:'Sora',sans-serif; font-size:17px; font-weight:400; color:#4D5756; line-height:1.8;">
+          A safe, loving space where little minds grow. Licensed daycare nurturing children from infancy to Grade R.
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-label">Small / Caption</div>
+          <div class="type-meta-detail">Sora / 13px / 600<br>Color: #6b7280</div>
+        </div>
+        <div class="type-sample" style="font-family:'Sora',sans-serif; font-size:13px; font-weight:600; color:#6b7280;">
+          Registration Fee: R500 (non-refundable) · Monday – Friday: 06:00 – 18:00
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-label">Button</div>
+          <div class="type-meta-detail">Sora / 15px / 600<br>Color: #FFFFFF on primary</div>
+        </div>
+        <div class="type-sample">
+          <span style="font-family:'Sora',sans-serif; font-size:15px; font-weight:600; color:#fff; background:#0077B6; padding:12px 32px; border-radius:60px; display:inline-block;">Enrol Now</span>
+          <span style="font-family:'Sora',sans-serif; font-size:15px; font-weight:600; color:#0E2A46; border:2px solid #0077B6; padding:10px 32px; border-radius:60px; display:inline-block; margin-left:12px;">Book a Tour</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-label">Nav Link</div>
+          <div class="type-meta-detail">Sora / 15px / 500<br>Color: #0E2A46</div>
+        </div>
+        <div class="type-sample" style="display:flex; gap:32px;">
+          <span style="font-family:'Sora',sans-serif; font-size:15px; font-weight:500; color:#0E2A46;">Home</span>
+          <span style="font-family:'Sora',sans-serif; font-size:15px; font-weight:500; color:#0077B6;">Programs</span>
+          <span style="font-family:'Sora',sans-serif; font-size:15px; font-weight:500; color:#0E2A46;">About</span>
+          <span style="font-family:'Sora',sans-serif; font-size:15px; font-weight:500; color:#0E2A46;">Contact</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Font comparison -->
+    <div class="palette-group">
+      <div class="palette-group-title">Font Families — Keep vs Drop</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div style="background:#fff; border-radius:16px; padding:28px; border-left:4px solid #2E7D32;">
+          <div style="font-size:11px; font-weight:700; color:#2E7D32; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">✓ Keep</div>
+          <div style="font-family:'Epilogue',sans-serif; font-size:28px; font-weight:800; color:#0E2A46; margin-bottom:4px;">Epilogue</div>
+          <div style="font-family:'Epilogue',sans-serif; font-size:14px; color:#6b7280; margin-bottom:20px;">Headings · 600, 700, 800</div>
+          <div style="font-family:'Epilogue',sans-serif; font-size:20px; font-weight:700; color:#0E2A46; margin-bottom:4px;">The quick brown fox</div>
+          <div style="font-family:'Epilogue',sans-serif; font-size:20px; font-weight:800; color:#0E2A46;">ABCDEFGHIJKLM 0123456789</div>
+          <div style="margin-top:24px; border-top:1px solid #F5F6F8; padding-top:16px;">
+            <div style="font-family:'Sora',sans-serif; font-size:28px; font-weight:700; color:#0E2A46; margin-bottom:4px;">Sora</div>
+            <div style="font-family:'Sora',sans-serif; font-size:14px; color:#6b7280; margin-bottom:20px;">Body · 400, 500, 600, 700</div>
+            <div style="font-family:'Sora',sans-serif; font-size:16px; font-weight:400; color:#4D5756; margin-bottom:4px;">The quick brown fox jumps over the lazy dog.</div>
+            <div style="font-family:'Sora',sans-serif; font-size:16px; font-weight:600; color:#4D5756;">ABCDEFGHIJKLM 0123456789</div>
+          </div>
+        </div>
+        <div style="background:#fff; border-radius:16px; padding:28px; border-left:4px solid #dc3545; opacity:0.7;">
+          <div style="font-size:11px; font-weight:700; color:#dc3545; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">✗ Drop from public site</div>
+          <div style="font-family:'Baloo 2',sans-serif; font-size:24px; font-weight:700; color:#0E2A46; margin-bottom:2px;">Baloo 2</div>
+          <div style="font-size:12px; color:#6b7280; margin-bottom:8px; text-decoration:line-through;">Too playful for premium direction</div>
+          <div style="font-family:'Baloo 2',sans-serif; font-size:18px; color:#999;">The quick brown fox</div>
+          <div style="margin-top:18px;">
+            <div style="font-family:'Roboto',sans-serif; font-size:24px; font-weight:500; color:#0E2A46; margin-bottom:2px;">Roboto</div>
+            <div style="font-size:12px; color:#6b7280; margin-bottom:8px; text-decoration:line-through;">Redundant — Sora covers this role</div>
+            <div style="font-family:'Roboto',sans-serif; font-size:18px; color:#999;">The quick brown fox</div>
+          </div>
+          <div style="margin-top:18px;">
+            <div style="font-family:'Amatic SC',sans-serif; font-size:28px; font-weight:700; color:#0E2A46; margin-bottom:2px;">Amatic SC</div>
+            <div style="font-size:12px; color:#6b7280; text-decoration:line-through;">Decorative, unused on homepage</div>
+            <div style="font-family:'Amatic SC',sans-serif; font-size:24px; color:#999;">The quick brown fox</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ BUTTONS ═══════════════ -->
+  <section>
+    <div class="section-label">03 — Buttons</div>
+    <div class="section-title">Button Styles</div>
+
+    <div class="btn-row">
+      <a class="btn-specimen btn--primary">Enrol Now</a>
+      <a class="btn-specimen btn--outline">Book a Tour</a>
+      <a class="btn-specimen btn--warm">Ask on WhatsApp</a>
+      <a class="btn-specimen btn--dark">Learn More</a>
+    </div>
+    <div style="font-size:12px; color:#6b7280; margin-top:-16px;">
+      All buttons: Sora 15px/600, pill radius (60px), 56px height, 2px border
+    </div>
+  </section>
+
+  <!-- ═══════════════ SECTION RHYTHM ═══════════════ -->
+  <section>
+    <div class="section-label">04 — Layout Rhythm</div>
+    <div class="section-title">Section Background Alternation</div>
+
+    <div class="rhythm-demo">
+      <div class="rhythm-block" style="background:#FFFFFF;">
+        <div class="rhythm-label" style="color:#6b7280;">White Section</div>
+        <div class="rhythm-card" style="background:#F5F6F8; color:#0E2A46;">Card: #F5F6F8</div>
+        <div style="font-size:11px; color:#6b7280;">Teams, FAQ, Fees</div>
+      </div>
+      <div class="rhythm-block" style="background:#F9F6F2;">
+        <div class="rhythm-label" style="color:#6b7280;">Cream Section</div>
+        <div class="rhythm-card" style="background:#FFFFFF; color:#0E2A46;">Card: #FFFFFF</div>
+        <div style="font-size:11px; color:#6b7280;">Programs, Daily Life, CTA</div>
+      </div>
+      <div class="rhythm-block" style="background:#0E2A46;">
+        <div class="rhythm-label" style="color:rgba(255,255,255,0.5);">Dark Section</div>
+        <div class="rhythm-card" style="background:rgba(255,255,255,0.08); color:#fff;">Transparent cards</div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.45);">Footer, Trust Strip</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px; background:#fff; border-radius:12px; padding:20px 24px; font-size:13px; color:#4D5756;">
+      <strong style="color:#0E2A46;">Rule:</strong> No card shadows. No card borders. Contrast comes purely from background color difference between the section and its cards.
+    </div>
+  </section>
+
+  <!-- ═══════════════ BORDER RADIUS ═══════════════ -->
+  <section>
+    <div class="section-label">05 — Radius & Shape</div>
+    <div class="section-title">Border Radius Scale</div>
+
+    <div class="radius-demos">
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius:6px;">sm</div>
+        <div class="radius-value">6px</div>
+        <div class="radius-label">Inputs, small pills</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius:12px;">md</div>
+        <div class="radius-value">12px</div>
+        <div class="radius-label">Cards, panels</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius:20px;">lg</div>
+        <div class="radius-value">20px</div>
+        <div class="radius-label">Large cards, sections</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius:999px; width:120px;">pill</div>
+        <div class="radius-value">999px</div>
+        <div class="radius-label">Buttons, badges, tags</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ GRADIENTS ═══════════════ -->
+  <section>
+    <div class="section-label">06 — Gradients</div>
+    <div class="section-title">Gradient System (Minimal Use)</div>
+
+    <div class="gradient-row">
+      <div class="gradient-card">
+        <div class="gradient-bar" style="background:linear-gradient(135deg, #0077B6 0%, #0c508e 100%);"></div>
+        <div class="gradient-info">
+          <div class="gradient-name">Primary Fade</div>
+          <div class="gradient-css">#0077B6 → #0c508e</div>
+          <div class="gradient-use">Auth pages header only</div>
+        </div>
+      </div>
+      <div class="gradient-card">
+        <div class="gradient-bar" style="background:linear-gradient(90deg, #0a2540, #0E2A46, #0c3a5e);"></div>
+        <div class="gradient-info">
+          <div class="gradient-name">Dark Strip</div>
+          <div class="gradient-css">#0a2540 → #0E2A46 → #0c3a5e</div>
+          <div class="gradient-use">Trust marquee strip</div>
+        </div>
+      </div>
+      <div class="gradient-card">
+        <div class="gradient-bar" style="background:linear-gradient(135deg, #D18109, #ffa726);"></div>
+        <div class="gradient-info">
+          <div class="gradient-name">Warm Glow</div>
+          <div class="gradient-css">#D18109 → #ffa726</div>
+          <div class="gradient-use">Decorative accent (hero blobs)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CONTRAST ═══════════════ -->
+  <section>
+    <div class="section-label">07 — Accessibility</div>
+    <div class="section-title">Contrast Pairings</div>
+
+    <div class="contrast-grid">
+      <div class="contrast-card" style="background:#FFFFFF;">
+        <div class="contrast-big" style="color:#0E2A46;">Heading on White</div>
+        <div class="contrast-body" style="color:#4D5756;">Body text reads clearly here.</div>
+        <span class="contrast-ratio contrast-pass">AAA — 15.4:1</span>
+      </div>
+      <div class="contrast-card" style="background:#F9F6F2;">
+        <div class="contrast-big" style="color:#0E2A46;">Heading on Cream</div>
+        <div class="contrast-body" style="color:#4D5756;">Body text reads clearly here.</div>
+        <span class="contrast-ratio contrast-pass">AAA — 13.8:1</span>
+      </div>
+      <div class="contrast-card" style="background:#0E2A46;">
+        <div class="contrast-big" style="color:#FFFFFF;">White on Navy</div>
+        <div class="contrast-body" style="color:rgba(255,255,255,0.7);">Footer body text style.</div>
+        <span class="contrast-ratio contrast-pass">AAA — 15.4:1</span>
+      </div>
+      <div class="contrast-card" style="background:#FFFFFF;">
+        <div class="contrast-big" style="color:#0077B6;">Primary on White</div>
+        <div class="contrast-body" style="color:#4D5756;">Links and accent text.</div>
+        <span class="contrast-ratio contrast-pass">AA — 4.6:1</span>
+      </div>
+      <div class="contrast-card" style="background:#F5F6F8;">
+        <div class="contrast-big" style="color:#0E2A46;">Heading on Card BG</div>
+        <div class="contrast-body" style="color:#4D5756;">Card content reads well.</div>
+        <span class="contrast-ratio contrast-pass">AAA — 14.2:1</span>
+      </div>
+      <div class="contrast-card" style="background:#0077B6;">
+        <div class="contrast-big" style="color:#FFFFFF;">White on Primary</div>
+        <div class="contrast-body" style="color:rgba(255,255,255,0.9);">Button label style.</div>
+        <span class="contrast-ratio contrast-pass">AA — 4.6:1</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ DO / DON'T ═══════════════ -->
+  <section>
+    <div class="section-label">08 — Guidelines</div>
+    <div class="section-title">Do & Don't</div>
+
+    <div class="do-dont">
+      <div class="do-card">
+        <h4>Do</h4>
+        <ul>
+          <li>Use background contrast for card separation (no shadows)</li>
+          <li>Keep Epilogue for headings, Sora for everything else</li>
+          <li>Alternate white/cream sections for visual rhythm</li>
+          <li>Use #0E2A46 for all headings consistently</li>
+          <li>Use pill-radius for all buttons and badges</li>
+          <li>Keep gradients minimal — only where specified</li>
+          <li>Use #0077B6 as the single primary action color</li>
+        </ul>
+      </div>
+      <div class="dont-card">
+        <h4>Don't</h4>
+        <ul>
+          <li>Add box-shadows to cards</li>
+          <li>Use Baloo 2 or Roboto on the public site</li>
+          <li>Mix black (#000) with navy (#0E2A46) for headings</li>
+          <li>Use colored borders on cards (bg contrast only)</li>
+          <li>Introduce new colors without adding to this system</li>
+          <li>Use more than 2 font families on a single page</li>
+          <li>Add decorative gradients to section backgrounds</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CSS TOKENS ═══════════════ -->
+  <section>
+    <div class="section-label">09 — CSS Tokens</div>
+    <div class="section-title">Implementation Reference</div>
+
+    <div style="background:#0E2A46; border-radius:16px; padding:32px; overflow-x:auto;">
+      <pre style="font-family:'Courier New',monospace; font-size:13px; line-height:1.8; color:rgba(255,255,255,0.85); margin:0; white-space:pre;"><span style="color:#6b7280;">/* Paste into :root in layouts/public.blade.php */</span>
+
+<span style="color:#0077B6;">:root</span> {
+  <span style="color:#D18109;">/* Brand Colors */</span>
+  --color-primary:     <span style="color:#0077B6;">#0077B6</span>;
+  --color-primary-dk:  <span style="color:#0c508e;">#0c508e</span>;
+  --color-accent:      <span style="color:#70167E;">#70167E</span>;
+  --color-warm:        <span style="color:#D18109;">#D18109</span>;
+  --color-warm-lt:     #FFF3E0;
+  --color-success:     <span style="color:#2E7D32;">#2E7D32</span>;
+
+  <span style="color:#D18109;">/* Neutrals */</span>
+  --color-text:        <span style="color:rgba(255,255,255,0.6);">#0E2A46</span>;
+  --color-body:        #4D5756;
+  --color-muted:       #6b7280;
+  --color-surface:     #F9F6F2;
+  --color-card:        #F5F6F8;
+
+  <span style="color:#D18109;">/* Functional */</span>
+  --color-error:       #dc3545;
+  --color-warning:     #ffc107;
+  --color-whatsapp:    #25D366;
+
+  <span style="color:#D18109;">/* Elevation (flat design — modals only) */</span>
+  --shadow-modal:  0 8px 40px rgba(0,0,0,.14);
+
+  <span style="color:#D18109;">/* Radii */</span>
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-pill:  999px;
+
+  <span style="color:#D18109;">/* Typography */</span>
+  --font-heading: 'Epilogue', sans-serif;
+  --font-body:    'Sora', sans-serif;
+}</pre>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
