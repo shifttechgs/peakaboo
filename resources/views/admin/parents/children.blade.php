@@ -151,7 +151,7 @@
                 @php
                     $initial  = strtoupper(substr($child->name, 0, 1));
                     $isActive = !$child->trashed();
-                    $app      = $child->applications->first();
+                    $app      = $child->childApplications->first();
                 @endphp
                 <tr>
                     <td>
@@ -159,7 +159,13 @@
                             <div class="c-avatar">{{ $initial }}</div>
                             <div>
                                 <div class="fw-semibold" style="color:#1a1f2e;">{{ $child->name }}</div>
-                                <div style="font-size:.76rem;color:#94a3b8;">{{ $child->email }}</div>
+                                @if($app && $app->child_dob)
+                                    <div style="font-size:.76rem;color:#94a3b8;">
+                                        <i class="fas fa-birthday-cake me-1" style="font-size:.6rem;"></i>{{ $app->child_dob->format('d M Y') }}
+                                    </div>
+                                @elseif(!str_contains($child->email, '@peekaboo.child'))
+                                    <div style="font-size:.76rem;color:#94a3b8;">{{ $child->email }}</div>
+                                @endif
                             </div>
                         </div>
                     </td>
@@ -232,4 +238,6 @@
 </div>
 
 @endsection
+
+
 

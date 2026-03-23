@@ -36,6 +36,39 @@ class AdmissionsController extends Controller
             });
         }
 
+        // ── CSV Export ────────────────────────────────────────────────────
+        if ($request->get('export') === 'csv') {
+            $rows = (clone $query)->with('lead')->latest()->get();
+            $filename = 'admissions_' . now()->format('Y-m-d') . '.csv';
+            $headers = [
+                'Content-Type'        => 'text/csv',
+                'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+            ];
+            $callback = function () use ($rows) {
+                $handle = fopen('php://output', 'w');
+                fputcsv($handle, ['Reference', 'Child Name', 'Child DOB', 'Programme', 'Fee Option', 'Start Date', 'Status', 'Parent Name', 'Parent Email', 'Parent Cell', 'Source', 'Documents', 'Created At']);
+                foreach ($rows as $app) {
+                    fputcsv($handle, [
+                        $app->reference,
+                        $app->child_name,
+                        $app->child_dob?->format('Y-m-d'),
+                        $app->program_name,
+                        $app->fee_option,
+                        $app->start_date?->format('Y-m-d'),
+                        $app->statusLabel(),
+                        $app->mother_name,
+                        $app->mother_email,
+                        $app->mother_cell,
+                        $app->lead?->source ?? '',
+                        $app->documentsCount(),
+                        $app->created_at->format('Y-m-d H:i'),
+                    ]);
+                }
+                fclose($handle);
+            };
+            return response()->stream($callback, 200, $headers);
+        }
+
         $applications = $query->with('lead')->latest()->paginate(25)->withQueryString();
 
         $stats = [
@@ -71,6 +104,11 @@ class AdmissionsController extends Controller
             'status'      => 'approved',
             'approved_at' => now(),
         ]);
+
+        // If parent already linked, create the child user immediately
+        if ($application->parent_user_id) {
+            $application->createChildUser();
+        }
 
         return redirect()->back()->with('success', "Application for {$application->child_name} has been approved.");
     }
@@ -134,6 +172,9 @@ class AdmissionsController extends Controller
                 'parent_user_id' => $existingUser->id,
                 'invited_at'     => now(),
             ]);
+
+            // Create child user from application data
+            $application->createChildUser();
 
             return redirect()->back()->with('success',
                 "Linked to existing account for {$existingUser->name}. No invitation email needed."

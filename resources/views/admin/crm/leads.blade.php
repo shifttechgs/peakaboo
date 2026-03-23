@@ -421,9 +421,25 @@ document.addEventListener('DOMContentLoaded', function() {
         var action = bulkForm.querySelector('[name="action"]').value;
         var count  = document.querySelectorAll('.lead-checkbox:checked').length;
         if (action === 'delete') {
-            if (!confirm('Archive ' + count + ' lead(s)? They can be restored later.')) e.preventDefault();
+            e.preventDefault();
+            showConfirm({
+                title:     'Archive Leads',
+                message:   'Archive ' + count + ' lead(s)? They can be restored later.',
+                icon:      '🗂️',
+                btnText:   'Archive',
+                btnColor:  '#ef4444',
+                onConfirm: function() { bulkForm.submit(); },
+            });
         } else if (action) {
-            if (!confirm('Update ' + count + ' lead(s)?')) e.preventDefault();
+            e.preventDefault();
+            showConfirm({
+                title:     'Update Status',
+                message:   'Update status for ' + count + ' lead(s)?',
+                icon:      '✏️',
+                btnText:   'Update',
+                btnColor:  '#0077B6',
+                onConfirm: function() { bulkForm.submit(); },
+            });
         }
     });
 });

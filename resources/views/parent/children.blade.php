@@ -5,50 +5,7 @@
 @section('page-title', 'My Children')
 
 @section('sidebar-nav')
-<a href="{{ route('parent.dashboard') }}" class="nav-link">
-    <i class="fas fa-home"></i> Dashboard
-</a>
-<a href="{{ route('parent.children') }}" class="nav-link active">
-    <i class="fas fa-child"></i> My Children
-</a>
-<a href="{{ route('parent.calendar') }}" class="nav-link">
-    <i class="fas fa-calendar-alt"></i> Calendar
-</a>
-<a href="{{ route('parent.newsletters') }}" class="nav-link">
-    <i class="fas fa-newspaper"></i> Newsletters
-</a>
-<a href="{{ route('parent.gallery') }}" class="nav-link">
-    <i class="fas fa-images"></i> Photo Gallery
-</a>
-
-<div class="nav-section-title">Billing</div>
-<a href="{{ route('parent.fees') }}" class="nav-link">
-    <i class="fas fa-file-invoice-dollar"></i> Fee Schedule
-</a>
-<a href="{{ route('parent.statements') }}" class="nav-link">
-    <i class="fas fa-receipt"></i> Statements
-</a>
-
-<div class="nav-section-title">Services</div>
-<a href="{{ route('parent.holiday-care') }}" class="nav-link">
-    <i class="fas fa-umbrella-beach"></i> Holiday Care
-</a>
-<a href="{{ route('parent.extra-murals') }}" class="nav-link">
-    <i class="fas fa-futbol"></i> Extra Murals
-</a>
-<a href="{{ route('parent.snack-box') }}" class="nav-link">
-    <i class="fas fa-apple-alt"></i> Snack Box
-</a>
-
-<div class="nav-section-title">Communication</div>
-<a href="{{ route('parent.messages') }}" class="nav-link">
-    <i class="fas fa-comments"></i> Messages
-</a>
-
-<div class="nav-section-title">Account</div>
-<a href="{{ route('parent.profile') }}" class="nav-link">
-    <i class="fas fa-user-cog"></i> Profile
-</a>
+@include('parent.partials.sidebar')
 @endsection
 
 @section('content')
@@ -63,11 +20,21 @@
                     </div>
                     <h4 class="mb-1">{{ $child['name'] }}</h4>
                     <span class="badge bg-primary">{{ $child['program'] }}</span>
+                    @php
+                        $stColors = ['approved'=>['bg-success','text-white'],'pending'=>['bg-warning','text-dark'],'under_review'=>['',''],'waitlist'=>['bg-secondary','text-white'],'rejected'=>['bg-danger','text-white']];
+                        [$stBg,$stTxt] = $stColors[$child['status']] ?? ['bg-secondary','text-white'];
+                    @endphp
+                    <span class="badge {{ $stBg }} {{ $stTxt }}">{{ $child['status_label'] }}</span>
                     <div class="mt-3">
                         <span class="badge bg-{{ $child['attendance_today'] == 'Present' ? 'success' : 'warning' }} px-3 py-2">
                             <i class="fas fa-{{ $child['attendance_today'] == 'Present' ? 'check' : 'clock' }} me-1"></i>
                             {{ $child['attendance_today'] }} Today
                         </span>
+                    </div>
+                    <div class="mt-3">
+                        <a href="{{ route('parent.children.show', $child['id']) }}" class="btn btn-sm btn-portal btn-portal-primary rounded-pill px-4">
+                            <i class="fas fa-eye me-1"></i> View Full Details
+                        </a>
                     </div>
                 </div>
             </div>
@@ -95,6 +62,18 @@
                             <tr>
                                 <td class="text-muted">Teacher</td>
                                 <td class="fw-semibold">{{ $child['teacher'] }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Fee Option</td>
+                                <td class="fw-semibold">{{ $child['fee_option'] ?? '—' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Reference</td>
+                                <td class="fw-semibold"><code style="color:#0077B6;">{{ $child['reference'] ?? '—' }}</code></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Start Date</td>
+                                <td class="fw-semibold">{{ $child['start_date'] ?? '—' }}</td>
                             </tr>
                         </table>
                     </div>

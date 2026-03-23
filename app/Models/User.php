@@ -39,6 +39,12 @@ class User extends Authenticatable
         return $this->hasMany(Application::class, 'parent_user_id');
     }
 
+    /** Enrolment applications where this user is the enrolled child. */
+    public function childApplications(): HasMany
+    {
+        return $this->hasMany(Application::class, 'child_user_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

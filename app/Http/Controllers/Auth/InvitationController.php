@@ -81,6 +81,11 @@ class InvitationController extends Controller
         // ── Back-fill application.parent_user_id ────────────────────────
         if ($invitation->application_id && $invitation->application) {
             $invitation->application->update(['parent_user_id' => $user->id]);
+
+            // ── Create child user from application data ─────────────────
+            if ($invitation->application->status === 'approved') {
+                $invitation->application->createChildUser();
+            }
         }
 
         Auth::login($user);

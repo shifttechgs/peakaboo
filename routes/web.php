@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\CrmController;
 use App\Http\Controllers\Admin\TasksController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\ParentPortalController as AdminParentPortalController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Parent\PortalController as ParentPortalController;
 use App\Http\Controllers\Teacher\PortalController as TeacherPortalController;
 use App\Http\Controllers\Child\PortalController as ChildPortalController;
@@ -137,6 +139,20 @@ Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('ad
         Route::post('/{id}/message', [AdminParentsController::class, 'sendMessage'])->name('message');
     });
 
+    // Parent Portal Management: disabled
+    // Route::prefix('parent-portal')->name('parent-portal.')->group(function () {
+    //     Route::get('/',                                [AdminParentPortalController::class, 'index'])->name('index');
+    //     Route::get('/invitations',                     [AdminParentPortalController::class, 'invitations'])->name('invitations');
+    //     Route::post('/store',                          [AdminParentPortalController::class, 'storeAccount'])->name('store');
+    //     Route::get('/{id}',                            [AdminParentPortalController::class, 'show'])->name('show');
+    //     Route::post('/{id}/resend-invite',             [AdminParentPortalController::class, 'resendInvite'])->name('resend-invite');
+    //     Route::post('/{id}/activate',                  [AdminParentPortalController::class, 'activate'])->name('activate');
+    //     Route::delete('/{id}/deactivate',              [AdminParentPortalController::class, 'deactivate'])->name('deactivate');
+    //     Route::post('/{id}/reset-password',            [AdminParentPortalController::class, 'resetPassword'])->name('reset-password');
+    //     Route::post('/app/{appId}/send-invite',        [AdminParentPortalController::class, 'sendInviteToApp'])->name('send-invite-app');
+    //     Route::delete('/invitations/{inviteId}/cancel',[AdminParentPortalController::class, 'cancelInvite'])->name('cancel-invite');
+    // });
+
     // Payments
     Route::prefix('payments')->name('payments.')->group(function () {
         Route::get('/', [PaymentsController::class, 'index'])->name('index');
@@ -184,6 +200,11 @@ Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('ad
         Route::delete('/{id}/force', [UsersController::class, 'forceDelete'])->name('force-delete');
     });
 
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+
     // Settings
     Route::prefix('settings')->name('settings.')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('index');
@@ -194,29 +215,35 @@ Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('ad
     });
 });
 
-// ─── Parent Portal Routes ─────────────────────────────────────────────────────
+// ─── Parent Portal Routes: disabled ───────────────────────────────────────────
 
-Route::middleware(['auth', 'role:parent|admin|super_admin'])->prefix('parent')->name('parent.')->group(function () {
-    Route::get('/', [ParentPortalController::class, 'index'])->name('dashboard');
-    Route::get('/children', [ParentPortalController::class, 'children'])->name('children');
-    Route::get('/children/{id}', [ParentPortalController::class, 'childDetail'])->name('children.show');
-    Route::get('/calendar', [ParentPortalController::class, 'calendar'])->name('calendar');
-    Route::get('/newsletters', [ParentPortalController::class, 'newsletters'])->name('newsletters');
-    Route::get('/gallery', [ParentPortalController::class, 'gallery'])->name('gallery');
-    Route::get('/fees', [ParentPortalController::class, 'fees'])->name('fees');
-    Route::get('/fees/statements', [ParentPortalController::class, 'statements'])->name('fees.statements');
-    Route::post('/fees/upload-pop', [ParentPortalController::class, 'uploadPop'])->name('fees.upload-pop');
-    Route::get('/messages', [ParentPortalController::class, 'messages'])->name('messages');
-    Route::post('/messages/send', [ParentPortalController::class, 'sendMessage'])->name('messages.send');
-    Route::get('/holiday-care', [ParentPortalController::class, 'holidayCare'])->name('holiday-care');
-    Route::post('/holiday-care/book', [ParentPortalController::class, 'bookHolidayCare'])->name('holiday-care.book');
-    Route::get('/extra-murals', [ParentPortalController::class, 'extraMurals'])->name('extra-murals');
-    Route::post('/extra-murals/signup', [ParentPortalController::class, 'signupExtraMurals'])->name('extra-murals.signup');
-    Route::get('/snack-box', [ParentPortalController::class, 'snackBox'])->name('snack-box');
-    Route::post('/snack-box/signup', [ParentPortalController::class, 'signupSnackBox'])->name('snack-box.signup');
-    Route::get('/profile', [ParentPortalController::class, 'profile'])->name('profile');
-    Route::post('/profile/update', [ParentPortalController::class, 'updateProfile'])->name('profile.update');
-});
+// Route::middleware(['auth', 'role:parent|admin|super_admin'])->prefix('parent')->name('parent.')->group(function () {
+//     Route::get('/', [ParentPortalController::class, 'index'])->name('dashboard');
+//     Route::get('/children', [ParentPortalController::class, 'children'])->name('children');
+//     Route::get('/children/{id}', [ParentPortalController::class, 'childDetail'])->name('children.show');
+//     Route::get('/calendar', [ParentPortalController::class, 'calendar'])->name('calendar');
+//     Route::get('/newsletters', [ParentPortalController::class, 'newsletters'])->name('newsletters');
+//     Route::get('/gallery', [ParentPortalController::class, 'gallery'])->name('gallery');
+//     Route::get('/fees', [ParentPortalController::class, 'fees'])->name('fees');
+//     Route::get('/fees/statements', [ParentPortalController::class, 'statements'])->name('fees.statements');
+//     Route::post('/fees/upload-pop', [ParentPortalController::class, 'uploadPop'])->name('fees.upload-pop');
+//     Route::get('/messages', [ParentPortalController::class, 'messages'])->name('messages');
+//     Route::post('/messages/send', [ParentPortalController::class, 'sendMessage'])->name('messages.send');
+//     Route::get('/holiday-care', [ParentPortalController::class, 'holidayCare'])->name('holiday-care');
+//     Route::post('/holiday-care/book', [ParentPortalController::class, 'bookHolidayCare'])->name('holiday-care.book');
+//     Route::get('/extra-murals', [ParentPortalController::class, 'extraMurals'])->name('extra-murals');
+//     Route::post('/extra-murals/signup', [ParentPortalController::class, 'signupExtraMurals'])->name('extra-murals.signup');
+//     Route::get('/snack-box', [ParentPortalController::class, 'snackBox'])->name('snack-box');
+//     Route::post('/snack-box/signup', [ParentPortalController::class, 'signupSnackBox'])->name('snack-box.signup');
+//     Route::get('/profile', [ParentPortalController::class, 'profile'])->name('profile');
+//     Route::post('/profile/update', [ParentPortalController::class, 'updateProfile'])->name('profile.update');
+//     Route::get('/documents', [ParentPortalController::class, 'documents'])->name('documents');
+//     Route::get('/reports', [ParentPortalController::class, 'reports'])->name('reports');
+//     Route::get('/activities', [ParentPortalController::class, 'activities'])->name('activities');
+//     Route::post('/activities/register', [ParentPortalController::class, 'registerActivity'])->name('activities.register');
+//     Route::get('/sleepover', [ParentPortalController::class, 'sleepover'])->name('sleepover');
+//     Route::post('/sleepover/apply', [ParentPortalController::class, 'applySleepover'])->name('sleepover.apply');
+// });
 
 // ─── Teacher Portal Routes ────────────────────────────────────────────────────
 

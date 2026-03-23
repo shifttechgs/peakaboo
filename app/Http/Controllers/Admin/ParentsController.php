@@ -67,7 +67,7 @@ class ParentsController extends Controller
     public function children(Request $request)
     {
         $query = User::withTrashed()
-            ->with('roles', 'applications')
+            ->with('roles', 'childApplications')
             ->whereHas('roles', fn($q) => $q->where('name', 'child'));
 
         if ($request->filled('search')) {
@@ -81,7 +81,7 @@ class ParentsController extends Controller
             'total'   => User::withTrashed()->whereHas('roles', fn($q) => $q->where('name', 'child'))->count(),
             'active'  => User::whereHas('roles', fn($q) => $q->where('name', 'child'))->count(),
             'with_apps' => User::withTrashed()->whereHas('roles', fn($q) => $q->where('name', 'child'))
-                ->whereHas('applications')->count(),
+                ->whereHas('childApplications')->count(),
         ];
 
         return view('admin.parents.children', compact('children', 'stats'));
@@ -89,11 +89,11 @@ class ParentsController extends Controller
 
     public function showChild($id)
     {
-        $child = User::withTrashed()->with('roles', 'applications')->findOrFail($id);
+        $child = User::withTrashed()->with('roles', 'childApplications')->findOrFail($id);
 
         // Get linked parent if any
         $parent = null;
-        $latestApp = $child->applications()->latest()->first();
+        $latestApp = $child->childApplications()->latest()->first();
         if ($latestApp && $latestApp->parent_user_id) {
             $parent = User::withTrashed()->find($latestApp->parent_user_id);
         }

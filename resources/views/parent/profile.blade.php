@@ -5,50 +5,7 @@
 @section('page-title', 'My Profile')
 
 @section('sidebar-nav')
-<a href="{{ route('parent.dashboard') }}" class="nav-link">
-    <i class="fas fa-home"></i> Dashboard
-</a>
-<a href="{{ route('parent.children') }}" class="nav-link">
-    <i class="fas fa-child"></i> My Children
-</a>
-<a href="{{ route('parent.calendar') }}" class="nav-link">
-    <i class="fas fa-calendar-alt"></i> Calendar
-</a>
-<a href="{{ route('parent.newsletters') }}" class="nav-link">
-    <i class="fas fa-newspaper"></i> Newsletters
-</a>
-<a href="{{ route('parent.gallery') }}" class="nav-link">
-    <i class="fas fa-images"></i> Photo Gallery
-</a>
-
-<div class="nav-section-title">Billing</div>
-<a href="{{ route('parent.fees') }}" class="nav-link">
-    <i class="fas fa-file-invoice-dollar"></i> Fee Schedule
-</a>
-<a href="{{ route('parent.statements') }}" class="nav-link">
-    <i class="fas fa-receipt"></i> Statements
-</a>
-
-<div class="nav-section-title">Services</div>
-<a href="{{ route('parent.holiday-care') }}" class="nav-link">
-    <i class="fas fa-umbrella-beach"></i> Holiday Care
-</a>
-<a href="{{ route('parent.extra-murals') }}" class="nav-link">
-    <i class="fas fa-futbol"></i> Extra Murals
-</a>
-<a href="{{ route('parent.snack-box') }}" class="nav-link">
-    <i class="fas fa-apple-alt"></i> Snack Box
-</a>
-
-<div class="nav-section-title">Communication</div>
-<a href="{{ route('parent.messages') }}" class="nav-link">
-    <i class="fas fa-comments"></i> Messages
-</a>
-
-<div class="nav-section-title">Account</div>
-<a href="{{ route('parent.profile') }}" class="nav-link active">
-    <i class="fas fa-user-cog"></i> Profile
-</a>
+@include('parent.partials.sidebar')
 @endsection
 
 @section('content')
@@ -60,23 +17,20 @@
                 <i class="fas fa-user me-2"></i> Personal Information
             </div>
             <div class="portal-card-body">
-                <form>
+                <form method="POST" action="{{ route('parent.profile.update') }}">
+                    @csrf
                     <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">First Name</label>
-                            <input type="text" class="form-control" value="{{ $parent['first_name'] ?? 'Sarah' }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Last Name</label>
-                            <input type="text" class="form-control" value="{{ $parent['last_name'] ?? 'Thompson' }}">
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Full Name</label>
+                            <input type="text" name="name" class="form-control" value="{{ old('name', $parent->name) }}" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Email Address</label>
-                            <input type="email" class="form-control" value="{{ $parent['email'] ?? 'sarah.thompson@email.com' }}">
+                            <input type="email" name="email" class="form-control" value="{{ old('email', $parent->email) }}" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Phone Number</label>
-                            <input type="tel" class="form-control" value="{{ $parent['phone'] ?? '082 898 9967' }}">
+                            <input type="tel" name="phone" class="form-control" value="{{ old('phone', $parent->phone) }}">
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-semibold">Home Address</label>
@@ -184,11 +138,11 @@
                     <i class="fas fa-check-circle fa-3x text-success"></i>
                 </div>
                 <h6 class="fw-bold">Account Active</h6>
-                <p class="text-muted small mb-3">Member since January 2025</p>
+                <p class="text-muted small mb-3">Member since {{ $parent->created_at->format('F Y') }}</p>
                 <div class="border-top pt-3">
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted small">Children Enrolled:</span>
-                        <span class="fw-semibold">{{ count($children) }}</span>
+                        <span class="fw-semibold">{{ $children->where('status', 'approved')->count() }}</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span class="text-muted small">Account Balance:</span>
@@ -233,7 +187,7 @@
             <div class="portal-card-header">Quick Actions</div>
             <div class="portal-card-body">
                 <div class="d-grid gap-2">
-                    <a href="{{ route('parent.statements') }}" class="btn btn-outline-primary btn-sm">
+                    <a href="{{ route('parent.fees.statements') }}" class="btn btn-outline-primary btn-sm">
                         <i class="fas fa-download me-2"></i> Download Statement
                     </a>
                     <a href="#" class="btn btn-outline-secondary btn-sm">

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class Application extends Model
 {
@@ -42,7 +44,7 @@ class Application extends Model
         'form_data', 'documents', 'pdf_path',
         'lead_id', 'admin_notes',
         'reviewed_at', 'approved_at', 'rejected_at', 'invited_at',
-        'parent_user_id',
+        'parent_user_id', 'child_user_id',
     ];
 
     protected $casts = [
@@ -65,6 +67,11 @@ class Application extends Model
     public function parentUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'parent_user_id');
+    }
+
+    public function childUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'child_user_id');
     }
 
     public function statusLabel(): string
@@ -100,5 +107,33 @@ class Application extends Model
     public function formValue(string $key, mixed $default = null): mixed
     {
         return ($this->form_data ?? [])[$key] ?? $default;
+    }
+
+    /**
+     * Create a child User record from the application data and assign the 'child' role.
+     * Skips if a child user is already linked.
+     */
+    public function createChildUser(): ?User
+    {
+        // Already linked — don't duplicate
+        if ($this->child_user_id) {
+            return $this->childUser;
+        }
+
+        // Build a unique email for the child (children don't log in, but email is required on users table)
+        $childEmail = 'child_' . Str::slug($this->child_name, '.') . '_' . $this->id . '@peekaboo.child';
+
+        $child = User::create([
+            'name'     => $this->child_name,
+            'email'    => $childEmail,
+            'password' => Hash::make(Str::random(32)), // unusable random password
+            'phone'    => null,
+        ]);
+
+        $child->assignRole('child');
+
+        $this->update(['child_user_id' => $child->id]);
+
+        return $child;
     }
 }

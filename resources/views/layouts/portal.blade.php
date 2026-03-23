@@ -42,21 +42,68 @@
         }
 
         .sidebar-brand {
-            padding: 20px;
+            padding: 22px 20px 18px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, #f0f9ff 0%, #fef1f2 100%);
+            position: relative;
         }
 
-        .sidebar-brand img {
-            height: 45px;
+        .sidebar-brand::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), #00B4D8, #FFB5BA);
+            border-radius: 2px;
         }
 
-        .sidebar-brand span {
-            font-weight: 700;
-            font-size: 1rem;
+        .sidebar-brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 119, 182, 0.15);
+            border: 2px solid white;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sidebar-brand-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 0;
+        }
+
+        .sidebar-brand-title {
+            font-weight: 800;
+            font-size: 1.05rem;
             color: var(--dark);
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+
+        .sidebar-brand-subtitle {
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--primary);
+            line-height: 1.3;
         }
 
         .sidebar-nav {
@@ -245,12 +292,25 @@
     <!-- Sidebar -->
     <aside class="portal-sidebar" id="sidebar">
         <div class="sidebar-brand">
-            <img src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo">
-            <span>@yield('portal-name', 'Portal')</span>
+            <div class="sidebar-brand-logo">
+                <img src="{{ asset('assets/img/peekaboo/peekaboo_logo.png') }}" alt="Peekaboo" onerror="this.src='{{ asset('assets/img/peekaboo/logo.png') }}'">
+            </div>
+            <div class="sidebar-brand-text">
+                <span class="sidebar-brand-title">Peekaboo</span>
+                <span class="sidebar-brand-subtitle">@yield('portal-name', 'Portal')</span>
+            </div>
         </div>
 
         <nav class="sidebar-nav">
             @yield('sidebar-nav')
+
+            <div class="nav-section-title" style="margin-top: 20px;">Session</div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="nav-link text-danger w-100 border-0 bg-transparent text-start" style="cursor: pointer;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </form>
         </nav>
     </aside>
 

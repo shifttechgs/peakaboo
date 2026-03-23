@@ -532,7 +532,11 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
                 <form method="POST" action="{{ route('admin.crm.leads.start-enrol', $lead->id) }}">
                     @csrf
                     <button type="submit" class="ld-btn ld-btn-amber"
-                            onclick="return confirm('Re-send enrolment invitation to {{ $lead->email }}?')">
+                            data-confirm="Send a new enrolment invitation link to {{ $lead->email }}?"
+                            data-confirm-title="Re-send Enrolment Invitation"
+                            data-confirm-icon="📧"
+                            data-confirm-btn="Send"
+                            data-confirm-color="#d97706">
                         <i class="fas fa-paper-plane"></i>Re-send Enrolment Link
                     </button>
                 </form>
@@ -654,7 +658,11 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
                 <form method="POST" action="{{ route('admin.crm.leads.notify-tour', $lead->id) }}">
                     @csrf
                     <button type="submit" class="ld-btn ld-btn-ghost"
-                            onclick="return confirm('Send tour confirmation email to {{ $lead->email }}?')">
+                            data-confirm="Send tour confirmation email to {{ $lead->email }}?"
+                            data-confirm-title="Send Confirmation Email"
+                            data-confirm-icon="📧"
+                            data-confirm-btn="Send Email"
+                            data-confirm-color="#0097a7">
                         <i class="fas fa-paper-plane"></i>Send Confirmation Email
                     </button>
                 </form>
@@ -675,7 +683,11 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
                 <form method="POST" action="{{ route('admin.crm.leads.start-enrol', $lead->id) }}" class="mb-0">
                     @csrf
                     <button type="submit" class="ld-btn ld-btn-success"
-                            onclick="return confirm('Send enrolment invitation to {{ $lead->email }}?')">
+                            data-confirm="Send enrolment invitation link to {{ $lead->email }}?"
+                            data-confirm-title="Start Enrolment"
+                            data-confirm-icon="🎓"
+                            data-confirm-btn="Send & Enrol"
+                            data-confirm-color="#16a34a">
                         <i class="fas fa-user-plus"></i>Start Enrolment
                         <small style="font-size:.72rem;opacity:.8;font-weight:400;">Emails enrolment form link</small>
                     </button>
@@ -798,7 +810,11 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
                         @csrf @method('DELETE')
                         <button type="submit" class="btn btn-sm p-0 border-0 bg-transparent"
                                 style="color:#adb5bd;"
-                                onclick="return confirm('Delete this task?')">
+                                data-confirm="This task will be permanently deleted."
+                                data-confirm-title="Delete Task"
+                                data-confirm-icon="🗑️"
+                                data-confirm-btn="Delete"
+                                data-confirm-color="#ef4444">
                             <i class="fas fa-times"></i>
                         </button>
                     </form>
