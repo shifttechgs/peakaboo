@@ -85,7 +85,7 @@
                     <th>Task</th>
                     <th>Due Date</th>
                     <th>Lead</th>
-                    <th style="width:60px;"></th>
+                    <th style="width:100px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -129,13 +129,19 @@
                         @endif
                     </td>
                     <td>
-                        <form method="POST" action="{{ route('admin.tasks.destroy', $task->id) }}">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger"
-                                    onclick="return confirm('Delete this task?')">
-                                <i class="fas fa-trash"></i>
+                        <div class="d-flex gap-1">
+                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                    data-bs-toggle="modal" data-bs-target="#editTask{{ $task->id }}">
+                                <i class="fas fa-edit"></i>
                             </button>
-                        </form>
+                            <form method="POST" action="{{ route('admin.tasks.destroy', $task->id) }}">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Delete this task?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @empty
@@ -188,14 +194,20 @@
                                 <span class="badge bg-light text-dark">{{ $task->lead->name }}</span>
                             @endif
                         </td>
-                        <td style="width:60px;">
-                            <form method="POST" action="{{ route('admin.tasks.destroy', $task->id) }}">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Delete?')">
-                                    <i class="fas fa-trash"></i>
+                        <td style="width:100px;">
+                            <div class="d-flex gap-1">
+                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                        data-bs-toggle="modal" data-bs-target="#editTask{{ $task->id }}">
+                                    <i class="fas fa-edit"></i>
                                 </button>
-                            </form>
+                                <form method="POST" action="{{ route('admin.tasks.destroy', $task->id) }}">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Delete?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
@@ -205,5 +217,52 @@
     </div>
 </div>
 @endif
+
+{{-- Edit Task Modals --}}
+@foreach($pending->merge($completed) as $task)
+<div class="modal fade" id="editTask{{ $task->id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{ route('admin.tasks.update', $task->id) }}">
+                @csrf @method('PUT')
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Edit Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Title <span class="text-danger">*</span></label>
+                        <input type="text" name="title" class="form-control" value="{{ $task->title }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <input type="text" name="description" class="form-control" value="{{ $task->description }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" name="due_date" class="form-control"
+                               value="{{ $task->due_date ? $task->due_date->format('Y-m-d') : '' }}">
+                    </div>
+                    <div class="mb-0">
+                        <label class="form-label">Linked Lead</label>
+                        <select name="lead_id" class="form-select">
+                            <option value="">No linked lead</option>
+                            @foreach($leads as $id => $name)
+                                <option value="{{ $id }}" {{ $task->lead_id == $id ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-admin btn-admin-primary">
+                        <i class="fas fa-save me-1"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 
 @endsection

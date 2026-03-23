@@ -32,7 +32,7 @@
             <p>We're thrilled to welcome <strong>{{ $lead->child_name }}</strong> to Peekaboo Early Learning Centre! Please complete the enrolment application using the link below — it only takes a few minutes.</p>
 
             <div class="cta-button">
-                <a href="{{ route('enrol.form') }}">Complete Enrolment Form →</a>
+                <a href="{{ $enrolUrl }}">Complete Enrolment Form →</a>
             </div>
 
             <div class="docs-box">
@@ -46,6 +46,10 @@
                 </ul>
             </div>
 
+            <p style="font-size:0.85rem; color:#888; margin-top:24px;">
+                <em>This link is personalised for you and will pre-fill your details. Please don't share it.</em>
+            </p>
+
             <p>Once your application is submitted, our team will review it and be in touch to confirm your start date and any remaining details.</p>
 
             <p>If you have any questions at any stage, please don't hesitate to call us or reply to this email — we're here to help.</p>
@@ -53,7 +57,8 @@
             <p>We look forward to having {{ $lead->child_name }} with us!<br><strong>The Peekaboo Team</strong></p>
         </div>
         <div class="footer">
-            <p>Peekaboo Early Learning Centre &bull; {{ $lead->reference }}</p>
+            <p>Peekaboo Early Learning Centre &bull; 139b Humewood Dr, Parklands, Cape Town, 7441</p>
+            <p>{{ $lead->reference }}</p>
         </div>
     </div>
 </body>

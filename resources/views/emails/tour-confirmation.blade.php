@@ -35,14 +35,20 @@
             <p>Hi <strong>{{ $lead->name }}</strong>,</p>
             <p>Great news — your tour of <strong>Peekaboo Early Learning Centre</strong> is confirmed! We're excited to meet you and {{ $lead->child_name }}.</p>
 
+            @php
+                $tourDate = $lead->tour_scheduled_at ?? $lead->preferred_date;
+                $tourTime = $lead->tour_scheduled_at
+                    ? $lead->tour_scheduled_at->format('H:i')
+                    : $lead->preferred_time;
+            @endphp
             <div class="detail-box">
                 <div class="row">
                     <span class="label">📅 Date:</span>
-                    <span class="value">{{ $lead->preferred_date->format('l, d F Y') }}</span>
+                    <span class="value">{{ $tourDate->format('l, d F Y') }}</span>
                 </div>
                 <div class="row">
                     <span class="label">⏰ Time:</span>
-                    <span class="value">{{ $lead->preferred_time }}</span>
+                    <span class="value">{{ $tourTime }}</span>
                 </div>
                 <div class="row">
                     <span class="label">👶 Child:</span>
@@ -67,6 +73,7 @@
 
             <div class="address-box">
                 📍 <strong>Address:</strong> Peekaboo Early Learning Centre<br>
+                139b Humewood Dr, Parklands, Cape Town, 7441<br>
                 Please arrive 5 minutes before your scheduled time.
             </div>
 
@@ -75,7 +82,8 @@
             <p>See you soon!<br><strong>The Peekaboo Team</strong></p>
         </div>
         <div class="footer">
-            <p>Peekaboo Early Learning Centre &bull; Reference: <strong>{{ $lead->reference }}</strong></p>
+            <p>Peekaboo Early Learning Centre &bull; 139b Humewood Dr, Parklands, Cape Town, 7441</p>
+            <p>Reference: <strong>{{ $lead->reference }}</strong></p>
         </div>
     </div>
 </body>

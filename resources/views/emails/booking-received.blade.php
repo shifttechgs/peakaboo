@@ -62,7 +62,8 @@
             <p>Warm regards,<br><strong>The Peekaboo Team</strong></p>
         </div>
         <div class="footer">
-            <p>Peekaboo Early Learning Centre &bull; Please save your reference number: <strong>{{ $lead->reference }}</strong></p>
+            <p>Peekaboo Early Learning Centre &bull; 139b Humewood Dr, Parklands, Cape Town, 7441</p>
+            <p>Please save your reference number: <strong>{{ $lead->reference }}</strong></p>
         </div>
     </div>
 </body>

@@ -8,11 +8,13 @@
         body { font-family: Arial, sans-serif; background: #f5f6fa; margin: 0; padding: 0; }
         .wrapper { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.08); }
         .header { background: #0077B6; padding: 32px 40px; text-align: center; }
-        .header img { height: 50px; }
-        .header h1 { color: #fff; margin: 16px 0 0; font-size: 22px; font-weight: 700; }
+        .header h1 { color: #fff; margin: 0; font-size: 22px; font-weight: 700; }
         .body { padding: 40px; }
         .body p { color: #444; font-size: 15px; line-height: 1.6; margin: 0 0 16px; }
         .role-badge { display: inline-block; background: #e8f4fd; color: #0077B6; font-weight: 700; padding: 4px 12px; border-radius: 20px; font-size: 14px; margin-bottom: 24px; }
+        .child-card { background: #f0f8ff; border: 1px solid #bee3f8; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; }
+        .child-card p { margin: 0; font-size: 14px; color: #2c5f8a; }
+        .child-card strong { font-size: 16px; color: #0077B6; }
         .cta { text-align: center; margin: 32px 0; }
         .cta a { background: #0077B6; color: #fff; text-decoration: none; padding: 14px 36px; border-radius: 8px; font-size: 16px; font-weight: 700; display: inline-block; }
         .cta a:hover { background: #005a8c; }
@@ -27,21 +29,39 @@
             <h1>Peekaboo Early Learning Centre</h1>
         </div>
         <div class="body">
-            <p>Hello,</p>
+            <p>Hi{{ $parentName ? ' ' . $parentName : '' }},</p>
+
+            @if($childName)
+            <p>Congratulations! <strong>{{ $childName }}'s</strong> enrolment application has been approved. You're one step away from accessing your parent portal.</p>
+
+            <div class="child-card">
+                <p>Child: <strong>{{ $childName }}</strong></p>
+                @if($programName)
+                <p style="margin-top:6px;">Programme: <strong>{{ $programName }}</strong></p>
+                @endif
+            </div>
+            @else
             <p>You've been invited to join <strong>Peekaboo Early Learning Centre</strong> as:</p>
             <div><span class="role-badge">{{ $role }}</span></div>
-            <p>Click the button below to set up your account and get started. Your invitation will expire on <strong>{{ $expiresAt }}</strong>.</p>
+            @endif
+
+            <p>Click the button below to set up your account and get access to the {{ $role }} portal. Your invitation expires on <strong>{{ $expiresAt }}</strong>.</p>
+
             <div class="cta">
-                <a href="{{ $acceptUrl }}">Accept Invitation</a>
+                <a href="{{ $acceptUrl }}">Set Up My Account →</a>
             </div>
+
             <p>If the button above doesn't work, copy and paste this link into your browser:</p>
             <p style="word-break:break-all; color:#0077B6; font-size:13px;">{{ $acceptUrl }}</p>
+
             <div class="expiry">
-                <strong>Note:</strong> This invitation link expires on {{ $expiresAt }}. If you did not expect this email, you can safely ignore it.
+                <strong>Note:</strong> This invitation link expires on <strong>{{ $expiresAt }}</strong>.
+                If you did not expect this email, you can safely ignore it.
             </div>
         </div>
         <div class="footer">
             <p>&copy; {{ date('Y') }} Peekaboo Early Learning Centre. All rights reserved.</p>
+            <p>139b Humewood Dr, Parklands, Cape Town, 7441</p>
         </div>
     </div>
 </body>

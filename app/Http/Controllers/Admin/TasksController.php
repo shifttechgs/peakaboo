@@ -54,12 +54,40 @@ class TasksController extends Controller
         return redirect()->back()->with('success', 'Task added');
     }
 
+    public function update(Request $request, Task $task)
+    {
+        $request->validate([
+            'title'       => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'due_date'    => 'nullable|date',
+            'lead_id'     => 'nullable|exists:leads,id',
+        ]);
+
+        $task->update([
+            'title'       => $request->title,
+            'description' => $request->description,
+            'due_date'    => $request->due_date,
+            'lead_id'     => $request->lead_id ?: null,
+        ]);
+
+        return redirect()->back()->with('success', 'Task updated');
+    }
+
     public function toggle(Task $task)
     {
         $task->update([
             'completed'    => !$task->completed,
             'completed_at' => $task->completed ? null : now(),
         ]);
+
+        if (request()->expectsJson()) {
+            return response()->json([
+                'success'       => true,
+                'completed'     => $task->completed,
+                'pending_count' => Task::where('completed', false)->count(),
+                'message'       => $task->completed ? 'Task marked complete' : 'Task reopened',
+            ]);
+        }
 
         return redirect()->back()->with('success', $task->completed ? 'Task marked complete' : 'Task reopened');
     }

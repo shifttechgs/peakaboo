@@ -226,17 +226,116 @@
     color: var(--color-error) !important;
 }
 
+/* ── Date Picker ── */
+.pb-date-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.pb-date-picker__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+.pb-date-picker__month {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--color-text);
+    letter-spacing: 0.3px;
+}
+.pb-date-picker__arrow {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #e0e4e8;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    color: var(--color-muted);
+    font-size: 12px;
+}
+.pb-date-picker__arrow:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(0,119,182,0.04);
+}
+.pb-date-picker__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+.pb-date-picker__day-header {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 0;
+}
+.pb-date-picker__day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text);
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: transparent;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    line-height: 1;
+    padding: 0;
+    min-height: 34px;
+}
+.pb-date-picker__day:hover:not(.pb-date-picker__day--disabled):not(.pb-date-picker__day--empty) {
+    background: rgba(0,119,182,0.06);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+.pb-date-picker__day--selected {
+    background: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    color: #fff !important;
+    font-weight: 700;
+}
+.pb-date-picker__day--today:not(.pb-date-picker__day--selected) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+.pb-date-picker__day--disabled {
+    color: #d0d5dd;
+    cursor: not-allowed;
+    background: transparent;
+}
+.pb-date-picker__day--empty {
+    cursor: default;
+}
+.pb-date-picker__day--weekend:not(.pb-date-picker__day--disabled) {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
 /* Time slot cards */
 .pb-time-slot {
     border: 1px solid #e0e4e8;
     border-radius: var(--radius-md);
-    padding: 20px;
+    padding: 14px 16px;
     cursor: pointer;
     background: #fff;
     transition: border-color 0.25s, background 0.25s;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     height: 100%;
 }
 .pb-time-slot:hover {
@@ -247,8 +346,8 @@
     background: rgba(0,119,182,0.04);
 }
 .pb-time-slot input[type="radio"] {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border: 2px solid #d0d5dd;
     cursor: pointer;
     accent-color: var(--color-primary);
@@ -256,7 +355,7 @@
 }
 .pb-time-slot__label {
     font-family: var(--font-body);
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--color-text);
     display: block;
@@ -264,10 +363,10 @@
 }
 .pb-time-slot__time {
     font-family: var(--font-body);
-    font-size: 14px;
+    font-size: 13px;
     color: var(--color-muted);
     display: block;
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 /* Submit button */
@@ -758,9 +857,17 @@
                                 </div>
 
                                 <!-- Preferred Date -->
-                                <div class="col-md-6">
+                                <div class="col-12">
                                     <label class="form-label">Preferred Date <span class="text-danger">*</span></label>
-                                    <input type="date" class="form-control" name="preferred_date" value="{{ old('preferred_date') }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}" required>
+                                    <input type="hidden" name="preferred_date" id="preferred_date_input" value="{{ old('preferred_date') }}" required>
+                                    <div class="pb-date-picker" id="pbDatePicker" style="background:#fff; border:1px solid #e0e4e8; border-radius:10px; padding:16px 20px;">
+                                        <div class="pb-date-picker__nav">
+                                            <button type="button" class="pb-date-picker__arrow" id="pbDatePrev"><i class="fa-solid fa-chevron-left"></i></button>
+                                            <span class="pb-date-picker__month" id="pbDateMonth">—</span>
+                                            <button type="button" class="pb-date-picker__arrow" id="pbDateNext"><i class="fa-solid fa-chevron-right"></i></button>
+                                        </div>
+                                        <div class="pb-date-picker__grid" id="pbDateGrid"></div>
+                                    </div>
                                 </div>
 
                                 <!-- Preferred Time -->
@@ -944,5 +1051,103 @@
     </script>
     @endpush
     @endif
+
+@push('scripts')
+<script>
+(function () {
+    const DAY_HEADERS = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+    const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    const input   = document.getElementById('preferred_date_input');
+    const grid    = document.getElementById('pbDateGrid');
+    const monthEl = document.getElementById('pbDateMonth');
+    const prevBtn = document.getElementById('pbDatePrev');
+    const nextBtn = document.getElementById('pbDateNext');
+
+    const today = new Date(); today.setHours(0,0,0,0);
+    const minDate = new Date(today); minDate.setDate(today.getDate() + 1);
+
+    // Restore old value or start from next month-view containing minDate
+    let current = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+    let selected = null;
+
+    const oldVal = input.value;
+    if (oldVal) {
+        const parts = oldVal.split('-');
+        selected = new Date(+parts[0], +parts[1]-1, +parts[2]);
+        current  = new Date(selected.getFullYear(), selected.getMonth(), 1);
+    }
+
+    function pad(n){ return String(n).padStart(2,'0'); }
+    function toISO(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+
+    function render() {
+        monthEl.textContent = MONTH_NAMES[current.getMonth()] + ' ' + current.getFullYear();
+
+        // Disable prev if this month is already the minimum month
+        const prevMonth = new Date(current.getFullYear(), current.getMonth() - 1, 1);
+        prevBtn.style.opacity = prevMonth < new Date(minDate.getFullYear(), minDate.getMonth(), 1) ? '0.35' : '1';
+        prevBtn.style.pointerEvents = prevMonth < new Date(minDate.getFullYear(), minDate.getMonth(), 1) ? 'none' : '';
+
+        grid.innerHTML = '';
+        // Day headers
+        DAY_HEADERS.forEach(d => {
+            const h = document.createElement('div');
+            h.className = 'pb-date-picker__day-header';
+            h.textContent = d;
+            grid.appendChild(h);
+        });
+
+        const firstDay = new Date(current.getFullYear(), current.getMonth(), 1).getDay();
+        const daysInMonth = new Date(current.getFullYear(), current.getMonth() + 1, 0).getDate();
+
+        // Empty cells before first day
+        for (let i = 0; i < firstDay; i++) {
+            const e = document.createElement('div');
+            e.className = 'pb-date-picker__day pb-date-picker__day--empty';
+            grid.appendChild(e);
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const date = new Date(current.getFullYear(), current.getMonth(), d);
+            const btn  = document.createElement('div');
+            const dow  = date.getDay(); // 0=Sun, 6=Sat
+            const isWeekend  = dow === 0 || dow === 6;
+            const isPast     = date < minDate;
+            const isToday    = toISO(date) === toISO(today);
+            const isSelected = selected && toISO(date) === toISO(selected);
+
+            btn.className = 'pb-date-picker__day';
+            btn.textContent = d;
+
+            if (isSelected) btn.classList.add('pb-date-picker__day--selected');
+            else if (isToday) btn.classList.add('pb-date-picker__day--today');
+
+            if (isPast || isWeekend) {
+                btn.classList.add(isPast ? 'pb-date-picker__day--disabled' : 'pb-date-picker__day--weekend');
+            } else {
+                btn.addEventListener('click', function () {
+                    selected = date;
+                    input.value = toISO(date);
+                    render();
+                });
+            }
+            grid.appendChild(btn);
+        }
+    }
+
+    prevBtn.addEventListener('click', function () {
+        current.setMonth(current.getMonth() - 1);
+        render();
+    });
+    nextBtn.addEventListener('click', function () {
+        current.setMonth(current.getMonth() + 1);
+        render();
+    });
+
+    render();
+})();
+</script>
+@endpush
 
 @endsection

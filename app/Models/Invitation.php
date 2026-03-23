@@ -14,6 +14,7 @@ class Invitation extends Model
         'role',
         'token',
         'invited_by',
+        'application_id',
         'expires_at',
         'accepted_at',
     ];
@@ -26,6 +27,11 @@ class Invitation extends Model
     public function invitedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'invited_by');
+    }
+
+    public function application(): BelongsTo
+    {
+        return $this->belongsTo(Application::class);
     }
 
     public function scopeValid(Builder $query): Builder

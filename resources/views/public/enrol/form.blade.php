@@ -552,6 +552,17 @@
                       novalidate>
                     @csrf
 
+                    @if(isset($prefill) && $prefill)
+                    {{-- Pre-fill banner shown when the form was opened via enrolment invite link --}}
+                    <div class="alert alert-success d-flex align-items-center gap-3 mb-4" style="border-left:4px solid var(--color-success);">
+                        <i class="fas fa-magic fa-lg" style="color:var(--color-success);flex-shrink:0;"></i>
+                        <div>
+                            <strong>We've pre-filled some details for you</strong> from your tour booking.
+                            Please review and complete the remaining fields.
+                        </div>
+                    </div>
+                    @endif
+
                     <!-- Step 1: Program Selection -->
                     <div class="step-content active" data-step="1">
                         <div class="form-section">
@@ -648,11 +659,13 @@
                             <div class="row g-4">
                                 <div class="col-md-8">
                                     <label class="form-label">Full Name (as per birth certificate) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="child_name" required>
+                                    <input type="text" class="form-control" name="child_name"
+                                           value="{{ $prefill['child_name'] ?? '' }}" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Nickname</label>
-                                    <input type="text" class="form-control" name="child_nickname">
+                                    <input type="text" class="form-control" name="child_nickname"
+                                           value="{{ $prefill['child_nickname'] ?? '' }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Date of Birth <span class="text-danger">*</span></label>
@@ -742,7 +755,8 @@
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <label class="form-label">Full Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="mother_name" required>
+                                    <input type="text" class="form-control" name="mother_name"
+                                           value="{{ $prefill['mother_name'] ?? '' }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">ID/Passport Number <span class="text-danger">*</span></label>
@@ -750,7 +764,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Cell Number <span class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control" name="mother_cell" required>
+                                    <input type="tel" class="form-control" name="mother_cell"
+                                           value="{{ $prefill['mother_cell'] ?? '' }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Work Number</label>
@@ -758,7 +773,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Email Address <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" name="mother_email" required>
+                                    <input type="email" class="form-control" name="mother_email"
+                                           value="{{ $prefill['mother_email'] ?? '' }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Occupation</label>

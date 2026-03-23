@@ -88,7 +88,8 @@
             <strong>The Peekaboo Team</strong></p>
         </div>
         <div class="footer">
-            <p>Peekaboo Early Learning Centre &bull; If you didn't expect this email, please contact us.</p>
+            <p>Peekaboo Early Learning Centre &bull; 139b Humewood Dr, Parklands, Cape Town, 7441</p>
+            <p>If you didn't expect this email, please contact us.</p>
         </div>
     </div>
 </body>

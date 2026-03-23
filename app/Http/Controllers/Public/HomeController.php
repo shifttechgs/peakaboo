@@ -10,6 +10,8 @@ use App\Mail\TourBookingMail;
 use App\Models\Lead;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
@@ -118,38 +120,63 @@ class HomeController extends Controller
     {
         // Validate the form data
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
-            'child_name' => 'required|string|max:255',
+            'name'           => 'required|string|max:255',
+            'phone'          => 'required|string|max:20',
+            'email'          => 'required|email|max:255',
+            'child_name'     => 'required|string|max:255',
             'child_nickname' => 'nullable|string|max:255',
-            'child_age' => 'required|string',
-            'preferred_date' => 'required|date',
+            'child_age'      => 'required|string',
+            'preferred_date' => 'required|date|after_or_equal:today',  // Fix #6: no past dates
             'preferred_time' => 'required|string',
-            'message' => 'nullable|string|max:2000',
-            'source' => 'nullable|string|max:100',
+            'message'        => 'nullable|string|max:2000',
+            'source'         => 'nullable|string|max:100',
         ]);
 
-        // Generate sequential reference
-        $year      = date('Y');
-        $nextNum   = Lead::whereYear('created_at', $year)->count() + 1;
-        $reference = 'TOUR-' . $year . '-' . str_pad($nextNum, 3, '0', STR_PAD_LEFT);
+        // Fix #7: Duplicate lead detection — same email with an open (non-terminal) status
+        $existing = Lead::where('email', $validated['email'])
+            ->whereNotIn('status', ['converted', 'lost'])
+            ->first();
 
-        // Persist lead to database
-        $lead = Lead::create([
-            'reference'      => $reference,
-            'name'           => $validated['name'],
-            'email'          => $validated['email'],
-            'phone'          => $validated['phone'],
-            'child_name'     => $validated['child_name'],
-            'child_nickname' => $validated['child_nickname'] ?? null,
-            'child_age'      => $validated['child_age'],
-            'preferred_date' => $validated['preferred_date'],
-            'preferred_time' => $validated['preferred_time'],
-            'message'        => $validated['message'] ?? null,
-            'source'         => $validated['source'] ?? null,
-            'status'         => 'new',
-        ]);
+        if ($existing) {
+            return redirect()->back()
+                ->with('info', "We already have a pending booking for this email address (ref: {$existing->reference}). We'll be in touch soon!")
+                ->withInput();
+        }
+
+        // Generate a unique reference and persist the lead atomically.
+        // DB transaction + lockForUpdate prevents duplicate references under concurrent submissions.
+        $lead = DB::transaction(function () use ($validated) {
+            $year    = date('Y');
+            $nextNum = Lead::whereYear('created_at', $year)->lockForUpdate()->count() + 1;
+            $reference = 'TOUR-' . $year . '-' . str_pad($nextNum, 3, '0', STR_PAD_LEFT);
+
+            return Lead::create([
+                'reference'      => $reference,
+                'name'           => $validated['name'],
+                'email'          => $validated['email'],
+                'phone'          => $validated['phone'],
+                'child_name'     => $validated['child_name'],
+                'child_nickname' => $validated['child_nickname'] ?? null,
+                'child_age'      => $validated['child_age'],
+                'preferred_date' => $validated['preferred_date'],
+                'preferred_time' => $validated['preferred_time'],
+                'message'        => $validated['message'] ?? null,
+                'source'         => $validated['source'] ?? null,
+                'status'         => 'new',
+            ]);
+        });
+
+        // Log lead creation activity
+        try {
+            \App\Models\LeadActivity::create([
+                'lead_id'     => $lead->id,
+                'user_id'     => null,
+                'type'        => 'created',
+                'description' => "Lead submitted via tour booking form ({$lead->reference})",
+            ]);
+        } catch (\Exception $e) {
+            Log::warning('Lead activity log failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
+        }
 
         // Auto-create follow-up task for admin
         try {
@@ -157,10 +184,10 @@ class HomeController extends Controller
                 'title'      => "Follow up with {$lead->name} — tour on {$lead->preferred_date->format('d M')}",
                 'due_date'   => $lead->preferred_date->subDay(),
                 'lead_id'    => $lead->id,
-                'created_by' => 1,
+                'created_by' => \App\Models\User::role('super_admin')->first()?->id ?? \App\Models\User::role('admin')->first()?->id ?? 1,
             ]);
         } catch (\Exception $e) {
-            \Log::warning('Auto-task creation failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
+            Log::warning('Auto-task creation failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
         }
 
         // Send admin notification email
@@ -168,20 +195,20 @@ class HomeController extends Controller
         $emailError = null;
 
         try {
-            \Log::info('Attempting to send tour booking email', [
-                'booking_id' => $reference,
+            Log::info('Attempting to send tour booking email', [
+                'booking_id' => $lead->reference,
                 'to_email'   => config('mail.contact_email'),
             ]);
 
             Mail::to(config('mail.contact_email'))
-                ->send(new TourBookingMail($validated, $reference));
+                ->send(new TourBookingMail($validated, $lead->reference));
 
             $emailSent = true;
-            \Log::info('Tour booking email sent successfully', ['booking_id' => $reference]);
+            Log::info('Tour booking email sent successfully', ['booking_id' => $lead->reference]);
 
         } catch (\Exception $e) {
-            \Log::error('Failed to send tour booking email', [
-                'booking_id' => $reference,
+            Log::error('Failed to send tour booking email', [
+                'booking_id' => $lead->reference,
                 'error'      => $e->getMessage(),
                 'trace'      => $e->getTraceAsString(),
             ]);
@@ -192,13 +219,13 @@ class HomeController extends Controller
         try {
             Mail::to($lead->email)->send(new BookingReceivedMail($lead));
         } catch (\Exception $e) {
-            \Log::error('BookingReceivedMail failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
+            Log::error('BookingReceivedMail failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
         }
 
         return redirect()->route('book-tour')
             ->with([
                 'success'     => 'Tour booking request received! We will contact you within 24 hours to confirm your appointment.',
-                'booking_id'  => $reference,
+                'booking_id'  => $lead->reference,
                 'email_sent'  => $emailSent,
                 'email_error' => $emailError,
             ]);

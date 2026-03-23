@@ -75,7 +75,8 @@
             <p>Warm regards,<br><strong>The Peekaboo Team</strong></p>
         </div>
         <div class="footer">
-            <p>Peekaboo Early Learning Centre &bull; Reference: <strong>{{ $application->reference }}</strong></p>
+            <p>Peekaboo Early Learning Centre &bull; 139b Humewood Dr, Parklands, Cape Town, 7441</p>
+            <p>Reference: <strong>{{ $application->reference }}</strong></p>
         </div>
     </div>
 </body>

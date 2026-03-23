@@ -379,12 +379,15 @@
                 <div class="nav-item">
                     <a href="{{ route('admin.admissions.index') }}" class="nav-link {{ request()->routeIs('admin.admissions.*') ? 'active' : '' }}">
                         <i class="fas fa-user-plus"></i> Admissions
-                        <span class="badge bg-warning">5</span>
+                        @php $pendingAppsCount = \App\Models\Application::whereIn('status', ['pending', 'under_review'])->count(); @endphp
+                        @if($pendingAppsCount > 0)
+                            <span class="badge bg-warning text-dark ms-auto">{{ $pendingAppsCount }}</span>
+                        @endif
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="{{ route('admin.crm.index') }}" class="nav-link {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
-                        <i class="fas fa-funnel-dollar"></i> CRM / Leads
+                        <i class="fas fa-funnel-dollar"></i> Lead Pipeline
                         @php $newLeadsCount = \App\Models\Lead::where('status', 'new')->count(); @endphp
                         @if($newLeadsCount > 0)
                             <span class="badge bg-info ms-auto">{{ $newLeadsCount }}</span>
@@ -396,23 +399,25 @@
                         <i class="fas fa-users"></i> Parents & Children
                     </a>
                 </div>
-                <div class="nav-item">
+                {{-- Payments: disabled --}}
+                {{-- <div class="nav-item">
                     <a href="{{ route('admin.payments.index') }}" class="nav-link {{ request()->routeIs('admin.payments.*') ? 'active' : '' }}">
                         <i class="fas fa-credit-card"></i> Payments
-                        <span class="badge bg-danger">1</span>
                     </a>
-                </div>
-                <div class="nav-item">
+                </div> --}}
+                {{-- Staff & Classes: disabled --}}
+                {{-- <div class="nav-item">
                     <a href="{{ route('admin.staff.index') }}" class="nav-link {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}">
                         <i class="fas fa-chalkboard-teacher"></i> Staff & Classes
                     </a>
-                </div>
+                </div> --}}
                 <div class="nav-item">
                     <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                         <i class="fas fa-users-cog"></i> Users & Access
                     </a>
                 </div>
-                <div class="nav-item">
+                {{-- Tasks: disabled --}}
+                {{-- <div class="nav-item">
                     <a href="{{ route('admin.tasks.index') }}" class="nav-link {{ request()->routeIs('admin.tasks.*') ? 'active' : '' }}">
                         <i class="fas fa-tasks"></i> Tasks
                         @php $pendingTaskCount = \App\Models\Task::where('completed', false)->count(); @endphp
@@ -420,10 +425,11 @@
                             <span class="badge bg-warning text-dark ms-auto">{{ $pendingTaskCount }}</span>
                         @endif
                     </a>
-                </div>
+                </div> --}}
             </div>
 
-            <div class="nav-section">
+            {{-- Communication section: disabled --}}
+            {{-- <div class="nav-section">
                 <div class="nav-section-title">Communication</div>
                 <div class="nav-item">
                     <a href="{{ route('admin.communication.index') }}" class="nav-link {{ request()->routeIs('admin.communication.index') ? 'active' : '' }}">
@@ -440,7 +446,7 @@
                         <i class="fas fa-robot"></i> Automations
                     </a>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="nav-section">
                 <div class="nav-section-title">Reports</div>
@@ -558,6 +564,23 @@
                 setTimeout(() => toast.remove(), 300);
             }
         }, 5000);
+
+        // Global toast helper for AJAX actions
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var icon = type === 'success' ? 'check-circle' : (type === 'error' ? 'exclamation-circle' : 'info-circle');
+            var existing = document.getElementById('ajax-toast');
+            if (existing) existing.remove();
+            var div = document.createElement('div');
+            div.id = 'ajax-toast';
+            div.className = 'admin-toast ' + type;
+            div.innerHTML = '<i class="fas fa-' + icon + ' me-2"></i> ' + message;
+            document.body.appendChild(div);
+            setTimeout(function() {
+                div.style.animation = 'slideInRight 0.3s ease reverse';
+                setTimeout(function() { div.remove(); }, 300);
+            }, 4000);
+        };
     </script>
     @stack('scripts')
 </body>

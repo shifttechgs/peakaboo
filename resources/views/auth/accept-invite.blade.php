@@ -79,8 +79,15 @@
         </div>
 
         <div class="welcome-banner">
-            <strong>Welcome to Peekaboo!</strong>
-            You've been invited as a <strong>{{ ucfirst($invitation->role) }}</strong>. Set your password to get started.
+            @if($invitation->application)
+                <strong>🎉 {{ $invitation->application->child_name }}'s enrolment approved!</strong>
+                Set your password to access the Parent Portal and manage
+                <strong>{{ $invitation->application->child_name }}'s</strong>
+                enrolment in <strong>{{ $invitation->application->program_name }}</strong>.
+            @else
+                <strong>Welcome to Peekaboo!</strong>
+                You've been invited as a <strong>{{ ucfirst($invitation->role) }}</strong>. Set your password to get started.
+            @endif
         </div>
 
         @if($errors->any())
@@ -101,7 +108,8 @@
             <div class="mb-3">
                 <label class="form-label" for="name">Your Full Name</label>
                 <input type="text" id="name" name="name" class="form-control"
-                    value="{{ old('name') }}" required autofocus autocomplete="name">
+                    value="{{ old('name', $invitation->application?->mother_name) }}"
+                    required autofocus autocomplete="name">
             </div>
             <div class="mb-3">
                 <label class="form-label" for="password">Choose a Password</label>

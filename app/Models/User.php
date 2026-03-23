@@ -33,6 +33,12 @@ class User extends Authenticatable
         return $this->hasMany(Invitation::class, 'invited_by');
     }
 
+    /** Enrolment applications where this user is the registered parent. */
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class, 'parent_user_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

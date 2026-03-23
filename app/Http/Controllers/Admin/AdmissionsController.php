@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\InvitationMail;
 use App\Models\Application;
 use App\Models\Invitation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -35,14 +36,17 @@ class AdmissionsController extends Controller
             });
         }
 
-        $applications = $query->latest()->paginate(25)->withQueryString();
+        $applications = $query->with('lead')->latest()->paginate(25)->withQueryString();
 
         $stats = [
+            'total'        => Application::count(),
             'pending'      => Application::where('status', 'pending')->count(),
             'under_review' => Application::where('status', 'under_review')->count(),
             'approved'     => Application::where('status', 'approved')->count(),
             'waitlist'     => Application::where('status', 'waitlist')->count(),
             'rejected'     => Application::where('status', 'rejected')->count(),
+            'this_month'   => Application::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count(),
+            'actionable'   => Application::whereIn('status', ['pending', 'under_review'])->count(),
         ];
 
         return view('admin.admissions.index', compact('applications', 'stats'));
@@ -50,7 +54,7 @@ class AdmissionsController extends Controller
 
     public function show($id)
     {
-        $application = Application::findOrFail($id);
+        $application = Application::with('lead')->findOrFail($id);
 
         // Auto-mark as under_review when admin opens it
         if ($application->status === 'pending') {
@@ -113,15 +117,42 @@ class AdmissionsController extends Controller
         $application = Application::findOrFail($id);
 
         $request->validate([
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['required', 'email'],
         ]);
 
+        $email = $request->email;
+
+        // ── Case 1: parent already has a user account ─────────────────────
+        $existingUser = User::where('email', $email)->first();
+        if ($existingUser) {
+            // Ensure they have the parent role
+            if (! $existingUser->hasRole('parent')) {
+                $existingUser->assignRole('parent');
+            }
+            // Link application directly — no invitation needed
+            $application->update([
+                'parent_user_id' => $existingUser->id,
+                'invited_at'     => now(),
+            ]);
+
+            return redirect()->back()->with('success',
+                "Linked to existing account for {$existingUser->name}. No invitation email needed."
+            );
+        }
+
+        // ── Case 2: resend — invalidate any previous pending invitation ──
+        Invitation::where('email', $email)
+            ->whereNull('accepted_at')
+            ->where('application_id', $application->id)
+            ->delete();
+
         $invitation = Invitation::create([
-            'email'      => $request->email,
-            'role'       => 'parent',
-            'token'      => Str::random(64),
-            'invited_by' => Auth::id(),
-            'expires_at' => now()->addDays(7),
+            'email'          => $email,
+            'role'           => 'parent',
+            'token'          => Str::random(64),
+            'invited_by'     => Auth::id(),
+            'application_id' => $application->id,
+            'expires_at'     => now()->addDays(7),
         ]);
 
         Mail::to($invitation->email)->send(new InvitationMail($invitation));

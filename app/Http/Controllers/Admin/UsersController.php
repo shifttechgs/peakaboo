@@ -32,10 +32,16 @@ class UsersController extends Controller
         $users = $query->orderBy('created_at', 'desc')->paginate(20)->withQueryString();
 
         $stats = [
-            'total'    => User::withTrashed()->count(),
-            'admins'   => User::withTrashed()->whereHas('roles', fn($q) => $q->where('name', 'admin'))->count(),
-            'teachers' => User::withTrashed()->whereHas('roles', fn($q) => $q->where('name', 'teacher'))->count(),
-            'families' => User::withTrashed()->whereHas('roles', fn($q) => $q->whereIn('name', ['parent', 'child']))->count(),
+            'total'          => User::withTrashed()->count(),
+            'active'         => User::count(),
+            'inactive'       => User::onlyTrashed()->count(),
+            'admins'         => User::withTrashed()->whereHas('roles', fn($q) => $q->whereIn('name', ['admin','super_admin']))->count(),
+            'teachers'       => User::withTrashed()->whereHas('roles', fn($q) => $q->where('name', 'teacher'))->count(),
+            'parents'        => User::withTrashed()->whereHas('roles', fn($q) => $q->where('name', 'parent'))->count(),
+            'children'       => User::withTrashed()->whereHas('roles', fn($q) => $q->where('name', 'child'))->count(),
+            'families'       => User::withTrashed()->whereHas('roles', fn($q) => $q->whereIn('name', ['parent', 'child']))->count(),
+            'new_this_month' => User::withTrashed()->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count(),
+            'new_last_month' => User::withTrashed()->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->count(),
         ];
 
         return view('admin.users.index', compact('users', 'stats'));
@@ -90,7 +96,10 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
 
-        if ($request->filled('password')) {
+        // Admins may not set passwords for parents or children — they use the reset flow
+        $protectedRoles = ['parent', 'child'];
+        $targetRole = $request->role;
+        if ($request->filled('password') && !in_array($targetRole, $protectedRoles)) {
             $user->password = Hash::make($request->password);
         }
 

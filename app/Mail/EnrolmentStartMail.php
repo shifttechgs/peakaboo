@@ -13,7 +13,10 @@ class EnrolmentStartMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public Lead $lead) {}
+    public function __construct(
+        public Lead $lead,
+        public string $enrolUrl,
+    ) {}
 
     public function envelope(): Envelope
     {
@@ -26,6 +29,7 @@ class EnrolmentStartMail extends Mailable
     {
         return new Content(
             view: 'emails.enrolment-start',
+            with: ['enrolUrl' => $this->enrolUrl],
         );
     }
 }

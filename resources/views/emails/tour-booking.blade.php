@@ -42,7 +42,7 @@ How they heard about us: **{{ ucfirst($data['source']) }}**
 ---
 
 @component('mail::button', ['url' => route('admin.crm.leads'), 'color' => 'primary'])
-View in CRM
+View in Lead Pipeline
 @endcomponent
 
 ### Next Steps

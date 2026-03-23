@@ -20,50 +20,8 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Parent\PortalController as ParentPortalController;
 use App\Http\Controllers\Teacher\PortalController as TeacherPortalController;
 use App\Http\Controllers\Child\PortalController as ChildPortalController;
-use Barryvdh\DomPDF\Facade\Pdf;
 
-// TEMPORARY TEST ROUTE - DELETE AFTER TESTING
-Route::get('/test-pdf', function () {
-    $testData = [
-        'start_date' => '2026-03-01',
-        'program' => 'full-day',
-        'program_name' => 'Full Day Program',
-        'fee_option' => 'monthly',
-        'fee_option_name' => 'Monthly Payment',
-        'child_name' => 'Test Child',
-        'child_dob' => '2022-05-15',
-        'child_gender' => 'male',
-        'child_id' => '1234567890123',
-        'child_language' => 'English',
-        'mother_name' => 'Test Mother',
-        'mother_id' => '9876543210987',
-        'mother_cell' => '0821234567',
-        'mother_email' => 'test@example.com',
-        'father_name' => 'Test Father',
-        'father_id' => '1112223334445',
-        'father_cell' => '0829876543',
-        'home_address' => '123 Test Street, Cape Town',
-        'emergency_name' => 'Emergency Contact',
-        'emergency_tel' => '0821111111',
-        'doctor_name' => 'Dr. Test',
-        'doctor_tel' => '0212222222',
-        'signature' => 'Test Parent',
-        'signature_date' => '2026-02-05',
-    ];
-    $applicationId = 'APP-2026-TEST';
-    try {
-        $pdf = Pdf::loadView('pdf.enrolment-application', [
-            'data' => $testData,
-            'applicationId' => $applicationId,
-        ]);
-        return $pdf->download('test-application.pdf');
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => $e->getMessage(),
-            'trace' => $e->getTraceAsString()
-        ], 500);
-    }
-});
+
 
 // Public Website Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -131,18 +89,41 @@ Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('ad
     Route::prefix('crm')->name('crm.')->group(function () {
         Route::get('/', [CrmController::class, 'index'])->name('index');
         Route::get('/leads', [CrmController::class, 'leads'])->name('leads');
-        Route::get('/leads/{id}', [CrmController::class, 'showLead'])->name('leads.show');
-        Route::post('/leads/{id}/status', [CrmController::class, 'updateLeadStatus'])->name('leads.status');
-        Route::post('/leads/{id}/notes', [CrmController::class, 'addLeadNotes'])->name('leads.notes');
-        Route::post('/leads/{id}/notify-tour', [CrmController::class, 'notifyTour'])->name('leads.notify-tour');
-        Route::post('/leads/{id}/start-enrol', [CrmController::class, 'startEnrol'])->name('leads.start-enrol');
-        Route::post('/leads/{id}/waitlist', [CrmController::class, 'addToWaitlist'])->name('leads.waitlist');
+        Route::get('/kanban', [CrmController::class, 'kanban'])->name('kanban');
+
+        // Static paths MUST come before {lead} wildcard routes
+        Route::get('/leads/export', [CrmController::class, 'export'])->name('leads.export');
+        Route::post('/leads/bulk-action', [CrmController::class, 'bulkAction'])->name('leads.bulk-action');
+        Route::get('/leads/create', [CrmController::class, 'createLead'])->name('leads.create');
+        Route::post('/leads', [CrmController::class, 'storeLead'])->name('leads.store');
+
+        // Wildcard {lead} routes
+        Route::patch('/leads/{lead}/status', [CrmController::class, 'ajaxUpdateStatus'])->name('leads.ajax-status');
+        Route::get('/leads/{lead}', [CrmController::class, 'showLead'])->name('leads.show');
+        Route::get('/leads/{lead}/edit', [CrmController::class, 'editLead'])->name('leads.edit');
+        Route::put('/leads/{lead}', [CrmController::class, 'updateLead'])->name('leads.update');
+        Route::delete('/leads/{lead}', [CrmController::class, 'destroyLead'])->name('leads.destroy');
+        Route::post('/leads/{lead}/status', [CrmController::class, 'updateLeadStatus'])->name('leads.status');
+        Route::post('/leads/{lead}/notes', [CrmController::class, 'addLeadNotes'])->name('leads.notes');
+        Route::post('/leads/{lead}/follow-up', [CrmController::class, 'setFollowUpDate'])->name('leads.follow-up');
+        Route::post('/leads/{lead}/tour-date', [CrmController::class, 'updateTourDate'])->name('leads.tour-date');
+        Route::post('/leads/{lead}/notify-tour', [CrmController::class, 'notifyTour'])->name('leads.notify-tour');
+        Route::post('/leads/{lead}/start-enrol', [CrmController::class, 'startEnrol'])->name('leads.start-enrol');
+        Route::post('/leads/{lead}/waitlist', [CrmController::class, 'addToWaitlist'])->name('leads.waitlist');
+        Route::post('/leads/{lead}/assign', [CrmController::class, 'assignLead'])->name('leads.assign');
+        Route::post('/leads/{lead}/mark-contacted', [CrmController::class, 'markContacted'])->name('leads.mark-contacted');
+        Route::post('/leads/{lead}/mark-lost', [CrmController::class, 'markLost'])->name('leads.mark-lost');
+
+        // Soft-delete recovery
+        Route::post('/leads/{id}/restore', [CrmController::class, 'restoreLead'])->name('leads.restore');
+        Route::delete('/leads/{id}/force', [CrmController::class, 'forceDeleteLead'])->name('leads.force-delete');
     });
 
     // Tasks
     Route::prefix('tasks')->name('tasks.')->group(function () {
         Route::get('/', [TasksController::class, 'index'])->name('index');
         Route::post('/', [TasksController::class, 'store'])->name('store');
+        Route::put('/{task}', [TasksController::class, 'update'])->name('update');
         Route::patch('/{task}/toggle', [TasksController::class, 'toggle'])->name('toggle');
         Route::delete('/{task}', [TasksController::class, 'destroy'])->name('destroy');
     });

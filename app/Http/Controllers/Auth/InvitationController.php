@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -39,7 +40,9 @@ class InvitationController extends Controller
 
     public function accept(string $token): View|RedirectResponse
     {
-        $invitation = Invitation::valid()->where('token', $token)->first();
+        $invitation = Invitation::valid()->where('token', $token)
+            ->with('application')
+            ->first();
 
         if (! $invitation) {
             return redirect()->route('login')
@@ -51,7 +54,9 @@ class InvitationController extends Controller
 
     public function register(Request $request, string $token): RedirectResponse
     {
-        $invitation = Invitation::valid()->where('token', $token)->first();
+        $invitation = Invitation::valid()->where('token', $token)
+            ->with('application')
+            ->first();
 
         if (! $invitation) {
             return redirect()->route('login')
@@ -59,8 +64,8 @@ class InvitationController extends Controller
         }
 
         $request->validate([
-            'name'                  => ['required', 'string', 'max:255'],
-            'password'              => ['required', 'string', 'min:8', 'confirmed'],
+            'name'     => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         $user = User::create([
@@ -73,6 +78,11 @@ class InvitationController extends Controller
 
         $invitation->update(['accepted_at' => now()]);
 
+        // ── Back-fill application.parent_user_id ────────────────────────
+        if ($invitation->application_id && $invitation->application) {
+            $invitation->application->update(['parent_user_id' => $user->id]);
+        }
+
         Auth::login($user);
 
         // Send welcome/onboarding email to new parents
@@ -80,7 +90,7 @@ class InvitationController extends Controller
             try {
                 Mail::to($user->email)->send(new OnboardingMail($user));
             } catch (\Exception $e) {
-                \Log::error('OnboardingMail failed', ['user' => $user->id, 'error' => $e->getMessage()]);
+                Log::error('OnboardingMail failed', ['user' => $user->id, 'error' => $e->getMessage()]);
             }
         }
 
