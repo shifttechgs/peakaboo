@@ -43,6 +43,10 @@ class HomeController extends Controller
         $programs = MockData::programs();
         $program = collect($programs)->firstWhere('id', $slug);
 
+        if (!$program) {
+            abort(404);
+        }
+
         return view('public.program-detail', [
             'business' => MockData::businessInfo(),
             'program' => $program,

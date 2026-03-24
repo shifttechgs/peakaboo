@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="vs-svg-assets" href="{{ route('home') }}#programs">
+                    <a class="vs-svg-assets" href="{{ route('programs') }}">
                         Programs
                         <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
                             <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
@@ -38,7 +38,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="vs-svg-assets" href="{{ route('home') }}#about">
+                    <a class="vs-svg-assets" href="{{ route('about') }}">
                         About
                         <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
                             <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="vs-svg-assets" href="{{ route('home') }}#fees">
+                    <a class="vs-svg-assets" href="{{ route('fees') }}">
                         Fees
                         <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
                             <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="vs-svg-assets" href="{{ route('home') }}#contact">
+                    <a class="vs-svg-assets" href="{{ route('contact') }}">
                         Contact
                         <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
                             <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
@@ -63,6 +63,18 @@
                 </li>
             </ul>
         </div>
+        <!-- ── Mobile Menu CTA Buttons ── -->
+        <div style="padding: 20px 20px 0; display: flex; flex-direction: column; gap: 10px;">
+            <a href="{{ route('enrol.index') }}"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:#0077B6;color:#fff;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #0077B6;">
+                <i class="fa-solid fa-pen-to-square"></i> Enrol Now
+            </a>
+            <a href="{{ route('book-tour') }}"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:transparent;color:#0077B6;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #0077B6;">
+                <i class="fa-regular fa-calendar-check"></i> Book a Tour
+            </a>
+        </div>
+
         <div class="px-20 py-20">
             <div class="sidemenu-contact style2">
                 <ul>
@@ -199,11 +211,11 @@
                     <div class="col-auto">
                         <nav class="main-menu d-none d-lg-block">
                             <ul>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}" style="color: var(--color-text, #0E2A46)">HOME</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}#programs" style="color: var(--color-text, #0E2A46)">Programs</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}#about" style="color: var(--color-text, #0E2A46)">About</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}#fees" style="color: var(--color-text, #0E2A46)">Fees</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('contact') }}" style="color: var(--color-text, #0E2A46)">Contact</a></li>
+                                <li><a class="vs-svg-assets {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}" style="color: var(--color-text, #0E2A46)">HOME</a></li>
+                                <li><a class="vs-svg-assets {{ request()->routeIs('programs') || request()->routeIs('program.detail') ? 'active' : '' }}" href="{{ route('programs') }}" style="color: var(--color-text, #0E2A46)">Programs</a></li>
+                                <li><a class="vs-svg-assets {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}" style="color: var(--color-text, #0E2A46)">About</a></li>
+                                <li><a class="vs-svg-assets {{ request()->routeIs('fees') ? 'active' : '' }}" href="{{ route('fees') }}" style="color: var(--color-text, #0E2A46)">Fees</a></li>
+                                <li><a class="vs-svg-assets {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}" style="color: var(--color-text, #0E2A46)">Contact</a></li>
                             </ul>
                         </nav>
                     </div>

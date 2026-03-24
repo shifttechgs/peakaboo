@@ -660,6 +660,14 @@
             </div>
 
         </div>
+        <!-- View All Programs link -->
+        <div class="row mt-5 wow itfadeUp">
+            <div class="col-12 text-center">
+                <a href="{{ route('programs') }}" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-body);font-size:16px;font-weight:700;color:var(--color-primary);text-decoration:none;border:2px solid var(--color-primary);padding:14px 40px;border-radius:var(--radius-pill);transition:all 0.3s;" onmouseover="this.style.background='var(--color-primary)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--color-primary)'">
+                    Explore All Programs <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
     </div>
 </section>
 <!-- Programs Section End -->
@@ -878,6 +886,11 @@
                 Registration Fee: <strong>R500 (non-refundable)</strong> &nbsp;·&nbsp;
                 <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20ask%20about%20fees%20and%20registration." target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chat to us on WhatsApp</a>
             </p>
+        </div>
+        <div class="text-center mt-4 wow itfadeUp" data-wow-delay="0.4s">
+            <a href="{{ route('fees') }}" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-body);font-size:15px;font-weight:700;color:var(--color-primary);text-decoration:none;border:2px solid var(--color-primary);padding:13px 36px;border-radius:var(--radius-pill);transition:all 0.3s;" onmouseover="this.style.background='var(--color-primary)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--color-primary)'">
+                View Full Fee Schedule <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
 
     </div>

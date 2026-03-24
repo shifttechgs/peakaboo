@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/flaticon_xoft.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/edunity-hero.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/peekaboo-mobile.css') }}">
 
     <style>
     :root {
@@ -157,6 +158,89 @@
     </main>
 
     @include('partials.public-footer')
+
+    <!-- ── Sticky Mobile CTA Bar (hidden on desktop) ── -->
+    <div class="pb-mobile-cta d-lg-none" id="pbMobileCta" aria-label="Quick actions">
+        <a href="{{ route('book-tour') }}" class="pb-mobile-cta__btn pb-mobile-cta__btn--outline">
+            <i class="fa-regular fa-calendar-check"></i> Book a Tour
+        </a>
+        <a href="{{ route('enrol.index') }}" class="pb-mobile-cta__btn pb-mobile-cta__btn--primary">
+            <i class="fa-solid fa-pen-to-square"></i> Enrol Now
+        </a>
+    </div>
+    <style>
+    .pb-mobile-cta {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        display: flex;
+        z-index: 9999;
+        padding: 10px 12px;
+        padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+        background: #fff;
+        border-top: 1px solid rgba(0,0,0,0.09);
+        gap: 8px;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+        /* Hide until user has scrolled past fold */
+        opacity: 0;
+        transform: translateY(100%);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+        pointer-events: none;
+    }
+    .pb-mobile-cta.pb-mobile-cta--visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+    .pb-mobile-cta__btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        height: 48px;
+        border-radius: 999px;
+        font-family: var(--font-body, 'Sora', sans-serif);
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: opacity 0.2s;
+        white-space: nowrap;
+    }
+    .pb-mobile-cta__btn:active { opacity: 0.8; }
+    .pb-mobile-cta__btn--outline {
+        background: transparent;
+        color: var(--color-primary, #0077B6);
+        border: 2px solid var(--color-primary, #0077B6);
+    }
+    .pb-mobile-cta__btn--primary {
+        background: var(--color-primary, #0077B6);
+        color: #fff;
+        border: 2px solid var(--color-primary, #0077B6);
+    }
+    /* Ensure back-to-top doesn't overlap */
+    @media (max-width: 991px) {
+        #backToTop {
+            bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+        }
+    }
+    </style>
+    <script>
+    (function() {
+        var bar = document.getElementById('pbMobileCta');
+        if (!bar) return;
+        var shown = false;
+        function onScroll() {
+            if (window.scrollY > 300 && !shown) {
+                bar.classList.add('pb-mobile-cta--visible');
+                shown = true;
+            } else if (window.scrollY <= 300 && shown) {
+                bar.classList.remove('pb-mobile-cta--visible');
+                shown = false;
+            }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+    </script>
 
     <!-- Back To Top Button -->
     <button class="back-to-top" id="backToTop" aria-label="Back to Top">

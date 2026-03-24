@@ -199,10 +199,10 @@
                     <h4 class="pb-footer__title">Quick Links</h4>
                     <ul class="pb-footer__links">
                         <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="{{ route('home') }}#programs">Programs</a></li>
-                        <li><a href="{{ route('home') }}#about">About Us</a></li>
-                        <li><a href="{{ route('home') }}#fees">Fees</a></li>
-                        <li><a href="{{ route('home') }}#faq">FAQ</a></li>
+                        <li><a href="{{ route('programs') }}">Programs</a></li>
+                        <li><a href="{{ route('about') }}">About Us</a></li>
+                        <li><a href="{{ route('fees') }}">Fees</a></li>
+                        <li><a href="{{ route('faq') }}">FAQ</a></li>
                     </ul>
                 </div>
 
@@ -212,8 +212,8 @@
                     <ul class="pb-footer__links">
                         <li><a href="{{ route('enrol.index') }}">Enrol Now</a></li>
                         <li><a href="{{ route('book-tour') }}">Book a Tour</a></li>
-                        <li><a href="{{ route('home') }}#contact">Contact Us</a></li>
-                        <li><a href="{{ route('admin.dashboard') }}">Admin Portal</a></li>
+                        <li><a href="{{ route('contact') }}">Contact Us</a></li>
+                        <li><a href="{{ route('gallery') }}">Gallery</a></li>
                     </ul>
                 </div>
 
