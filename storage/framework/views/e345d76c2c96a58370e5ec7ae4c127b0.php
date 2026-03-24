@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Portal') - Peekaboo</title>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <title><?php echo $__env->yieldContent('title', 'Portal'); ?> - Peekaboo</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/peekaboo/logo.png') }}">
+    <link rel="icon" type="image/png" href="<?php echo e(asset('assets/img/peekaboo/logo.png')); ?>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/bootstrap.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/fontawesome.min.css')); ?>">
 
     <style>
         :root {
@@ -258,12 +258,12 @@
 
         .portal-toast.success { background: #28a745; }
 
-        @@keyframes slideIn {
+        @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
 
-        @@media (max-width: 992px) {
+        @media(max-width: 992px) {
             .portal-sidebar {
                 transform: translateX(-100%);
             }
@@ -286,27 +286,27 @@
             cursor: pointer;
         }
     </style>
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 <body>
     <!-- Sidebar -->
     <aside class="portal-sidebar" id="sidebar">
         <div class="sidebar-brand">
             <div class="sidebar-brand-logo">
-                <img src="{{ asset('assets/img/peekaboo/peekaboo_logo.png') }}" alt="Peekaboo" onerror="this.src='{{ asset('assets/img/peekaboo/logo.png') }}'">
+                <img src="<?php echo e(asset('assets/img/peekaboo/peekaboo_logo.png')); ?>" alt="Peekaboo" onerror="this.src='<?php echo e(asset('assets/img/peekaboo/logo.png')); ?>'">
             </div>
             <div class="sidebar-brand-text">
                 <span class="sidebar-brand-title">Peekaboo</span>
-                <span class="sidebar-brand-subtitle">@yield('portal-name', 'Portal')</span>
+                <span class="sidebar-brand-subtitle"><?php echo $__env->yieldContent('portal-name', 'Portal'); ?></span>
             </div>
         </div>
 
         <nav class="sidebar-nav">
-            @yield('sidebar-nav')
+            <?php echo $__env->yieldContent('sidebar-nav'); ?>
 
             <div class="nav-section-title" style="margin-top: 20px;">Session</div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
+            <form method="POST" action="<?php echo e(route('logout')); ?>">
+                <?php echo csrf_field(); ?>
                 <button type="submit" class="nav-link text-danger w-100 border-0 bg-transparent text-start" style="cursor: pointer;">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
@@ -321,19 +321,20 @@
                 <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('show')">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h5 class="mb-0 fw-bold">@yield('page-title', 'Dashboard')</h5>
+                <h5 class="mb-0 fw-bold"><?php echo $__env->yieldContent('page-title', 'Dashboard'); ?></h5>
             </div>
 
             <div class="d-flex align-items-center gap-4">
-                @yield('header-actions')
+                <?php echo $__env->yieldContent('header-actions'); ?>
                 <div class="dropdown">
                     <div class="d-flex align-items-center gap-2" data-bs-toggle="dropdown" style="cursor: pointer;">
                         <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold" style="width: 38px; height: 38px; font-size: 14px; flex-shrink: 0;">
-                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            <?php echo e(strtoupper(substr(auth()->user()->name, 0, 1))); ?>
+
                         </div>
                         <div class="d-none d-md-block">
-                            <div class="fw-semibold" style="font-size: 14px; line-height: 1.2;">{{ auth()->user()->name }}</div>
-                            <div class="text-muted" style="font-size: 12px;">{{ ucfirst(auth()->user()->getRoleNames()->first() ?? 'User') }}</div>
+                            <div class="fw-semibold" style="font-size: 14px; line-height: 1.2;"><?php echo e(auth()->user()->name); ?></div>
+                            <div class="text-muted" style="font-size: 12px;"><?php echo e(ucfirst(auth()->user()->getRoleNames()->first() ?? 'User')); ?></div>
                         </div>
                         <i class="fas fa-chevron-down text-muted"></i>
                     </div>
@@ -342,8 +343,8 @@
                         <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
+                            <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="dropdown-item text-danger">
                                     <i class="fas fa-sign-out-alt me-2"></i> Logout
                                 </button>
@@ -355,18 +356,19 @@
         </header>
 
         <div class="portal-content">
-            @yield('content')
+            <?php echo $__env->yieldContent('content'); ?>
         </div>
     </main>
 
-    @if(session('success'))
+    <?php if(session('success')): ?>
     <div class="portal-toast success" id="toast">
-        <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-    </div>
-    @endif
+        <i class="fas fa-check-circle me-2"></i> <?php echo e(session('success')); ?>
 
-    <script src="{{ asset('assets/js/vendor/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    </div>
+    <?php endif; ?>
+
+    <script src="<?php echo e(asset('assets/js/vendor/jquery-3.7.1.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/bootstrap.min.js')); ?>"></script>
     <script>
         setTimeout(function() {
             const toast = document.getElementById('toast');
@@ -376,6 +378,7 @@
             }
         }, 5000);
     </script>
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
+<?php /**PATH C:\wamp64_3.3.4\www\projects\peekaboo\resources\views/layouts/portal.blade.php ENDPATH**/ ?>

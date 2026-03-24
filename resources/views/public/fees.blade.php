@@ -1,7 +1,42 @@
 @extends('layouts.public')
 
-@section('title', 'Fees & Pricing - Peekaboo Daycare & Preschool')
-@section('description', 'Transparent pricing at Peekaboo Daycare, Parklands. Half-day from R3,800/month, Full-day from R4,200/month. Sleepovers R150/night. No hidden costs.')
+@section('title', 'Daycare Fees & Pricing 2026 — Peekaboo Preschool Parklands, Cape Town')
+@section('description', 'Transparent daycare fees at Peekaboo Parklands, Cape Town. Half-day from R3,800/month, full-day from R4,200/month. Optional snack box R400/month. No hidden costs. Sibling discounts available.')
+@section('keywords', 'daycare fees Parklands 2026, preschool pricing Cape Town, childcare costs Parklands, full day daycare cost Cape Town, half day preschool fees Cape Town, affordable daycare Cape Town, how much does daycare cost Cape Town, Peekaboo Daycare fees')
+@section('canonical', route('fees'))
+@section('og_title', 'Daycare Fees & Pricing 2026 — Peekaboo Preschool Parklands, Cape Town')
+@section('og_description', 'Transparent pricing at Peekaboo Daycare Parklands. Half-day from R3,800/mo, Full-day from R4,200/mo. No hidden costs. Sibling discounts available.')
+
+@push('schema')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "WebPage",
+  "@@id": "{{ route('fees') }}#webpage",
+  "url": "{{ route('fees') }}",
+  "name": "Daycare Fees & Pricing 2026 — Peekaboo Preschool Parklands, Cape Town",
+  "description": "Transparent daycare fees at Peekaboo Daycare in Parklands, Cape Town. Half-day from R3,800/month, full-day R4,200/month.",
+  "isPartOf": {"@@id": "{{ url('/') }}/#website"},
+  "breadcrumb": {
+    "@@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@@type": "ListItem", "position": 1, "name": "Home", "item": "{{ route('home') }}"},
+      {"@@type": "ListItem", "position": 2, "name": "Fees & Pricing", "item": "{{ route('fees') }}"}
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "PriceSpecification",
+  "name": "Peekaboo Daycare Fee Structure 2026",
+  "description": "Monthly childcare fees at Peekaboo Daycare & Preschool, Parklands Cape Town",
+  "priceCurrency": "ZAR",
+  "eligibleQuantity": {"@@type": "QuantitativeValue", "unitText": "per month"}
+}
+</script>
+@endpush
 
 @section('content')
 
@@ -13,7 +48,7 @@
 .pb-page-hero { background:var(--color-surface);padding:80px 0 72px;overflow:hidden;position:relative; }
 .pb-page-hero__shape-1 { position:absolute;top:-60px;right:-80px;opacity:.3;z-index:0;animation:itswing 4s ease-in-out infinite alternate;transform-origin:top right; }
 .pb-page-hero__shape-2 { position:absolute;bottom:-30px;left:-50px;opacity:.2;z-index:0;animation:itswing 6s ease-in-out infinite alternate; }
-@keyframes itswing { 0%{transform:rotate(0deg);}100%{transform:rotate(6deg);} }
+@@keyframes itswing { 0%{transform:rotate(0deg);}100%{transform:rotate(6deg);} }
 .pb-page-hero__breadcrumb { list-style:none;padding:0;margin:0 0 20px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-family:var(--font-body);font-size:14px; }
 .pb-page-hero__breadcrumb li { color:var(--color-muted); }
 .pb-page-hero__breadcrumb a { color:var(--color-primary);text-decoration:none;transition:color .25s; }
@@ -22,7 +57,7 @@
 
 /* Right column quick-fact chips */
 .pb-fees-hero-chips { display:flex;flex-direction:column;gap:16px;padding-left:20px; }
-@media(max-width:991px){ .pb-fees-hero-chips{padding-left:0;margin-top:44px;flex-direction:row;flex-wrap:wrap;} }
+@@media(max-width:991px){ .pb-fees-hero-chips{padding-left:0;margin-top:44px;flex-direction:row;flex-wrap:wrap;} }
 .pb-fees-hero-chip { display:flex;align-items:center;gap:16px;background:#fff;border-radius:var(--radius-md);padding:16px 24px;min-width:240px;transition:transform .3s ease; }
 .pb-fees-hero-chip:hover { transform:translateX(6px); }
 .pb-fees-hero-chip__icon { width:52px;height:52px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff; }
@@ -339,7 +374,7 @@
 <style>
 .pb-faq { padding:110px 0 100px;position:relative;overflow:hidden; }
 .pb-faq__shape { position:absolute;bottom:5%;left:-2%;z-index:0;animation:itswing-2 3s forwards infinite alternate;transform-origin:top left;opacity:.6; }
-@keyframes itswing-2 { 0%{transform:rotate(0deg);}100%{transform:rotate(5deg);} }
+@@keyframes itswing-2 { 0%{transform:rotate(0deg);}100%{transform:rotate(5deg);} }
 .pb-faq__sub { font-family:var(--font-body);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--color-warm);display:block;margin-bottom:12px; }
 .pb-faq__heading { font-family:var(--font-heading);font-size:clamp(30px,4vw,42px);font-weight:900;color:var(--color-text);line-height:1.1;margin-bottom:18px; }
 .pb-faq__heading span { color:var(--color-primary); }
@@ -361,7 +396,7 @@
 .pb-faq .accordion .accordion-button.pb-faq__btn::after { background-image:none!important;content:'\f078'!important;font-family:'Font Awesome 6 Pro'!important;font-weight:900!important;font-size:12px!important;color:var(--color-muted);width:auto;height:auto;transition:transform .3s ease,color .3s ease; }
 .pb-faq .accordion .accordion-button.pb-faq__btn:not(.collapsed)::after { content:'\f077'!important;color:var(--color-primary);transform:none; }
 .pb-faq__body { font-family:var(--font-body);font-size:15px;color:var(--color-body);line-height:1.8;padding:0 24px 22px 72px; }
-@media(max-width:575px){ .pb-faq__body{padding:0 18px 18px 62px;font-size:14px;} }
+@@media(max-width:575px){ .pb-faq__body{padding:0 18px 18px 62px;font-size:14px;} }
 </style>
 
     <div class="pb-faq__shape d-none d-lg-block">
@@ -511,7 +546,7 @@
 .pb-cta__btn-secondary:hover { border-color:var(--color-primary);color:var(--color-primary);transform:translateY(-3px);box-shadow:0 4px 18px rgba(0,119,182,.1); }
 .pb-cta__card { background:#fff;border-radius:20px;padding:44px 40px;position:relative; }
 .pb-cta__card-badge { position:absolute;top:-14px;right:24px;background:var(--color-warm);color:#fff;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 20px;border-radius:var(--radius-pill);animation:pulse-badge 2s ease-in-out infinite; }
-@keyframes pulse-badge { 0%,100%{transform:scale(1);}50%{transform:scale(1.05);} }
+@@keyframes pulse-badge { 0%,100%{transform:scale(1);}50%{transform:scale(1.05);} }
 .pb-cta__card-title { font-family:var(--font-heading);font-size:24px;font-weight:800;color:var(--color-text);margin-bottom:10px; }
 .pb-cta__card-desc { font-family:var(--font-body);font-size:16px;color:var(--color-body);line-height:1.7;margin-bottom:28px; }
 .pb-cta__card-contacts { display:flex;flex-direction:column;gap:12px;margin-bottom:28px; }
@@ -526,8 +561,8 @@
 .pb-cta__card-btn:hover { background:var(--color-primary-dk);color:#fff; }
 .pb-cta__card-btn i { margin-right:6px; }
 .pb-cta__shape { position:absolute;top:6%;right:-1%;z-index:0;animation:itswing-2 3s forwards infinite alternate;transform-origin:bottom right;opacity:.5; }
-@media(max-width:991px){ .pb-cta__card{margin-top:50px;} .pb-cta__lead{max-width:100%;} }
-@media(max-width:575px){ .pb-cta{padding:80px 0;} .pb-cta__card{padding:28px 22px;} .pb-cta__buttons{flex-direction:column;} .pb-cta__btn-primary,.pb-cta__btn-secondary{justify-content:center;width:100%;} }
+@@media(max-width:991px){ .pb-cta__card{margin-top:50px;} .pb-cta__lead{max-width:100%;} }
+@@media(max-width:575px){ .pb-cta{padding:80px 0;} .pb-cta__card{padding:28px 22px;} .pb-cta__buttons{flex-direction:column;} .pb-cta__btn-primary,.pb-cta__btn-secondary{justify-content:center;width:100%;} }
 </style>
 
     <div class="pb-cta__shape d-none d-lg-block">
@@ -604,6 +639,13 @@
 </section>
 
 @endsection
+
+
+
+
+
+
+
 
 
 

@@ -1,7 +1,41 @@
 @extends('layouts.public')
 
-@section('title', 'FAQ - Peekaboo Daycare & Preschool')
-@section('description', 'Answers to the most common questions about Peekaboo Daycare in Parklands, Cape Town — hours, fees, policies, curriculum, and more.')
+@section('title', 'Frequently Asked Questions — Peekaboo Daycare Parklands, Cape Town')
+@section('description', 'Got questions about Peekaboo Daycare in Parklands, Cape Town? Find answers about operating hours, fees, CAPS curriculum, sick policy, teacher ratios, registration, and more.')
+@section('keywords', 'daycare FAQ Parklands Cape Town, preschool questions Cape Town, childcare hours Cape Town, daycare fees questions, CAPS curriculum FAQ, teacher ratio daycare Cape Town')
+@section('canonical', route('faq'))
+@section('og_title', 'FAQ — Peekaboo Daycare Parklands, Cape Town')
+@section('og_description', 'Answers to the most common questions about Peekaboo Daycare in Parklands, Cape Town — hours, fees, CAPS curriculum, policies and more.')
+
+@push('schema')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "FAQPage",
+  "@@id": "{{ route('faq') }}#webpage",
+  "url": "{{ route('faq') }}",
+  "name": "Frequently Asked Questions — Peekaboo Daycare Parklands",
+  "isPartOf": {"@@id": "{{ url('/') }}/#website"},
+  "breadcrumb": {
+    "@@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@@type": "ListItem", "position": 1, "name": "Home", "item": "{{ route('home') }}"},
+      {"@@type": "ListItem", "position": 2, "name": "FAQ", "item": "{{ route('faq') }}"}
+    ]
+  },
+  "mainEntity": [
+    {"@@type": "Question", "name": "What are your operating hours?", "acceptedAnswer": {"@@type": "Answer", "text": "Peekaboo Daycare is open Monday to Friday from 06:00 to 18:00. We offer half-day options until 12:00 (babies–3 years) or 13:00 (4 years–Grade R)."}},
+    {"@@type": "Question", "name": "What is your sick child policy?", "acceptedAnswer": {"@@type": "Answer", "text": "For the health and safety of all children, sick children cannot attend school. Children with fever, vomiting, or contagious conditions must stay home."}},
+    {"@@type": "Question", "name": "Do you provide meals?", "acceptedAnswer": {"@@type": "Answer", "text": "We offer an optional Snack Box service for R400/month which provides healthy snacks throughout the day. Parents can also send their own food."}},
+    {"@@type": "Question", "name": "What is your teacher-to-child ratio?", "acceptedAnswer": {"@@type": "Answer", "text": "We maintain low ratios: 1:4 for babies, 1:6 for toddlers, 1:8 for preschool, and 1:10 for Grade R."}},
+    {"@@type": "Question", "name": "Is there a registration fee?", "acceptedAnswer": {"@@type": "Answer", "text": "Yes, there is a non-refundable R500 registration fee required upon enrolment to secure your child's place."}},
+    {"@@type": "Question", "name": "What notice period is required?", "acceptedAnswer": {"@@type": "Answer", "text": "A full calendar month's written notice is required to withdraw your child. We do not accept notice for the month of November."}},
+    {"@@type": "Question", "name": "Do you offer sibling discounts?", "acceptedAnswer": {"@@type": "Answer", "text": "Yes! We offer discounts for families with 2 or more children enrolled at Peekaboo. Please contact us for details."}},
+    {"@@type": "Question", "name": "What curriculum does Peekaboo follow?", "acceptedAnswer": {"@@type": "Answer", "text": "Our Grade R programme follows the CAPS (Curriculum and Assessment Policy Statement). All programmes incorporate age-appropriate learning through play."}}
+  ]
+}
+</script>
+@endpush
 
 @section('content')
 <style>
@@ -207,4 +241,5 @@
 </section>
 
 @endsection
+
 

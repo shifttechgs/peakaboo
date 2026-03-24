@@ -168,10 +168,10 @@
 .pb-footer__credit a:hover { color: #fff; }
 
 /* ── Responsive ── */
-@@media (max-width: 991px) {
+@media(max-width: 991px) {
     .pb-footer__main { padding: 50px 0 30px; }
 }
-@@media (max-width: 575px) {
+@media(max-width: 575px) {
     .pb-footer__desc { max-width: 100%; }
 }
 </style>
@@ -183,8 +183,8 @@
 
                 <!-- Col 1 — Logo + Desc + Social -->
                 <div class="col-lg-4 col-md-6">
-                    <a href="{{ route('home') }}">
-                        <img src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo Daycare" class="pb-footer__logo">
+                    <a href="<?php echo e(route('home')); ?>">
+                        <img src="<?php echo e(asset('assets/img/peekaboo/logo.png')); ?>" alt="Peekaboo Daycare" class="pb-footer__logo">
                     </a>
                     <p class="pb-footer__desc">A safe, loving space where little minds grow. Licensed daycare nurturing children from infancy to Grade R with qualified teachers and Christian values.</p>
                     <div class="pb-footer__social">
@@ -198,11 +198,11 @@
                 <div class="col-lg-2 col-md-6 col-6">
                     <h4 class="pb-footer__title">Quick Links</h4>
                     <ul class="pb-footer__links">
-                        <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="{{ route('programs') }}">Programs</a></li>
-                        <li><a href="{{ route('about') }}">About Us</a></li>
-                        <li><a href="{{ route('fees') }}">Fees</a></li>
-                        <li><a href="{{ route('faq') }}">FAQ</a></li>
+                        <li><a href="<?php echo e(route('home')); ?>">Home</a></li>
+                        <li><a href="<?php echo e(route('programs')); ?>">Programs</a></li>
+                        <li><a href="<?php echo e(route('about')); ?>">About Us</a></li>
+                        <li><a href="<?php echo e(route('fees')); ?>">Fees</a></li>
+                        <li><a href="<?php echo e(route('faq')); ?>">FAQ</a></li>
                     </ul>
                 </div>
 
@@ -210,10 +210,10 @@
                 <div class="col-lg-2 col-md-6 col-6">
                     <h4 class="pb-footer__title">Get Started</h4>
                     <ul class="pb-footer__links">
-                        <li><a href="{{ route('enrol.index') }}">Enrol Now</a></li>
-                        <li><a href="{{ route('book-tour') }}">Book a Tour</a></li>
-                        <li><a href="{{ route('contact') }}">Contact Us</a></li>
-                        <li><a href="{{ route('admin.dashboard') }}">Portal</a></li>
+                        <li><a href="<?php echo e(route('enrol.index')); ?>">Enrol Now</a></li>
+                        <li><a href="<?php echo e(route('book-tour')); ?>">Book a Tour</a></li>
+                        <li><a href="<?php echo e(route('contact')); ?>">Contact Us</a></li>
+                        <li><a href="<?php echo e(route('admin.dashboard')); ?>">Portal</a></li>
                     </ul>
                 </div>
 
@@ -250,7 +250,7 @@
             <div class="row gy-2 align-items-center justify-content-between">
                 <div class="col-md-auto">
                     <p class="pb-footer__copyright">
-                        &copy; {{ date('Y') }} <a href="{{ route('home') }}">Peekaboo Daycare &amp; Preschool</a>. All rights reserved.
+                        &copy; <?php echo e(date('Y')); ?> <a href="<?php echo e(route('home')); ?>">Peekaboo Daycare &amp; Preschool</a>. All rights reserved.
                     </p>
                 </div>
                 <div class="col-md-auto">
@@ -263,3 +263,4 @@
     </div>
 
 </footer>
+<?php /**PATH C:\wamp64_3.3.4\www\projects\peekaboo\resources\views/partials/public-footer.blade.php ENDPATH**/ ?>

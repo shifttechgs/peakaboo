@@ -4,60 +4,60 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    {{-- ── SEO: Title ── --}}
-    <title>@yield('title', 'Peekaboo Daycare & Preschool — Parklands, Cape Town')</title>
+    
+    <title><?php echo $__env->yieldContent('title', 'Peekaboo Daycare & Preschool — Parklands, Cape Town'); ?></title>
 
-    {{-- ── SEO: Core meta ── --}}
+    
     <meta name="author" content="Peekaboo Daycare & Preschool">
-    <meta name="description" content="@yield('description', 'Safe, trusted childcare for 3 months to Grade R in Parklands, Cape Town. Qualified teachers, CAPS curriculum, Christian values. Enrol today.')">
-    <meta name="keywords" content="@yield('keywords', 'daycare Parklands Cape Town, preschool Parklands Cape Town, childcare Cape Town, nursery school Parklands, Grade R Cape Town, baby room daycare Cape Town, CAPS preschool Cape Town, Christian preschool Parklands, Peekaboo Daycare')">
+    <meta name="description" content="<?php echo $__env->yieldContent('description', 'Safe, trusted childcare for 3 months to Grade R in Parklands, Cape Town. Qualified teachers, CAPS curriculum, Christian values. Enrol today.'); ?>">
+    <meta name="keywords" content="<?php echo $__env->yieldContent('keywords', 'daycare Parklands Cape Town, preschool Parklands Cape Town, childcare Cape Town, nursery school Parklands, Grade R Cape Town, baby room daycare Cape Town, CAPS preschool Cape Town, Christian preschool Parklands, Peekaboo Daycare'); ?>">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-    {{-- ── SEO: Canonical ── --}}
-    <link rel="canonical" href="@yield('canonical', url()->current())">
+    
+    <link rel="canonical" href="<?php echo $__env->yieldContent('canonical', url()->current()); ?>">
 
-    {{-- ── SEO: Open Graph ── --}}
-    <meta property="og:type"        content="@yield('og_type', 'website')">
+    
+    <meta property="og:type"        content="<?php echo $__env->yieldContent('og_type', 'website'); ?>">
     <meta property="og:site_name"   content="Peekaboo Daycare &amp; Preschool">
-    <meta property="og:title"       content="@yield('og_title', 'Peekaboo Daycare &amp; Preschool — Parklands, Cape Town')">
-    <meta property="og:description" content="@yield('og_description', 'Safe, trusted childcare for 3 months to Grade R in Parklands, Cape Town. Qualified teachers, CAPS curriculum, Christian values.')">
-    <meta property="og:url"         content="@yield('canonical', url()->current())">
-    <meta property="og:image"       content="@yield('og_image', asset('assets/img/peekaboo/og-default.jpg'))">
+    <meta property="og:title"       content="<?php echo $__env->yieldContent('og_title', 'Peekaboo Daycare &amp; Preschool — Parklands, Cape Town'); ?>">
+    <meta property="og:description" content="<?php echo $__env->yieldContent('og_description', 'Safe, trusted childcare for 3 months to Grade R in Parklands, Cape Town. Qualified teachers, CAPS curriculum, Christian values.'); ?>">
+    <meta property="og:url"         content="<?php echo $__env->yieldContent('canonical', url()->current()); ?>">
+    <meta property="og:image"       content="<?php echo $__env->yieldContent('og_image', asset('assets/img/peekaboo/og-default.jpg')); ?>">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale"      content="en_ZA">
 
-    {{-- ── SEO: Twitter / X Card ── --}}
+    
     <meta name="twitter:card"        content="summary_large_image">
-    <meta name="twitter:title"       content="@yield('og_title', 'Peekaboo Daycare &amp; Preschool — Parklands, Cape Town')">
-    <meta name="twitter:description" content="@yield('og_description', 'Safe, trusted childcare for 3 months to Grade R in Parklands, Cape Town. Qualified teachers, CAPS curriculum, Christian values.')">
-    <meta name="twitter:image"       content="@yield('og_image', asset('assets/img/peekaboo/og-default.jpg'))">
+    <meta name="twitter:title"       content="<?php echo $__env->yieldContent('og_title', 'Peekaboo Daycare &amp; Preschool — Parklands, Cape Town'); ?>">
+    <meta name="twitter:description" content="<?php echo $__env->yieldContent('og_description', 'Safe, trusted childcare for 3 months to Grade R in Parklands, Cape Town. Qualified teachers, CAPS curriculum, Christian values.'); ?>">
+    <meta name="twitter:image"       content="<?php echo $__env->yieldContent('og_image', asset('assets/img/peekaboo/og-default.jpg')); ?>">
 
-    {{-- ── SEO: Geo meta ── --}}
+    
     <meta name="geo.region"   content="ZA-WC">
     <meta name="geo.placename" content="Parklands, Cape Town">
     <meta name="geo.position" content="-33.8248;18.4968">
     <meta name="ICBM"         content="-33.8248, 18.4968">
 
-    {{-- ── SEO: Global LocalBusiness + EducationalOrganization + AggregateRating JSON-LD ── --}}
+    
     <script type="application/ld+json">
     {
-      "@@context": "https://schema.org",
-      "@@graph": [
+      "@context": "https://schema.org",
+      "@graph": [
         {
-          "@@type": ["EducationalOrganization", "LocalBusiness", "ChildCare"],
-          "@@id": "{{ url('/') }}/#organization",
+          "@type": ["EducationalOrganization", "LocalBusiness", "ChildCare"],
+          "@id": "<?php echo e(url('/')); ?>/#organization",
           "name": "Peekaboo Daycare & Preschool",
           "alternateName": ["Peekaboo Daycare", "Peekaboo Preschool"],
-          "url": "{{ url('/') }}",
-          "logo": "{{ asset('assets/img/peekaboo/logo.png') }}",
-          "image": "{{ asset('assets/img/peekaboo/og-default.jpg') }}",
+          "url": "<?php echo e(url('/')); ?>",
+          "logo": "<?php echo e(asset('assets/img/peekaboo/logo.png')); ?>",
+          "image": "<?php echo e(asset('assets/img/peekaboo/og-default.jpg')); ?>",
           "description": "Safe, trusted childcare for children aged 3 months to Grade R in Parklands, Cape Town. CAPS-aligned curriculum, qualified teachers, Christian values. Established 2010.",
           "foundingDate": "2010",
           "address": {
-            "@@type": "PostalAddress",
+            "@type": "PostalAddress",
             "streetAddress": "139B Humewood Drive",
             "addressLocality": "Parklands",
             "addressRegion": "Western Cape",
@@ -65,7 +65,7 @@
             "addressCountry": "ZA"
           },
           "geo": {
-            "@@type": "GeoCoordinates",
+            "@type": "GeoCoordinates",
             "latitude": "-33.8248",
             "longitude": "18.4968"
           },
@@ -73,7 +73,7 @@
           "email": "peekaboodaycare@telkomsa.net",
           "openingHoursSpecification": [
             {
-              "@@type": "OpeningHoursSpecification",
+              "@type": "OpeningHoursSpecification",
               "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
               "opens": "06:00",
               "closes": "18:00"
@@ -83,14 +83,14 @@
           "currenciesAccepted": "ZAR",
           "paymentAccepted": "EFT",
           "areaServed": [
-            {"@@type": "Place", "name": "Parklands, Cape Town"},
-            {"@@type": "Place", "name": "Blouberg, Cape Town"},
-            {"@@type": "Place", "name": "Table View, Cape Town"},
-            {"@@type": "Place", "name": "Sunningdale, Cape Town"},
-            {"@@type": "Place", "name": "Sunridge, Cape Town"}
+            {"@type": "Place", "name": "Parklands, Cape Town"},
+            {"@type": "Place", "name": "Blouberg, Cape Town"},
+            {"@type": "Place", "name": "Table View, Cape Town"},
+            {"@type": "Place", "name": "Sunningdale, Cape Town"},
+            {"@type": "Place", "name": "Sunridge, Cape Town"}
           ],
           "aggregateRating": {
-            "@@type": "AggregateRating",
+            "@type": "AggregateRating",
             "ratingValue": "4.9",
             "reviewCount": "150",
             "bestRating": "5",
@@ -101,17 +101,17 @@
           ]
         },
         {
-          "@@type": "WebSite",
-          "@@id": "{{ url('/') }}/#website",
-          "url": "{{ url('/') }}",
+          "@type": "WebSite",
+          "@id": "<?php echo e(url('/')); ?>/#website",
+          "url": "<?php echo e(url('/')); ?>",
           "name": "Peekaboo Daycare & Preschool",
           "description": "Safe, trusted childcare for 3 months to Grade R in Parklands, Cape Town.",
-          "publisher": {"@@id": "{{ url('/') }}/#organization"},
+          "publisher": {"@id": "<?php echo e(url('/')); ?>/#organization"},
           "potentialAction": {
-            "@@type": "SearchAction",
+            "@type": "SearchAction",
             "target": {
-              "@@type": "EntryPoint",
-              "urlTemplate": "{{ url('/') }}/?s={search_term_string}"
+              "@type": "EntryPoint",
+              "urlTemplate": "<?php echo e(url('/')); ?>/?s={search_term_string}"
             },
             "query-input": "required name=search_term_string"
           }
@@ -120,11 +120,11 @@
     }
     </script>
 
-    {{-- ── SEO: Per-page additional schema (pushed from child views) ── --}}
-    @stack('schema')
+    
+    <?php echo $__env->yieldPushContent('schema'); ?>
 
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/peekaboo/logo.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('assets/img/peekaboo/logo.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(asset('assets/img/peekaboo/logo.png')); ?>">
+    <link rel="apple-touch-icon" href="<?php echo e(asset('assets/img/peekaboo/logo.png')); ?>">
 
     <!-- Google Fonts — Brand: Epilogue (headings) + Sora (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
@@ -132,16 +132,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- All CSS Files -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/custom-animation.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/flaticon_xoft.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/edunity-hero.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/peekaboo-mobile.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/bootstrap.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/fontawesome.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/magnific-popup.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/swiper-bundle.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/animate.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/custom-animation.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/flaticon_xoft.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/style.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/edunity-hero.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/peekaboo-mobile.css')); ?>">
 
     <style>
     :root {
@@ -251,32 +251,32 @@
     }
     </style>
 
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 <body>
-{{--    <!-- Preloader -->--}}
-{{--    <div class="preloader">--}}
-{{--        <button class="vs-btn preloaderCls">Cancel Preloader</button>--}}
-{{--        <div class="preloader-inner">--}}
-{{--            <img src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo Daycare">--}}
-{{--            <span class="loader"></span>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 
-    @include('partials.public-header')
+
+
+
+
+
+
+
+
+    <?php echo $__env->make('partials.public-header', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <main class="vs-main">
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
     </main>
 
-    @include('partials.public-footer')
+    <?php echo $__env->make('partials.public-footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <!-- ── Sticky Mobile CTA Bar (hidden on desktop) ── -->
     <div class="pb-mobile-cta d-lg-none" id="pbMobileCta" aria-label="Quick actions">
-        <a href="{{ route('book-tour') }}" class="pb-mobile-cta__btn pb-mobile-cta__btn--outline">
+        <a href="<?php echo e(route('book-tour')); ?>" class="pb-mobile-cta__btn pb-mobile-cta__btn--outline">
             <i class="fa-regular fa-calendar-check"></i> Book a Tour
         </a>
-        <a href="{{ route('enrol.index') }}" class="pb-mobile-cta__btn pb-mobile-cta__btn--primary">
+        <a href="<?php echo e(route('enrol.index')); ?>" class="pb-mobile-cta__btn pb-mobile-cta__btn--primary">
             <i class="fa-solid fa-pen-to-square"></i> Enrol Now
         </a>
     </div>
@@ -366,20 +366,21 @@
     </button>
 
     <!-- All JS Files -->
-    <script src="{{ asset('assets/js/vendor/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/wow.min.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
-    <script src="{{ asset('assets/js/gsap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/ScrollTrigger.min.js') }}"></script>
-    <script src="{{ asset('assets/js/gsap-scroll-to-plugin.js') }}"></script>
-    <script src="{{ asset('assets/js/SplitText.js') }}"></script>
-    <script src="{{ asset('assets/js/lenis.min.js') }}"></script>
-    <script src="{{ asset('assets/js/flipperCount.js') }}"></script>
-    <script src="{{ asset('assets/js/swiper-bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/purecounter.js') }}"></script>
-    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="<?php echo e(asset('assets/js/vendor/jquery-3.7.1.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/bootstrap.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/wow.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/jquery.magnific-popup.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/gsap.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/ScrollTrigger.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/gsap-scroll-to-plugin.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/SplitText.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/lenis.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/flipperCount.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/swiper-bundle.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/purecounter.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/main.js')); ?>"></script>
 
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
+<?php /**PATH C:\wamp64_3.3.4\www\projects\peekaboo\resources\views/layouts/public.blade.php ENDPATH**/ ?>

@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin') - Peekaboo Admin</title>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <title><?php echo $__env->yieldContent('title', 'Admin'); ?> - Peekaboo Admin</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/peekaboo/logo.png') }}">
+    <link rel="icon" type="image/png" href="<?php echo e(asset('assets/img/peekaboo/logo.png')); ?>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/bootstrap.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/css/fontawesome.min.css')); ?>">
 
     <style>
         :root {
@@ -446,7 +446,7 @@
         .admin-toast.success { background: #059669; }
         .admin-toast.error { background: #dc2626; }
         .admin-toast.info { background: var(--primary); }
-        @@keyframes toastIn { from { transform: translateY(-12px); opacity: 0; } to { transform: none; opacity: 1; } }
+        @keyframes toastIn { from { transform: translateY(-12px); opacity: 0; } to { transform: none; opacity: 1; } }
 
         .loading-overlay {
             position: fixed; inset: 0; background: rgba(255,255,255,.85);
@@ -456,9 +456,9 @@
             width: 32px; height: 32px; border: 3px solid #eaedf0;
             border-top-color: var(--primary); border-radius: 50%; animation: spin .7s linear infinite;
         }
-        @@keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        @@media (max-width: 992px) {
+        @media(max-width: 992px) {
             .sb { transform: translateX(-100%); }
             .sb.show { transform: none; }
             .admin-main { margin-left: 0; }
@@ -466,15 +466,15 @@
         }
         .mobile-toggle { display: none; background: none; border: none; font-size: 1.3rem; color: var(--text); cursor: pointer; }
     </style>
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 <body>
 
-    {{-- ───── SIDEBAR ───── --}}
+    
     <aside class="sb" id="sidebar">
         <div class="sb-brand">
             <div class="sb-brand-logo">
-                <img src="{{ asset('assets/img/peekaboo/peekaboo_logo.png') }}" alt="Peekaboo" onerror="this.src='{{ asset('assets/img/peekaboo/logo.png') }}'">
+                <img src="<?php echo e(asset('assets/img/peekaboo/peekaboo_logo.png')); ?>" alt="Peekaboo" onerror="this.src='<?php echo e(asset('assets/img/peekaboo/logo.png')); ?>'">
             </div>
             <div class="sb-brand-text">
                 <span class="sb-brand-title">Peekaboo</span>
@@ -484,69 +484,67 @@
 
         <nav class="sb-nav">
             <div class="sb-heading">Overview</div>
-            <a href="{{ route('admin.dashboard') }}" class="sb-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.dashboard')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.dashboard') ? 'active' : ''); ?>">
                 <i class="fas fa-th-large"></i> Dashboard
             </a>
 
             <div class="sb-heading">Manage</div>
-            <a href="{{ route('admin.admissions.index') }}" class="sb-link {{ request()->routeIs('admin.admissions.*') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.admissions.index')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.admissions.*') ? 'active' : ''); ?>">
                 <i class="fas fa-user-plus"></i> Admissions
-                @php $pendingAppsCount = \App\Models\Application::whereIn('status', ['pending', 'under_review'])->count(); @endphp
-                @if($pendingAppsCount > 0)<span class="sb-count">{{ $pendingAppsCount }}</span>@endif
+                <?php $pendingAppsCount = \App\Models\Application::whereIn('status', ['pending', 'under_review'])->count(); ?>
+                <?php if($pendingAppsCount > 0): ?><span class="sb-count"><?php echo e($pendingAppsCount); ?></span><?php endif; ?>
             </a>
-            <a href="{{ route('admin.crm.index') }}" class="sb-link {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.crm.index')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.crm.*') ? 'active' : ''); ?>">
                 <i class="fas fa-funnel-dollar"></i> Lead Pipeline
-                @php $newLeadsCount = \App\Models\Lead::where('status', 'new')->count(); @endphp
-                @if($newLeadsCount > 0)<span class="sb-count">{{ $newLeadsCount }}</span>@endif
+                <?php $newLeadsCount = \App\Models\Lead::where('status', 'new')->count(); ?>
+                <?php if($newLeadsCount > 0): ?><span class="sb-count"><?php echo e($newLeadsCount); ?></span><?php endif; ?>
             </a>
-            <a href="{{ route('admin.parents.index') }}" class="sb-link {{ request()->routeIs('admin.parents.*') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.parents.index')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.parents.*') ? 'active' : ''); ?>">
                 <i class="fas fa-users"></i> Parents & Children
             </a>
-            <a href="{{ route('admin.users.index') }}" class="sb-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.users.index')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.users.*') ? 'active' : ''); ?>">
                 <i class="fas fa-lock"></i> Users & Access
             </a>
 
-            {{-- Parent Portal: disabled --}}
-            {{-- <a href="{{ route('admin.parent-portal.index') }}" class="sb-link {{ request()->routeIs('admin.parent-portal.*') ? 'active' : '' }}">
-                <i class="fas fa-door-open"></i> Parent Portal
-            </a> --}}
+            
+            
 
             <div class="sb-heading">Insights</div>
-            <a href="{{ route('admin.reports.index') }}" class="sb-link {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.reports.index')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.reports.*') ? 'active' : ''); ?>">
                 <i class="fas fa-chart-bar"></i> Reports
             </a>
 
             <div class="sb-heading">Settings</div>
-            <a href="{{ route('admin.settings.index') }}" class="sb-link {{ request()->routeIs('admin.settings.index') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.settings.index')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.settings.index') ? 'active' : ''); ?>">
                 <i class="fas fa-cog"></i> General
             </a>
-            <a href="{{ route('admin.settings.audit-log') }}" class="sb-link {{ request()->routeIs('admin.settings.audit-log') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.settings.audit-log')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.settings.audit-log') ? 'active' : ''); ?>">
                 <i class="fas fa-scroll"></i> Audit Log
             </a>
-            <a href="{{ route('admin.settings.permissions') }}" class="sb-link {{ request()->routeIs('admin.settings.permissions') ? 'active' : '' }}">
+            <a href="<?php echo e(route('admin.settings.permissions')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.settings.permissions') ? 'active' : ''); ?>">
                 <i class="fas fa-shield-alt"></i> Permissions
             </a>
 
             <div class="sb-divider"></div>
-            <a href="{{ route('home') }}" class="sb-link" target="_blank">
+            <a href="<?php echo e(route('home')); ?>" class="sb-link" target="_blank">
                 <i class="fas fa-external-link-alt"></i> View website
             </a>
         </nav>
 
         <div class="sb-footer">
-            <div class="sb-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+            <div class="sb-avatar"><?php echo e(strtoupper(substr(auth()->user()->name, 0, 1))); ?></div>
             <div class="sb-footer-info">
-                <span class="sb-footer-name">{{ auth()->user()->name }}</span>
-                <span class="sb-footer-role">{{ ucfirst(auth()->user()->getRoleNames()->first() ?? 'User') }}</span>
+                <span class="sb-footer-name"><?php echo e(auth()->user()->name); ?></span>
+                <span class="sb-footer-role"><?php echo e(ucfirst(auth()->user()->getRoleNames()->first() ?? 'User')); ?></span>
             </div>
-            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
-                @csrf
+            <form method="POST" action="<?php echo e(route('logout')); ?>" style="margin:0;">
+                <?php echo csrf_field(); ?>
                 <button type="submit" class="sb-logout" title="Sign out"><i class="fas fa-sign-out-alt"></i></button>
             </form>
         </div>
     </aside>
 
-    {{-- ───── MAIN ───── --}}
+    
     <main class="admin-main">
         <header class="admin-header">
             <div class="hdr-left">
@@ -554,21 +552,21 @@
                     <i class="fas fa-bars"></i>
                 </button>
 
-                @hasSection('breadcrumb')
+                <?php if (! empty(trim($__env->yieldContent('breadcrumb')))): ?>
                     <div class="hdr-breadcrumb d-none d-md-flex">
-                        @yield('breadcrumb')
+                        <?php echo $__env->yieldContent('breadcrumb'); ?>
                     </div>
-                @else
+                <?php else: ?>
                     <div class="hdr-search-wrap d-none d-md-block">
                         <input type="search" class="hdr-search" placeholder="Search anything…">
                         <i class="fas fa-search search-icon"></i>
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
 
             <div class="hdr-right">
                 <div class="hdr-search-wrap d-none d-md-none">
-                    {{-- Search moves here on breadcrumb pages if needed --}}
+                    
                 </div>
 
                 <a href="#" class="hdr-icon-btn" title="Notifications">
@@ -576,7 +574,7 @@
                     <span class="notif-dot"></span>
                 </a>
 
-                <a href="{{ route('admin.settings.index') }}" class="hdr-icon-btn" title="Settings">
+                <a href="<?php echo e(route('admin.settings.index')); ?>" class="hdr-icon-btn" title="Settings">
                     <i class="fas fa-cog"></i>
                 </a>
 
@@ -584,28 +582,28 @@
 
                 <div class="dropdown">
                     <div class="hdr-user" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="hdr-user-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+                        <div class="hdr-user-avatar"><?php echo e(strtoupper(substr(auth()->user()->name, 0, 1))); ?></div>
                         <div class="hdr-user-info d-none d-md-block">
-                            <div class="hdr-user-name">{{ auth()->user()->name }}</div>
-                            <div class="hdr-user-role">{{ ucfirst(auth()->user()->getRoleNames()->first() ?? 'User') }}</div>
+                            <div class="hdr-user-name"><?php echo e(auth()->user()->name); ?></div>
+                            <div class="hdr-user-role"><?php echo e(ucfirst(auth()->user()->getRoleNames()->first() ?? 'User')); ?></div>
                         </div>
                         <i class="fas fa-chevron-down hdr-user-chevron d-none d-md-block"></i>
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end hdr-dropdown">
                         <li>
-                            <a class="dropdown-item" href="{{ route('admin.profile') }}">
+                            <a class="dropdown-item" href="<?php echo e(route('admin.profile')); ?>">
                                 <i class="fas fa-user"></i> Profile
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('admin.settings.index') }}">
+                            <a class="dropdown-item" href="<?php echo e(route('admin.settings.index')); ?>">
                                 <i class="fas fa-cog"></i> Settings
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
+                            <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="dropdown-item text-danger">
                                     <i class="fas fa-sign-out-alt"></i> Sign out
                                 </button>
@@ -617,20 +615,20 @@
         </header>
 
         <div class="admin-content">
-            @yield('content')
+            <?php echo $__env->yieldContent('content'); ?>
         </div>
     </main>
 
-    {{-- Toast --}}
-    @if(session('success'))
-    <div class="admin-toast success" id="toast"><i class="fas fa-check-circle me-2"></i>{{ session('success') }}</div>
-    @endif
-    @if(session('error'))
-    <div class="admin-toast error" id="toast"><i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}</div>
-    @endif
+    
+    <?php if(session('success')): ?>
+    <div class="admin-toast success" id="toast"><i class="fas fa-check-circle me-2"></i><?php echo e(session('success')); ?></div>
+    <?php endif; ?>
+    <?php if(session('error')): ?>
+    <div class="admin-toast error" id="toast"><i class="fas fa-exclamation-circle me-2"></i><?php echo e(session('error')); ?></div>
+    <?php endif; ?>
 
-    <script src="{{ asset('assets/js/vendor/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="<?php echo e(asset('assets/js/vendor/jquery-3.7.1.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/bootstrap.min.js')); ?>"></script>
 
     <script>
         setTimeout(function() {
@@ -651,7 +649,7 @@
         };
     </script>
 
-    {{-- Confirm Modal --}}
+    
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width:380px;">
             <div class="modal-content" style="border:none;border-radius:14px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.12);">
@@ -700,6 +698,7 @@
         });
     </script>
 
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
+<?php /**PATH C:\wamp64_3.3.4\www\projects\peekaboo\resources\views/layouts/admin.blade.php ENDPATH**/ ?>

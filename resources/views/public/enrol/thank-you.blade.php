@@ -1,6 +1,7 @@
 @extends('layouts.public')
 
-@section('title', 'Application Submitted - Peekaboo Daycare & Preschool')
+@section('title', 'Application Submitted — Thank You | Peekaboo Daycare')
+@section('canonical', route('enrol.thank-you'))
 
 @section('content')
 <style>

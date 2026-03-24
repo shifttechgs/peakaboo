@@ -1,7 +1,32 @@
 @extends('layouts.public')
 
-@section('title', 'Contact Us - Peekaboo Daycare & Preschool')
-@section('description', 'Get in touch with Peekaboo Daycare in Parklands, Cape Town. Call, email, or visit us. We\'d love to hear from you.')
+@section('title', 'Contact Peekaboo Daycare — Parklands, Cape Town | 021 557 4999')
+@section('description', 'Contact Peekaboo Daycare & Preschool in Parklands, Cape Town. Call 021 557 4999 or 082 898 9967, email us, or visit us at 139B Humewood Drive, Parklands. Book a tour today.')
+@section('keywords', 'contact daycare Parklands, Peekaboo Daycare contact, preschool Cape Town phone number, childcare Parklands address, daycare near me Parklands contact')
+@section('canonical', route('contact'))
+@section('og_title', 'Contact Peekaboo Daycare — Parklands, Cape Town')
+@section('og_description', 'Get in touch with Peekaboo Daycare in Parklands, Cape Town. Call 021 557 4999, email us, or visit 139B Humewood Drive, Parklands.')
+
+@push('schema')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "ContactPage",
+  "@@id": "{{ route('contact') }}#webpage",
+  "url": "{{ route('contact') }}",
+  "name": "Contact Peekaboo Daycare — Parklands, Cape Town",
+  "description": "Contact Peekaboo Daycare & Preschool in Parklands, Cape Town by phone, email, or in person.",
+  "isPartOf": {"@@id": "{{ url('/') }}/#website"},
+  "breadcrumb": {
+    "@@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@@type": "ListItem", "position": 1, "name": "Home", "item": "{{ route('home') }}"},
+      {"@@type": "ListItem", "position": 2, "name": "Contact Us", "item": "{{ route('contact') }}"}
+    ]
+  }
+}
+</script>
+@endpush
 
 @section('content')
 <style>

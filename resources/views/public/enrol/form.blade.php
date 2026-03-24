@@ -1,6 +1,11 @@
 @extends('layouts.public')
 
-@section('title', 'Enrolment Form - Peekaboo Daycare')
+@section('title', 'Enrolment Application Form — Peekaboo Daycare Parklands, Cape Town')
+@section('canonical', route('enrol.form'))
+
+@push('schema')
+{{-- Form/thank-you pages: noindex to avoid duplicate content --}}
+@endpush
 
 @push('styles')
 <style>
@@ -105,7 +110,7 @@
     display: block;
     animation: fadeInUp 0.5s ease;
 }
-@keyframes fadeInUp {
+@@keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
 }
@@ -321,7 +326,7 @@
     z-index: 1000;
     animation: slideInLeft 0.4s ease;
 }
-@keyframes slideInLeft {
+@@keyframes slideInLeft {
     from { opacity: 0; transform: translateX(-100px); }
     to   { opacity: 1; transform: translateX(0); }
 }
@@ -472,7 +477,7 @@
 }
 
 /* ── Responsive ── */
-@media (max-width: 768px) {
+@@media (max-width: 768px) {
     .step-item:not(:last-child)::after { width: 15px; }
     .step-circle { width: 40px; height: 40px; font-size: 0.9rem; }
     .form-section { padding: 30px 20px; }
@@ -1158,15 +1163,15 @@
 
 @push('styles')
 <style>
-@keyframes slideIn {
+@@keyframes slideIn {
     from { transform: translateX(400px); opacity: 0; }
     to   { transform: translateX(0); opacity: 1; }
 }
-@keyframes slideOut {
+@@keyframes slideOut {
     from { transform: translateX(0); opacity: 1; }
     to   { transform: translateX(400px); opacity: 0; }
 }
-@keyframes shake {
+@@keyframes shake {
     0%, 100% { transform: translateX(0); }
     10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
     20%, 40%, 60%, 80% { transform: translateX(5px); }

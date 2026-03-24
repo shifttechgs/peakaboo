@@ -1,7 +1,51 @@
 @extends('layouts.public')
 
-@section('title', ($program['name'] ?? 'Program') . ' - Peekaboo Daycare & Preschool')
-@section('description', 'Learn about the ' . ($program['name'] ?? '') . ' programme at Peekaboo Daycare in Parklands, Cape Town. ' . ($program['description'] ?? ''))
+@section('title', ($program['name'] ?? 'Programme') . ' Programme — Peekaboo Daycare Parklands, Cape Town')
+@section('description', 'Discover the ' . ($program['name'] ?? '') . ' programme (' . ($program['age'] ?? '') . ') at Peekaboo Daycare in Parklands, Cape Town. ' . ($program['description'] ?? '') . ' CAPS-aligned, qualified teachers.')
+@section('keywords', strtolower($program['name'] ?? 'programme') . ' Parklands Cape Town, ' . strtolower($program['name'] ?? '') . ' daycare Cape Town, preschool ' . strtolower($program['name'] ?? '') . ' Parklands, childcare ' . ($program['age'] ?? '') . ' Cape Town')
+@section('canonical', route('program.detail', $program['id'] ?? ''))
+@section('og_title', ($program['name'] ?? 'Programme') . ' Programme — Peekaboo Daycare Parklands, Cape Town')
+@section('og_description', 'The ' . ($program['name'] ?? '') . ' programme (' . ($program['age'] ?? '') . ') at Peekaboo Daycare Parklands, Cape Town. ' . ($program['description'] ?? ''))
+
+@push('schema')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "WebPage",
+  "@@id": "{{ route('program.detail', $program['id'] ?? '') }}#webpage",
+  "url": "{{ route('program.detail', $program['id'] ?? '') }}",
+  "name": "{{ ($program['name'] ?? 'Programme') }} Programme — Peekaboo Daycare Parklands, Cape Town",
+  "description": "{{ ($program['description'] ?? '') }}",
+  "isPartOf": {"@@id": "{{ url('/') }}/#website"},
+  "breadcrumb": {
+    "@@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@@type": "ListItem", "position": 1, "name": "Home", "item": "{{ route('home') }}"},
+      {"@@type": "ListItem", "position": 2, "name": "Programmes", "item": "{{ route('programs') }}"},
+      {"@@type": "ListItem", "position": 3, "name": "{{ $program['name'] ?? 'Programme' }}", "item": "{{ route('program.detail', $program['id'] ?? '') }}"}
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "Course",
+  "name": "{{ $program['name'] ?? 'Programme' }} at Peekaboo Daycare",
+  "description": "{{ $program['description'] ?? '' }}",
+  "provider": {"@@id": "{{ url('/') }}/#organization"},
+  "educationalLevel": "{{ $program['age'] ?? '' }}",
+  "url": "{{ route('program.detail', $program['id'] ?? '') }}",
+  "offers": {
+    "@@type": "Offer",
+    "category": "Childcare",
+    "priceCurrency": "ZAR",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "{{ date('Y') }}-01-01"
+  }
+}
+</script>
+@endpush
 
 @section('content')
 <style>
@@ -69,7 +113,7 @@
     list-style: none; padding: 0; margin: 0 0 36px;
     display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px;
 }
-@media (max-width: 575px) { .pb-prog-detail__features { grid-template-columns: 1fr; } }
+@@media (max-width: 575px) { .pb-prog-detail__features { grid-template-columns: 1fr; } }
 .pb-prog-detail__features li {
     display: flex; align-items: center; gap: 10px;
     font-family: var(--font-body); font-size: 15px; color: var(--color-body);
@@ -319,4 +363,8 @@ $photo = asset($classImages[$program['id']] ?? 'assets/img/class/class-1-3.jpg')
 </section>
 
 @endsection
+
+
+
+
 

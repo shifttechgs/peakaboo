@@ -1,34 +1,32 @@
-@extends('layouts.public')
+<?php $__env->startSection('title', 'Gallery — Peekaboo Daycare & Preschool Parklands, Cape Town'); ?>
+<?php $__env->startSection('description', 'Take a peek inside Peekaboo Daycare in Parklands, Cape Town. See our bright classrooms, safe outdoor play areas, activities, and happy children learning every day.'); ?>
+<?php $__env->startSection('keywords', 'daycare gallery Parklands, preschool photos Cape Town, Peekaboo Daycare classrooms, childcare facility Cape Town photos'); ?>
+<?php $__env->startSection('canonical', route('gallery')); ?>
+<?php $__env->startSection('og_title', 'Gallery — Peekaboo Daycare Parklands, Cape Town'); ?>
+<?php $__env->startSection('og_description', 'Take a peek inside Peekaboo Daycare — bright classrooms, safe outdoor areas, activities and happy children in Parklands, Cape Town.'); ?>
 
-@section('title', 'Gallery — Peekaboo Daycare & Preschool Parklands, Cape Town')
-@section('description', 'Take a peek inside Peekaboo Daycare in Parklands, Cape Town. See our bright classrooms, safe outdoor play areas, activities, and happy children learning every day.')
-@section('keywords', 'daycare gallery Parklands, preschool photos Cape Town, Peekaboo Daycare classrooms, childcare facility Cape Town photos')
-@section('canonical', route('gallery'))
-@section('og_title', 'Gallery — Peekaboo Daycare Parklands, Cape Town')
-@section('og_description', 'Take a peek inside Peekaboo Daycare — bright classrooms, safe outdoor areas, activities and happy children in Parklands, Cape Town.')
-
-@push('schema')
+<?php $__env->startPush('schema'); ?>
 <script type="application/ld+json">
 {
-  "@@context": "https://schema.org",
-  "@@type": "ImageGallery",
-  "@@id": "{{ route('gallery') }}#webpage",
-  "url": "{{ route('gallery') }}",
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  "@id": "<?php echo e(route('gallery')); ?>#webpage",
+  "url": "<?php echo e(route('gallery')); ?>",
   "name": "Peekaboo Daycare Gallery — Parklands, Cape Town",
   "description": "Photos of Peekaboo Daycare & Preschool in Parklands, Cape Town — classrooms, outdoor areas, and learning activities.",
-  "isPartOf": {"@@id": "{{ url('/') }}/#website"},
+  "isPartOf": {"@id": "<?php echo e(url('/')); ?>/#website"},
   "breadcrumb": {
-    "@@type": "BreadcrumbList",
+    "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@@type": "ListItem", "position": 1, "name": "Home", "item": "{{ route('home') }}"},
-      {"@@type": "ListItem", "position": 2, "name": "Gallery", "item": "{{ route('gallery') }}"}
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo e(route('home')); ?>"},
+      {"@type": "ListItem", "position": 2, "name": "Gallery", "item": "<?php echo e(route('gallery')); ?>"}
     ]
   }
 }
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
 /* ============================================================
    GALLERY PAGE
@@ -69,8 +67,8 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
 }
-@@media (max-width: 991px) { .pb-gallery__grid { grid-template-columns: repeat(2, 1fr); } }
-@@media (max-width: 575px)  { .pb-gallery__grid { grid-template-columns: 1fr; } }
+@media(max-width: 991px) { .pb-gallery__grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 575px)  { .pb-gallery__grid { grid-template-columns: 1fr; } }
 
 .pb-gallery__item {
     position: relative; border-radius: var(--radius-md); overflow: hidden;
@@ -145,7 +143,7 @@
     <div class="container">
         <h1 class="pb-page-header__title">Our Gallery</h1>
         <ul class="pb-page-header__breadcrumb">
-            <li><a href="{{ route('home') }}">Home</a></li>
+            <li><a href="<?php echo e(route('home')); ?>">Home</a></li>
             <li>Gallery</li>
         </ul>
     </div>
@@ -166,8 +164,8 @@
         <div class="pb-gallery__grid wow itfadeUp">
 
             <div class="pb-gallery__item pb-gallery__item--wide">
-                <a href="{{ asset('assets/img/gallery/gal-1-1.jpg') }}" class="popup-image">
-                    <img src="{{ asset('assets/img/gallery/gal-1-1.jpg') }}" alt="Peekaboo Daycare classroom" loading="lazy">
+                <a href="<?php echo e(asset('assets/img/gallery/gal-1-1.jpg')); ?>" class="popup-image">
+                    <img src="<?php echo e(asset('assets/img/gallery/gal-1-1.jpg')); ?>" alt="Peekaboo Daycare classroom" loading="lazy">
                     <div class="pb-gallery__item-overlay">
                         <span class="pb-gallery__item-zoom"><i class="fal fa-plus"></i></span>
                     </div>
@@ -176,8 +174,8 @@
             </div>
 
             <div class="pb-gallery__item">
-                <a href="{{ asset('assets/img/gallery/gal-1-2.jpg') }}" class="popup-image">
-                    <img src="{{ asset('assets/img/gallery/gal-1-2.jpg') }}" alt="Children playing at Peekaboo" loading="lazy">
+                <a href="<?php echo e(asset('assets/img/gallery/gal-1-2.jpg')); ?>" class="popup-image">
+                    <img src="<?php echo e(asset('assets/img/gallery/gal-1-2.jpg')); ?>" alt="Children playing at Peekaboo" loading="lazy">
                     <div class="pb-gallery__item-overlay">
                         <span class="pb-gallery__item-zoom"><i class="fal fa-plus"></i></span>
                     </div>
@@ -186,8 +184,8 @@
             </div>
 
             <div class="pb-gallery__item">
-                <a href="{{ asset('assets/img/gallery/gal-1-3.jpg') }}" class="popup-image">
-                    <img src="{{ asset('assets/img/gallery/gal-1-3.jpg') }}" alt="Learning at Peekaboo" loading="lazy">
+                <a href="<?php echo e(asset('assets/img/gallery/gal-1-3.jpg')); ?>" class="popup-image">
+                    <img src="<?php echo e(asset('assets/img/gallery/gal-1-3.jpg')); ?>" alt="Learning at Peekaboo" loading="lazy">
                     <div class="pb-gallery__item-overlay">
                         <span class="pb-gallery__item-zoom"><i class="fal fa-plus"></i></span>
                     </div>
@@ -196,8 +194,8 @@
             </div>
 
             <div class="pb-gallery__item">
-                <a href="{{ asset('assets/img/gallery/gal-1-4.jpg') }}" class="popup-image">
-                    <img src="{{ asset('assets/img/gallery/gal-1-4.jpg') }}" alt="Toddlers at Peekaboo" loading="lazy">
+                <a href="<?php echo e(asset('assets/img/gallery/gal-1-4.jpg')); ?>" class="popup-image">
+                    <img src="<?php echo e(asset('assets/img/gallery/gal-1-4.jpg')); ?>" alt="Toddlers at Peekaboo" loading="lazy">
                     <div class="pb-gallery__item-overlay">
                         <span class="pb-gallery__item-zoom"><i class="fal fa-plus"></i></span>
                     </div>
@@ -206,8 +204,8 @@
             </div>
 
             <div class="pb-gallery__item">
-                <a href="{{ asset('assets/img/gallery/gal-1-5.jpg') }}" class="popup-image">
-                    <img src="{{ asset('assets/img/gallery/gal-1-5.jpg') }}" alt="Preschool activities" loading="lazy">
+                <a href="<?php echo e(asset('assets/img/gallery/gal-1-5.jpg')); ?>" class="popup-image">
+                    <img src="<?php echo e(asset('assets/img/gallery/gal-1-5.jpg')); ?>" alt="Preschool activities" loading="lazy">
                     <div class="pb-gallery__item-overlay">
                         <span class="pb-gallery__item-zoom"><i class="fal fa-plus"></i></span>
                     </div>
@@ -216,8 +214,8 @@
             </div>
 
             <div class="pb-gallery__item">
-                <a href="{{ asset('assets/img/gallery/gal-1-6.jpg') }}" class="popup-image">
-                    <img src="{{ asset('assets/img/gallery/gal-1-6.jpg') }}" alt="Grade R at Peekaboo" loading="lazy">
+                <a href="<?php echo e(asset('assets/img/gallery/gal-1-6.jpg')); ?>" class="popup-image">
+                    <img src="<?php echo e(asset('assets/img/gallery/gal-1-6.jpg')); ?>" alt="Grade R at Peekaboo" loading="lazy">
                     <div class="pb-gallery__item-overlay">
                         <span class="pb-gallery__item-zoom"><i class="fal fa-plus"></i></span>
                     </div>
@@ -226,8 +224,8 @@
             </div>
 
             <div class="pb-gallery__item">
-                <a href="{{ asset('assets/img/gallery/gal-1-1.jpg') }}" class="popup-image">
-                    <img src="{{ asset('assets/img/gallery/gal-1-2.jpg') }}" alt="Peekaboo Daycare environment" loading="lazy">
+                <a href="<?php echo e(asset('assets/img/gallery/gal-1-1.jpg')); ?>" class="popup-image">
+                    <img src="<?php echo e(asset('assets/img/gallery/gal-1-2.jpg')); ?>" alt="Peekaboo Daycare environment" loading="lazy">
                     <div class="pb-gallery__item-overlay">
                         <span class="pb-gallery__item-zoom"><i class="fal fa-plus"></i></span>
                     </div>
@@ -236,8 +234,8 @@
             </div>
 
             <div class="pb-gallery__item pb-gallery__item--wide">
-                <a href="{{ asset('assets/img/gallery/gal-1-3.jpg') }}" class="popup-image">
-                    <img src="{{ asset('assets/img/gallery/gal-1-5.jpg') }}" alt="Happy children at Peekaboo" loading="lazy">
+                <a href="<?php echo e(asset('assets/img/gallery/gal-1-3.jpg')); ?>" class="popup-image">
+                    <img src="<?php echo e(asset('assets/img/gallery/gal-1-5.jpg')); ?>" alt="Happy children at Peekaboo" loading="lazy">
                     <div class="pb-gallery__item-overlay">
                         <span class="pb-gallery__item-zoom"><i class="fal fa-plus"></i></span>
                     </div>
@@ -246,8 +244,8 @@
             </div>
 
             <div class="pb-gallery__item">
-                <a href="{{ asset('assets/img/gallery/gal-1-6.jpg') }}" class="popup-image">
-                    <img src="{{ asset('assets/img/gallery/gal-1-4.jpg') }}" alt="Healthy meals at Peekaboo" loading="lazy">
+                <a href="<?php echo e(asset('assets/img/gallery/gal-1-6.jpg')); ?>" class="popup-image">
+                    <img src="<?php echo e(asset('assets/img/gallery/gal-1-4.jpg')); ?>" alt="Healthy meals at Peekaboo" loading="lazy">
                     <div class="pb-gallery__item-overlay">
                         <span class="pb-gallery__item-zoom"><i class="fal fa-plus"></i></span>
                     </div>
@@ -267,10 +265,10 @@
                 <h2 class="pb-gallery-cta__title">Love What You See?</h2>
                 <p class="pb-gallery-cta__desc">Come experience Peekaboo in person — book a free tour and let your child see their new home.</p>
                 <div>
-                    <a href="{{ route('book-tour') }}" class="pb-gallery-cta__btn pb-gallery-cta__btn--primary">
+                    <a href="<?php echo e(route('book-tour')); ?>" class="pb-gallery-cta__btn pb-gallery-cta__btn--primary">
                         <i class="fa-regular fa-calendar-check"></i> Book a Free Tour
                     </a>
-                    <a href="{{ route('enrol.index') }}" class="pb-gallery-cta__btn pb-gallery-cta__btn--outline">
+                    <a href="<?php echo e(route('enrol.index')); ?>" class="pb-gallery-cta__btn pb-gallery-cta__btn--outline">
                         <i class="fa-solid fa-pen-to-square"></i> Enrol Now
                     </a>
                 </div>
@@ -279,9 +277,9 @@
     </div>
 </section>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     if (typeof $.fn.magnificPopup !== 'undefined') {
@@ -295,7 +293,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
 
 
+
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\wamp64_3.3.4\www\projects\peekaboo\resources\views/public/gallery.blade.php ENDPATH**/ ?>

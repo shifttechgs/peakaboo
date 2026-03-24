@@ -1,39 +1,35 @@
-@extends('layouts.public')
+<?php $__env->startSection('title', 'About Peekaboo Daycare — Trusted Preschool Parklands, Cape Town Since 2010'); ?>
+<?php $__env->startSection('description', 'Established in 2010, Peekaboo Daycare in Parklands, Cape Town has been a trusted home away from home for 150+ families. CAPS-aligned, Christian values, qualified teachers. Meet our team.'); ?>
+<?php $__env->startSection('keywords', 'about Peekaboo Daycare Parklands, trusted preschool Cape Town, CAPS daycare Cape Town, Christian preschool Parklands Cape Town, daycare established 2010, qualified teachers daycare Parklands'); ?>
+<?php $__env->startSection('canonical', route('about')); ?>
+<?php $__env->startSection('og_title', 'About Peekaboo Daycare — Trusted Preschool in Parklands, Cape Town Since 2010'); ?>
+<?php $__env->startSection('og_description', 'For 15+ years Peekaboo Daycare has been a trusted partner for 150+ families in Parklands, Cape Town. CAPS curriculum, Christian values, qualified teachers.'); ?>
 
-@section('title', 'About Peekaboo Daycare — Trusted Preschool Parklands, Cape Town Since 2010')
-@section('description', 'Established in 2010, Peekaboo Daycare in Parklands, Cape Town has been a trusted home away from home for 150+ families. CAPS-aligned, Christian values, qualified teachers. Meet our team.')
-@section('keywords', 'about Peekaboo Daycare Parklands, trusted preschool Cape Town, CAPS daycare Cape Town, Christian preschool Parklands Cape Town, daycare established 2010, qualified teachers daycare Parklands')
-@section('canonical', route('about'))
-@section('og_title', 'About Peekaboo Daycare — Trusted Preschool in Parklands, Cape Town Since 2010')
-@section('og_description', 'For 15+ years Peekaboo Daycare has been a trusted partner for 150+ families in Parklands, Cape Town. CAPS curriculum, Christian values, qualified teachers.')
-
-@push('schema')
+<?php $__env->startPush('schema'); ?>
 <script type="application/ld+json">
 {
-  "@@context": "https://schema.org",
-  "@@type": "AboutPage",
-  "@@id": "{{ route('about') }}#webpage",
-  "url": "{{ route('about') }}",
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": "<?php echo e(route('about')); ?>#webpage",
+  "url": "<?php echo e(route('about')); ?>",
   "name": "About Peekaboo Daycare — Trusted Preschool in Parklands, Cape Town Since 2010",
   "description": "Established in 2010, Peekaboo Daycare in Parklands, Cape Town has been a trusted home away from home for 150+ families.",
-  "isPartOf": {"@@id": "{{ url('/') }}/#website"},
-  "about": {"@@id": "{{ url('/') }}/#organization"},
+  "isPartOf": {"@id": "<?php echo e(url('/')); ?>/#website"},
+  "about": {"@id": "<?php echo e(url('/')); ?>/#organization"},
   "breadcrumb": {
-    "@@type": "BreadcrumbList",
+    "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@@type": "ListItem", "position": 1, "name": "Home", "item": "{{ route('home') }}"},
-      {"@@type": "ListItem", "position": 2, "name": "About Us", "item": "{{ route('about') }}"}
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo e(route('home')); ?>"},
+      {"@type": "ListItem", "position": 2, "name": "About Us", "item": "<?php echo e(route('about')); ?>"}
     ]
   }
 }
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-{{-- ══════════════════════════════════════════════════
-     PAGE HERO — surface bg, Edunity shapes + buttons
-     ══════════════════════════════════════════════════ --}}
+
 <section class="pb-page-hero fix p-relative">
 <style>
 .pb-page-hero {
@@ -50,7 +46,7 @@
     position: absolute; bottom: -30px; left: -50px; opacity: .2; z-index: 0;
     animation: itswing 6s ease-in-out infinite alternate;
 }
-@@keyframes itswing {
+@keyframes itswing {
     0%   { transform: rotate(0deg); }
     100% { transform: rotate(6deg); }
 }
@@ -84,19 +80,19 @@
 </style>
 
     <div class="pb-page-hero__shape-1 d-none d-lg-block">
-        <img src="{{ asset('assets/img/about/shape-4-4.png') }}" alt="" style="width:280px;">
+        <img src="<?php echo e(asset('assets/img/about/shape-4-4.png')); ?>" alt="" style="width:280px;">
     </div>
     <div class="pb-page-hero__shape-2 d-none d-lg-block">
-        <img src="{{ asset('assets/img/hero/shape-2-3.png') }}" alt="" style="width:200px;">
+        <img src="<?php echo e(asset('assets/img/hero/shape-2-3.png')); ?>" alt="" style="width:200px;">
     </div>
 
     <div class="container" style="position:relative;z-index:2;">
         <div class="row align-items-center">
 
-            {{-- Left — copy + CTAs --}}
+            
             <div class="col-lg-6 wow itfadeLeft" data-wow-duration=".9s" data-wow-delay=".1s">
                 <ul class="pb-page-hero__breadcrumb">
-                    <li><a href="{{ route('home') }}">Home</a></li>
+                    <li><a href="<?php echo e(route('home')); ?>">Home</a></li>
                     <li>About Us</li>
                 </ul>
                 <span class="it-section-subtitle-5 orange" style="margin-bottom:18px;display:inline-flex;align-items:center;gap:8px;">
@@ -106,25 +102,25 @@
                     A Trusted Home<br><span style="color:var(--color-primary)">Away From Home</span>
                 </h1>
                 <div class="ed-hero-2-text mb-30">
-                    <p>For {{ date('Y') - 2010 }}+ years we've been more than just a daycare —  a trusted partner for families in Parklands, Cape Town, where every child is known, loved, and celebrated.</p>
+                    <p>For <?php echo e(date('Y') - 2010); ?>+ years we've been more than just a daycare —  a trusted partner for families in Parklands, Cape Town, where every child is known, loved, and celebrated.</p>
                 </div>
                 <div class="ed-hero-2-button-wrapper">
                     <div class="ed-hero-2-button d-flex align-items-center flex-wrap">
-                        <a class="ed-btn-radius" href="{{ route('book-tour') }}">Book a Tour</a>
-                        <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('enrol.index') }}">
+                        <a class="ed-btn-radius" href="<?php echo e(route('book-tour')); ?>">Book a Tour</a>
+                        <a class="ed-btn-radius ed-btn-radius--outline" href="<?php echo e(route('enrol.index')); ?>">
                             <i class="fa-solid fa-pen-to-square"></i> Enrol Now
                         </a>
                     </div>
                 </div>
             </div>
 
-            {{-- Right — quick stats --}}
+            
             <div class="col-lg-6 wow itfadeRight" data-wow-duration=".9s" data-wow-delay=".3s">
                 <div class="pb-about-hero-stats">
                     <div class="pb-about-hero-stat">
                         <span class="pb-about-hero-stat__icon" style="background:var(--color-primary)"><i class="fa-solid fa-calendar-check"></i></span>
                         <span>
-                            <span class="pb-about-hero-stat__num">{{ date('Y') - 2010 }}+ Years</span>
+                            <span class="pb-about-hero-stat__num"><?php echo e(date('Y') - 2010); ?>+ Years</span>
                             <span class="pb-about-hero-stat__label">of trusted early childhood care</span>
                         </span>
                     </div>
@@ -157,53 +153,51 @@
 </section>
 
 
-{{-- ══════════════════════════════════════════════════
-     OUR STORY — exact .it-about-5-area from home
-     ══════════════════════════════════════════════════ --}}
+
 <div class="it-about-5-area fix ed-about-4-wrap p-relative pb-120" style="padding-top:110px;">
 
     <div class="it-about-5-shape-4 d-none d-md-block">
-        <img src="{{ asset('assets/img/about/shape-5-4.png') }}" alt="">
+        <img src="<?php echo e(asset('assets/img/about/shape-5-4.png')); ?>" alt="">
     </div>
     <div class="it-about-5-shape-5 d-none d-xl-block">
-        <img src="{{ asset('assets/img/about/shape-4-4.png') }}" alt="">
+        <img src="<?php echo e(asset('assets/img/about/shape-4-4.png')); ?>" alt="">
     </div>
 
     <div class="container">
         <div class="row align-items-center">
 
-            {{-- Left — stacked images (exact home structure) --}}
+            
             <div class="col-xl-6 col-lg-6 wow itfadeLeft" data-wow-duration=".9s" data-wow-delay=".5s">
                 <div class="ed-hero-thumb-wrap text-center text-md-end p-relative">
                     <div class="ed-hero-thumb-main p-relative">
-                        <img src="{{ asset('assets/img/about/about-4-1.png') }}" alt="Children at Peekaboo Daycare">
+                        <img src="<?php echo e(asset('assets/img/about/about-4-1.png')); ?>" alt="Children at Peekaboo Daycare">
                         <div class="ed-hero-thumb-shape-1 d-none d-md-block">
-                            <img src="{{ asset('assets/img/about/shape-4-1.png') }}" alt="">
+                            <img src="<?php echo e(asset('assets/img/about/shape-4-1.png')); ?>" alt="">
                         </div>
                     </div>
                     <div class="ed-hero-thumb-sm p-relative">
-                        <img src="{{ asset('assets/img/about/about-4-2.png') }}" alt="Happy children at Peekaboo">
+                        <img src="<?php echo e(asset('assets/img/about/about-4-2.png')); ?>" alt="Happy children at Peekaboo">
                         <div class="ed-hero-thumb-shape-1">
-                            <img src="{{ asset('assets/img/about/shape-4-2.png') }}" alt="">
+                            <img src="<?php echo e(asset('assets/img/about/shape-4-2.png')); ?>" alt="">
                         </div>
                     </div>
                     <div class="ed-hero-thumb-shape-2">
-                        <img src="{{ asset('assets/img/about/shape-4-3.png') }}" alt="">
+                        <img src="<?php echo e(asset('assets/img/about/shape-4-3.png')); ?>" alt="">
                     </div>
                     <div class="ed-hero-thumb-shape-3">
-                        <img src="{{ asset('assets/img/hero/shape-1-2.png') }}" alt="">
+                        <img src="<?php echo e(asset('assets/img/hero/shape-1-2.png')); ?>" alt="">
                     </div>
                     <div class="ed-hero-thumb-shape-4">
-                        <img src="{{ asset('assets/img/hero/shape-1-3.png') }}" alt="">
+                        <img src="<?php echo e(asset('assets/img/hero/shape-1-3.png')); ?>" alt="">
                     </div>
                     <div class="ed-hero-thumb-student d-none d-md-flex align-items-center">
-                        <span><i>{{ date('Y') - 2010 }}+</i><br>Years of Care</span>
-                        <img src="{{ asset('assets/img/hero/student.png') }}" alt="">
+                        <span><i><?php echo e(date('Y') - 2010); ?>+</i><br>Years of Care</span>
+                        <img src="<?php echo e(asset('assets/img/hero/student.png')); ?>" alt="">
                     </div>
                 </div>
             </div>
 
-            {{-- Right — text (exact home structure) --}}
+            
             <div class="col-xl-6 col-lg-6 wow itfadeRight" data-wow-duration=".9s" data-wow-delay=".7s">
                 <div class="it-about-5-right">
                     <div class="it-about-5-title-box pb-10">
@@ -215,7 +209,7 @@
                         </h2>
                     </div>
                     <div class="it-about-5-text mb-30">
-                        <p>Peekaboo Daycare & Preschool was founded in 2010 with a simple but powerful vision: to create a safe, nurturing environment where every child feels loved, valued, and inspired to learn. Over {{ date('Y') - 2010 }} years on, that vision drives everything we do.</p>
+                        <p>Peekaboo Daycare & Preschool was founded in 2010 with a simple but powerful vision: to create a safe, nurturing environment where every child feels loved, valued, and inspired to learn. Over <?php echo e(date('Y') - 2010); ?> years on, that vision drives everything we do.</p>
                         <p style="margin-top:14px;">Nestled in the heart of Parklands, Cape Town, we welcome children from 3 months through to Grade R — guiding each one through the most formative years of their life with qualified educators, a warm Christian ethos, and a curriculum that celebrates every stage of development.</p>
                     </div>
                     <div class="it-about-5-content">
@@ -241,8 +235,8 @@
                         </div>
                     </div>
                     <div class="it-feature-button">
-                        <a class="ed-btn-radius" href="{{ route('book-tour') }}">Book a Tour</a>
-                        <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('enrol.index') }}">
+                        <a class="ed-btn-radius" href="<?php echo e(route('book-tour')); ?>">Book a Tour</a>
+                        <a class="ed-btn-radius ed-btn-radius--outline" href="<?php echo e(route('enrol.index')); ?>">
                             <i class="fa-solid fa-pen-to-square"></i> Enrol Now
                         </a>
                     </div>
@@ -254,12 +248,10 @@
 </div>
 
 
-{{-- ══════════════════════════════════════════════════
-     FUNFACTS — exact .ed-funfact-area from home
-     ══════════════════════════════════════════════════ --}}
+
 <div class="ed-funfact-area ed-funfact-wrap p-relative pb-90" style="padding-top:80px;">
     <div class="ed-funfact-shape-1 d-none d-xl-block">
-        <img src="{{ asset('assets/img/about/shape-1-5.png') }}" alt="">
+        <img src="<?php echo e(asset('assets/img/about/shape-1-5.png')); ?>" alt="">
     </div>
     <div class="container container-3">
         <div class="row">
@@ -276,7 +268,7 @@
                 <div class="it-funfact-item text-center border-style-1">
                     <div class="it-funfact-icon mb-30"><span><i class="flaticon-class"></i></span></div>
                     <div class="it-funfact-content">
-                        <h6><i class="purecounter" data-purecounter-duration="1" data-purecounter-end="{{ date('Y') - 2010 }}">0</i>+</h6>
+                        <h6><i class="purecounter" data-purecounter-duration="1" data-purecounter-end="<?php echo e(date('Y') - 2010); ?>">0</i>+</h6>
                         <span>Years Experience</span>
                     </div>
                 </div>
@@ -304,10 +296,7 @@
 </div>
 
 
-{{-- ══════════════════════════════════════════════════
-     OUR VALUES — pb-daily__card pattern from home
-     (same card structure as "A Typical Day" section)
-     ══════════════════════════════════════════════════ --}}
+
 <section class="pb-daily" style="background:var(--color-surface);padding:110px 0 100px;position:relative;overflow:hidden;">
 <style>
 .pb-daily__sub { font-family:var(--font-body);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--color-warm);display:block;margin-bottom:12px; }
@@ -336,11 +325,11 @@
         </div>
 
         <div class="row g-4 mt-2 wow itfadeUp" data-wow-delay=".1s">
-            {{-- Card 1: Love & Belonging — warm, nurturing baby/toddler care image --}}
+            
             <div class="col-lg-3 col-md-6">
                 <div class="pb-daily__card">
                     <div class="pb-daily__thumb">
-                        <img src="{{ asset('assets/img/class/class-1-1.jpg') }}" alt="Love and belonging at Peekaboo" loading="lazy">
+                        <img src="<?php echo e(asset('assets/img/class/class-1-1.jpg')); ?>" alt="Love and belonging at Peekaboo" loading="lazy">
                         <span class="pb-daily__time" style="background:var(--color-primary)"><i class="fa-solid fa-heart"></i> Core Value</span>
                     </div>
                     <div class="pb-daily__body">
@@ -350,11 +339,11 @@
                     </div>
                 </div>
             </div>
-            {{-- Card 2: Safety First — secure, controlled environment image --}}
+            
             <div class="col-lg-3 col-md-6">
                 <div class="pb-daily__card">
                     <div class="pb-daily__thumb">
-                        <img src="{{ asset('assets/img/choose/choose-2-1.jpg') }}" alt="Safety first at Peekaboo" loading="lazy">
+                        <img src="<?php echo e(asset('assets/img/choose/choose-2-1.jpg')); ?>" alt="Safety first at Peekaboo" loading="lazy">
                         <span class="pb-daily__time" style="background:var(--color-warm)"><i class="fa-solid fa-shield-halved"></i> Core Value</span>
                     </div>
                     <div class="pb-daily__body">
@@ -364,11 +353,11 @@
                     </div>
                 </div>
             </div>
-            {{-- Card 3: Excellence in Learning — structured classroom/teaching image --}}
+            
             <div class="col-lg-3 col-md-6">
                 <div class="pb-daily__card">
                     <div class="pb-daily__thumb">
-                        <img src="{{ asset('assets/img/class/class-details-big-image-1.jpg') }}" alt="Excellence in learning at Peekaboo" loading="lazy">
+                        <img src="<?php echo e(asset('assets/img/class/class-details-big-image-1.jpg')); ?>" alt="Excellence in learning at Peekaboo" loading="lazy">
                         <span class="pb-daily__time" style="background:var(--color-accent)"><i class="fa-solid fa-book-open-reader"></i> Core Value</span>
                     </div>
                     <div class="pb-daily__body">
@@ -378,11 +367,11 @@
                     </div>
                 </div>
             </div>
-            {{-- Card 4: Partnership with Parents — parent/family connection image --}}
+            
             <div class="col-lg-3 col-md-6">
                 <div class="pb-daily__card">
                     <div class="pb-daily__thumb">
-                        <img src="{{ asset('assets/img/about/thumb-4-1.jpg') }}" alt="Partnership with parents at Peekaboo" loading="lazy">
+                        <img src="<?php echo e(asset('assets/img/about/thumb-4-1.jpg')); ?>" alt="Partnership with parents at Peekaboo" loading="lazy">
                         <span class="pb-daily__time" style="background:var(--color-success)"><i class="fa-solid fa-hands-holding-child"></i> Core Value</span>
                     </div>
                     <div class="pb-daily__body">
@@ -397,9 +386,7 @@
 </section>
 
 
-{{-- ══════════════════════════════════════════════════
-     MEET OUR TEAM — exact home #teachers section
-     ══════════════════════════════════════════════════ --}}
+
 <section id="teachers" class="pb-teachers">
 <style>
 #teachers {
@@ -412,7 +399,7 @@
 .pb-teachers__heading span { color:var(--color-primary); }
 .pb-teachers__lead { font-family:var(--font-body);color:var(--color-body);font-size:17px;line-height:1.75;max-width:590px;margin:0 auto; }
 .pb-teachers__shape { position:absolute;top:4%;right:-1%;z-index:0;animation:itswing-2 3s forwards infinite alternate;transform-origin:bottom right; }
-@@keyframes itswing-2 { 0% { transform:rotate(0deg); } 100% { transform:rotate(5deg); } }
+@keyframes itswing-2 { 0% { transform:rotate(0deg); } 100% { transform:rotate(5deg); } }
 
 /* Edunity team card */
 .ed-team-item { padding:10px;border-radius:5px;background:#fff;box-shadow:0 0 30px 0 rgba(0,0,0,.06);transition:box-shadow .3s,transform .3s; }
@@ -438,8 +425,8 @@
 .t-marquee--fwd { animation:t-fwd 38s linear infinite; }
 .t-marquee--rev { animation:t-rev 44s linear infinite; }
 .t-marquee-wrap:hover .t-marquee { animation-play-state:paused; }
-@@keyframes t-fwd { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-@@keyframes t-rev { from { transform:translateX(-50%); } to { transform:translateX(0); } }
+@keyframes t-fwd { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+@keyframes t-rev { from { transform:translateX(-50%); } to { transform:translateX(0); } }
 .t-bubble { width:170px;height:170px;border-radius:50%;overflow:hidden;flex-shrink:0;border:5px solid #fff;box-shadow:0 6px 20px rgba(0,0,0,.13);transition:transform .28s ease,box-shadow .28s ease;cursor:pointer; }
 .t-bubble:hover { transform:scale(1.10) translateY(-5px);box-shadow:0 14px 36px rgba(12,80,142,.26); }
 .t-bubble img { width:100%;height:100%;object-fit:cover;display:block; }
@@ -459,7 +446,7 @@
 </style>
 
     <div class="pb-teachers__shape d-none d-md-block">
-        <img src="{{ asset('assets/img/about/shape-4-4.png') }}" alt="">
+        <img src="<?php echo e(asset('assets/img/about/shape-4-4.png')); ?>" alt="">
     </div>
 
     <div class="container" style="position:relative;z-index:2;">
@@ -472,14 +459,14 @@
             </div>
         </div>
 
-        {{-- Management Swiper — exact home structure --}}
+        
         <div class="ed-team-wrapper wow itfadeUp" data-wow-delay=".1s">
             <div class="swiper-container ed-team-active">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <div class="ed-team-item">
                             <div class="ed-team-thumb fix">
-                                <img src="{{ asset('assets/img/peekaboo_staff/1.png') }}" alt="Peekaboo Director">
+                                <img src="<?php echo e(asset('assets/img/peekaboo_staff/1.png')); ?>" alt="Peekaboo Director">
                             </div>
                             <div class="ed-team-content">
                                 <div class="ed-team-author-box">
@@ -493,7 +480,7 @@
                     <div class="swiper-slide">
                         <div class="ed-team-item">
                             <div class="ed-team-thumb fix">
-                                <img src="{{ asset('assets/img/peekaboo_staff/2.png') }}" alt="Peekaboo Management">
+                                <img src="<?php echo e(asset('assets/img/peekaboo_staff/2.png')); ?>" alt="Peekaboo Management">
                             </div>
                             <div class="ed-team-content">
                                 <div class="ed-team-author-box">
@@ -507,7 +494,7 @@
                     <div class="swiper-slide">
                         <div class="ed-team-item">
                             <div class="ed-team-thumb fix">
-                                <img src="{{ asset('assets/img/peekaboo_staff/3.png') }}" alt="Peekaboo Management">
+                                <img src="<?php echo e(asset('assets/img/peekaboo_staff/3.png')); ?>" alt="Peekaboo Management">
                             </div>
                             <div class="ed-team-content">
                                 <div class="ed-team-author-box">
@@ -522,34 +509,34 @@
             </div>
         </div>
 
-        {{-- Full team marquee — exact home structure --}}
+        
         <div class="wow itfadeUp" data-wow-delay=".2s">
             <div class="t-team-header">
                 <span class="t-team-label">Meet the Rest of Our Wonderful Team</span>
             </div>
             <div class="t-marquee-wrap">
                 <div class="t-marquee t-marquee--fwd">
-                    @foreach(range(4,15) as $n)
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/'.$n.'.png') }}" alt="Peekaboo staff"></div>
-                    @endforeach
-                    @foreach(range(4,15) as $n)
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/'.$n.'.png') }}" alt="Peekaboo staff"></div>
-                    @endforeach
+                    <?php $__currentLoopData = range(4,15); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $n): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="t-bubble"><img src="<?php echo e(asset('assets/img/peekaboo_staff/'.$n.'.png')); ?>" alt="Peekaboo staff"></div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php $__currentLoopData = range(4,15); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $n): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="t-bubble"><img src="<?php echo e(asset('assets/img/peekaboo_staff/'.$n.'.png')); ?>" alt="Peekaboo staff"></div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
             <div class="t-marquee-wrap">
                 <div class="t-marquee t-marquee--rev">
-                    @foreach(range(16,27) as $n)
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/'.$n.'.png') }}" alt="Peekaboo staff"></div>
-                    @endforeach
-                    @foreach(range(16,27) as $n)
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/'.$n.'.png') }}" alt="Peekaboo staff"></div>
-                    @endforeach
+                    <?php $__currentLoopData = range(16,27); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $n): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="t-bubble"><img src="<?php echo e(asset('assets/img/peekaboo_staff/'.$n.'.png')); ?>" alt="Peekaboo staff"></div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php $__currentLoopData = range(16,27); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $n): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="t-bubble"><img src="<?php echo e(asset('assets/img/peekaboo_staff/'.$n.'.png')); ?>" alt="Peekaboo staff"></div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
         </div>
 
-        {{-- Qualifications banner — exact home structure --}}
+        
         <div class="t-qual wow itfadeUp" data-wow-delay=".25s">
             <div class="row align-items-center gy-4">
                 <div class="col-lg-7">
@@ -574,12 +561,10 @@
 </section>
 
 
-{{-- ══════════════════════════════════════════════════
-     TESTIMONIALS — exact home Swiper structure
-     ══════════════════════════════════════════════════ --}}
+
 <div class="it-testimonial-area ed-testimonial-style-2 ed-testimonial-style-3 pb-120 fix p-relative" style="padding-top:110px;background-color:#F0EDE8;">
-    <div class="ed-testimonial-shape-1"><img src="{{ asset('assets/img/testimonial/shape-4-1.png') }}" alt=""></div>
-    <div class="ed-testimonial-shape-2 d-none d-xxl-block"><img src="{{ asset('assets/img/testimonial/shape-5-3.png') }}" alt=""></div>
+    <div class="ed-testimonial-shape-1"><img src="<?php echo e(asset('assets/img/testimonial/shape-4-1.png')); ?>" alt=""></div>
+    <div class="ed-testimonial-shape-2 d-none d-xxl-block"><img src="<?php echo e(asset('assets/img/testimonial/shape-5-3.png')); ?>" alt=""></div>
     <div class="container container-3">
         <div class="it-testimonial-title-wrap" style="margin-bottom:60px;">
             <div class="row align-items-end">
@@ -657,9 +642,7 @@
 </div>
 
 
-{{-- ══════════════════════════════════════════════════
-     FINAL CTA — exact .pb-cta from home.blade.php
-     ══════════════════════════════════════════════════ --}}
+
 <section id="contact" class="pb-cta">
 <style>
 .pb-cta { background:var(--color-surface);padding:110px 0 100px;position:relative;overflow:hidden; }
@@ -699,7 +682,7 @@
 </style>
 
     <div class="pb-cta__shape d-none d-lg-block">
-        <img src="{{ asset('assets/img/about/shape-4-4.png') }}" alt="">
+        <img src="<?php echo e(asset('assets/img/about/shape-4-4.png')); ?>" alt="">
     </div>
 
     <div class="container" style="position:relative;z-index:2;">
@@ -724,10 +707,10 @@
                     </div>
                 </div>
                 <div class="pb-cta__buttons">
-                    <a href="{{ route('book-tour') }}" class="pb-cta__btn-primary">
+                    <a href="<?php echo e(route('book-tour')); ?>" class="pb-cta__btn-primary">
                         <i class="fa-regular fa-calendar-check"></i> Book a Tour
                     </a>
-                    <a href="{{ route('enrol.index') }}" class="pb-cta__btn-secondary">
+                    <a href="<?php echo e(route('enrol.index')); ?>" class="pb-cta__btn-secondary">
                         <i class="fa-solid fa-pen-to-square"></i> Enrol Now
                     </a>
                 </div>
@@ -761,7 +744,7 @@
                             </span>
                         </span>
                     </div>
-                    <a href="{{ route('book-tour') }}" class="pb-cta__card-btn">
+                    <a href="<?php echo e(route('book-tour')); ?>" class="pb-cta__card-btn">
                         <i class="fa-regular fa-calendar-check"></i> Book a Tour
                     </a>
                 </div>
@@ -771,9 +754,9 @@
     </div>
 </section>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -792,10 +775,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
 
 
 
 
 
+
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\wamp64_3.3.4\www\projects\peekaboo\resources\views/public/about.blade.php ENDPATH**/ ?>

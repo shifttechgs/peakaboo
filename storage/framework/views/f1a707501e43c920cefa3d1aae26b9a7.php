@@ -1,52 +1,48 @@
-@extends('layouts.public')
+<?php $__env->startSection('title', 'Programmes — Baby Room to Grade R | Peekaboo Daycare Parklands, Cape Town'); ?>
+<?php $__env->startSection('description', 'From Baby Room (3 months) to Grade R — discover age-appropriate programmes at Peekaboo Daycare in Parklands, Cape Town. CAPS-aligned, qualified teachers, low child-to-teacher ratios.'); ?>
+<?php $__env->startSection('keywords', 'preschool programmes Cape Town, baby room daycare Parklands, toddler programme Cape Town, Grade R Parklands Cape Town, CAPS Grade R preschool, infant care Cape Town, nursery school programmes Parklands'); ?>
+<?php $__env->startSection('canonical', route('programs')); ?>
+<?php $__env->startSection('og_title', 'Programmes — Baby Room to Grade R | Peekaboo Daycare Parklands'); ?>
+<?php $__env->startSection('og_description', 'From Baby Room (3 months) to Grade R — age-appropriate programmes at Peekaboo Daycare Parklands, Cape Town. CAPS-aligned, low child-to-teacher ratios.'); ?>
 
-@section('title', 'Programmes — Baby Room to Grade R | Peekaboo Daycare Parklands, Cape Town')
-@section('description', 'From Baby Room (3 months) to Grade R — discover age-appropriate programmes at Peekaboo Daycare in Parklands, Cape Town. CAPS-aligned, qualified teachers, low child-to-teacher ratios.')
-@section('keywords', 'preschool programmes Cape Town, baby room daycare Parklands, toddler programme Cape Town, Grade R Parklands Cape Town, CAPS Grade R preschool, infant care Cape Town, nursery school programmes Parklands')
-@section('canonical', route('programs'))
-@section('og_title', 'Programmes — Baby Room to Grade R | Peekaboo Daycare Parklands')
-@section('og_description', 'From Baby Room (3 months) to Grade R — age-appropriate programmes at Peekaboo Daycare Parklands, Cape Town. CAPS-aligned, low child-to-teacher ratios.')
-
-@push('schema')
+<?php $__env->startPush('schema'); ?>
 <script type="application/ld+json">
 {
-  "@@context": "https://schema.org",
-  "@@type": "WebPage",
-  "@@id": "{{ route('programs') }}#webpage",
-  "url": "{{ route('programs') }}",
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "<?php echo e(route('programs')); ?>#webpage",
+  "url": "<?php echo e(route('programs')); ?>",
   "name": "Programmes — Baby Room to Grade R | Peekaboo Daycare Parklands, Cape Town",
   "description": "From Baby Room (3 months) to Grade R — discover age-appropriate programmes at Peekaboo Daycare in Parklands, Cape Town.",
-  "isPartOf": {"@@id": "{{ url('/') }}/#website"},
+  "isPartOf": {"@id": "<?php echo e(url('/')); ?>/#website"},
   "breadcrumb": {
-    "@@type": "BreadcrumbList",
+    "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@@type": "ListItem", "position": 1, "name": "Home", "item": "{{ route('home') }}"},
-      {"@@type": "ListItem", "position": 2, "name": "Programmes", "item": "{{ route('programs') }}"}
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo e(route('home')); ?>"},
+      {"@type": "ListItem", "position": 2, "name": "Programmes", "item": "<?php echo e(route('programs')); ?>"}
     ]
   }
 }
 </script>
 <script type="application/ld+json">
 {
-  "@@context": "https://schema.org",
-  "@@type": "ItemList",
+  "@context": "https://schema.org",
+  "@type": "ItemList",
   "name": "Peekaboo Daycare Programmes",
   "description": "All programmes offered at Peekaboo Daycare & Preschool in Parklands, Cape Town",
   "itemListElement": [
-    {"@@type": "ListItem", "position": 1, "name": "Baby Room (3 months – 18 months)", "url": "{{ route('program.detail', 'baby-room') }}"},
-    {"@@type": "ListItem", "position": 2, "name": "Toddlers (18 months – 3 years)", "url": "{{ route('program.detail', 'toddlers') }}"},
-    {"@@type": "ListItem", "position": 3, "name": "Preschool (3 – 4 years)", "url": "{{ route('program.detail', 'preschool') }}"},
-    {"@@type": "ListItem", "position": 4, "name": "Grade R / Kindergarten (5 – 6 years)", "url": "{{ route('program.detail', 'kindergarten') }}"}
+    {"@type": "ListItem", "position": 1, "name": "Baby Room (3 months – 18 months)", "url": "<?php echo e(route('program.detail', 'baby-room')); ?>"},
+    {"@type": "ListItem", "position": 2, "name": "Toddlers (18 months – 3 years)", "url": "<?php echo e(route('program.detail', 'toddlers')); ?>"},
+    {"@type": "ListItem", "position": 3, "name": "Preschool (3 – 4 years)", "url": "<?php echo e(route('program.detail', 'preschool')); ?>"},
+    {"@type": "ListItem", "position": 4, "name": "Grade R / Kindergarten (5 – 6 years)", "url": "<?php echo e(route('program.detail', 'kindergarten')); ?>"}
   ]
 }
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-{{-- ══════════════════════════════════════════════════
-     PAGE HERO — surface bg, shapes, Edunity CTA btns
-     ══════════════════════════════════════════════════ --}}
+
 <section class="pb-page-hero fix p-relative">
 <style>
 .pb-page-hero {
@@ -63,7 +59,7 @@
     position: absolute; bottom: -30px; left: -50px; opacity: .2; z-index: 0;
     animation: itswing 6s ease-in-out infinite alternate;
 }
-@@keyframes itswing {
+@keyframes itswing {
     0%   { transform: rotate(0deg); }
     100% { transform: rotate(6deg); }
 }
@@ -79,7 +75,7 @@
 
 /* Programme chips — right column */
 .pb-prog-chips { display: flex; flex-direction: column; gap: 16px; padding-left: 20px; }
-@@media (max-width:991px) { .pb-prog-chips { padding-left: 0; margin-top: 44px; flex-direction: row; flex-wrap: wrap; } }
+@media(max-width:991px) { .pb-prog-chips { padding-left: 0; margin-top: 44px; flex-direction: row; flex-wrap: wrap; } }
 
 .pb-prog-chip {
     display: flex; align-items: center; gap: 16px;
@@ -98,10 +94,10 @@
 </style>
 
     <div class="pb-page-hero__shape-1 d-none d-lg-block">
-        <img src="{{ asset('assets/img/about/shape-4-4.png') }}" alt="" style="width:280px;">
+        <img src="<?php echo e(asset('assets/img/about/shape-4-4.png')); ?>" alt="" style="width:280px;">
     </div>
     <div class="pb-page-hero__shape-2 d-none d-lg-block">
-        <img src="{{ asset('assets/img/hero/shape-2-3.png') }}" alt="" style="width:200px;">
+        <img src="<?php echo e(asset('assets/img/hero/shape-2-3.png')); ?>" alt="" style="width:200px;">
     </div>
 
     <div class="container" style="position:relative;z-index:2;">
@@ -109,7 +105,7 @@
 
             <div class="col-lg-6 wow itfadeLeft" data-wow-duration=".9s" data-wow-delay=".1s">
                 <ul class="pb-page-hero__breadcrumb">
-                    <li><a href="{{ route('home') }}">Home</a></li>
+                    <li><a href="<?php echo e(route('home')); ?>">Home</a></li>
                     <li>Programs</li>
                 </ul>
                 <span class="it-section-subtitle-5 orange" style="margin-bottom:18px;display:inline-flex;align-items:center;gap:8px;">
@@ -123,8 +119,8 @@
                 </div>
                 <div class="ed-hero-2-button-wrapper">
                     <div class="ed-hero-2-button d-flex align-items-center flex-wrap">
-                        <a class="ed-btn-radius" href="{{ route('enrol.index') }}">Enrol Now</a>
-                        <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('book-tour') }}">
+                        <a class="ed-btn-radius" href="<?php echo e(route('enrol.index')); ?>">Enrol Now</a>
+                        <a class="ed-btn-radius ed-btn-radius--outline" href="<?php echo e(route('book-tour')); ?>">
                             <i class="fa-regular fa-calendar-check"></i> Book a Tour
                         </a>
                     </div>
@@ -169,9 +165,7 @@
 </section>
 
 
-{{-- ══════════════════════════════════════════════════
-     OVERVIEW CARDS — exact pb-prog-card from home
-     ══════════════════════════════════════════════════ --}}
+
 <section id="overview" style="background:var(--color-surface);padding:100px 0 110px;position:relative;overflow:hidden;">
 <style>
 /* reuse home-page card CSS verbatim */
@@ -223,7 +217,7 @@
                 <div class="pb-prog-card pb-prog-card--blue w-100">
                     <div class="pb-prog-card__bar"></div>
                     <div class="pb-prog-card__photo">
-                        <img src="{{ asset('assets/img/class/class-1-1.jpg') }}" alt="Baby Room" loading="lazy">
+                        <img src="<?php echo e(asset('assets/img/class/class-1-1.jpg')); ?>" alt="Baby Room" loading="lazy">
                         <span class="pb-prog-card__age-pill">3 – 18 months</span>
                     </div>
                     <div class="pb-prog-card__body">
@@ -239,7 +233,7 @@
                 <div class="pb-prog-card pb-prog-card--warm w-100">
                     <div class="pb-prog-card__bar"></div>
                     <div class="pb-prog-card__photo">
-                        <img src="{{ asset('assets/img/class/class-details-big-image-1.jpg') }}" alt="Toddlers" loading="lazy">
+                        <img src="<?php echo e(asset('assets/img/class/class-details-big-image-1.jpg')); ?>" alt="Toddlers" loading="lazy">
                         <span class="pb-prog-card__age-pill">18 months – 3 years</span>
                     </div>
                     <div class="pb-prog-card__body">
@@ -255,7 +249,7 @@
                 <div class="pb-prog-card pb-prog-card--accent w-100">
                     <div class="pb-prog-card__bar"></div>
                     <div class="pb-prog-card__photo">
-                        <img src="{{ asset('assets/img/class/class-1-3.jpg') }}" alt="Preschool" loading="lazy">
+                        <img src="<?php echo e(asset('assets/img/class/class-1-3.jpg')); ?>" alt="Preschool" loading="lazy">
                         <span class="pb-prog-card__age-pill">3 – 4 years</span>
                     </div>
                     <div class="pb-prog-card__body">
@@ -271,7 +265,7 @@
                 <div class="pb-prog-card pb-prog-card--green w-100">
                     <div class="pb-prog-card__bar"></div>
                     <div class="pb-prog-card__photo">
-                        <img src="{{ asset('assets/img/class/class-1-4.jpg') }}" alt="Grade R" loading="lazy">
+                        <img src="<?php echo e(asset('assets/img/class/class-1-4.jpg')); ?>" alt="Grade R" loading="lazy">
                         <span class="pb-prog-card__age-pill">5 – 6 years</span>
                     </div>
                     <div class="pb-prog-card__body">
@@ -288,10 +282,7 @@
 </section>
 
 
-{{-- ══════════════════════════════════════════════════
-     PROGRAMME DEEP-DIVES
-     Mirrors .it-about-5-area layout from home page
-     ══════════════════════════════════════════════════ --}}
+
 <style>
 /* Deep-dive sections */
 .pb-prog-detail-section { padding:100px 0;position:relative;overflow:hidden; }
@@ -312,7 +303,7 @@
     padding:14px 22px;box-shadow:0 8px 32px rgba(14,42,70,.13);
     display:flex;align-items:center;gap:14px;min-width:190px;z-index:3;
 }
-@@media(max-width:575px){ .pb-prog-float { left:12px;bottom:-16px;padding:10px 14px;min-width:0; } }
+@media(max-width:575px){ .pb-prog-float { left:12px;bottom:-16px;padding:10px 14px;min-width:0; } }
 .pb-prog-float__icon { width:46px;height:46px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff; }
 .pb-prog-float__num  { font-family:var(--font-heading);font-size:1.55rem;font-weight:900;color:var(--color-text);line-height:1;display:block; }
 .pb-prog-float__lbl  { font-family:var(--font-body);font-size:12px;font-weight:500;color:var(--color-muted); }
@@ -330,24 +321,24 @@
 
 /* Feature list — mirrors it-about-5-list */
 .pb-prog-feat { list-style:none;padding:0;margin:0 0 32px;columns:2;column-gap:24px; }
-@@media(max-width:575px){ .pb-prog-feat { columns:1; } }
+@media(max-width:575px){ .pb-prog-feat { columns:1; } }
 .pb-prog-feat li { display:flex;align-items:center;gap:10px;font-family:var(--font-body);font-size:15px;color:var(--color-body);margin-bottom:12px;break-inside:avoid; }
 .pb-prog-feat li i { font-size:14px;flex-shrink:0; }
 </style>
 
 
-{{-- 1. BABY ROOM --}}
+
 <section class="pb-prog-detail-section pb-prog-detail-section--white" id="baby-room">
     <div class="pb-prog-detail-section__shape d-none d-xl-block" style="top:-50px;right:-60px;animation:itswing 5s ease-in-out infinite alternate;transform-origin:top right;">
-        <img src="{{ asset('assets/img/about/shape-5-4.png') }}" alt="" style="width:240px;">
+        <img src="<?php echo e(asset('assets/img/about/shape-5-4.png')); ?>" alt="" style="width:240px;">
     </div>
     <div class="container" style="position:relative;z-index:2;">
         <div class="row align-items-center gx-5 gy-5">
-            {{-- Photo --}}
+            
             <div class="col-lg-6 wow itfadeLeft" data-wow-duration=".9s" data-wow-delay=".3s">
                 <div class="pb-prog-img-wrap">
                     <div class="pb-prog-img-main">
-                        <img src="{{ asset('assets/img/class/class-1-1.jpg') }}" alt="Baby Room at Peekaboo Daycare">
+                        <img src="<?php echo e(asset('assets/img/class/class-1-1.jpg')); ?>" alt="Baby Room at Peekaboo Daycare">
                     </div>
                     <div class="pb-prog-float">
                         <span class="pb-prog-float__icon" style="background:var(--color-primary)"><i class="fa-solid fa-users"></i></span>
@@ -358,7 +349,7 @@
                     </div>
                 </div>
             </div>
-            {{-- Content --}}
+            
             <div class="col-lg-6 wow itfadeRight" data-wow-duration=".9s" data-wow-delay=".5s">
                 <div class="it-about-5-title-box pb-10">
                     <span class="it-section-subtitle-5 orange">
@@ -398,8 +389,8 @@
                     </div>
                 </div>
                 <div class="it-feature-button">
-                    <a class="ed-btn-radius" href="{{ route('enrol.index') }}">Enrol Now</a>
-                    <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('book-tour') }}">
+                    <a class="ed-btn-radius" href="<?php echo e(route('enrol.index')); ?>">Enrol Now</a>
+                    <a class="ed-btn-radius ed-btn-radius--outline" href="<?php echo e(route('book-tour')); ?>">
                         <i class="fa-regular fa-calendar-check"></i> Book a Tour
                     </a>
                 </div>
@@ -409,18 +400,18 @@
 </section>
 
 
-{{-- 2. TODDLERS --}}
+
 <section class="pb-prog-detail-section pb-prog-detail-section--surface" id="toddlers">
     <div class="pb-prog-detail-section__shape d-none d-xl-block" style="bottom:-40px;left:-40px;transform:scaleX(-1);animation:itswing 6s ease-in-out infinite alternate;">
-        <img src="{{ asset('assets/img/hero/shape-2-3.png') }}" alt="" style="width:200px;">
+        <img src="<?php echo e(asset('assets/img/hero/shape-2-3.png')); ?>" alt="" style="width:200px;">
     </div>
     <div class="container" style="position:relative;z-index:2;">
         <div class="row align-items-center gx-5 gy-5 flex-lg-row-reverse">
-            {{-- Photo --}}
+            
             <div class="col-lg-6 wow itfadeRight" data-wow-duration=".9s" data-wow-delay=".3s">
                 <div class="pb-prog-img-wrap">
                     <div class="pb-prog-img-main">
-                        <img src="{{ asset('assets/img/class/class-details-big-image-1.jpg') }}" alt="Toddlers at Peekaboo Daycare">
+                        <img src="<?php echo e(asset('assets/img/class/class-details-big-image-1.jpg')); ?>" alt="Toddlers at Peekaboo Daycare">
                     </div>
                     <div class="pb-prog-float">
                         <span class="pb-prog-float__icon" style="background:var(--color-warm)"><i class="fa-solid fa-users"></i></span>
@@ -428,7 +419,7 @@
                     </div>
                 </div>
             </div>
-            {{-- Content --}}
+            
             <div class="col-lg-6 wow itfadeLeft" data-wow-duration=".9s" data-wow-delay=".5s">
                 <div class="it-about-5-title-box pb-10">
                     <span class="it-section-subtitle-5 orange">
@@ -468,8 +459,8 @@
                     </div>
                 </div>
                 <div class="it-feature-button">
-                    <a class="ed-btn-radius" href="{{ route('enrol.index') }}">Enrol Now</a>
-                    <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('book-tour') }}">
+                    <a class="ed-btn-radius" href="<?php echo e(route('enrol.index')); ?>">Enrol Now</a>
+                    <a class="ed-btn-radius ed-btn-radius--outline" href="<?php echo e(route('book-tour')); ?>">
                         <i class="fa-regular fa-calendar-check"></i> Book a Tour
                     </a>
                 </div>
@@ -479,18 +470,18 @@
 </section>
 
 
-{{-- 3. PRESCHOOL --}}
+
 <section class="pb-prog-detail-section pb-prog-detail-section--white" id="preschool">
     <div class="pb-prog-detail-section__shape d-none d-xl-block" style="top:-40px;right:-40px;animation:itswing 4s ease-in-out infinite alternate;transform-origin:top right;">
-        <img src="{{ asset('assets/img/about/shape-4-4.png') }}" alt="" style="width:240px;">
+        <img src="<?php echo e(asset('assets/img/about/shape-4-4.png')); ?>" alt="" style="width:240px;">
     </div>
     <div class="container" style="position:relative;z-index:2;">
         <div class="row align-items-center gx-5 gy-5">
-            {{-- Photo --}}
+            
             <div class="col-lg-6 wow itfadeLeft" data-wow-duration=".9s" data-wow-delay=".3s">
                 <div class="pb-prog-img-wrap">
                     <div class="pb-prog-img-main">
-                        <img src="{{ asset('assets/img/class/class-1-3.jpg') }}" alt="Preschool at Peekaboo Daycare">
+                        <img src="<?php echo e(asset('assets/img/class/class-1-3.jpg')); ?>" alt="Preschool at Peekaboo Daycare">
                     </div>
                     <div class="pb-prog-float">
                         <span class="pb-prog-float__icon" style="background:var(--color-accent)"><i class="fa-solid fa-users"></i></span>
@@ -498,7 +489,7 @@
                     </div>
                 </div>
             </div>
-            {{-- Content --}}
+            
             <div class="col-lg-6 wow itfadeRight" data-wow-duration=".9s" data-wow-delay=".5s">
                 <div class="it-about-5-title-box pb-10">
                     <span class="it-section-subtitle-5 orange">
@@ -538,8 +529,8 @@
                     </div>
                 </div>
                 <div class="it-feature-button">
-                    <a class="ed-btn-radius" href="{{ route('enrol.index') }}">Enrol Now</a>
-                    <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('book-tour') }}">
+                    <a class="ed-btn-radius" href="<?php echo e(route('enrol.index')); ?>">Enrol Now</a>
+                    <a class="ed-btn-radius ed-btn-radius--outline" href="<?php echo e(route('book-tour')); ?>">
                         <i class="fa-regular fa-calendar-check"></i> Book a Tour
                     </a>
                 </div>
@@ -549,18 +540,18 @@
 </section>
 
 
-{{-- 4. GRADE R --}}
+
 <section class="pb-prog-detail-section pb-prog-detail-section--surface" id="grade-r">
     <div class="pb-prog-detail-section__shape d-none d-xl-block" style="bottom:-40px;right:-40px;animation:itswing 5s ease-in-out infinite alternate;">
-        <img src="{{ asset('assets/img/hero/shape-2-4.png') }}" alt="" style="width:220px;">
+        <img src="<?php echo e(asset('assets/img/hero/shape-2-4.png')); ?>" alt="" style="width:220px;">
     </div>
     <div class="container" style="position:relative;z-index:2;">
         <div class="row align-items-center gx-5 gy-5 flex-lg-row-reverse">
-            {{-- Photo --}}
+            
             <div class="col-lg-6 wow itfadeRight" data-wow-duration=".9s" data-wow-delay=".3s">
                 <div class="pb-prog-img-wrap">
                     <div class="pb-prog-img-main">
-                        <img src="{{ asset('assets/img/class/class-1-4.jpg') }}" alt="Grade R at Peekaboo Daycare">
+                        <img src="<?php echo e(asset('assets/img/class/class-1-4.jpg')); ?>" alt="Grade R at Peekaboo Daycare">
                     </div>
                     <div class="pb-prog-float">
                         <span class="pb-prog-float__icon" style="background:var(--color-success)"><i class="fa-solid fa-graduation-cap"></i></span>
@@ -568,7 +559,7 @@
                     </div>
                 </div>
             </div>
-            {{-- Content --}}
+            
             <div class="col-lg-6 wow itfadeLeft" data-wow-duration=".9s" data-wow-delay=".5s">
                 <div class="it-about-5-title-box pb-10">
                     <span class="it-section-subtitle-5 orange">
@@ -608,8 +599,8 @@
                     </div>
                 </div>
                 <div class="it-feature-button">
-                    <a class="ed-btn-radius" href="{{ route('enrol.index') }}">Enrol Now</a>
-                    <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('book-tour') }}">
+                    <a class="ed-btn-radius" href="<?php echo e(route('enrol.index')); ?>">Enrol Now</a>
+                    <a class="ed-btn-radius ed-btn-radius--outline" href="<?php echo e(route('book-tour')); ?>">
                         <i class="fa-regular fa-calendar-check"></i> Book a Tour
                     </a>
                 </div>
@@ -619,12 +610,10 @@
 </section>
 
 
-{{-- ══════════════════════════════════════════════════
-     TESTIMONIALS — exact home structure + classes
-     ══════════════════════════════════════════════════ --}}
+
 <div class="it-testimonial-area ed-testimonial-style-2 ed-testimonial-style-3 pb-120 fix p-relative" style="padding-top:110px;background-color:#F0EDE8;">
-   <div class="ed-testimonial-shape-1"><img src="{{ asset('assets/img/testimonial/shape-4-1.png') }}" alt=""></div>
-   <div class="ed-testimonial-shape-2 d-none d-xxl-block"><img src="{{ asset('assets/img/testimonial/shape-5-3.png') }}" alt=""></div>
+   <div class="ed-testimonial-shape-1"><img src="<?php echo e(asset('assets/img/testimonial/shape-4-1.png')); ?>" alt=""></div>
+   <div class="ed-testimonial-shape-2 d-none d-xxl-block"><img src="<?php echo e(asset('assets/img/testimonial/shape-5-3.png')); ?>" alt=""></div>
    <div class="container container-3">
       <div class="it-testimonial-title-wrap" style="margin-bottom:60px;">
          <div class="row align-items-end">
@@ -686,9 +675,7 @@
 </div>
 
 
-{{-- ══════════════════════════════════════════════════
-     FINAL CTA — exact .pb-cta from home.blade.php
-     ══════════════════════════════════════════════════ --}}
+
 <section id="contact" class="pb-cta">
 <style>
 .pb-cta {
@@ -756,7 +743,7 @@
     padding: 7px 20px; border-radius: var(--radius-pill);
     animation: pulse-badge 2s ease-in-out infinite;
 }
-@@keyframes pulse-badge { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes pulse-badge { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 .pb-cta__card-title { font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--color-text); margin-bottom: 10px; }
 .pb-cta__card-desc { font-family: var(--font-body); font-size: 16px; color: var(--color-body); line-height: 1.7; margin-bottom: 28px; }
 .pb-cta__card-contacts { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
@@ -790,12 +777,12 @@
 /* Decorative shape */
 .pb-cta__shape { position: absolute; top: 6%; right: -1%; z-index: 0; animation: itswing-2 3s forwards infinite alternate; transform-origin: bottom right; opacity: 0.5; }
 
-@@media (max-width: 991px) { .pb-cta__card { margin-top: 50px; } .pb-cta__lead { max-width: 100%; } }
-@@media (max-width: 575px) { .pb-cta { padding: 80px 0; } .pb-cta__card { padding: 28px 22px; } .pb-cta__buttons { flex-direction: column; } .pb-cta__btn-primary, .pb-cta__btn-secondary { justify-content: center; width: 100%; } }
+@media(max-width: 991px) { .pb-cta__card { margin-top: 50px; } .pb-cta__lead { max-width: 100%; } }
+@media(max-width: 575px) { .pb-cta { padding: 80px 0; } .pb-cta__card { padding: 28px 22px; } .pb-cta__buttons { flex-direction: column; } .pb-cta__btn-primary, .pb-cta__btn-secondary { justify-content: center; width: 100%; } }
 </style>
 
     <div class="pb-cta__shape d-none d-lg-block">
-        <img src="{{ asset('assets/img/about/shape-4-4.png') }}" alt="">
+        <img src="<?php echo e(asset('assets/img/about/shape-4-4.png')); ?>" alt="">
     </div>
 
     <div class="container" style="position:relative;z-index:2;">
@@ -823,10 +810,10 @@
                 </div>
 
                 <div class="pb-cta__buttons">
-                    <a href="{{ route('book-tour') }}" class="pb-cta__btn-primary">
+                    <a href="<?php echo e(route('book-tour')); ?>" class="pb-cta__btn-primary">
                         <i class="fa-regular fa-calendar-check"></i> Book a Tour
                     </a>
-                    <a href="{{ route('enrol.index') }}" class="pb-cta__btn-secondary">
+                    <a href="<?php echo e(route('enrol.index')); ?>" class="pb-cta__btn-secondary">
                         <i class="fa-solid fa-pen-to-square"></i> Enrol Now
                     </a>
                 </div>
@@ -863,7 +850,7 @@
                         </span>
                     </div>
 
-                    <a href="{{ route('book-tour') }}" class="pb-cta__card-btn">
+                    <a href="<?php echo e(route('book-tour')); ?>" class="pb-cta__card-btn">
                         <i class="fa-regular fa-calendar-check"></i> Book a Tour
                     </a>
                 </div>
@@ -873,9 +860,9 @@
     </div>
 </section>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // data-background handler (mirrors main.js)
@@ -904,7 +891,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
 
 
@@ -914,3 +901,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\wamp64_3.3.4\www\projects\peekaboo\resources\views/public/programs.blade.php ENDPATH**/ ?>

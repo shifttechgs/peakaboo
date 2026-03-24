@@ -1,7 +1,32 @@
 @extends('layouts.public')
 
-@section('title', 'Book a Tour - Peekaboo Daycare & Preschool')
-@section('description', 'Schedule a visit to Peekaboo Daycare in Parklands, Cape Town. Tour our facilities, meet our teachers, and see our programs in action.')
+@section('title', 'Book a School Tour — Peekaboo Daycare Parklands, Cape Town')
+@section('description', 'Book a free tour at Peekaboo Daycare in Parklands, Cape Town. Visit our facilities, meet our qualified teachers, and see our CAPS-aligned programmes in action. Tours available weekdays.')
+@section('keywords', 'book daycare tour Parklands Cape Town, visit preschool Cape Town, school tour Peekaboo Daycare, childcare tour Cape Town northside, book tour preschool Parklands')
+@section('canonical', route('book-tour'))
+@section('og_title', 'Book a Free School Tour — Peekaboo Daycare Parklands, Cape Town')
+@section('og_description', 'Visit Peekaboo Daycare in Parklands, Cape Town. Tour our facilities, meet teachers, see our CAPS programmes. Book your free tour today.')
+
+@push('schema')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "WebPage",
+  "@@id": "{{ route('book-tour') }}#webpage",
+  "url": "{{ route('book-tour') }}",
+  "name": "Book a School Tour — Peekaboo Daycare Parklands, Cape Town",
+  "description": "Book a free tour at Peekaboo Daycare in Parklands, Cape Town.",
+  "isPartOf": {"@@id": "{{ url('/') }}/#website"},
+  "breadcrumb": {
+    "@@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@@type": "ListItem", "position": 1, "name": "Home", "item": "{{ route('home') }}"},
+      {"@@type": "ListItem", "position": 2, "name": "Book a Tour", "item": "{{ route('book-tour') }}"}
+    ]
+  }
+}
+</script>
+@endpush
 
 @section('content')
 <style>
@@ -129,7 +154,7 @@
     gap: 12px;
     animation: floatBadge 3s ease-in-out infinite alternate;
 }
-@keyframes floatBadge {
+@@keyframes floatBadge {
     from { transform: translateY(0); }
     to   { transform: translateY(-8px); }
 }

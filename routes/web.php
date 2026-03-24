@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\InvitationController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\EnrolmentController;
+use App\Http\Controllers\Public\SitemapController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdmissionsController;
 use App\Http\Controllers\Admin\ParentsController as AdminParentsController;
@@ -35,6 +36,27 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'submitContact'])->name('contact.submit');
 Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
+
+// ── SEO: Sitemap & Robots ──────────────────────────────────────────────────
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/robots.txt', function () {
+    $content = "User-agent: *\n"
+             . "Allow: /\n"
+             . "Disallow: /admin/\n"
+             . "Disallow: /parent/\n"
+             . "Disallow: /teacher/\n"
+             . "Disallow: /child/\n"
+             . "Disallow: /login\n"
+             . "Disallow: /register/\n"
+             . "Disallow: /forgot-password\n"
+             . "Disallow: /reset-password\n"
+             . "Disallow: /enrol/form\n"
+             . "Disallow: /enrol/thank-you\n"
+             . "Disallow: /enrol/status/\n"
+             . "\n"
+             . "Sitemap: " . route('sitemap') . "\n";
+    return response($content, 200)->header('Content-Type', 'text/plain');
+})->name('robots');
 
 // Enrolment Form Routes
 Route::prefix('enrol')->name('enrol.')->group(function () {

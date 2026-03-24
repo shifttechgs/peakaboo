@@ -1,7 +1,32 @@
 @extends('layouts.public')
 
-@section('title', 'Enrol Your Child - Peekaboo Daycare & Preschool')
-@section('description', 'Enrol your child at Peekaboo Daycare in Parklands, Cape Town. Simple online application — complete in 10 minutes.')
+@section('title', 'Enrol Your Child — Peekaboo Daycare Parklands, Cape Town | Apply Online')
+@section('description', 'Enrol your child at Peekaboo Daycare & Preschool in Parklands, Cape Town. Simple online application — takes 10 minutes. Accepting applications for 2026. Ages 3 months to Grade R.')
+@section('keywords', 'enrol preschool Parklands 2026, daycare application Cape Town, register child daycare Parklands, enrol kindergarten Cape Town, preschool enrolment Cape Town northside')
+@section('canonical', route('enrol.index'))
+@section('og_title', 'Enrol Your Child — Peekaboo Daycare Parklands, Cape Town')
+@section('og_description', 'Apply online in 10 minutes. Peekaboo Daycare in Parklands, Cape Town is now accepting enrolments for 2026. Ages 3 months to Grade R.')
+
+@push('schema')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "WebPage",
+  "@@id": "{{ route('enrol.index') }}#webpage",
+  "url": "{{ route('enrol.index') }}",
+  "name": "Enrol Your Child — Peekaboo Daycare Parklands, Cape Town",
+  "description": "Enrol your child at Peekaboo Daycare in Parklands, Cape Town. Online application open for 2026.",
+  "isPartOf": {"@@id": "{{ url('/') }}/#website"},
+  "breadcrumb": {
+    "@@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@@type": "ListItem", "position": 1, "name": "Home", "item": "{{ route('home') }}"},
+      {"@@type": "ListItem", "position": 2, "name": "Enrol Now", "item": "{{ route('enrol.index') }}"}
+    ]
+  }
+}
+</script>
+@endpush
 
 @section('content')
 <style>
