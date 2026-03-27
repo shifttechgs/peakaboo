@@ -213,7 +213,7 @@
                         <li><a href="{{ route('enrol.index') }}">Enrol Now</a></li>
                         <li><a href="{{ route('book-tour') }}">Book a Tour</a></li>
                         <li><a href="{{ route('contact') }}">Contact Us</a></li>
-                        <li><a href="{{ route('admin.dashboard') }}">Portal</a></li>
+                        <li><a href="{{ route('admin.dashboard') }}">Staff Login</a></li>
                     </ul>
                 </div>
 

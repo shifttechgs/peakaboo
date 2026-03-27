@@ -399,7 +399,7 @@
   .ed-hero-2-right .ed-hero-thumb-student { left: 10%; }
 }
 .ed-hero-2-right .ed-hero-thumb-student span i {
-  color: var(--it-theme-5);   /* teal */
+  color: var(--color-primary, #0077B6);   /* Peekaboo brand blue */
 }
 .ed-hero-2-right .ed-hero-thumb-courses {
   bottom: auto;

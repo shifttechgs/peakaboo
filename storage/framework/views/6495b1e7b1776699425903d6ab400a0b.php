@@ -213,7 +213,7 @@
                         <li><a href="<?php echo e(route('enrol.index')); ?>">Enrol Now</a></li>
                         <li><a href="<?php echo e(route('book-tour')); ?>">Book a Tour</a></li>
                         <li><a href="<?php echo e(route('contact')); ?>">Contact Us</a></li>
-                        <li><a href="<?php echo e(route('admin.dashboard')); ?>">Portal</a></li>
+                        <li><a href="<?php echo e(route('admin.dashboard')); ?>">Staff Login</a></li>
                     </ul>
                 </div>
 
