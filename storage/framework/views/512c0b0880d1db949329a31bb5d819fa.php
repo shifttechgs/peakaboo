@@ -956,12 +956,112 @@
              data-background="<?php echo e(asset('assets/img/video/bg-4-2.jpg')); ?>">
           <div class="it-video-play-wrap">
             <div class="it-video-play">
-              <a class="popup-video play" href="https://www.youtube.com/watch?v=PO_fBTkoznc">
+              <a class="popup-video play" href="#schoolVideoModal">
                 <i class="fas fa-play"></i>
               </a>
             </div>
           </div>
         </div>
+
+        <!-- Video Modal -->
+        <div id="schoolVideoModal" class="mfp-hide">
+          <div class="peekaboo-video-modal">
+            <button type="button" class="peekaboo-video-close" title="Close">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <video id="schoolVideo" controls playsinline preload="metadata">
+              <source src="<?php echo e(asset('assets/img/school/school_video.mp4')); ?>" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <style>
+          /* ── Premium Video Modal ── */
+          .peekaboo-video-modal {
+            position: relative;
+            width: 90vw;
+            max-width: 960px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: var(--radius-lg, 20px);
+            overflow: hidden;
+            box-shadow: 0 24px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.06);
+          }
+          .peekaboo-video-modal video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: contain;
+            background: #000;
+          }
+
+          /* Close button */
+          .peekaboo-video-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0,0,0,.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .25s, transform .25s;
+          }
+          .peekaboo-video-close:hover {
+            background: var(--color-primary, #0077B6);
+            transform: scale(1.1);
+          }
+
+          /* Override Magnific Popup backdrop for premium feel */
+          .mfp-bg.mfp-ready { opacity: .88 !important; background: #0a0a0a !important; }
+          .mfp-wrap .mfp-content { padding: 20px; }
+          .mfp-container { padding: 0; }
+
+          /* Hide default mfp close button since we have our own */
+          .mfp-inline-holder .mfp-close { display: none !important; }
+
+          /* Mobile */
+          @media (max-width: 575px) {
+            .peekaboo-video-modal { width: 96vw; border-radius: var(--radius-md, 12px); }
+            .peekaboo-video-close { width: 34px; height: 34px; font-size: 15px; top: 8px; right: 8px; }
+          }
+        </style>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            $('.popup-video[href="#schoolVideoModal"]').magnificPopup({
+              type: 'inline',
+              midClick: true,
+              removalDelay: 200,
+              mainClass: 'mfp-fade',
+              callbacks: {
+                open: function() {
+                  var video = document.getElementById('schoolVideo');
+                  video.currentTime = 0;
+                  video.play();
+                },
+                close: function() {
+                  var video = document.getElementById('schoolVideo');
+                  video.pause();
+                  video.currentTime = 0;
+                }
+              }
+            });
+
+            $(document).on('click', '.peekaboo-video-close', function() {
+              $.magnificPopup.close();
+            });
+          });
+        </script>
       </div>
     </div>
   </div>
@@ -972,7 +1072,7 @@
      Layout mirrors Edunity ed-funfact-area / ed-funfact-wrap
      CSS lives in assets/css/edunity-hero.css
 ========================================= -->
-<div class="ed-funfact-area ed-funfact-wrap p-relative pb-90">
+<div class="ed-funfact-area ed-funfact-wrap p-relative pb-90" style="padding-top: 100px;">
 
   <div class="ed-funfact-shape-1 d-none d-xl-block">
     <img src="<?php echo e(asset('assets/img/about/shape-1-5.png')); ?>" alt="">
@@ -1910,6 +2010,117 @@
 
             </div>
         </div>
+
+        <!-- ── Our Classrooms Gallery ── -->
+        <div class="row mt-5 wow itfadeUp" data-wow-delay="0.2s">
+            <div class="col-lg-6 mx-auto text-center mb-4">
+                <span class="pb-daily__sub">See Our Spaces</span>
+                <h3 class="pb-daily__heading" style="font-size:28px;">Inside Our Classrooms</h3>
+            </div>
+        </div>
+
+        <div class="pb-gallery__grid wow itfadeUp" data-wow-delay="0.3s">
+            <?php
+                $schoolPhotos = [
+                    ['src' => 'infant-nurture-room.jpeg',        'alt' => 'Infant nurture room with soft play mats'],
+                    ['src' => 'classroom-numbers-learning.jpeg',  'alt' => 'Numbers and literacy learning classroom'],
+                    ['src' => 'classroom-theme-wall.jpeg',        'alt' => 'Classroom with theme wall and activity tables'],
+                    ['src' => 'classroom-cubbies-activities.jpeg','alt' => 'Classroom with cubbies and group activity tables'],
+                    ['src' => 'classroom-group-learning.jpeg',    'alt' => 'Group learning classroom setup'],
+                    ['src' => 'classroom-creative-arts.jpeg',     'alt' => 'Creative arts and crafts classroom'],
+                    ['src' => 'classroom-sensory-play.jpeg',      'alt' => 'Sensory play area with colourful learning mat'],
+                ];
+            ?>
+
+            <?php $__currentLoopData = $schoolPhotos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $photo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <a href="<?php echo e(asset('assets/img/school/' . $photo['src'])); ?>" class="pb-gallery__item popup-image">
+                    <img src="<?php echo e(asset('assets/img/school/' . $photo['src'])); ?>" alt="<?php echo e($photo['alt']); ?>" loading="lazy">
+                    <div class="pb-gallery__overlay">
+                        <i class="fa-solid fa-magnifying-glass-plus"></i>
+                    </div>
+                </a>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+
+        <style>
+        /* ── School Photo Gallery Grid ── */
+        .pb-gallery__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 260px;
+            gap: 16px;
+        }
+        .pb-gallery__grid .pb-gallery__item:first-child {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        .pb-gallery__item {
+            position: relative;
+            border-radius: var(--radius-lg, 20px);
+            overflow: hidden;
+            display: block;
+        }
+        .pb-gallery__item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .pb-gallery__item:hover img {
+            transform: scale(1.06);
+        }
+        .pb-gallery__overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 119, 182, 0.0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.35s ease;
+        }
+        .pb-gallery__overlay i {
+            color: #fff;
+            font-size: 26px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            text-shadow: 0 2px 8px rgba(0,0,0,.3);
+        }
+        .pb-gallery__item:hover .pb-gallery__overlay {
+            background: rgba(0, 119, 182, 0.35);
+        }
+        .pb-gallery__item:hover .pb-gallery__overlay i {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (max-width: 991px) {
+            .pb-gallery__grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: 220px;
+            }
+        }
+        @media (max-width: 767px) {
+            .pb-gallery__grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 200px;
+                gap: 12px;
+            }
+            .pb-gallery__grid .pb-gallery__item:first-child {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+        }
+        @media (max-width: 480px) {
+            .pb-gallery__grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: 220px;
+            }
+            .pb-gallery__grid .pb-gallery__item:first-child {
+                grid-column: span 1;
+            }
+        }
+        </style>
 
     </div>
 </section>
