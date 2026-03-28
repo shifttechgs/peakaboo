@@ -511,6 +511,12 @@
                 <i class="fas fa-door-open"></i> Parent Portal
             </a> --}}
 
+            <a href="{{ route('admin.payments.index') }}" class="sb-link {{ request()->routeIs('admin.payments.*') ? 'active' : '' }}">
+                <i class="fas fa-credit-card"></i> Payments
+                @php $pendingPopsCount = \App\Models\Payment::pending()->count(); @endphp
+                @if($pendingPopsCount > 0)<span class="sb-count">{{ $pendingPopsCount }}</span>@endif
+            </a>
+
             <div class="sb-heading">Insights</div>
             <a href="{{ route('admin.reports.index') }}" class="sb-link {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
                 <i class="fas fa-chart-bar"></i> Reports

@@ -11,12 +11,6 @@
     border: 1px solid #f0f0f0; overflow: hidden;
     margin-bottom: 20px;
 }
-.app-panel.accent-blue   { border-left: 3px solid #3b82f6; }
-.app-panel.accent-green  { border-left: 3px solid #16a34a; }
-.app-panel.accent-violet { border-left: 3px solid #7c3aed; }
-.app-panel.accent-teal   { border-left: 3px solid #0097a7; }
-.app-panel.accent-amber  { border-left: 3px solid #d97706; }
-.app-panel.accent-red    { border-left: 3px solid #ef4444; }
 .app-panel-header {
     padding: 15px 22px; border-bottom: 1px solid #f3f4f6;
     display: flex; align-items: center; justify-content: space-between;
@@ -38,7 +32,7 @@
 }
 .app-row:last-child { border-bottom: none; }
 .app-row-label {
-    font-size: .74rem; color: #adb5bd; min-width: 130px;
+    font-size: .74rem; color: #adb5bd; min-width: 100px;
     flex-shrink: 0; font-weight: 600;
 }
 .app-row-val {
@@ -190,7 +184,7 @@
 <div class="col-lg-7">
 
     {{-- Programme --}}
-    <div class="app-panel accent-violet">
+    <div class="app-panel">
         <div class="app-panel-header">
             <h6><i class="fas fa-graduation-cap me-2" style="color:#7c3aed;"></i>Programme Selection</h6>
         </div>
@@ -203,7 +197,7 @@
     </div>
 
     {{-- Child --}}
-    <div class="app-panel accent-teal">
+    <div class="app-panel">
         <div class="app-panel-header">
             <h6><i class="fas fa-child me-2" style="color:#0097a7;"></i>Child Information</h6>
         </div>
@@ -234,14 +228,21 @@
     </div>
 
     {{-- Parents --}}
-    <div class="app-panel accent-blue">
+    <div class="app-panel">
         <div class="app-panel-header">
             <h6><i class="fas fa-users me-2" style="color:#3b82f6;"></i>Parent / Guardian Information</h6>
         </div>
         <div class="app-panel-body">
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="app-section-label">Mother / Guardian 1</div>
+            <div class="row g-0">
+                {{-- Mother --}}
+                <div class="{{ $application->father_name ? 'col-md-6' : 'col-12' }}"
+                     style="{{ $application->father_name ? 'border-right:1px solid #f3f4f6;' : '' }} padding-right: {{ $application->father_name ? '20px' : '0' }};">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                        <div style="width:28px;height:28px;border-radius:8px;background:#fdf2f8;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <i class="fas fa-female" style="color:#be185d;font-size:.75rem;"></i>
+                        </div>
+                        <span style="font-size:.67rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#be185d;">Mother / Guardian 1</span>
+                    </div>
                     <div class="app-row"><span class="app-row-label">Full Name</span><span class="app-row-val">{{ $application->mother_name }}</span></div>
                     <div class="app-row"><span class="app-row-label">ID Number</span><span class="app-row-val">{{ $application->formValue('mother_id', '—') }}</span></div>
                     <div class="app-row"><span class="app-row-label">Cell</span><span class="app-row-val"><a href="tel:{{ $application->mother_cell }}">{{ $application->mother_cell }}</a></span></div>
@@ -250,9 +251,16 @@
                     <div class="app-row"><span class="app-row-label">Occupation</span><span class="app-row-val">{{ $application->formValue('mother_occupation') }}</span></div>
                     @endif
                 </div>
+
+                {{-- Father --}}
                 @if($application->father_name)
-                <div class="col-md-6">
-                    <div class="app-section-label">Father / Guardian 2</div>
+                <div class="col-md-6" style="padding-left:20px;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                        <div style="width:28px;height:28px;border-radius:8px;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <i class="fas fa-male" style="color:#1d4ed8;font-size:.75rem;"></i>
+                        </div>
+                        <span style="font-size:.67rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#1d4ed8;">Father / Guardian 2</span>
+                    </div>
                     <div class="app-row"><span class="app-row-label">Full Name</span><span class="app-row-val">{{ $application->father_name }}</span></div>
                     <div class="app-row"><span class="app-row-label">ID Number</span><span class="app-row-val">{{ $application->formValue('father_id', '—') }}</span></div>
                     @if($application->father_cell)
@@ -349,7 +357,7 @@
 <div class="col-lg-5">
 
     {{-- Status + Timeline + Actions --}}
-    <div class="app-panel accent-violet">
+    <div class="app-panel">
         <div class="app-panel-header">
             <h6><i class="fas fa-tag me-2" style="color:#7c3aed;"></i>Application Status</h6>
             <span class="app-status-pill" style="background:{{ $stBg }};color:{{ $stClr }};">{{ $application->statusLabel() }}</span>
@@ -437,7 +445,7 @@
         $srcMap = ['google'=>['#fee2e2','#ef4444'],'facebook'=>['#dbeafe','#3b82f6'],'instagram'=>['#fef3c7','#d97706'],'referral'=>['#dcfce7','#16a34a'],'other'=>['#f3f4f6','#6c757d']];
         [$sBg,$sClr] = $srcMap[$lead->source] ?? ['#f3f4f6','#6c757d'];
     @endphp
-    <div class="app-panel accent-green">
+    <div class="app-panel">
         <div class="app-panel-header">
             <h6><i class="fas fa-funnel-dollar me-2" style="color:#16a34a;"></i>Originated from Lead Pipeline</h6>
             <span style="font-size:.68rem;font-weight:700;border-radius:20px;padding:2px 9px;background:{{ $ldBg }};color:{{ $ldClr }};">
@@ -471,7 +479,14 @@
     <div class="app-panel">
         <div class="app-panel-header">
             <h6><i class="fas fa-folder-open me-2" style="color:#d97706;"></i>Documents</h6>
-            @php $dc = $application->documentsCount(); @endphp
+            @php
+                // Merge child record docs over application docs so parent-portal uploads are visible
+                $effectiveDocs = array_merge(
+                    $application->documents ?? [],
+                    $application->child?->documents ?? []
+                );
+                $dc = count(array_filter($effectiveDocs));
+            @endphp
             <span style="font-size:.72rem;font-weight:700;color:{{ $dc >= 3 ? '#16a34a' : ($dc > 0 ? '#d97706' : '#ef4444') }};">{{ $dc }}/4 uploaded</span>
         </div>
         <div class="app-panel-body">
@@ -486,7 +501,7 @@
             @endphp
             @foreach($docTypes as $type => $meta)
             @php
-                $exists = $type === 'pdf' ? (bool)$application->pdf_path : $application->hasDocument($type);
+                $exists = $type === 'pdf' ? (bool)$application->pdf_path : !empty($effectiveDocs[$type]);
             @endphp
             @if($exists)
             <a href="{{ route('admin.admissions.document', [$application->id, $type]) }}"
@@ -513,7 +528,7 @@
     </div>
 
     {{-- Internal Notes --}}
-    <div class="app-panel accent-amber">
+    <div class="app-panel">
         <div class="app-panel-header">
             <h6><i class="fas fa-sticky-note me-2" style="color:#d97706;"></i>Internal Notes</h6>
         </div>

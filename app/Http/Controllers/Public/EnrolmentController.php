@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class EnrolmentController extends Controller
@@ -190,11 +191,14 @@ class EnrolmentController extends Controller
             $nextNum       = Application::whereYear('created_at', $year)->lockForUpdate()->count() + 1;
             $applicationId = 'APP-' . $year . '-' . str_pad($nextNum, 3, '0', STR_PAD_LEFT);
 
-            // Rename the temp upload directory to the real application reference
+            // Move the temp upload directory to the real application reference.
+            // rename() fails on Windows when files inside still have open handles (e.g. DomPDF),
+            // so we copy-then-delete instead.
             $oldDir = storage_path('app/public/enrolments/' . $tempId);
             $newDir = storage_path('app/public/enrolments/' . $applicationId);
-            if (file_exists($oldDir)) {
-                rename($oldDir, $newDir);
+            if (File::exists($oldDir)) {
+                File::copyDirectory($oldDir, $newDir);
+                File::deleteDirectory($oldDir);
             }
 
             // Update document paths to use the real applicationId

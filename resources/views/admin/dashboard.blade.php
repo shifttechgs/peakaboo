@@ -245,6 +245,7 @@
     </div>
 </div>
 
+
 {{-- ════════════════════════════════════════════════════════════════════════
      OVERVIEW BAR — one unified strip: Leads pipeline + Enrolment counts
      ════════════════════════════════════════════════════════════════════════ --}}
@@ -502,7 +503,7 @@
 
 {{-- ── Row 2: Applications | Class Capacity ───────────────────────────── --}}
 <div class="row g-4">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
         <div class="panel h-100">
             <div class="panel-header">
                 <h6>
@@ -586,39 +587,39 @@
     </div>
 
     {{-- Class Capacity --}}
-    <div class="col-lg-4">
-        <div class="panel h-100">
-            <div class="panel-header">
-                <h6><i class="fas fa-school me-2" style="color:#0077B6;"></i>Class Capacity</h6>
-            </div>
-            <div class="panel-body">
-                @foreach($classes as $class)
-                @php
-                    $pct      = $class['capacity'] > 0 ? round(($class['enrolled']/$class['capacity'])*100) : 0;
-                    $barColor = $pct >= 100 ? '#ef4444' : ($pct >= 85 ? '#d97706' : '#16a34a');
-                    $bgColor  = $pct >= 100 ? '#fff0f0' : ($pct >= 85 ? '#fffbeb' : '#f0fdf4');
-                @endphp
-                <div class="cap-row">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <span class="fw-semibold" style="font-size:.84rem;color:#1a1f2e;">{{ $class['name'] }}</span>
-                        <span style="font-size:.76rem;font-weight:700;color:{{ $barColor }};">{{ $class['enrolled'] }}/{{ $class['capacity'] }}</span>
-                    </div>
-                    <div style="background:#f3f4f6;border-radius:6px;height:7px;overflow:hidden;">
-                        <div style="width:{{ $pct }}%;height:7px;border-radius:6px;background:{{ $barColor }};transition:width .4s;"></div>
-                    </div>
-                    <div class="mt-1">
-                        <span class="rounded-pill px-2" style="background:{{ $bgColor }};color:{{ $barColor }};font-size:.7rem;font-weight:600;">
-                            @if($pct >= 100) Full — waitlist only
-                            @elseif($pct >= 85) {{ $class['capacity']-$class['enrolled'] }} spot(s) left
-                            @else {{ $class['capacity']-$class['enrolled'] }} open
-                            @endif
-                        </span>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
+{{--    <div class="col-lg-4">--}}
+{{--        <div class="panel h-100">--}}
+{{--            <div class="panel-header">--}}
+{{--                <h6><i class="fas fa-school me-2" style="color:#0077B6;"></i>Class Capacity</h6>--}}
+{{--            </div>--}}
+{{--            <div class="panel-body">--}}
+{{--                @foreach($classes as $class)--}}
+{{--                @php--}}
+{{--                    $pct      = $class['capacity'] > 0 ? round(($class['enrolled']/$class['capacity'])*100) : 0;--}}
+{{--                    $barColor = $pct >= 100 ? '#ef4444' : ($pct >= 85 ? '#d97706' : '#16a34a');--}}
+{{--                    $bgColor  = $pct >= 100 ? '#fff0f0' : ($pct >= 85 ? '#fffbeb' : '#f0fdf4');--}}
+{{--                @endphp--}}
+{{--                <div class="cap-row">--}}
+{{--                    <div class="d-flex justify-content-between align-items-center mb-1">--}}
+{{--                        <span class="fw-semibold" style="font-size:.84rem;color:#1a1f2e;">{{ $class['name'] }}</span>--}}
+{{--                        <span style="font-size:.76rem;font-weight:700;color:{{ $barColor }};">{{ $class['enrolled'] }}/{{ $class['capacity'] }}</span>--}}
+{{--                    </div>--}}
+{{--                    <div style="background:#f3f4f6;border-radius:6px;height:7px;overflow:hidden;">--}}
+{{--                        <div style="width:{{ $pct }}%;height:7px;border-radius:6px;background:{{ $barColor }};transition:width .4s;"></div>--}}
+{{--                    </div>--}}
+{{--                    <div class="mt-1">--}}
+{{--                        <span class="rounded-pill px-2" style="background:{{ $bgColor }};color:{{ $barColor }};font-size:.7rem;font-weight:600;">--}}
+{{--                            @if($pct >= 100) Full — waitlist only--}}
+{{--                            @elseif($pct >= 85) {{ $class['capacity']-$class['enrolled'] }} spot(s) left--}}
+{{--                            @else {{ $class['capacity']-$class['enrolled'] }} open--}}
+{{--                            @endif--}}
+{{--                        </span>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                @endforeach--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 </div>
 
 @push('scripts')

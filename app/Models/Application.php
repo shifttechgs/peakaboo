@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -44,7 +45,7 @@ class Application extends Model
         'form_data', 'documents', 'pdf_path',
         'lead_id', 'admin_notes',
         'reviewed_at', 'approved_at', 'rejected_at', 'invited_at',
-        'parent_user_id', 'child_user_id',
+        'parent_user_id', 'child_user_id', 'child_id',
     ];
 
     protected $casts = [
@@ -62,6 +63,11 @@ class Application extends Model
     public function lead(): BelongsTo
     {
         return $this->belongsTo(Lead::class);
+    }
+
+    public function child(): BelongsTo
+    {
+        return $this->belongsTo(Child::class);
     }
 
     public function parentUser(): BelongsTo

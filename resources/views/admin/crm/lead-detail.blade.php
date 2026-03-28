@@ -30,13 +30,6 @@
 .ld-panel-header h6 { margin: 0; font-weight: 700; font-size: .9rem; color: #1a1f2e; }
 .ld-panel-body { padding: 22px; }
 
-/* accent left-border variant */
-.ld-panel.accent-blue   { border-left: 3px solid #3b82f6; }
-.ld-panel.accent-green  { border-left: 3px solid #16a34a; }
-.ld-panel.accent-amber  { border-left: 3px solid #d97706; }
-.ld-panel.accent-teal   { border-left: 3px solid #0097a7; }
-.ld-panel.accent-red    { border-left: 3px solid #ef4444; }
-.ld-panel.accent-violet { border-left: 3px solid #7c3aed; }
 
 /* ── Field grid inside info panels ─────────────────────────────────── */
 .ld-field-label {
@@ -454,7 +447,7 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
     <div class="col-lg-5">
 
         {{-- ── Status ────────────────────────────────────────────────── --}}
-        <div class="ld-panel accent-blue">
+        <div class="ld-panel">
             <div class="ld-panel-header">
                 <h6><i class="fas fa-tag me-2" style="color:#3b82f6;"></i>Update Status</h6>
             </div>
@@ -481,7 +474,7 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
         {{-- ── Linked Enrolment ──────────────────────────────────────── --}}
         @if($lead->application)
         @php $app = $lead->application; @endphp
-        <div class="ld-panel accent-green">
+        <div class="ld-panel">
             <div class="ld-panel-header">
                 <h6><i class="fas fa-file-alt me-2" style="color:#16a34a;"></i>Enrolment Application</h6>
                 @php
@@ -521,7 +514,7 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
             </div>
         </div>
         @elseif($lead->status === 'converted')
-        <div class="ld-panel accent-amber">
+        <div class="ld-panel">
             <div class="ld-panel-header">
                 <h6><i class="fas fa-file-alt me-2" style="color:#d97706;"></i>Enrolment Application</h6>
             </div>
@@ -570,7 +563,7 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
         </div>
 
         {{-- ── Follow-up Date ─────────────────────────────────────────── --}}
-        <div class="ld-panel {{ $lead->isFollowUpDue() ? 'accent-red' : 'accent-amber' }}">
+        <div class="ld-panel">
             <div class="ld-panel-header">
                 <h6>
                     <i class="fas fa-calendar-alt me-2" style="color:#d97706;"></i>Follow-up Date
@@ -603,7 +596,7 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
 
         {{-- ── First Contact (New only) ───────────────────────────────── --}}
         @if($lead->status === 'new')
-        <div class="ld-panel accent-blue">
+        <div class="ld-panel">
             <div class="ld-panel-header">
                 <h6><i class="fas fa-phone-alt me-2" style="color:#3b82f6;"></i>First Contact</h6>
             </div>
@@ -623,7 +616,7 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
 
         {{-- ── Tour Actions ───────────────────────────────────────────── --}}
         @if(in_array($lead->status, ['contacted', 'new', 'tour_scheduled']))
-        <div class="ld-panel accent-teal">
+        <div class="ld-panel">
             <div class="ld-panel-header">
                 <h6><i class="fas fa-calendar-check me-2" style="color:#0097a7;"></i>Tour Actions</h6>
             </div>
@@ -672,7 +665,7 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
 
         {{-- ── Post-Tour Actions ──────────────────────────────────────── --}}
         @if($lead->status === 'tour_completed')
-        <div class="ld-panel accent-green">
+        <div class="ld-panel">
             <div class="ld-panel-header">
                 <h6><i class="fas fa-graduation-cap me-2" style="color:#16a34a;"></i>Post-Tour Actions</h6>
             </div>
@@ -704,7 +697,7 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
 
         {{-- ── Mark as Lost ───────────────────────────────────────────── --}}
         @if(!in_array($lead->status, ['lost', 'converted']))
-        <div class="ld-panel accent-red">
+        <div class="ld-panel">
             <div class="ld-panel-header">
                 <h6><i class="fas fa-times-circle me-2" style="color:#ef4444;"></i>Mark as Lost</h6>
             </div>
@@ -721,7 +714,7 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
 
         {{-- ── Lost Reason (if lost) ──────────────────────────────────── --}}
         @if($lead->status === 'lost' && $lead->lost_reason)
-        <div class="ld-panel accent-red">
+        <div class="ld-panel">
             <div class="ld-panel-body">
                 <div class="ld-field-label">Lost Reason</div>
                 <div class="ld-field-val" style="color:#ef4444;">

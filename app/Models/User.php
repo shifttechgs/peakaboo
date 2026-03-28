@@ -45,6 +45,12 @@ class User extends Authenticatable
         return $this->hasMany(Application::class, 'child_user_id');
     }
 
+    /** Proof-of-payment submissions by this parent. */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class, 'parent_user_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Parent;
 use App\Http\Controllers\Controller;
 use App\Data\MockData;
 use App\Models\Application;
+use App\Models\Child;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,70 +31,130 @@ class PortalController extends Controller
     {
         $apps = $apps ?? $this->parentApplications();
         return $apps->map(function ($app) {
+            // Prefer data from the canonical Child record when available
+            $childRecord = $app->child;
+
             return [
+                // Identity
                 'id'               => $app->id,
+                'child_id'         => $childRecord?->id,
+                'child_number'     => $childRecord?->child_number,          // PBK-SJS-0001
                 'name'             => $app->child_name,
                 'full_name'        => $app->child_name,
+                'nickname'         => $app->child_nickname,
                 'dob'              => $app->child_dob?->format('d M Y') ?? '—',
                 'dob_raw'          => $app->child_dob,
                 'age'              => $app->child_dob ? $app->child_dob->age . ' yrs' : '—',
+                'age_years'        => $app->child_dob ? $app->child_dob->age : null,
                 'gender'           => ucfirst($app->child_gender ?? '—'),
+                'id_number'        => $app->child_id_number,
+                'language'         => $app->child_language,
+
+                // Enrolment
                 'program'          => $app->program_name ?? '—',
                 'program_slug'     => $app->program,
                 'fee_option'       => $app->fee_option_name ?? $app->fee_option ?? '—',
                 'snack_box'        => $app->snack_box,
-                'reference'        => $app->reference,
+                'reference'        => $app->reference,                      // APP-2026-001 (admin/CRM use)
                 'status'           => $app->status,
                 'status_label'     => $app->statusLabel(),
                 'start_date'       => $app->start_date?->format('d M Y'),
                 'enrolled_date'    => $app->approved_at?->format('d M Y') ?? $app->created_at->format('d M Y'),
-                'teacher'          => $this->teacherForProgram($app->program),
-                'attendance_today' => 'Present',
-                'attendance_rate'  => '95%',
-                'days_this_month'  => now()->day > 1 ? now()->day - 1 : 0,
-                'absent_days'      => 1,
-                'allergies'        => $app->formValue('medical_allergies', 'None listed'),
-                'medical_notes'    => $app->formValue('medical_conditions', ''),
-                'documents'        => $app->documents ?? [],
+                'applied_date'     => $app->created_at->format('d M Y'),
+
+                // Parent contacts
+                'mother_name'      => $app->mother_name,
+                'mother_email'     => $app->mother_email,
+                'mother_cell'      => $app->mother_cell,
+                'father_name'      => $app->father_name,
+                'father_email'     => $app->father_email,
+                'father_cell'      => $app->father_cell,
+
+                // Medical
+                'allergies'        => $app->formValue('medical_allergies', null),
+                'medical_notes'    => $app->formValue('medical_conditions', null),
+
+                // Documents — prefer child record docs, fall back to application docs
+                'documents'        => $childRecord?->documents ?? $app->documents ?? [],
+
+                // Raw models
                 'application'      => $app,
+                'child_record'     => $childRecord,
             ];
         });
-    }
-
-    private function teacherForProgram(?string $program): string
-    {
-        return match ($program) {
-            'baby-room' => 'Michelle Peters',
-            'toddlers'  => 'Nomsa Dlamini',
-            'preschool' => 'Thandi Nkosi',
-            'grade-r'   => 'Lisa Thompson',
-            default     => 'TBA',
-        };
     }
 
     private function feeSummary($apps)
     {
         $totalMonthly = 0;
+        $feeLines     = [];
+
         foreach ($apps as $app) {
             if ($app->status === 'approved') {
-                $fee = match ($app->fee_option) {
+                $baseFee = match ($app->fee_option) {
                     'half-day', 'Half Day' => 3800,
                     default                => 4200,
                 };
+
+                // child_number is the bank EFT reference; fall back to APP ref for pending
+                $payRef = $app->child?->child_number ?? $app->reference;
+
+                // Programme fee line
+                $feeLines[] = [
+                    'child'        => $app->child_name,
+                    'child_number' => $payRef,
+                    'reference'    => $payRef,
+                    'desc'         => ($app->fee_option_name ?? $app->fee_option) . ' — ' . ($app->program_name ?? $app->program),
+                    'amount'       => $baseFee,
+                ];
+
+                // Snack box add-on line (only if enrolled)
                 if ($app->snack_box) {
-                    $fee += 400;
+                    $feeLines[] = [
+                        'child'        => $app->child_name,
+                        'child_number' => $payRef,
+                        'reference'    => $payRef,
+                        'desc'         => 'Snack Box — ' . $app->child_name,
+                        'amount'       => 400,
+                    ];
                 }
-                $totalMonthly += $fee;
+
+                $totalMonthly += $baseFee + ($app->snack_box ? 400 : 0);
             }
         }
+
+        // ── Real payment data ──────────────────────────────────────────────
+        $currentMonth = now()->format('Y-m');
+
+        // Verified payments this month
+        $verifiedThisMonth = Payment::forParent(Auth::id())
+            ->verified()
+            ->where('month_year', $currentMonth)
+            ->sum('amount');
+
+        // Balance = what's owed this month minus what's been verified
+        $balance = max(0, $totalMonthly - $verifiedThisMonth);
+
+        // Most recent verified payment (any month)
+        $lastPayment = Payment::forParent(Auth::id())
+            ->verified()
+            ->latest('payment_date')
+            ->first();
+
+        // Pending POP count (parent can see their submission is in review)
+        $pendingPop = Payment::forParent(Auth::id())
+            ->pending()
+            ->count();
 
         $nextDue = now()->copy()->startOfMonth()->addMonth();
 
         return [
             'monthly_fee'       => $totalMonthly,
-            'last_payment'      => $totalMonthly,
-            'last_payment_date' => now()->subMonth()->startOfMonth()->addDays(4)->format('d M Y'),
-            'balance'           => 0,
+            'fee_lines'         => $feeLines,
+            'last_payment'      => $lastPayment ? (float) $lastPayment->amount : 0,
+            'last_payment_date' => $lastPayment ? $lastPayment->payment_date->format('d M Y') : null,
+            'balance'           => $balance,
+            'pending_pop'       => $pendingPop,
             'next_due'          => $nextDue->format('d M Y'),
             'next_due_days'     => (int) now()->diffInDays($nextDue, false),
         ];
@@ -142,6 +204,27 @@ class PortalController extends Controller
                 'action'  => route('parent.children'),
                 'action_label' => 'View Applications',
             ]);
+        }
+
+        // Check for missing required documents — use child record when available (more up-to-date)
+        foreach ($apps as $app) {
+            $uploaded = array_merge($app->documents ?? [], $app->child?->documents ?? []);
+            $missing  = [];
+            foreach (self::REQUIRED_DOCS as $key => $label) {
+                if (empty($uploaded[$key])) {
+                    $missing[] = $label;
+                }
+            }
+            if (!empty($missing)) {
+                $attentionItems->push([
+                    'type'         => 'danger',
+                    'icon'         => 'fa-file-upload',
+                    'title'        => 'Missing Documents — ' . $app->child_name,
+                    'message'      => 'Please upload the following required document(s): ' . implode(', ', $missing) . '.',
+                    'action'       => route('parent.documents'),
+                    'action_label' => 'Upload Now',
+                ]);
+            }
         }
 
         $announcements = MockData::announcements();
@@ -227,26 +310,90 @@ class PortalController extends Controller
 
     public function fees()
     {
-        $apps = $this->parentApplications();
+        $apps     = $this->parentApplications();
+        $children = $this->childrenFromApps($apps);
+
+        // Build per-child fee breakdown from real application data
+        $feeLines = $apps->map(function ($app) {
+            $base = match ($app->fee_option) {
+                'half-day', 'Half Day' => 3800,
+                default                => 4200,
+            };
+            return [
+                'name'        => $app->child_name,
+                'program'     => $app->program_name ?? $app->program,
+                'fee_option'  => $app->fee_option_name ?? $app->fee_option,
+                'base_fee'    => $base,
+                'snack_box'   => $app->snack_box,
+                'snack_fee'   => $app->snack_box ? 400 : 0,
+                'total'       => $base + ($app->snack_box ? 400 : 0),
+                'status'      => $app->status,
+            ];
+        });
+
         return view('parent.fees', [
-            'children' => $this->childrenFromApps($apps),
-            'payments' => MockData::payments(),
+            'children'   => $children,
+            'feeLines'   => $feeLines,
+            'feeSummary' => $this->feeSummary($apps),
         ]);
     }
 
     public function statements()
     {
         $apps = $this->parentApplications();
+
+        // Real payments for this parent — last 3 months, newest first
+        $payments = Payment::forParent(Auth::id())
+            ->whereIn('month_year', [
+                now()->format('Y-m'),
+                now()->subMonth()->format('Y-m'),
+                now()->subMonths(2)->format('Y-m'),
+            ])
+            ->orderByDesc('payment_date')
+            ->orderByDesc('created_at')
+            ->get();
+
         return view('parent.statements', [
             'children'       => $this->childrenFromApps($apps),
             'accountSummary' => $this->feeSummary($apps),
-            'paymentHistory' => [],
+            'payments'       => $payments,
         ]);
     }
 
-    public function uploadPop()
+    public function uploadPop(Request $request)
     {
-        return redirect()->route('parent.fees')->with('success', 'Proof of payment uploaded successfully.');
+        $request->validate([
+            'amount'    => 'required|numeric|min:1',
+            'date'      => 'required|date',
+            'reference' => 'required|string|max:100',
+            'pop_file'  => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ]);
+
+        $user = $this->parentUser();
+        $path = $request->file('pop_file')->store(
+            'proof-of-payments/' . $user->id,
+            'public'
+        );
+
+        // Resolve the child/application for this parent
+        $approvedApp = $this->parentApplications()
+            ->where('status', 'approved')
+            ->first();
+
+        Payment::create([
+            'parent_user_id' => $user->id,
+            'child_id'       => $approvedApp?->child_id,
+            'application_id' => $approvedApp?->id,
+            'amount'         => $request->amount,
+            'payment_date'   => $request->date,
+            'reference'      => $request->reference,
+            'month_year'     => \Carbon\Carbon::parse($request->date)->format('Y-m'),
+            'pop_path'       => $path,
+            'status'         => 'pending',
+        ]);
+
+        return redirect()->route('parent.fees.statements')
+            ->with('success', 'Proof of payment submitted. We will verify and update your account within 1–2 business days.');
     }
 
     // ─── Messages ──────────────────────────────────────────────────────────
@@ -318,6 +465,17 @@ class PortalController extends Controller
     {
         $user = $this->parentUser();
 
+        // Password change flow
+        if ($request->filled('current_password')) {
+            $request->validate([
+                'current_password'      => ['required', 'current_password'],
+                'password'              => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+            $user->update(['password' => bcrypt($request->password)]);
+            return redirect()->route('parent.profile')->with('success', 'Password updated successfully.');
+        }
+
+        // Profile details flow
         $request->validate([
             'name'  => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
@@ -331,47 +489,84 @@ class PortalController extends Controller
 
     // ─── Document Vault ────────────────────────────────────────────────────
 
+    const REQUIRED_DOCS = [
+        'birth_certificate' => 'Birth Certificate',
+        'clinic_card'       => 'Clinic / Immunisation Card',
+        'parent_ids'        => 'Parent ID Document',
+        'proof_address'     => 'Proof of Address',
+    ];
+
     public function documents()
     {
         $apps = $this->parentApplications();
         $children = $this->childrenFromApps($apps);
 
-        $allDocuments = [];
+        // Build per-child document checklist
+        $childDocs = [];
         foreach ($apps as $app) {
-            $docs = $app->documents ?? [];
-            foreach ($docs as $type => $path) {
-                if ($path) {
-                    $allDocuments[] = [
-                        'child_name'  => $app->child_name,
-                        'app_id'      => $app->id,
-                        'reference'   => $app->reference,
-                        'type'        => $type,
-                        'label'       => $this->documentLabel($type),
-                        'path'        => $path,
-                        'uploaded_at' => $app->updated_at->format('d M Y'),
-                    ];
-                }
+            // Prefer documents from the canonical child record; fall back to application
+            $docSource = $app->child ?? $app;
+            $uploaded  = $docSource->documents ?? [];
+            $docs = [];
+            foreach (self::REQUIRED_DOCS as $type => $label) {
+                $path = $uploaded[$type] ?? null;
+                $docs[] = [
+                    'type'        => $type,
+                    'label'       => $label,
+                    'path'        => $path,
+                    'uploaded'    => (bool) $path,
+                    'uploaded_at' => $path ? $docSource->updated_at->format('d M Y') : null,
+                    'ext'         => $path ? strtolower(pathinfo($path, PATHINFO_EXTENSION)) : null,
+                ];
             }
+            $childDocs[] = [
+                'app_id'       => $app->id,
+                'child_id'     => $app->child_id,
+                'child_name'   => $app->child_name,
+                'child_number' => $app->child?->child_number,
+                'reference'    => $app->reference,
+                'docs'         => $docs,
+                'uploaded'     => collect($docs)->where('uploaded', true)->count(),
+                'total'        => count($docs),
+            ];
         }
 
         return view('parent.documents', [
             'children'  => $children,
-            'documents' => $allDocuments,
+            'childDocs' => $childDocs,
         ]);
     }
 
-    private function documentLabel(string $type): string
+    public function uploadDocument(Request $request)
     {
-        return match ($type) {
-            'birth_certificate'   => 'Birth Certificate',
-            'clinic_card'         => 'Clinic / Immunisation Card',
-            'medical_certificate' => 'Medical Certificate',
-            'id_document'         => 'Parent ID Document',
-            'proof_of_residence'  => 'Proof of Residence',
-            'school_report'       => 'Previous School Report',
-            'transfer_letter'     => 'Transfer Letter',
-            default               => ucfirst(str_replace('_', ' ', $type)),
-        };
+        $request->validate([
+            'app_id'   => 'required|integer',
+            'doc_type' => 'required|string|in:' . implode(',', array_keys(self::REQUIRED_DOCS)),
+            'file'     => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ]);
+
+        $app = Application::where('parent_user_id', Auth::id())
+            ->findOrFail($request->app_id);
+
+        $folder = $app->child?->child_number ?? $app->reference;
+        $path = $request->file('file')->store(
+            'enrolments/' . $folder,
+            'public'
+        );
+
+        // Save to canonical child record when available; also keep on application
+        if ($app->child) {
+            $documents = $app->child->documents ?? [];
+            $documents[$request->doc_type] = $path;
+            $app->child->update(['documents' => $documents]);
+        } else {
+            $documents = $app->documents ?? [];
+            $documents[$request->doc_type] = $path;
+            $app->update(['documents' => $documents]);
+        }
+
+        return redirect()->route('parent.documents')
+            ->with('success', self::REQUIRED_DOCS[$request->doc_type] . ' uploaded successfully.');
     }
 
     // ─── School Reports ────────────────────────────────────────────────────
@@ -388,7 +583,7 @@ class PortalController extends Controller
                     'child_name' => $child['name'],
                     'term'       => 'Term 1, 2026',
                     'date'       => '24 Mar 2026',
-                    'teacher'    => $child['teacher'],
+                    'teacher'    => 'TBA',
                     'program'    => $child['program'],
                     'comment'    => $child['name'] . ' is settling in well and making great progress across all learning areas.',
                     'areas'      => [

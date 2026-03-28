@@ -14,7 +14,7 @@ class AdminUserSeeder extends Seeder
             ['email' => env('ADMIN_EMAIL', 'admin@peekaboo.co.za')],
             [
                 'name'     => 'Peekaboo Admin',
-                'password' => Hash::make(env('ADMIN_PASSWORD', 'changeme123!')),
+                'password' => Hash::make(env('ADMIN_PASSWORD', 'changeme124!')),
             ]
         );
 

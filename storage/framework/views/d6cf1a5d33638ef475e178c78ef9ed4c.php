@@ -244,6 +244,7 @@
 </div>
 
 
+
 <?php
     $convRate  = $pipeline['total'] > 0 ? round(($pipeline['converted'] / $pipeline['total']) * 100) : 0;
     $totalApps = array_sum($enrolmentStats);
@@ -500,7 +501,7 @@
 
 
 <div class="row g-4">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
         <div class="panel h-100">
             <div class="panel-header">
                 <h6>
@@ -585,39 +586,35 @@
     </div>
 
     
-    <div class="col-lg-4">
-        <div class="panel h-100">
-            <div class="panel-header">
-                <h6><i class="fas fa-school me-2" style="color:#0077B6;"></i>Class Capacity</h6>
-            </div>
-            <div class="panel-body">
-                <?php $__currentLoopData = $classes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php
-                    $pct      = $class['capacity'] > 0 ? round(($class['enrolled']/$class['capacity'])*100) : 0;
-                    $barColor = $pct >= 100 ? '#ef4444' : ($pct >= 85 ? '#d97706' : '#16a34a');
-                    $bgColor  = $pct >= 100 ? '#fff0f0' : ($pct >= 85 ? '#fffbeb' : '#f0fdf4');
-                ?>
-                <div class="cap-row">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <span class="fw-semibold" style="font-size:.84rem;color:#1a1f2e;"><?php echo e($class['name']); ?></span>
-                        <span style="font-size:.76rem;font-weight:700;color:<?php echo e($barColor); ?>;"><?php echo e($class['enrolled']); ?>/<?php echo e($class['capacity']); ?></span>
-                    </div>
-                    <div style="background:#f3f4f6;border-radius:6px;height:7px;overflow:hidden;">
-                        <div style="width:<?php echo e($pct); ?>%;height:7px;border-radius:6px;background:<?php echo e($barColor); ?>;transition:width .4s;"></div>
-                    </div>
-                    <div class="mt-1">
-                        <span class="rounded-pill px-2" style="background:<?php echo e($bgColor); ?>;color:<?php echo e($barColor); ?>;font-size:.7rem;font-weight:600;">
-                            <?php if($pct >= 100): ?> Full — waitlist only
-                            <?php elseif($pct >= 85): ?> <?php echo e($class['capacity']-$class['enrolled']); ?> spot(s) left
-                            <?php else: ?> <?php echo e($class['capacity']-$class['enrolled']); ?> open
-                            <?php endif; ?>
-                        </span>
-                    </div>
-                </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
-        </div>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
 <?php $__env->startPush('scripts'); ?>

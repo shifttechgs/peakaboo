@@ -9,11 +9,6 @@
     box-shadow: 0 1px 8px rgba(0,0,0,.07);
     border: 1px solid #f0f0f0; overflow: hidden; margin-bottom: 20px;
 }
-.cd-panel.accent-green  { border-left: 3px solid #16a34a; }
-.cd-panel.accent-blue   { border-left: 3px solid #3b82f6; }
-.cd-panel.accent-violet { border-left: 3px solid #7c3aed; }
-.cd-panel.accent-teal   { border-left: 3px solid #0097a7; }
-.cd-panel.accent-amber  { border-left: 3px solid #d97706; }
 .cd-panel-header {
     padding: 15px 22px; border-bottom: 1px solid #f3f4f6;
     display: flex; align-items: center; justify-content: space-between;
@@ -119,7 +114,7 @@
     <div class="col-lg-7">
 
         {{-- Child Details --}}
-        <div class="cd-panel accent-green">
+        <div class="cd-panel">
             <div class="cd-panel-header">
                 <h6><i class="fas fa-child me-2" style="color:#16a34a;"></i>Child Details</h6>
             </div>
@@ -201,7 +196,7 @@
 
         {{-- Enrolment Application --}}
         @if($latestApp)
-        <div class="cd-panel accent-violet">
+        <div class="cd-panel">
             <div class="cd-panel-header">
                 <h6><i class="fas fa-file-alt me-2" style="color:#7c3aed;"></i>Enrolment Application</h6>
                 <a href="{{ route('admin.admissions.show', $latestApp->id) }}"
@@ -246,7 +241,7 @@
     <div class="col-lg-5">
 
         {{-- Parent / Guardian --}}
-        <div class="cd-panel accent-blue">
+        <div class="cd-panel">
             <div class="cd-panel-header">
                 <h6><i class="fas fa-user me-2" style="color:#3b82f6;"></i>Parent / Guardian</h6>
                 @if($parent)
@@ -333,7 +328,7 @@
         </div>
 
         {{-- Actions --}}
-        <div class="cd-panel accent-teal">
+        <div class="cd-panel">
             <div class="cd-panel-header">
                 <h6><i class="fas fa-bolt me-2" style="color:#0097a7;"></i>Actions</h6>
             </div>

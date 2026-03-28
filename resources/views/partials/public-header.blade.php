@@ -73,6 +73,26 @@
                style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:transparent;color:#0077B6;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #0077B6;">
                 <i class="fa-regular fa-calendar-check"></i> Book a Tour
             </a>
+            @auth
+                @php
+                    $mobilePortalUrl = match(true) {
+                        auth()->user()->hasRole('super_admin') => route('admin.dashboard'),
+                        auth()->user()->hasRole('admin')       => route('admin.dashboard'),
+                        auth()->user()->hasRole('teacher')     => route('teacher.dashboard'),
+                        auth()->user()->hasRole('child')       => route('child.dashboard'),
+                        default                                => route('parent.dashboard'),
+                    };
+                @endphp
+                <a href="{{ $mobilePortalUrl }}"
+                   style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:#f0f9ff;color:#0077B6;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #bae6fd;">
+                    <i class="fas fa-th-large"></i> My Portal
+                </a>
+            @else
+                <a href="{{ route('login') }}"
+                   style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:#f0f9ff;color:#0077B6;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #bae6fd;">
+                    <i class="fas fa-sign-in-alt"></i> Portal Login
+                </a>
+            @endauth
         </div>
 
         <div class="px-20 py-20">
@@ -221,9 +241,27 @@
                     </div>
                     <div class="col-auto">
                         <div class="vs-header__action">
-                            <div class="d-none d-xl-inline-flex gap-2">
+                            <div class="d-none d-xl-inline-flex gap-2 align-items-center">
                                 <a href="{{ route('book-tour') }}" class="pb-header-btn pb-header-btn--outline">Book a Tour</a>
                                 <a href="{{ route('enrol.index') }}" class="pb-header-btn pb-header-btn--primary">Enrol Now</a>
+                                @auth
+                                    @php
+                                        $portalUrl = match(true) {
+                                            auth()->user()->hasRole('super_admin') => route('admin.dashboard'),
+                                            auth()->user()->hasRole('admin')       => route('admin.dashboard'),
+                                            auth()->user()->hasRole('teacher')     => route('teacher.dashboard'),
+                                            auth()->user()->hasRole('child')       => route('child.dashboard'),
+                                            default                                => route('parent.dashboard'),
+                                        };
+                                    @endphp
+                                    <a href="{{ $portalUrl }}" class="pb-header-btn pb-header-btn--portal">
+                                        <i class="fas fa-th-large me-1" style="font-size:13px;"></i> Portal
+                                    </a>
+                                @else
+                                    <a href="{{ route('login') }}" class="pb-header-btn pb-header-btn--portal">
+                                        <i class="fas fa-sign-in-alt me-1" style="font-size:13px;"></i> Portal
+                                    </a>
+                                @endauth
                             </div>
 {{--                            <div class="d-inline-flex d-lg-none align-items-center">--}}
 {{--                                <button class="sideMenuToggler">--}}
@@ -300,6 +338,17 @@
         .pb-header-btn--outline:hover {
             background: var(--color-primary, #0077B6);
             color: #fff;
+            transform: translateY(-2px);
+        }
+        .pb-header-btn--portal {
+            background: #f0f9ff;
+            color: var(--color-primary, #0077B6);
+            border-color: #bae6fd;
+        }
+        .pb-header-btn--portal:hover {
+            background: var(--color-primary, #0077B6);
+            color: #fff;
+            border-color: var(--color-primary, #0077B6);
             transform: translateY(-2px);
         }
     </style>

@@ -509,6 +509,12 @@
             
             
 
+            <a href="<?php echo e(route('admin.payments.index')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.payments.*') ? 'active' : ''); ?>">
+                <i class="fas fa-credit-card"></i> Payments
+                <?php $pendingPopsCount = \App\Models\Payment::pending()->count(); ?>
+                <?php if($pendingPopsCount > 0): ?><span class="sb-count"><?php echo e($pendingPopsCount); ?></span><?php endif; ?>
+            </a>
+
             <div class="sb-heading">Insights</div>
             <a href="<?php echo e(route('admin.reports.index')); ?>" class="sb-link <?php echo e(request()->routeIs('admin.reports.*') ? 'active' : ''); ?>">
                 <i class="fas fa-chart-bar"></i> Reports

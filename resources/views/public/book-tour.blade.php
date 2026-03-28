@@ -177,78 +177,190 @@
 
 /* ── Form Section ── */
 .pb-tour {
-    padding: 100px 0 80px;
+    padding: 80px 0 80px;
 }
 
 /* Form card */
 .pb-tour-form {
-    background: var(--color-surface);
+    background: #fff;
     border-radius: var(--radius-lg);
-    padding: 48px;
+    padding: 0;
+    border: 1px solid #e8ecf0;
+    box-shadow: 0 4px 40px rgba(14,42,70,0.07);
+    overflow: hidden;
 }
 .pb-tour-form__header {
+    background: var(--color-text);
+    padding: 28px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 12px;
-    margin-bottom: 32px;
 }
 .pb-tour-form__title {
     font-family: var(--font-heading);
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: 800;
-    color: var(--color-text);
+    color: #fff;
     margin: 0;
 }
 .pb-tour-form__free {
     font-family: var(--font-body);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
-    color: var(--color-success);
-    background: rgba(46,125,50,0.08);
-    padding: 6px 16px;
+    color: #fff;
+    background: rgba(255,255,255,0.12);
+    padding: 5px 14px;
     border-radius: var(--radius-pill);
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    letter-spacing: 0.2px;
+}
+
+/* Form body */
+.pb-tour-form__body {
+    padding: 36px 40px 40px;
+}
+
+/* Section dividers */
+.pb-form-section {
+    margin-bottom: 28px;
+}
+.pb-form-section__label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--color-muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.pb-form-section__label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #edf0f3;
+}
+
+/* Input groups with icons */
+.pb-input-wrap {
+    position: relative;
+}
+.pb-input-wrap .pb-input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-muted);
+    font-size: 13px;
+    pointer-events: none;
+    transition: color 0.2s;
+}
+.pb-input-wrap textarea ~ .pb-input-icon,
+.pb-input-wrap .pb-input-icon--top {
+    top: 14px;
+    transform: none;
 }
 .pb-tour-form .form-label {
     font-family: var(--font-body);
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--color-text);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     display: block;
+}
+.pb-tour-form .form-label .req {
+    color: var(--color-primary);
+    margin-left: 2px;
 }
 .pb-tour-form .form-control,
 .pb-tour-form .form-select {
     font-family: var(--font-body);
-    font-size: 16px;
-    border: 1px solid #e0e4e8;
-    border-radius: var(--radius-sm);
-    padding: 14px 18px;
+    font-size: 14px;
+    border: 1.5px solid #dde2e8;
+    border-radius: 8px;
+    padding: 11px 14px 11px 38px;
     height: auto;
-    background: #fff;
+    background: #fafbfc;
     color: var(--color-text);
-    transition: border-color 0.25s;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     width: 100%;
+}
+.pb-tour-form .form-control--no-icon,
+.pb-tour-form .form-select--no-icon {
+    padding-left: 14px;
 }
 .pb-tour-form .form-control:focus,
 .pb-tour-form .form-select:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(0,119,182,0.08);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0,119,182,0.09);
     outline: none;
 }
+.pb-tour-form .form-control:focus ~ .pb-input-icon,
+.pb-tour-form .form-select:focus ~ .pb-input-icon {
+    color: var(--color-primary);
+}
+.pb-input-wrap:focus-within .pb-input-icon {
+    color: var(--color-primary);
+}
 .pb-tour-form .form-control::placeholder {
-    color: var(--color-muted);
-    font-size: 15px;
+    color: #adb5bd;
+    font-size: 13px;
 }
 .pb-tour-form textarea.form-control {
-    min-height: 120px;
+    min-height: 100px;
+    padding-left: 38px;
+    resize: vertical;
 }
 .pb-tour-form .text-danger {
     color: var(--color-error) !important;
+}
+
+/* Submit button */
+.pb-tour-form__btn {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: 16px 40px;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,119,182,0.28);
+    letter-spacing: 0.2px;
+}
+.pb-tour-form__btn:hover:not(:disabled) {
+    background: var(--color-primary-dk);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0,119,182,0.32);
+}
+.pb-tour-form__btn:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+}
+.pb-tour-form__note {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--color-muted);
+    text-align: center;
+    margin: 12px 0 0;
+}
+.pb-tour-form__note i {
+    color: var(--color-success);
+    margin-right: 4px;
 }
 
 /* ── Date Picker ── */
@@ -261,7 +373,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+}
+.pb-date-picker {
+    gap: 6px;
 }
 .pb-date-picker__month {
     font-family: var(--font-heading);
@@ -271,8 +386,8 @@
     letter-spacing: 0.3px;
 }
 .pb-date-picker__arrow {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     border: 1px solid #e0e4e8;
     border-radius: 50%;
     background: #fff;
@@ -292,26 +407,26 @@
 .pb-date-picker__grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 3px;
 }
 .pb-date-picker__day-header {
     font-family: var(--font-body);
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
     color: var(--color-muted);
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    padding: 4px 0;
+    padding: 3px 0;
 }
 .pb-date-picker__day {
     aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 6px;
     font-family: var(--font-body);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--color-text);
     cursor: pointer;
@@ -320,7 +435,7 @@
     transition: background 0.15s, border-color 0.15s, color 0.15s;
     line-height: 1;
     padding: 0;
-    min-height: 34px;
+    min-height: 26px;
 }
 .pb-date-picker__day:hover:not(.pb-date-picker__day--disabled):not(.pb-date-picker__day--empty) {
     background: rgba(0,119,182,0.06);
@@ -352,35 +467,36 @@
 
 /* Time slot cards */
 .pb-time-slot {
-    border: 1px solid #e0e4e8;
-    border-radius: var(--radius-md);
-    padding: 14px 16px;
+    border: 1.5px solid #dde2e8;
+    border-radius: 8px;
+    padding: 12px 14px;
     cursor: pointer;
-    background: #fff;
-    transition: border-color 0.25s, background 0.25s;
+    background: #fafbfc;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     height: 100%;
 }
 .pb-time-slot:hover {
     border-color: var(--color-primary);
+    background: #fff;
 }
 .pb-time-slot:has(input:checked) {
     border-color: var(--color-primary);
-    background: rgba(0,119,182,0.04);
+    background: rgba(0,119,182,0.05);
+    box-shadow: 0 0 0 3px rgba(0,119,182,0.09);
 }
 .pb-time-slot input[type="radio"] {
-    width: 18px;
-    height: 18px;
-    border: 2px solid #d0d5dd;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
     accent-color: var(--color-primary);
     flex-shrink: 0;
 }
 .pb-time-slot__label {
     font-family: var(--font-body);
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--color-text);
     display: block;
@@ -388,46 +504,10 @@
 }
 .pb-time-slot__time {
     font-family: var(--font-body);
-    font-size: 13px;
+    font-size: 11px;
     color: var(--color-muted);
     display: block;
     margin-top: 1px;
-}
-
-/* Submit button */
-.pb-tour-form__btn {
-    font-family: var(--font-body);
-    font-size: 16px;
-    font-weight: 700;
-    background: var(--color-primary);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-pill);
-    padding: 18px 48px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    justify-content: center;
-    box-shadow: 0 4px 18px rgba(0,119,182,0.25);
-}
-.pb-tour-form__btn:hover {
-    background: var(--color-primary-dk);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0,119,182,0.35);
-}
-.pb-tour-form__note {
-    font-family: var(--font-body);
-    font-size: 13px;
-    color: var(--color-muted);
-    text-align: center;
-    margin: 14px 0 0;
-}
-.pb-tour-form__note i {
-    color: var(--color-success);
-    margin-right: 4px;
 }
 
 /* ── Sidebar ── */
@@ -733,13 +813,15 @@
 /* ── Responsive ── */
 @media (max-width: 991px) {
     .pb-tour-hero { padding: 56px 0 48px; }
-    .pb-tour { padding: 70px 0 50px; }
-    .pb-tour-form { padding: 36px 28px; }
+    .pb-tour { padding: 60px 0 50px; }
+    .pb-tour-form__header { padding: 22px 28px; }
+    .pb-tour-form__body { padding: 28px 28px 32px; }
     .pb-tour-sidebar { position: static; }
 }
 @media (max-width: 575px) {
     .pb-tour-hero__stats { gap: 20px; }
-    .pb-tour-form { padding: 28px 20px; }
+    .pb-tour-form__header { padding: 18px 20px; }
+    .pb-tour-form__body { padding: 22px 20px 28px; }
     .pb-tour-sidebar__card,
     .pb-tour-proof,
     .pb-tour-process,
@@ -831,61 +913,95 @@
 
                     <div class="pb-tour-form">
                         <div class="pb-tour-form__header">
-                            <h2 class="pb-tour-form__title">Request Your Tour</h2>
-                            <span class="pb-tour-form__free"><i class="fa-solid fa-clock"></i> Takes 2 min to complete</span>
+                            <h2 class="pb-tour-form__title">Request Your Free Tour</h2>
+                            <span class="pb-tour-form__free"><i class="fa-solid fa-clock"></i> 2 min to complete</span>
                         </div>
 
+                        <div class="pb-tour-form__body">
                         <form action="{{ route('book-tour.submit') }}" method="POST">
                             @csrf
-                            <div class="row g-4">
+                            <div class="row g-3">
+
+                                <!-- Section: Your Details -->
+                                <div class="col-12">
+                                    <div class="pb-form-section__label">Your Details</div>
+                                </div>
 
                                 <!-- Parent Name -->
                                 <div class="col-md-6">
-                                    <label class="form-label">Parent/Guardian Full Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="e.g. Sarah Johnson" required>
+                                    <label class="form-label">Full Name <span class="req">*</span></label>
+                                    <div class="pb-input-wrap">
+                                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="e.g. Sarah Johnson" required>
+                                        <i class="fa-regular fa-user pb-input-icon"></i>
+                                    </div>
                                 </div>
 
                                 <!-- Phone -->
                                 <div class="col-md-6">
-                                    <label class="form-label">Phone Number <span class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}" placeholder="082 000 0000" required>
+                                    <label class="form-label">Phone Number <span class="req">*</span></label>
+                                    <div class="pb-input-wrap">
+                                        <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}" placeholder="082 000 0000" required>
+                                        <i class="fa-solid fa-phone pb-input-icon"></i>
+                                    </div>
                                 </div>
 
                                 <!-- Email -->
                                 <div class="col-12">
-                                    <label class="form-label">Email Address <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="you@example.com" required>
+                                    <label class="form-label">Email Address <span class="req">*</span></label>
+                                    <div class="pb-input-wrap">
+                                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="you@example.com" required>
+                                        <i class="fa-regular fa-envelope pb-input-icon"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Section: Your Child -->
+                                <div class="col-12 mt-2">
+                                    <div class="pb-form-section__label">Your Child</div>
                                 </div>
 
                                 <!-- Child Name -->
                                 <div class="col-md-8">
-                                    <label class="form-label">Child's Full Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="child_name" value="{{ old('child_name') }}" required>
+                                    <label class="form-label">Child's Full Name <span class="req">*</span></label>
+                                    <div class="pb-input-wrap">
+                                        <input type="text" class="form-control" name="child_name" value="{{ old('child_name') }}" placeholder="Full name" required>
+                                        <i class="fa-solid fa-child pb-input-icon"></i>
+                                    </div>
                                 </div>
 
                                 <!-- Nickname -->
                                 <div class="col-md-4">
                                     <label class="form-label">Nickname</label>
-                                    <input type="text" class="form-control" name="child_nickname" value="{{ old('child_nickname') }}">
+                                    <div class="pb-input-wrap">
+                                        <input type="text" class="form-control" name="child_nickname" value="{{ old('child_nickname') }}" placeholder="Optional">
+                                        <i class="fa-regular fa-face-smile pb-input-icon"></i>
+                                    </div>
                                 </div>
 
                                 <!-- Child Age -->
                                 <div class="col-md-6">
-                                    <label class="form-label">Child's Age <span class="text-danger">*</span></label>
-                                    <select class="form-select" name="child_age" required>
-                                        <option value="">Select age range...</option>
-                                        <option value="0-1" {{ old('child_age') == '0-1' ? 'selected' : '' }}>0–1 year (Baby Room)</option>
-                                        <option value="1-3" {{ old('child_age') == '1-3' ? 'selected' : '' }}>1–3 years (Toddlers)</option>
-                                        <option value="3-4" {{ old('child_age') == '3-4' ? 'selected' : '' }}>3–4 years (Preschool)</option>
-                                        <option value="5-6" {{ old('child_age') == '5-6' ? 'selected' : '' }}>5–6 years (Grade R)</option>
-                                    </select>
+                                    <label class="form-label">Age Group <span class="req">*</span></label>
+                                    <div class="pb-input-wrap">
+                                        <select class="form-select" name="child_age" required>
+                                            <option value="">Select age range…</option>
+                                            <option value="0-1" {{ old('child_age') == '0-1' ? 'selected' : '' }}>0–1 year (Baby Room)</option>
+                                            <option value="1-3" {{ old('child_age') == '1-3' ? 'selected' : '' }}>1–3 years (Toddlers)</option>
+                                            <option value="3-4" {{ old('child_age') == '3-4' ? 'selected' : '' }}>3–4 years (Preschool)</option>
+                                            <option value="5-6" {{ old('child_age') == '5-6' ? 'selected' : '' }}>5–6 years (Grade R)</option>
+                                        </select>
+                                        <i class="fa-solid fa-layer-group pb-input-icon"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Section: Visit Details -->
+                                <div class="col-12 mt-2">
+                                    <div class="pb-form-section__label">Visit Details</div>
                                 </div>
 
                                 <!-- Preferred Date -->
                                 <div class="col-12">
-                                    <label class="form-label">Preferred Date <span class="text-danger">*</span></label>
+                                    <label class="form-label">Preferred Date <span class="req">*</span></label>
                                     <input type="hidden" name="preferred_date" id="preferred_date_input" value="{{ old('preferred_date') }}" required>
-                                    <div class="pb-date-picker" id="pbDatePicker" style="background:#fff; border:1px solid #e0e4e8; border-radius:10px; padding:16px 20px;">
+                                    <div class="pb-date-picker" id="pbDatePicker" style="background:#fafbfc; border:1.5px solid #dde2e8; border-radius:10px; padding:12px 14px; max-width:340px;">
                                         <div class="pb-date-picker__nav">
                                             <button type="button" class="pb-date-picker__arrow" id="pbDatePrev"><i class="fa-solid fa-chevron-left"></i></button>
                                             <span class="pb-date-picker__month" id="pbDateMonth">—</span>
@@ -897,8 +1013,8 @@
 
                                 <!-- Preferred Time -->
                                 <div class="col-12">
-                                    <label class="form-label">Preferred Time <span class="text-danger">*</span></label>
-                                    <div class="row g-3">
+                                    <label class="form-label">Preferred Time <span class="req">*</span></label>
+                                    <div class="row g-2">
                                         <div class="col-md-4">
                                             <label class="pb-time-slot">
                                                 <input type="radio" name="preferred_time" value="09:00" {{ old('preferred_time', '09:00') == '09:00' ? 'checked' : '' }}>
@@ -932,26 +1048,34 @@
                                 <!-- Message -->
                                 <div class="col-12">
                                     <label class="form-label">Questions or Special Requirements?</label>
-                                    <textarea class="form-control" name="message" rows="4" placeholder="Tell us anything you'd like to know or see during your visit...">{{ old('message') }}</textarea>
+                                    <div class="pb-input-wrap">
+                                        <textarea class="form-control" name="message" rows="3" placeholder="Tell us anything you'd like to know or see during your visit…">{{ old('message') }}</textarea>
+                                        <i class="fa-regular fa-comment-dots pb-input-icon pb-input-icon--top"></i>
+                                    </div>
                                 </div>
 
                                 <!-- Source -->
                                 <div class="col-12">
                                     <label class="form-label">How did you hear about us?</label>
-                                    <select class="form-select" name="source">
-                                        <option value="">Select...</option>
-                                        <option value="facebook" {{ old('source') == 'facebook' ? 'selected' : '' }}>Facebook</option>
-                                        <option value="google" {{ old('source') == 'google' ? 'selected' : '' }}>Google Search</option>
-                                        <option value="instagram" {{ old('source') == 'instagram' ? 'selected' : '' }}>Instagram</option>
-                                        <option value="referral" {{ old('source') == 'referral' ? 'selected' : '' }}>Friend/Family Referral</option>
-                                        <option value="other" {{ old('source') == 'other' ? 'selected' : '' }}>Other</option>
-                                    </select>
+                                    <div class="pb-input-wrap">
+                                        <select class="form-select" name="source">
+                                            <option value="">Select…</option>
+                                            <option value="facebook" {{ old('source') == 'facebook' ? 'selected' : '' }}>Facebook</option>
+                                            <option value="google" {{ old('source') == 'google' ? 'selected' : '' }}>Google Search</option>
+                                            <option value="instagram" {{ old('source') == 'instagram' ? 'selected' : '' }}>Instagram</option>
+                                            <option value="referral" {{ old('source') == 'referral' ? 'selected' : '' }}>Friend / Family Referral</option>
+                                            <option value="other" {{ old('source') == 'other' ? 'selected' : '' }}>Other</option>
+                                        </select>
+                                        <i class="fa-solid fa-magnifying-glass pb-input-icon"></i>
+                                    </div>
                                 </div>
 
                                 <!-- Submit -->
-                                <div class="col-12 mt-2">
-                                    <button type="submit" class="pb-tour-form__btn">
-                                        <i class="fa-regular fa-calendar-check"></i> Book My Free Tour
+                                <div class="col-12 mt-3">
+                                    <button type="submit" class="pb-tour-form__btn" id="tourSubmitBtn">
+                                        <span id="tourBtnIcon"><i class="fa-regular fa-calendar-check"></i></span>
+                                        <span class="spinner-border spinner-border-sm d-none" id="tourBtnSpinner" role="status" aria-hidden="true" style="width:16px;height:16px;border-width:2px;"></span>
+                                        <span id="tourBtnText">Book My Free Tour</span>
                                     </button>
                                     <p class="pb-tour-form__note">
                                         <i class="fa-solid fa-lock"></i> No commitment required — we'll confirm within 24 hours
@@ -959,6 +1083,7 @@
                                 </div>
                             </div>
                         </form>
+                        </div>
                     </div>
                 </div>
 
@@ -1171,6 +1296,20 @@
     });
 
     render();
+
+    // Submit loader
+    const form    = document.querySelector('form[action="{{ route('book-tour.submit') }}"]');
+    const btn     = document.getElementById('tourSubmitBtn');
+    const icon    = document.getElementById('tourBtnIcon');
+    const spinner = document.getElementById('tourBtnSpinner');
+    const btnText = document.getElementById('tourBtnText');
+
+    form.addEventListener('submit', function () {
+        btn.disabled = true;
+        icon.classList.add('d-none');
+        spinner.classList.remove('d-none');
+        btnText.textContent = 'Sending…';
+    });
 })();
 </script>
 @endpush

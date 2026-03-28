@@ -1,6 +1,6 @@
 @extends('layouts.portal')
 
-@section('title', $child['name'] . ' — My Children')
+@section('title', $child['name'])
 @section('portal-name', 'Parent Portal')
 @section('page-title', $child['name'])
 
@@ -10,111 +10,274 @@
 
 @push('styles')
 <style>
-.cd-info-row { display:flex;gap:8px;padding:9px 0;border-bottom:1px solid #f3f4f6; }
-.cd-info-row:last-child { border-bottom:none; }
-.cd-info-label { font-size:.78rem;color:#94a3b8;min-width:140px;flex-shrink:0;font-weight:600; }
-.cd-info-val   { font-size:.88rem;color:#1a1f2e;font-weight:600; }
+/* ─── Hero panel ───────────────────────────────────────────────────────── */
+.hero-panel {
+    background: #fff; border-radius: 16px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 1px 8px rgba(0,0,0,.06);
+    overflow: hidden; margin-bottom: 24px;
+}
+.hero-top {
+    padding: 24px 26px 20px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #fef1f2 100%);
+    border-bottom: 1px solid #f0f0f0;
+    position: relative;
+}
+.hero-top::after {
+    content: '';
+    position: absolute; bottom: 0; left: 26px; right: 26px; height: 2px;
+    background: linear-gradient(90deg, #0077B6, #00B4D8, #FFB5BA);
+    border-radius: 2px;
+}
+.hero-avatar {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; font-weight: 800; color: #0077B6;
+    box-shadow: 0 2px 10px rgba(0,119,182,.15);
+    border: 2px solid #fff; flex-shrink: 0;
+}
+.hero-stats { display: flex; border-top: 1px solid #f3f4f6; }
+.hero-stat {
+    flex: 1; padding: 15px 14px 17px; text-align: center;
+    border-right: 1px solid #f3f4f6;
+}
+.hero-stat:last-child { border-right: none; }
+.hs-val { font-size: 1rem; font-weight: 800; color: #1a1f2e; line-height: 1; }
+.hs-lbl { font-size: .62rem; font-weight: 600; text-transform: uppercase;
+          letter-spacing: .5px; color: #94a3b8; margin-top: 4px; }
+
+/* ─── Panel ────────────────────────────────────────────────────────────── */
+.panel {
+    background: #fff; border-radius: 16px;
+    box-shadow: 0 1px 8px rgba(0,0,0,.06);
+    border: 1px solid #f0f0f0; overflow: hidden; margin-bottom: 20px;
+}
+.panel-header {
+    padding: 15px 22px; border-bottom: 1px solid #f3f4f6;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.panel-header h6 { margin: 0; font-weight: 700; font-size: .88rem; color: #1a1f2e; }
+.panel-body { padding: 6px 0; }
+
+/* ─── Info rows ────────────────────────────────────────────────────────── */
+.info-row {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 10px 22px; border-bottom: 1px solid #f9fafb;
+}
+.info-row:last-child { border-bottom: none; }
+.info-lbl {
+    font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .4px; color: #94a3b8; min-width: 150px; flex-shrink: 0;
+}
+.info-val { font-size: .87rem; font-weight: 600; color: #1a1f2e; }
+.info-val.muted { color: #94a3b8; font-weight: 400; font-style: italic; }
+
+/* ─── Section micro-label ──────────────────────────────────────────────── */
+.micro-label {
+    font-size: .63rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.1px; color: #adb5bd; margin-bottom: 12px;
+}
+
+/* ─── Document rows ────────────────────────────────────────────────────── */
+.doc-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 22px; border-bottom: 1px solid #f9fafb;
+}
+.doc-row:last-child { border-bottom: none; }
+.doc-icon {
+    width: 34px; height: 34px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .78rem; flex-shrink: 0;
+}
+.doc-icon.uploaded { background: #dcfce7; color: #16a34a; }
+.doc-icon.missing  { background: #f3f4f6; color: #d1d5db; }
+.doc-name { font-size: .83rem; font-weight: 600; color: #1a1f2e; flex: 1; }
+.doc-status-pill {
+    font-size: .7rem; font-weight: 700; border-radius: 999px;
+    padding: 3px 10px; white-space: nowrap;
+}
+.doc-status-pill.uploaded { background: #dcfce7; color: #16a34a; }
+.doc-status-pill.missing  { background: #f3f4f6; color: #94a3b8; }
+
+/* ─── Contact card ─────────────────────────────────────────────────────── */
+.contact-block {
+    padding: 14px 22px; border-bottom: 1px solid #f9fafb;
+}
+.contact-block:last-child { border-bottom: none; }
+.contact-role {
+    font-size: .62rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: .8px; color: #94a3b8; margin-bottom: 6px;
+}
+.contact-name { font-size: .92rem; font-weight: 700; color: #1a1f2e; margin-bottom: 4px; }
+.contact-detail {
+    font-size: .78rem; color: #64748b; display: flex; align-items: center; gap: 6px;
+    margin-bottom: 2px;
+}
+.contact-detail i { width: 14px; text-align: center; color: #94a3b8; }
 </style>
 @endpush
 
 @section('content')
 
-{{-- Breadcrumb --}}
-<div class="mb-3">
-    <small>
-        <a href="{{ route('parent.children') }}" class="text-primary text-decoration-none">My Children</a>
-        <span class="text-muted mx-1">/</span>
-        <span class="text-muted">{{ $child['name'] }}</span>
-    </small>
+{{-- ── Breadcrumb ──────────────────────────────────────────────────────── --}}
+<div class="mb-4 d-flex align-items-center gap-2">
+    <a href="{{ route('parent.dashboard') }}" class="text-decoration-none" style="font-size:.8rem;color:#94a3b8;">Dashboard</a>
+    <i class="fas fa-chevron-right" style="font-size:.55rem;color:#d1d5db;"></i>
+    <a href="{{ route('parent.children') }}" class="text-decoration-none" style="font-size:.8rem;color:#94a3b8;">My Children</a>
+    <i class="fas fa-chevron-right" style="font-size:.55rem;color:#d1d5db;"></i>
+    <span style="font-size:.8rem;color:#1a1f2e;font-weight:600;">{{ $child['name'] }}</span>
 </div>
 
-{{-- ── Child Header Card ─────────────────────────────────────────────────── --}}
-<div class="child-card mb-4">
-    <div class="d-flex justify-content-between align-items-start">
-        <div class="d-flex gap-3 align-items-center">
-            <div class="rounded-circle bg-white d-flex align-items-center justify-content-center" style="width:70px;height:70px;">
-                <i class="fas fa-child fa-2x text-primary"></i>
+{{-- ── Hero ────────────────────────────────────────────────────────────── --}}
+<div class="hero-panel">
+    <div class="hero-top">
+        <div class="d-flex align-items-center gap-3">
+            <div class="hero-avatar">{{ strtoupper(substr($child['name'], 0, 1)) }}</div>
+            <div class="flex-grow-1">
+                <div style="font-size:1.2rem;font-weight:800;color:#1a1f2e;line-height:1.2;">
+                    {{ $child['name'] }}
+                    @if($child['nickname'])
+                        <span style="font-size:.82rem;font-weight:500;color:#64748b;margin-left:6px;">"{{ $child['nickname'] }}"</span>
+                    @endif
+                </div>
+                <div style="font-size:.8rem;color:#64748b;margin-top:3px;">
+                    {{ $child['program'] }}
+                    @if($child['dob'] !== '—') &bull; Born {{ $child['dob'] }} @endif
+                    &bull; {{ $child['gender'] }}
+                </div>
             </div>
-            <div>
-                <h3 class="mb-1 fw-bold">{{ $child['name'] }}</h3>
-                <div class="mb-1"><strong>{{ $child['program'] }}</strong> &bull; {{ $child['fee_option'] }}</div>
-                <small class="opacity-75">{{ $child['age'] }} &bull; {{ $child['gender'] }} &bull; DOB: {{ $child['dob'] }}</small>
-            </div>
+            @php
+                $stColors = [
+                    'approved'     => ['#dcfce7','#16a34a'],
+                    'pending'      => ['#fff7ed','#d97706'],
+                    'under_review' => ['#f5f3ff','#7c3aed'],
+                    'waitlist'     => ['#f3f4f6','#6c757d'],
+                    'rejected'     => ['#fee2e2','#ef4444'],
+                ];
+                [$stBg,$stC] = $stColors[$child['status']] ?? ['#f3f4f6','#6c757d'];
+            @endphp
+            <span class="badge rounded-pill px-3 py-2"
+                  style="background:{{ $stBg }};color:{{ $stC }};font-weight:700;font-size:.72rem;white-space:nowrap;">
+                {{ $child['status_label'] }}
+            </span>
         </div>
-        @php
-            $stColors = ['approved'=>['#dcfce7','#16a34a'],'pending'=>['#fff7ed','#d97706'],'under_review'=>['#f5f3ff','#7c3aed'],'waitlist'=>['#f3f4f6','#6c757d'],'rejected'=>['#fee2e2','#ef4444']];
-            [$stBg,$stC] = $stColors[$child['status']] ?? ['#f3f4f6','#6c757d'];
-        @endphp
-        <span class="badge rounded-pill px-3 py-2" style="background:{{ $stBg }};color:{{ $stC }};font-weight:700;font-size:.76rem;">
-            {{ $child['status_label'] }}
-        </span>
     </div>
-    <hr class="my-3 opacity-25">
-    <div class="row text-center">
-        <div class="col-3">
-            <div class="fw-bold">{{ $child['attendance_rate'] }}</div>
-            <small class="opacity-75">Attendance</small>
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <div class="hs-val" style="font-size:.85rem;">{{ $child['reference'] }}</div>
+            <div class="hs-lbl">Reference</div>
         </div>
-        <div class="col-3">
-            <div class="fw-bold">{{ $child['days_this_month'] }}</div>
-            <small class="opacity-75">Days This Month</small>
+        <div class="hero-stat">
+            <div class="hs-val">{{ $child['age_years'] !== null ? $child['age_years'] : '—' }}</div>
+            <div class="hs-lbl">Age (yrs)</div>
         </div>
-        <div class="col-3">
-            <div class="fw-bold">{{ $child['teacher'] }}</div>
-            <small class="opacity-75">Teacher</small>
+        <div class="hero-stat">
+            <div class="hs-val" style="font-size:.85rem;">{{ $child['fee_option'] }}</div>
+            <div class="hs-lbl">Fee Plan</div>
         </div>
-        <div class="col-3">
-            <div class="fw-bold">{{ $child['reference'] }}</div>
-            <small class="opacity-75">Reference</small>
+        <div class="hero-stat">
+            <div class="hs-val" style="font-size:.85rem;">{{ $child['start_date'] ?? '—' }}</div>
+            <div class="hs-lbl">Start Date</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hs-val" style="font-size:.85rem;">{{ $child['enrolled_date'] }}</div>
+            <div class="hs-lbl">Enrolled</div>
         </div>
     </div>
 </div>
 
+{{-- ── Two-column layout ───────────────────────────────────────────────── --}}
 <div class="row g-4">
 
-    {{-- ── Left Column ────────────────────────────────────────────────────── --}}
+    {{-- LEFT ─────────────────────────────────────────────────────────────── --}}
     <div class="col-lg-7">
 
-        {{-- Enrolment Details --}}
-        <div class="portal-card mb-4">
-            <div class="portal-card-header">
-                <i class="fas fa-clipboard-check me-2 text-primary"></i> Enrolment Information
+        {{-- Child Details --}}
+        <div class="micro-label"><i class="fas fa-child me-1"></i> Child Details</div>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="info-row">
+                    <div class="info-lbl">Full Name</div>
+                    <div class="info-val">{{ $child['full_name'] }}</div>
+                </div>
+                @if($child['nickname'])
+                <div class="info-row">
+                    <div class="info-lbl">Nickname</div>
+                    <div class="info-val">{{ $child['nickname'] }}</div>
+                </div>
+                @endif
+                <div class="info-row">
+                    <div class="info-lbl">Date of Birth</div>
+                    <div class="info-val">{{ $child['dob'] }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-lbl">Age</div>
+                    <div class="info-val">{{ $child['age'] }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-lbl">Gender</div>
+                    <div class="info-val">{{ $child['gender'] }}</div>
+                </div>
+                @if($child['language'])
+                <div class="info-row">
+                    <div class="info-lbl">Home Language</div>
+                    <div class="info-val">{{ $child['language'] }}</div>
+                </div>
+                @endif
+                @if($child['id_number'])
+                <div class="info-row">
+                    <div class="info-lbl">ID / Birth Reg No.</div>
+                    <div class="info-val"><code style="color:#0077B6;font-size:.84rem;">{{ $child['id_number'] }}</code></div>
+                </div>
+                @endif
             </div>
-            <div class="portal-card-body">
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Application Ref</div>
-                    <div class="cd-info-val"><code style="color:#0077B6;">{{ $child['reference'] }}</code></div>
+        </div>
+
+        {{-- Enrolment Details --}}
+        <div class="micro-label"><i class="fas fa-clipboard-check me-1"></i> Enrolment</div>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="info-row">
+                    <div class="info-lbl">Application Ref</div>
+                    <div class="info-val"><code style="color:#0077B6;font-size:.84rem;">{{ $child['reference'] }}</code></div>
                 </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Programme</div>
-                    <div class="cd-info-val">{{ $child['program'] }}</div>
+                <div class="info-row">
+                    <div class="info-lbl">Programme</div>
+                    <div class="info-val">{{ $child['program'] }}</div>
                 </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Fee Option</div>
-                    <div class="cd-info-val">{{ $child['fee_option'] }}</div>
+                <div class="info-row">
+                    <div class="info-lbl">Fee Option</div>
+                    <div class="info-val">{{ $child['fee_option'] }}</div>
                 </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Snack Box</div>
-                    <div class="cd-info-val">
+                <div class="info-row">
+                    <div class="info-lbl">Snack Box</div>
+                    <div class="info-val">
                         @if($child['snack_box'])
-                            <span class="badge bg-success rounded-pill px-2"><i class="fas fa-check me-1"></i> Yes</span>
+                            <span style="background:#dcfce7;color:#16a34a;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;">
+                                <i class="fas fa-check me-1"></i> Subscribed
+                            </span>
                         @else
-                            <span class="text-muted">No</span>
+                            <span class="muted" style="font-size:.84rem;color:#94a3b8;font-style:italic;">Not subscribed</span>
                         @endif
                     </div>
                 </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Start Date</div>
-                    <div class="cd-info-val">{{ $child['start_date'] ?? '—' }}</div>
+                <div class="info-row">
+                    <div class="info-lbl">Start Date</div>
+                    <div class="info-val">{{ $child['start_date'] ?? '—' }}</div>
                 </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Enrolled Since</div>
-                    <div class="cd-info-val">{{ $child['enrolled_date'] }}</div>
+                <div class="info-row">
+                    <div class="info-lbl">Applied On</div>
+                    <div class="info-val">{{ $child['applied_date'] }}</div>
                 </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Status</div>
-                    <div class="cd-info-val">
-                        <span class="badge rounded-pill px-3" style="background:{{ $stBg }};color:{{ $stC }};">
+                <div class="info-row">
+                    <div class="info-lbl">Enrolled Since</div>
+                    <div class="info-val">{{ $child['enrolled_date'] }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-lbl">Status</div>
+                    <div class="info-val">
+                        <span class="badge rounded-pill px-3"
+                              style="background:{{ $stBg }};color:{{ $stC }};font-weight:700;font-size:.72rem;">
                             {{ $child['status_label'] }}
                         </span>
                     </div>
@@ -122,152 +285,133 @@
             </div>
         </div>
 
-        {{-- Child Info --}}
-        <div class="portal-card mb-4">
-            <div class="portal-card-header">
-                <i class="fas fa-child me-2 text-info"></i> Child Details
-            </div>
-            <div class="portal-card-body">
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Full Name</div>
-                    <div class="cd-info-val">{{ $child['full_name'] }}</div>
-                </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Date of Birth</div>
-                    <div class="cd-info-val">{{ $child['dob'] }}</div>
-                </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Age</div>
-                    <div class="cd-info-val">{{ $child['age'] }}</div>
-                </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Gender</div>
-                    <div class="cd-info-val">{{ $child['gender'] }}</div>
-                </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Class Teacher</div>
-                    <div class="cd-info-val">{{ $child['teacher'] }}</div>
-                </div>
-            </div>
-        </div>
-
-        {{-- Medical Information --}}
-        <div class="portal-card mb-4">
-            <div class="portal-card-header">
-                <i class="fas fa-heartbeat me-2 text-danger"></i> Medical Information
-            </div>
-            <div class="portal-card-body">
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Allergies</div>
-                    <div class="cd-info-val">{{ $child['allergies'] ?: 'None recorded' }}</div>
-                </div>
-                <div class="cd-info-row">
-                    <div class="cd-info-label">Medical Notes</div>
-                    <div class="cd-info-val">{{ $child['medical_notes'] ?: 'None recorded' }}</div>
-                </div>
-            </div>
-        </div>
-
-        {{-- Uploaded Documents --}}
-        @if(count($child['documents'] ?? []) > 0)
-        <div class="portal-card mb-4">
-            <div class="portal-card-header">
-                <i class="fas fa-folder-open me-2 text-success"></i> Uploaded Documents
-            </div>
-            <div class="portal-card-body p-0">
-                @foreach($child['documents'] as $type => $path)
-                @if($path)
-                <div class="d-flex align-items-center gap-3 px-4 py-3 border-bottom">
-                    <div class="rounded bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style="width:38px;height:38px;flex-shrink:0;">
-                        <i class="fas fa-file text-primary" style="font-size:.8rem;"></i>
+        {{-- Medical --}}
+        <div class="micro-label"><i class="fas fa-heartbeat me-1"></i> Medical Information</div>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="info-row">
+                    <div class="info-lbl">Allergies</div>
+                    <div class="info-val {{ !$child['allergies'] ? 'muted' : '' }}">
+                        {{ $child['allergies'] ?: 'None recorded' }}
                     </div>
-                    <div class="flex-grow-1">
-                        <div class="fw-semibold" style="font-size:.86rem;">{{ ucfirst(str_replace('_', ' ', $type)) }}</div>
-                    </div>
-                    <a href="{{ asset('storage/' . $path) }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3" style="font-size:.78rem;">
-                        <i class="fas fa-eye me-1"></i> View
-                    </a>
                 </div>
-                @endif
-                @endforeach
+                <div class="info-row">
+                    <div class="info-lbl">Medical Notes</div>
+                    <div class="info-val {{ !$child['medical_notes'] ? 'muted' : '' }}">
+                        {{ $child['medical_notes'] ?: 'None recorded' }}
+                    </div>
+                </div>
             </div>
         </div>
-        @endif
 
     </div>
 
-    {{-- ── Right Column ───────────────────────────────────────────────────── --}}
+    {{-- RIGHT ────────────────────────────────────────────────────────────── --}}
     <div class="col-lg-5">
 
-        {{-- This Month's Attendance --}}
-        <div class="portal-card mb-4">
-            <div class="portal-card-header">
-                <i class="fas fa-calendar-check me-2 text-success"></i> This Month's Attendance
-            </div>
-            <div class="portal-card-body">
-                <div class="row g-3 text-center mb-3">
-                    <div class="col-4">
-                        <div class="bg-success bg-opacity-10 rounded p-3">
-                            <div class="h4 fw-bold text-success mb-0">{{ $child['days_this_month'] }}</div>
-                            <small class="text-muted">Present</small>
-                        </div>
+        {{-- Parent / Guardian Contacts --}}
+        <div class="micro-label"><i class="fas fa-users me-1"></i> Parent / Guardian Contacts</div>
+        <div class="panel">
+            <div class="panel-body" style="padding: 0;">
+                {{-- Mother --}}
+                @if($child['mother_name'])
+                <div class="contact-block">
+                    <div class="contact-role">Mother / Primary Guardian</div>
+                    <div class="contact-name">{{ $child['mother_name'] }}</div>
+                    @if($child['mother_cell'])
+                    <div class="contact-detail">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:{{ $child['mother_cell'] }}" style="color:#0077B6;text-decoration:none;">{{ $child['mother_cell'] }}</a>
                     </div>
-                    <div class="col-4">
-                        <div class="bg-warning bg-opacity-10 rounded p-3">
-                            <div class="h4 fw-bold text-warning mb-0">{{ $child['absent_days'] }}</div>
-                            <small class="text-muted">Absent</small>
-                        </div>
+                    @endif
+                    @if($child['mother_email'])
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:{{ $child['mother_email'] }}" style="color:#0077B6;text-decoration:none;">{{ $child['mother_email'] }}</a>
                     </div>
-                    <div class="col-4">
-                        <div class="bg-primary bg-opacity-10 rounded p-3">
-                            <div class="h4 fw-bold text-primary mb-0">{{ $child['attendance_rate'] }}</div>
-                            <small class="text-muted">Rate</small>
-                        </div>
-                    </div>
+                    @endif
                 </div>
-                <div class="d-flex justify-content-between align-items-center p-3 rounded" style="background:#f8f9fa;">
-                    <span style="font-size:.86rem;">Today's Status</span>
-                    <span class="badge bg-{{ $child['attendance_today'] === 'Present' ? 'success' : 'warning' }} rounded-pill px-3 py-2">
-                        <i class="fas fa-{{ $child['attendance_today'] === 'Present' ? 'check' : 'clock' }} me-1"></i>
-                        {{ $child['attendance_today'] }}
-                    </span>
+                @endif
+
+                {{-- Father --}}
+                @if($child['father_name'])
+                <div class="contact-block">
+                    <div class="contact-role">Father / Secondary Guardian</div>
+                    <div class="contact-name">{{ $child['father_name'] }}</div>
+                    @if($child['father_cell'])
+                    <div class="contact-detail">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:{{ $child['father_cell'] }}" style="color:#0077B6;text-decoration:none;">{{ $child['father_cell'] }}</a>
+                    </div>
+                    @endif
+                    @if($child['father_email'])
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:{{ $child['father_email'] }}" style="color:#0077B6;text-decoration:none;">{{ $child['father_email'] }}</a>
+                    </div>
+                    @endif
                 </div>
+                @endif
+
+                @if(!$child['mother_name'] && !$child['father_name'])
+                <div class="contact-block">
+                    <span style="font-size:.82rem;color:#94a3b8;font-style:italic;">No contact details on record.</span>
+                </div>
+                @endif
             </div>
         </div>
 
-        {{-- Quick Actions --}}
-        <div class="portal-card mb-4">
-            <div class="portal-card-header">
-                <i class="fas fa-bolt me-2 text-warning"></i> Quick Actions
+        {{-- Documents --}}
+        @php
+            $requiredDocs = [
+                'birth_certificate' => 'Birth Certificate',
+                'clinic_card'       => 'Clinic / Immunisation Card',
+                'parent_ids'        => 'Parent ID Document',
+                'proof_address'     => 'Proof of Address',
+            ];
+            $uploaded = $child['documents'] ?? [];
+        @endphp
+        <div class="micro-label"><i class="fas fa-folder-open me-1"></i> Documents</div>
+        <div class="panel">
+            <div class="panel-header">
+                <h6>Required Documents</h6>
+                <a href="{{ route('parent.documents') }}"
+                   style="font-size:.76rem;font-weight:600;color:#0077B6;text-decoration:none;">
+                    Manage <i class="fas fa-arrow-right ms-1" style="font-size:.6rem;"></i>
+                </a>
             </div>
-            <div class="portal-card-body">
-                <div class="d-grid gap-2">
-                    <a href="{{ route('parent.reports') }}" class="quick-action">
-                        <div class="icon bg-info bg-opacity-10"><i class="fas fa-chart-line text-info"></i></div>
-                        <div><div class="fw-semibold">View School Report</div><small class="text-muted">Latest term report</small></div>
-                    </a>
-                    <a href="{{ route('parent.activities') }}" class="quick-action">
-                        <div class="icon bg-warning bg-opacity-10"><i class="fas fa-running text-warning"></i></div>
-                        <div><div class="fw-semibold">Register for Activities</div><small class="text-muted">Extra-murals & more</small></div>
-                    </a>
-                    <a href="{{ route('parent.sleepover') }}" class="quick-action">
-                        <div class="icon" style="background:rgba(124,58,237,.1);"><i class="fas fa-moon" style="color:#7c3aed;"></i></div>
-                        <div><div class="fw-semibold">Apply for Sleepover</div><small class="text-muted">Upcoming sleepover nights</small></div>
-                    </a>
-                    <a href="{{ route('parent.documents') }}" class="quick-action">
-                        <div class="icon bg-success bg-opacity-10"><i class="fas fa-folder-open text-success"></i></div>
-                        <div><div class="fw-semibold">Document Vault</div><small class="text-muted">Certificates & records</small></div>
-                    </a>
-                    <a href="{{ route('parent.messages') }}" class="quick-action">
-                        <div class="icon bg-danger bg-opacity-10"><i class="fas fa-comment-dots text-danger"></i></div>
-                        <div><div class="fw-semibold">Message Teacher</div><small class="text-muted">Send {{ $child['teacher'] }} a note</small></div>
-                    </a>
+            <div class="panel-body" style="padding:0;">
+                @foreach($requiredDocs as $key => $label)
+                @php $isUploaded = !empty($uploaded[$key]); @endphp
+                <div class="doc-row">
+                    <div class="doc-icon {{ $isUploaded ? 'uploaded' : 'missing' }}">
+                        <i class="fas {{ $isUploaded ? 'fa-check' : 'fa-file' }}"></i>
+                    </div>
+                    <div class="doc-name">{{ $label }}</div>
+                    @if($isUploaded)
+                        <a href="{{ asset('storage/' . $uploaded[$key]) }}" target="_blank"
+                           class="doc-status-pill uploaded" style="text-decoration:none;">
+                            <i class="fas fa-eye me-1" style="font-size:.62rem;"></i> View
+                        </a>
+                    @else
+                        <span class="doc-status-pill missing">Missing</span>
+                    @endif
                 </div>
+                @endforeach
             </div>
+            @php $missingCount = collect($requiredDocs)->keys()->filter(fn($k) => empty($uploaded[$k]))->count(); @endphp
+            @if($missingCount > 0)
+            <div style="padding:12px 22px;border-top:1px solid #f3f4f6;">
+                <a href="{{ route('parent.documents') }}"
+                   class="btn btn-sm w-100 rounded-pill"
+                   style="background:#fff5f5;color:#b91c1c;border:1.5px solid #fecaca;font-weight:600;font-size:.78rem;">
+                    <i class="fas fa-upload me-1"></i> Upload {{ $missingCount }} Missing Document{{ $missingCount > 1 ? 's' : '' }}
+                </a>
+            </div>
+            @endif
         </div>
 
     </div>
 </div>
 
 @endsection
-

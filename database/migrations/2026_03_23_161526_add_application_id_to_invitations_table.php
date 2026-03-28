@@ -9,6 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    // Column was added via 2026_03_27_154929_add_application_id_to_invitations_table_fix
     public function up(): void
     {
         Schema::table('invitations', function (Blueprint $table) {
@@ -16,9 +17,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('invitations', function (Blueprint $table) {

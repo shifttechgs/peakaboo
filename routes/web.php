@@ -84,9 +84,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/reset-password/{token}', [PasswordResetController::class, 'showReset'])->name('password.reset');
     Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
 
-    Route::get('/register/accept/{token}', [InvitationController::class, 'accept'])->name('invitation.accept');
-    Route::post('/register/accept/{token}', [InvitationController::class, 'register'])->name('invitation.register');
 });
+
+// Invitation accept — outside guest middleware so logged-in admins can test links
+Route::get('/register/accept/{token}', [InvitationController::class, 'accept'])->name('invitation.accept');
+Route::post('/register/accept/{token}', [InvitationController::class, 'register'])->name('invitation.register');
 
 // Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
@@ -181,7 +183,8 @@ Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('ad
         Route::get('/outstanding', [PaymentsController::class, 'outstanding'])->name('outstanding');
         Route::get('/statements', [PaymentsController::class, 'statements'])->name('statements');
         Route::post('/record', [PaymentsController::class, 'record'])->name('record');
-        Route::post('/{id}/confirm', [PaymentsController::class, 'confirm'])->name('confirm');
+        Route::post('/{payment}/verify', [PaymentsController::class, 'verify'])->name('verify');
+        Route::post('/{payment}/reject', [PaymentsController::class, 'reject'])->name('reject');
     });
 
     // Staff
@@ -237,35 +240,36 @@ Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('ad
     });
 });
 
-// ─── Parent Portal Routes: disabled ───────────────────────────────────────────
+// ─── Parent Portal Routes ─────────────────────────────────────────────────────
 
-// Route::middleware(['auth', 'role:parent|admin|super_admin'])->prefix('parent')->name('parent.')->group(function () {
-//     Route::get('/', [ParentPortalController::class, 'index'])->name('dashboard');
-//     Route::get('/children', [ParentPortalController::class, 'children'])->name('children');
-//     Route::get('/children/{id}', [ParentPortalController::class, 'childDetail'])->name('children.show');
-//     Route::get('/calendar', [ParentPortalController::class, 'calendar'])->name('calendar');
-//     Route::get('/newsletters', [ParentPortalController::class, 'newsletters'])->name('newsletters');
-//     Route::get('/gallery', [ParentPortalController::class, 'gallery'])->name('gallery');
-//     Route::get('/fees', [ParentPortalController::class, 'fees'])->name('fees');
-//     Route::get('/fees/statements', [ParentPortalController::class, 'statements'])->name('fees.statements');
-//     Route::post('/fees/upload-pop', [ParentPortalController::class, 'uploadPop'])->name('fees.upload-pop');
-//     Route::get('/messages', [ParentPortalController::class, 'messages'])->name('messages');
-//     Route::post('/messages/send', [ParentPortalController::class, 'sendMessage'])->name('messages.send');
-//     Route::get('/holiday-care', [ParentPortalController::class, 'holidayCare'])->name('holiday-care');
-//     Route::post('/holiday-care/book', [ParentPortalController::class, 'bookHolidayCare'])->name('holiday-care.book');
-//     Route::get('/extra-murals', [ParentPortalController::class, 'extraMurals'])->name('extra-murals');
-//     Route::post('/extra-murals/signup', [ParentPortalController::class, 'signupExtraMurals'])->name('extra-murals.signup');
-//     Route::get('/snack-box', [ParentPortalController::class, 'snackBox'])->name('snack-box');
-//     Route::post('/snack-box/signup', [ParentPortalController::class, 'signupSnackBox'])->name('snack-box.signup');
-//     Route::get('/profile', [ParentPortalController::class, 'profile'])->name('profile');
-//     Route::post('/profile/update', [ParentPortalController::class, 'updateProfile'])->name('profile.update');
-//     Route::get('/documents', [ParentPortalController::class, 'documents'])->name('documents');
-//     Route::get('/reports', [ParentPortalController::class, 'reports'])->name('reports');
-//     Route::get('/activities', [ParentPortalController::class, 'activities'])->name('activities');
-//     Route::post('/activities/register', [ParentPortalController::class, 'registerActivity'])->name('activities.register');
-//     Route::get('/sleepover', [ParentPortalController::class, 'sleepover'])->name('sleepover');
-//     Route::post('/sleepover/apply', [ParentPortalController::class, 'applySleepover'])->name('sleepover.apply');
-// });
+Route::middleware(['auth', 'role:parent|admin|super_admin'])->prefix('parent')->name('parent.')->group(function () {
+    Route::get('/', [ParentPortalController::class, 'index'])->name('dashboard');
+    Route::get('/children', [ParentPortalController::class, 'children'])->name('children');
+    Route::get('/children/{id}', [ParentPortalController::class, 'childDetail'])->name('children.show');
+    Route::get('/calendar', [ParentPortalController::class, 'calendar'])->name('calendar');
+    Route::get('/newsletters', [ParentPortalController::class, 'newsletters'])->name('newsletters');
+    Route::get('/gallery', [ParentPortalController::class, 'gallery'])->name('gallery');
+    Route::get('/fees', [ParentPortalController::class, 'fees'])->name('fees');
+    Route::get('/fees/statements', [ParentPortalController::class, 'statements'])->name('fees.statements');
+    Route::post('/fees/upload-pop', [ParentPortalController::class, 'uploadPop'])->name('fees.upload-pop');
+    Route::get('/messages', [ParentPortalController::class, 'messages'])->name('messages');
+    Route::post('/messages/send', [ParentPortalController::class, 'sendMessage'])->name('messages.send');
+    Route::get('/holiday-care', [ParentPortalController::class, 'holidayCare'])->name('holiday-care');
+    Route::post('/holiday-care/book', [ParentPortalController::class, 'bookHolidayCare'])->name('holiday-care.book');
+    Route::get('/extra-murals', [ParentPortalController::class, 'extraMurals'])->name('extra-murals');
+    Route::post('/extra-murals/signup', [ParentPortalController::class, 'signupExtraMurals'])->name('extra-murals.signup');
+    Route::get('/snack-box', [ParentPortalController::class, 'snackBox'])->name('snack-box');
+    Route::post('/snack-box/signup', [ParentPortalController::class, 'signupSnackBox'])->name('snack-box.signup');
+    Route::get('/profile', [ParentPortalController::class, 'profile'])->name('profile');
+    Route::post('/profile/update', [ParentPortalController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/documents', [ParentPortalController::class, 'documents'])->name('documents');
+    Route::post('/documents/upload', [ParentPortalController::class, 'uploadDocument'])->name('documents.upload');
+    Route::get('/reports', [ParentPortalController::class, 'reports'])->name('reports');
+    Route::get('/activities', [ParentPortalController::class, 'activities'])->name('activities');
+    Route::post('/activities/register', [ParentPortalController::class, 'registerActivity'])->name('activities.register');
+    Route::get('/sleepover', [ParentPortalController::class, 'sleepover'])->name('sleepover');
+    Route::post('/sleepover/apply', [ParentPortalController::class, 'applySleepover'])->name('sleepover.apply');
+});
 
 // ─── Teacher Portal Routes ────────────────────────────────────────────────────
 
