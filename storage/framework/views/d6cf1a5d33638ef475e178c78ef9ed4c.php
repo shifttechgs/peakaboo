@@ -259,14 +259,18 @@
         <span class="bar-section-label">
             <i class="fas fa-circle me-1" style="color:#7c3aed;font-size:.45rem;vertical-align:middle;"></i>Enrolments
         </span>
+        <span id="live-updated-stamp" style="margin-left:auto;font-size:.68rem;color:#a3acb9;display:flex;align-items:center;gap:5px;opacity:0;transition:opacity .4s;">
+            <span id="live-pulse" style="width:6px;height:6px;border-radius:50%;background:#16a34a;display:inline-block;"></span>
+            <span id="live-updated-text">Updated just now</span>
+        </span>
     </div>
 
     <div class="overview-stats">
 
         
         <a href="<?php echo e(route('admin.crm.leads', ['status'=>'new'])); ?>" class="stat-tile st-blue leads-tile">
-            <?php if($pipeline['new'] > 0): ?><div class="st-dot" style="background:#3b82f6;"></div><?php endif; ?>
-            <div class="st-val"><?php echo e($pipeline['new']); ?></div>
+            <div class="st-dot" id="live-dot-new" style="background:#3b82f6;<?php echo e($pipeline['new'] > 0 ? '' : 'display:none;'); ?>"></div>
+            <div class="st-val" data-live="new-leads"><?php echo e($pipeline['new']); ?></div>
             <div class="st-label">New Leads</div>
             <div class="st-trend">Awaiting contact</div>
         </a>
@@ -274,16 +278,16 @@
         <div class="overview-divider"></div>
 
         <a href="<?php echo e(route('admin.crm.leads', ['status'=>'tour_scheduled'])); ?>" class="stat-tile st-info leads-tile">
-            <div class="st-val"><?php echo e($pipeline['tour_scheduled']); ?></div>
+            <div class="st-val" data-live="tours-booked"><?php echo e($pipeline['tour_scheduled']); ?></div>
             <div class="st-label">Tours Booked</div>
             <div class="st-trend">This pipeline</div>
         </a>
 
         <div class="overview-divider"></div>
 
-        <a href="<?php echo e(route('admin.crm.leads', ['status'=>'new'])); ?>" class="stat-tile leads-tile <?php echo e($pipeline['overdue'] > 0 ? 'st-alert' : ''); ?>">
-            <?php if($pipeline['overdue'] > 0): ?><div class="st-dot" style="background:#ef4444;"></div><?php endif; ?>
-            <div class="st-val" style="<?php echo e($pipeline['overdue'] === 0 ? 'color:#adb5bd;' : ''); ?>"><?php echo e($pipeline['overdue']); ?></div>
+        <a href="<?php echo e(route('admin.crm.leads', ['status'=>'new'])); ?>" class="stat-tile leads-tile <?php echo e($pipeline['overdue'] > 0 ? 'st-alert' : ''); ?>" id="live-tile-overdue">
+            <div class="st-dot" id="live-dot-overdue" style="background:#ef4444;<?php echo e($pipeline['overdue'] > 0 ? '' : 'display:none;'); ?>"></div>
+            <div class="st-val" data-live="overdue" style="<?php echo e($pipeline['overdue'] === 0 ? 'color:#adb5bd;' : ''); ?>"><?php echo e($pipeline['overdue']); ?></div>
             <div class="st-label">Overdue</div>
             <div class="st-trend">&gt; 3 days no contact</div>
         </a>
@@ -291,12 +295,12 @@
         <div class="overview-divider"></div>
 
         <a href="<?php echo e(route('admin.crm.leads', ['status'=>'converted'])); ?>" class="stat-tile st-good leads-tile">
-            <div class="st-val"><?php echo e($pipeline['converted']); ?></div>
+            <div class="st-val" data-live="converted"><?php echo e($pipeline['converted']); ?></div>
             <div class="st-label">Converted</div>
             <div class="st-bar-track">
-                <div class="st-bar-fill" style="width:<?php echo e($convRate); ?>%;background:#16a34a;"></div>
+                <div class="st-bar-fill" id="live-bar-conv" style="width:<?php echo e($convRate); ?>%;background:#16a34a;"></div>
             </div>
-            <div class="st-trend"><?php echo e($convRate); ?>% rate</div>
+            <div class="st-trend"><span data-live="conv-rate"><?php echo e($convRate); ?></span>% rate</div>
         </a>
 
         
@@ -306,8 +310,8 @@
 
         
         <a href="<?php echo e(route('admin.admissions.index', ['status'=>'pending'])); ?>" class="stat-tile st-warn enrol-tile">
-            <?php if($enrolmentStats['pending'] > 0): ?><div class="st-dot" style="background:#d97706;"></div><?php endif; ?>
-            <div class="st-val" style="<?php echo e($enrolmentStats['pending'] === 0 ? 'color:#adb5bd;' : ''); ?>"><?php echo e($enrolmentStats['pending']); ?></div>
+            <div class="st-dot" id="live-dot-pending" style="background:#d97706;<?php echo e($enrolmentStats['pending'] > 0 ? '' : 'display:none;'); ?>"></div>
+            <div class="st-val" data-live="pending" style="<?php echo e($enrolmentStats['pending'] === 0 ? 'color:#adb5bd;' : ''); ?>"><?php echo e($enrolmentStats['pending']); ?></div>
             <div class="st-label">Pending Review</div>
             <div class="st-trend">Needs decision</div>
         </a>
@@ -315,8 +319,8 @@
         <div class="overview-divider"></div>
 
         <a href="<?php echo e(route('admin.admissions.index', ['status'=>'under_review'])); ?>" class="stat-tile st-violet enrol-tile">
-            <?php if($enrolmentStats['under_review'] > 0): ?><div class="st-dot" style="background:#7c3aed;"></div><?php endif; ?>
-            <div class="st-val" style="<?php echo e($enrolmentStats['under_review'] === 0 ? 'color:#adb5bd;' : ''); ?>"><?php echo e($enrolmentStats['under_review']); ?></div>
+            <div class="st-dot" id="live-dot-review" style="background:#7c3aed;<?php echo e($enrolmentStats['under_review'] > 0 ? '' : 'display:none;'); ?>"></div>
+            <div class="st-val" data-live="under-review" style="<?php echo e($enrolmentStats['under_review'] === 0 ? 'color:#adb5bd;' : ''); ?>"><?php echo e($enrolmentStats['under_review']); ?></div>
             <div class="st-label">Under Review</div>
             <div class="st-trend">In progress</div>
         </a>
@@ -324,18 +328,18 @@
         <div class="overview-divider"></div>
 
         <a href="<?php echo e(route('admin.admissions.index', ['status'=>'approved'])); ?>" class="stat-tile st-good enrol-tile">
-            <div class="st-val"><?php echo e($enrolmentStats['approved']); ?></div>
+            <div class="st-val" data-live="approved"><?php echo e($enrolmentStats['approved']); ?></div>
             <div class="st-label">Approved</div>
             <div class="st-bar-track">
-                <div class="st-bar-fill" style="width:<?php echo e($approvalRate); ?>%;background:#16a34a;"></div>
+                <div class="st-bar-fill" id="live-bar-approval" style="width:<?php echo e($approvalRate); ?>%;background:#16a34a;"></div>
             </div>
-            <div class="st-trend"><?php echo e($approvalRate); ?>% approval</div>
+            <div class="st-trend"><span data-live="approval-rate"><?php echo e($approvalRate); ?></span>% approval</div>
         </a>
 
         <div class="overview-divider"></div>
 
         <a href="<?php echo e(route('admin.admissions.index', ['status'=>'waitlist'])); ?>" class="stat-tile enrol-tile">
-            <div class="st-val" style="color:#6c757d;"><?php echo e($enrolmentStats['waitlist']); ?></div>
+            <div class="st-val" data-live="waitlist" style="color:#6c757d;"><?php echo e($enrolmentStats['waitlist']); ?></div>
             <div class="st-label">Waitlist</div>
             <div class="st-trend">Holding</div>
         </a>
@@ -693,6 +697,145 @@
     // Default: show today
     setActive(todayKey);
     renderPane(todayKey);
+})();
+</script>
+
+<script>
+// ── Silent dashboard polling ──────────────────────────────────────────────
+(function () {
+    const INTERVAL_MS  = 5 * 60 * 1000; // 5 minutes
+    const ENDPOINT     = '<?php echo e(route('admin.live-stats')); ?>';
+    const CSRF         = document.querySelector('meta[name="csrf-token"]').content;
+
+    // Fade a number element to new value
+    function patchVal(selector, newVal) {
+        const el = document.querySelector('[data-live="' + selector + '"]');
+        if (!el || el.textContent.trim() === String(newVal)) return;
+        el.style.transition = 'opacity .25s';
+        el.style.opacity = '0';
+        setTimeout(function () {
+            el.textContent = newVal;
+            el.style.opacity = '1';
+        }, 200);
+    }
+
+    function showStamp() {
+        const stamp = document.getElementById('live-updated-stamp');
+        const text  = document.getElementById('live-updated-text');
+        if (!stamp) return;
+        const now = new Date();
+        const hh  = String(now.getHours()).padStart(2, '0');
+        const mm  = String(now.getMinutes()).padStart(2, '0');
+        text.textContent = 'Updated ' + hh + ':' + mm;
+        stamp.style.opacity = '1';
+    }
+
+    function patchBell(count) {
+        // Find or create the badge inside the bell button
+        const btn = document.querySelector('.hdr-icon-btn[data-bs-toggle="dropdown"] .fa-bell')
+                           ?.closest('.hdr-icon-btn');
+        if (!btn) return;
+        let badge = btn.querySelector('.notif-count-badge');
+        if (count > 0) {
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'notif-count-badge';
+                btn.appendChild(badge);
+            }
+            badge.textContent = count > 9 ? '9+' : count;
+        } else {
+            if (badge) badge.remove();
+        }
+    }
+
+    function patchOverdueTile(count) {
+        const tile = document.getElementById('live-tile-overdue');
+        const dot  = document.getElementById('live-dot-overdue');
+        const val  = document.querySelector('[data-live="overdue"]');
+        if (!tile || !val) return;
+        if (count > 0) {
+            tile.classList.add('st-alert');
+            if (dot) dot.style.display = '';
+            val.style.color = '';
+        } else {
+            tile.classList.remove('st-alert');
+            if (dot) dot.style.display = 'none';
+            val.style.color = '#adb5bd';
+        }
+    }
+
+    function patchNewLeadsDot(count) {
+        const dot = document.getElementById('live-dot-new');
+        if (dot) dot.style.display = count > 0 ? '' : 'none';
+    }
+
+    function patchPendingDot(count) {
+        const dot = document.getElementById('live-dot-pending');
+        if (dot) dot.style.display = count > 0 ? '' : 'none';
+    }
+
+    function patchReviewDot(count) {
+        const dot = document.getElementById('live-dot-review');
+        if (dot) dot.style.display = count > 0 ? '' : 'none';
+    }
+
+    function patchProgressBar(id, pct) {
+        const bar = document.getElementById(id);
+        if (bar) bar.style.width = pct + '%';
+    }
+
+    function applyStats(data) {
+        const p = data.pipeline;
+        const e = data.enrolments;
+
+        // Leads
+        patchVal('new-leads',   p.new);
+        patchVal('tours-booked', p.tour_scheduled);
+        patchVal('overdue',     p.overdue);
+        patchVal('converted',   p.converted);
+        patchVal('conv-rate',   data.conv_rate);
+        patchProgressBar('live-bar-conv', data.conv_rate);
+
+        // Enrolments
+        patchVal('pending',      e.pending);
+        patchVal('under-review', e.under_review);
+        patchVal('approved',     e.approved);
+        patchVal('waitlist',     e.waitlist);
+        patchVal('approval-rate', data.approval_rate);
+        patchProgressBar('live-bar-approval', data.approval_rate);
+
+        // Dots & tile states
+        patchNewLeadsDot(p.new);
+        patchOverdueTile(p.overdue);
+        patchPendingDot(e.pending);
+        patchReviewDot(e.under_review);
+
+        // Bell
+        patchBell(data.unread_notifications);
+
+        showStamp();
+    }
+
+    function poll() {
+        fetch(ENDPOINT, {
+            headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' },
+            credentials: 'same-origin',
+        })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+        .then(applyStats)
+        .catch(function (err) {
+            // Silent — don't surface fetch errors to the user
+            console.warn('[live-stats] poll failed:', err);
+        });
+    }
+
+    // Poll every 5 minutes
+    setInterval(poll, INTERVAL_MS);
+
+    // Also re-poll immediately when the tab becomes visible again after being hidden
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') poll();
+    });
 })();
 </script>
 <?php $__env->stopPush(); ?>

@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\TasksController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\ParentPortalController as AdminParentPortalController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Parent\PortalController as ParentPortalController;
 use App\Http\Controllers\Teacher\PortalController as TeacherPortalController;
 use App\Http\Controllers\Child\PortalController as ChildPortalController;
@@ -98,6 +99,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/live-stats', [DashboardController::class, 'liveStats'])->name('live-stats');
 
     // Admissions
     Route::prefix('admissions')->name('admissions.')->group(function () {
@@ -230,6 +232,13 @@ Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('ad
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
+    // Notifications
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::post('/mark-all-read', [NotificationsController::class, 'markAllRead'])->name('mark-all-read');
+        Route::post('/{id}/read',     [NotificationsController::class, 'markRead'])->name('read');
+        Route::delete('/{id}',        [NotificationsController::class, 'destroy'])->name('destroy');
+    });
+
     // Settings
     Route::prefix('settings')->name('settings.')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('index');
@@ -295,3 +304,12 @@ Route::middleware(['auth', 'role:child|admin|super_admin'])->prefix('child')->na
     Route::get('/gallery', [ChildPortalController::class, 'gallery'])->name('gallery');
     Route::get('/updates', [ChildPortalController::class, 'updates'])->name('updates');
 });
+
+Route::get('reboot', function() {
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    return '✅ Caches cleared!';
+});
+

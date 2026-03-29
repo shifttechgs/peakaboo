@@ -65,10 +65,10 @@
         </div>
         <!-- ── Mobile Menu CTA Buttons ── -->
         <div style="padding: 20px 20px 0; display: flex; flex-direction: column; gap: 10px;">
-            <a href="{{ route('enrol.index') }}"
-               style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:#0077B6;color:#fff;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #0077B6;">
-                <i class="fa-solid fa-pen-to-square"></i> Enrol Now
-            </a>
+{{--            <a href="{{ route('enrol.index') }}"--}}
+{{--               style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:#0077B6;color:#fff;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #0077B6;">--}}
+{{--                <i class="fa-solid fa-pen-to-square"></i> Enrol Now--}}
+{{--            </a>--}}
             <a href="{{ route('book-tour') }}"
                style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:transparent;color:#0077B6;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #0077B6;">
                 <i class="fa-regular fa-calendar-check"></i> Book a Tour
@@ -243,7 +243,7 @@
                         <div class="vs-header__action">
                             <div class="d-none d-xl-inline-flex gap-2 align-items-center">
                                 <a href="{{ route('book-tour') }}" class="pb-header-btn pb-header-btn--outline">Book a Tour</a>
-                                <a href="{{ route('enrol.index') }}" class="pb-header-btn pb-header-btn--primary">Enrol Now</a>
+{{--                                <a href="{{ route('enrol.index') }}" class="pb-header-btn pb-header-btn--primary">Enrol Now</a>--}}
                                 @auth
                                     @php
                                         $portalUrl = match(true) {

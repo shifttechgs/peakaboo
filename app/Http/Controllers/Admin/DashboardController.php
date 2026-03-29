@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Data\MockData;
 use App\Models\Application;
 use App\Models\Lead;
+use Illuminate\Http\JsonResponse;
 
 class DashboardController extends Controller
 {
@@ -83,5 +84,37 @@ class DashboardController extends Controller
             'enrolmentStats',
             'classes'
         ));
+    }
+
+    public function liveStats(): JsonResponse
+    {
+        $pipeline = [];
+        foreach (Lead::STATUSES as $status) {
+            $pipeline[$status] = Lead::where('status', $status)->count();
+        }
+        $pipeline['total']   = Lead::count();
+        $pipeline['overdue'] = Lead::whereIn('status', ['new', 'contacted'])
+            ->where('created_at', '<', now()->subDays(3))
+            ->count();
+
+        $enrolments = [
+            'pending'      => Application::where('status', 'pending')->count(),
+            'under_review' => Application::where('status', 'under_review')->count(),
+            'approved'     => Application::where('status', 'approved')->count(),
+            'waitlist'     => Application::where('status', 'waitlist')->count(),
+            'rejected'     => Application::where('status', 'rejected')->count(),
+        ];
+
+        $totalApps    = array_sum($enrolments);
+        $convRate     = $pipeline['total']    > 0 ? round(($pipeline['converted']    / $pipeline['total'])    * 100) : 0;
+        $approvalRate = $totalApps            > 0 ? round(($enrolments['approved']   / $totalApps)            * 100) : 0;
+
+        return response()->json([
+            'pipeline'               => $pipeline,
+            'enrolments'             => $enrolments,
+            'conv_rate'              => $convRate,
+            'approval_rate'          => $approvalRate,
+            'unread_notifications'   => auth()->user()->unreadNotifications()->count(),
+        ]);
     }
 }

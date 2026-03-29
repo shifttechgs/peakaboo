@@ -9,10 +9,13 @@ use App\Mail\ContactFormMail;
 use App\Mail\TourBookingMail;
 use App\Models\Lead;
 use App\Models\Task;
+use App\Models\User;
+use App\Notifications\NewTourBookingNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class HomeController extends Controller
 {
@@ -224,6 +227,14 @@ class HomeController extends Controller
             Mail::to($lead->email)->send(new BookingReceivedMail($lead));
         } catch (\Exception $e) {
             Log::error('BookingReceivedMail failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
+        }
+
+        // In-app notification for all admin / super_admin users
+        try {
+            $admins = User::role(['admin', 'super_admin'])->get();
+            Notification::send($admins, new NewTourBookingNotification($lead));
+        } catch (\Exception $e) {
+            Log::warning('NewTourBookingNotification failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
         }
 
         return redirect()->route('book-tour')

@@ -299,6 +299,77 @@
             background: var(--danger);
             border: 2px solid #fff;
         }
+        .notif-count-badge {
+            position: absolute;
+            top: 4px; right: 4px;
+            min-width: 16px; height: 16px;
+            background: var(--danger);
+            color: #fff;
+            font-size: .6rem; font-weight: 700;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            padding: 0 3px;
+            border: 2px solid #fff;
+            line-height: 1;
+        }
+
+        /* notifications dropdown */
+        .notif-dropdown {
+            width: 360px;
+            border-radius: 12px;
+            border: 1px solid #eaedf0;
+            box-shadow: 0 12px 40px rgba(0,0,0,.1), 0 2px 6px rgba(0,0,0,.04);
+            margin-top: 6px;
+            padding: 0;
+            overflow: hidden;
+        }
+        .notif-dropdown-head {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 16px 12px;
+            border-bottom: 1px solid #eaedf0;
+        }
+        .notif-dropdown-head .title {
+            font-size: .82rem; font-weight: 700; color: var(--text);
+        }
+        .notif-dropdown-head .mark-all {
+            font-size: .75rem; font-weight: 600; color: var(--primary);
+            text-decoration: none; border: none; background: none; cursor: pointer; padding: 0;
+        }
+        .notif-dropdown-head .mark-all:hover { text-decoration: underline; }
+        .notif-list { max-height: 320px; overflow-y: auto; }
+        .notif-list::-webkit-scrollbar { width: 4px; }
+        .notif-list::-webkit-scrollbar-track { background: transparent; }
+        .notif-list::-webkit-scrollbar-thumb { background: #e4e9f0; border-radius: 4px; }
+        .notif-item {
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 13px 16px;
+            border-bottom: 1px solid #f4f5f7;
+            text-decoration: none;
+            transition: background .12s;
+            cursor: pointer;
+            position: relative;
+        }
+        .notif-item:last-child { border-bottom: none; }
+        .notif-item:hover { background: #f8fafc; }
+        .notif-item.unread { background: #eff8ff; }
+        .notif-item.unread:hover { background: #e0f0fc; }
+        .notif-icon-wrap {
+            width: 34px; height: 34px; border-radius: 8px;
+            background: #dbeafe; color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: .78rem; flex-shrink: 0; margin-top: 1px;
+        }
+        .notif-item.unread .notif-icon-wrap { background: #bfdbfe; }
+        .notif-content { flex: 1; min-width: 0; }
+        .notif-title { font-size: .8rem; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 3px; }
+        .notif-msg { font-size: .75rem; color: var(--text-secondary); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .notif-time { font-size: .68rem; color: #a3acb9; margin-top: 4px; }
+        .unread-pip {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--primary); flex-shrink: 0; margin-top: 6px;
+        }
+        .notif-empty { padding: 32px 16px; text-align: center; color: #a3acb9; font-size: .82rem; }
+        .notif-empty i { font-size: 1.4rem; display: block; margin-bottom: 8px; opacity: .4; }
 
         /* header divider */
         .hdr-divider {
@@ -577,10 +648,55 @@
                     {{-- Search moves here on breadcrumb pages if needed --}}
                 </div>
 
-                <a href="#" class="hdr-icon-btn" title="Notifications">
-                    <i class="far fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </a>
+                @php
+                    $unreadNotifications = auth()->user()->unreadNotifications()->latest()->take(8)->get();
+                    $unreadCount = auth()->user()->unreadNotifications()->count();
+                @endphp
+                <div class="dropdown">
+                    <button class="hdr-icon-btn" data-bs-toggle="dropdown" aria-expanded="false" title="Notifications">
+                        <i class="far fa-bell"></i>
+                        @if($unreadCount > 0)
+                            <span class="notif-count-badge">{{ $unreadCount > 9 ? '9+' : $unreadCount }}</span>
+                        @endif
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end notif-dropdown">
+                        <div class="notif-dropdown-head">
+                            <span class="title">Notifications @if($unreadCount > 0)<span style="color:#94a3b8;font-weight:500;">({{ $unreadCount }} new)</span>@endif</span>
+                            @if($unreadCount > 0)
+                                <form method="POST" action="{{ route('admin.notifications.mark-all-read') }}" style="margin:0;">
+                                    @csrf
+                                    <button type="submit" class="mark-all">Mark all read</button>
+                                </form>
+                            @endif
+                        </div>
+                        <div class="notif-list">
+                            @forelse($unreadNotifications as $notif)
+                                <a href="{{ route('admin.notifications.read', $notif->id) }}"
+                                   class="notif-item unread"
+                                   onclick="event.preventDefault(); document.getElementById('notif-form-{{ $notif->id }}').submit();">
+                                    <div class="notif-icon-wrap">
+                                        <i class="fas fa-calendar-check"></i>
+                                    </div>
+                                    <div class="notif-content">
+                                        <div class="notif-title">{{ $notif->data['title'] ?? 'Notification' }}</div>
+                                        <div class="notif-msg">{{ $notif->data['message'] ?? '' }}</div>
+                                        <div class="notif-time">{{ $notif->created_at->diffForHumans() }}</div>
+                                    </div>
+                                    <div class="unread-pip"></div>
+                                </a>
+                                <form id="notif-form-{{ $notif->id }}" method="POST"
+                                      action="{{ route('admin.notifications.read', $notif->id) }}" style="display:none;">
+                                    @csrf
+                                </form>
+                            @empty
+                                <div class="notif-empty">
+                                    <i class="far fa-bell"></i>
+                                    You're all caught up!
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
 
                 <a href="{{ route('admin.settings.index') }}" class="hdr-icon-btn" title="Settings">
                     <i class="fas fa-cog"></i>

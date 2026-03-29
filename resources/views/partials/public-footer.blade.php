@@ -190,7 +190,7 @@
                     <div class="pb-footer__social">
                         <a href="https://facebook.com/peekaboodaycare" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="https://wa.me/27828989967" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="mailto:peekaboodaycare@telkomsa.net" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+                        <a href="mailto:admin@peekaboodaycare.co.za" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
                     </div>
                 </div>
 
@@ -231,7 +231,7 @@
                         </li>
                         <li class="pb-footer__contact-item">
                             <i class="fa-solid fa-envelope"></i>
-                            <a href="mailto:peekaboodaycare@telkomsa.net">peekaboodaycare@telkomsa.net</a>
+                            <a href="mailto:admin@peekaboodaycare.co.za">admin@peekaboodaycare.co.za</a>
                         </li>
                     </ul>
                     <div class="pb-footer__hours">
