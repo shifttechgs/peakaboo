@@ -2,287 +2,324 @@
 
 @section('title', 'Statements')
 @section('portal-name', 'Parent Portal')
-@section('page-title', 'Account Statements')
+@section('page-title', 'Statements')
 
 @section('sidebar-nav')
-<a href="{{ route('parent.dashboard') }}" class="nav-link">
-    <i class="fas fa-home"></i> Dashboard
-</a>
-<a href="{{ route('parent.children') }}" class="nav-link">
-    <i class="fas fa-child"></i> My Children
-</a>
-<a href="{{ route('parent.calendar') }}" class="nav-link">
-    <i class="fas fa-calendar-alt"></i> Calendar
-</a>
-<a href="{{ route('parent.newsletters') }}" class="nav-link">
-    <i class="fas fa-newspaper"></i> Newsletters
-</a>
-<a href="{{ route('parent.gallery') }}" class="nav-link">
-    <i class="fas fa-images"></i> Photo Gallery
-</a>
-
-<div class="nav-section-title">Billing</div>
-<a href="{{ route('parent.fees') }}" class="nav-link">
-    <i class="fas fa-file-invoice-dollar"></i> Fee Schedule
-</a>
-<a href="{{ route('parent.statements') }}" class="nav-link active">
-    <i class="fas fa-receipt"></i> Statements
-</a>
-
-<div class="nav-section-title">Services</div>
-<a href="{{ route('parent.holiday-care') }}" class="nav-link">
-    <i class="fas fa-umbrella-beach"></i> Holiday Care
-</a>
-<a href="{{ route('parent.extra-murals') }}" class="nav-link">
-    <i class="fas fa-futbol"></i> Extra Murals
-</a>
-<a href="{{ route('parent.snack-box') }}" class="nav-link">
-    <i class="fas fa-apple-alt"></i> Snack Box
-</a>
-
-<div class="nav-section-title">Communication</div>
-<a href="{{ route('parent.messages') }}" class="nav-link">
-    <i class="fas fa-comments"></i> Messages
-</a>
-
-<div class="nav-section-title">Account</div>
-<a href="{{ route('parent.profile') }}" class="nav-link">
-    <i class="fas fa-user-cog"></i> Profile
-</a>
+@include('parent.partials.sidebar')
 @endsection
 
+@push('styles')
+<style>
+/* ─── Micro label ──────────────────────────────────────────────────────── */
+.micro-label {
+    font-size: .63rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.1px; color: #adb5bd; margin-bottom: 12px;
+}
+
+/* ─── Panel ────────────────────────────────────────────────────────────── */
+.panel {
+    background: #fff; border-radius: 16px;
+    box-shadow: 0 1px 8px rgba(0,0,0,.06);
+    border: 1px solid #f0f0f0; overflow: hidden; margin-bottom: 24px;
+}
+.panel-header {
+    padding: 15px 22px; border-bottom: 1px solid #f3f4f6;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.panel-header h6 { margin: 0; font-weight: 700; font-size: .9rem; color: #1a1f2e; }
+
+/* ─── Summary bar ──────────────────────────────────────────────────────── */
+.summary-bar {
+    background: #fff; border-radius: 16px;
+    border: 1px solid #f0f0f0; box-shadow: 0 1px 8px rgba(0,0,0,.06);
+    display: flex; overflow: hidden; margin-bottom: 24px;
+}
+.summary-tile {
+    flex: 1; padding: 18px 16px 20px; text-align: center;
+    border-right: 1px solid #f3f4f6;
+}
+.summary-tile:last-child { border-right: none; }
+.st-val { font-size: 1.5rem; font-weight: 800; line-height: 1; color: #1a1f2e; }
+.st-lbl { font-size: .67rem; font-weight: 600; text-transform: uppercase;
+          letter-spacing: .5px; color: #94a3b8; margin-top: 5px; }
+.st-sub { font-size: .68rem; color: #adb5bd; margin-top: 3px; }
+.st-val.good { color: #16a34a; }
+.st-val.warn { color: #d97706; }
+.st-val.bad  { color: #ef4444; }
+
+/* ─── POP upload card ──────────────────────────────────────────────────── */
+.pop-card {
+    border-radius: 16px; border: 2px dashed #bae6fd;
+    background: #f0f9ff; padding: 32px 28px; text-align: center;
+    transition: border-color .15s, background .15s;
+}
+.pop-card:hover { border-color: #0077B6; background: #e0f2fe; }
+
+/* ─── Transaction table ────────────────────────────────────────────────── */
+.txn-table th {
+    font-size: .68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .5px; color: #adb5bd; background: #fafafa;
+    border-bottom: 1px solid #f0f0f0; padding: 11px 20px; border-top: none;
+}
+.txn-table td {
+    padding: 12px 20px; vertical-align: middle;
+    border-bottom: 1px solid #f8f8f8; font-size: .85rem; color: #374151;
+}
+.txn-table tbody tr:last-child td { border-bottom: none; }
+.txn-table tbody tr:hover td { background: #fafcff; transition: background .1s; }
+.txn-table tfoot td {
+    padding: 13px 20px; background: #f8faff;
+    border-top: 2px solid #e0eeff; border-bottom: none; font-size: .86rem;
+}
+</style>
+@endpush
+
 @section('content')
-<!-- Account Summary -->
-<div class="row g-4 mb-4">
-    <div class="col-md-4">
-        <div class="portal-card h-100">
-            <div class="portal-card-body text-center">
-                <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                    <i class="fas fa-wallet fa-2x text-success"></i>
+
+{{-- ── Page header ──────────────────────────────────────────────────────── --}}
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <div style="font-size:1.1rem;font-weight:800;color:#1a1f2e;letter-spacing:-.2px;">Account Statement</div>
+        <div style="font-size:.82rem;color:#94a3b8;margin-top:2px;">
+            {{ now()->format('F Y') }} &mdash; balance overview & proof of payment
+        </div>
+    </div>
+    <a href="{{ route('parent.fees') }}"
+       class="btn btn-sm rounded-pill px-3"
+       style="background:#f0f9ff;color:#0077B6;border:1.5px solid #bae6fd;font-weight:600;font-size:.8rem;">
+        <i class="fas fa-arrow-left me-1"></i> Fee Schedule
+    </a>
+</div>
+
+{{-- ── Account summary bar ───────────────────────────────────────────────── --}}
+<div class="summary-bar">
+    <div class="summary-tile">
+        <div class="st-val">R {{ number_format($accountSummary['monthly_fee'], 0) }}</div>
+        <div class="st-lbl">Monthly Fee</div>
+        <div class="st-sub">Current plan</div>
+    </div>
+    <div class="summary-tile">
+        <div class="st-val good">R {{ number_format($accountSummary['last_payment'], 0) }}</div>
+        <div class="st-lbl">Last Payment</div>
+        <div class="st-sub">{{ $accountSummary['last_payment_date'] ?? '—' }}</div>
+    </div>
+    <div class="summary-tile">
+        <div class="st-val {{ $accountSummary['balance'] > 0 ? 'bad' : 'good' }}">
+            R {{ number_format($accountSummary['balance'], 0) }}
+        </div>
+        <div class="st-lbl">Balance</div>
+        <div class="st-sub">{{ $accountSummary['balance'] > 0 ? 'Outstanding' : 'Up to date' }}</div>
+    </div>
+    <div class="summary-tile">
+        <div class="st-val {{ isset($accountSummary['next_due_days']) && $accountSummary['next_due_days'] <= 7 ? 'warn' : '' }}"
+             style="font-size:1rem;">
+            {{ $accountSummary['next_due'] }}
+        </div>
+        <div class="st-lbl">Next Due</div>
+        <div class="st-sub">
+            @if(isset($accountSummary['next_due_days']) && $accountSummary['next_due_days'] >= 0)
+                in {{ $accountSummary['next_due_days'] }} day(s)
+            @else &mdash; @endif
+        </div>
+    </div>
+</div>
+
+{{-- ── Upload proof of payment ──────────────────────────────────────────── --}}
+<div class="micro-label"><i class="fas fa-upload me-1"></i> Proof of Payment</div>
+<div class="panel">
+    <div class="panel-header">
+        <h6>Upload Proof of Payment (POP)</h6>
+        <span style="font-size:.74rem;color:#94a3b8;">PDF, JPG or PNG &mdash; max 5 MB</span>
+    </div>
+    <div style="padding:22px 24px;">
+        <form method="POST" action="{{ route('parent.fees.upload-pop') }}" enctype="multipart/form-data">
+            @csrf
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label" style="font-size:.78rem;font-weight:700;color:#374151;">Payment Amount</label>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text" style="font-weight:600;background:#f8faff;border-color:#e0eeff;color:#0077B6;">R</span>
+                        <input type="number" name="amount" class="form-control form-control-sm @error('amount') is-invalid @enderror"
+                               placeholder="0.00" step="0.01" min="1"
+                               style="border-color:#e0eeff;"
+                               value="{{ old('amount') }}" required>
+                    </div>
+                    @error('amount')<div class="invalid-feedback d-block" style="font-size:.74rem;">{{ $message }}</div>@enderror
                 </div>
-                <h6 class="text-muted mb-1">Current Balance</h6>
-                <div class="h3 fw-bold {{ $accountSummary['balance'] > 0 ? 'text-danger' : 'text-success' }}">
-                    R {{ number_format(abs($accountSummary['balance']), 2) }}
-                    @if($accountSummary['balance'] < 0)
-                    <small class="badge bg-success">Credit</small>
-                    @elseif($accountSummary['balance'] > 0)
-                    <small class="badge bg-danger">Outstanding</small>
+                <div class="col-md-3">
+                    <label class="form-label" style="font-size:.78rem;font-weight:700;color:#374151;">Payment Date</label>
+                    <input type="date" name="date" class="form-control form-control-sm @error('date') is-invalid @enderror"
+                           style="border-color:#e0eeff;"
+                           value="{{ old('date', date('Y-m-d')) }}" required>
+                    @error('date')<div class="invalid-feedback" style="font-size:.74rem;">{{ $message }}</div>@enderror
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" style="font-size:.78rem;font-weight:700;color:#374151;">Bank Reference</label>
+                    <input type="text" name="reference" class="form-control form-control-sm @error('reference') is-invalid @enderror"
+                           placeholder="e.g. EFT-123456"
+                           style="border-color:#e0eeff;font-family:monospace;"
+                           value="{{ old('reference') }}" required>
+                    @error('reference')<div class="invalid-feedback" style="font-size:.74rem;">{{ $message }}</div>@enderror
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" style="font-size:.78rem;font-weight:700;color:#374151;">POP File</label>
+                    <input type="file" name="pop_file" class="form-control form-control-sm @error('pop_file') is-invalid @enderror"
+                           accept=".pdf,.jpg,.jpeg,.png"
+                           style="border-color:#e0eeff;" required>
+                    @error('pop_file')<div class="invalid-feedback" style="font-size:.74rem;">{{ $message }}</div>@enderror
+                </div>
+            </div>
+
+            {{-- Hint row --}}
+            <div class="d-flex align-items-center justify-content-between mt-3 pt-3" style="border-top:1px solid #f3f4f6;">
+                <div style="font-size:.76rem;color:#94a3b8;">
+                    <i class="fas fa-info-circle me-1" style="color:#bae6fd;"></i>
+                    Use <strong style="color:#374151;font-family:monospace;">{{ $children->first()['child_number'] ?? $children->first()['reference'] ?? 'your child number' }}</strong> as your EFT reference.
+                    We'll verify and update your account within <strong style="color:#374151;">1–2 business days</strong>.
+                </div>
+                <button type="submit" class="btn btn-sm rounded-pill px-4 ms-3"
+                        style="background:#0077B6;color:#fff;border:none;font-weight:600;font-size:.8rem;white-space:nowrap;flex-shrink:0;">
+                    <i class="fas fa-upload me-1"></i> Submit POP
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- ── Bank details quick-ref ───────────────────────────────────────────── --}}
+<div class="micro-label"><i class="fas fa-university me-1"></i> Payment Details</div>
+<div class="panel">
+    <div style="display:flex;flex-wrap:wrap;padding:4px 0 4px;">
+        @foreach([
+            ['Bank',           'First National Bank (FNB)'],
+            ['Account Name',   'Peekaboo Daycare'],
+            ['Account Number', '62123456789'],
+            ['Branch Code',    '250655'],
+            ['Reference',      $children->first()['child_number'] ?? $children->first()['reference'] ?? 'Your Child Number'],
+        ] as [$lbl, $val])
+        <div style="flex:1;min-width:140px;padding:14px 22px;border-right:1px solid #f3f4f6;">
+            <div style="font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;margin-bottom:3px;">{{ $lbl }}</div>
+            <div style="font-size:.87rem;font-weight:700;color:#{{ $lbl === 'Reference' ? '0077B6' : '1a1f2e' }};{{ in_array($lbl, ['Account Number','Branch Code']) ? 'font-family:monospace;letter-spacing:.5px;' : '' }}">
+                {{ $val }}
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+
+{{-- ── Current month statement ──────────────────────────────────────────── --}}
+<div class="micro-label"><i class="fas fa-file-invoice me-1"></i> {{ now()->format('F Y') }} Statement</div>
+<div class="panel">
+    <div class="panel-header">
+        <h6>Transaction History</h6>
+        <span style="font-size:.74rem;color:#94a3b8;">
+            Balance:
+            <strong style="color:{{ $accountSummary['balance'] > 0 ? '#ef4444' : '#16a34a' }};">
+                R {{ number_format($accountSummary['balance'], 2) }}
+                {{ $accountSummary['balance'] == 0 ? '(Paid up)' : ($accountSummary['balance'] < 0 ? 'CR' : 'Outstanding') }}
+            </strong>
+        </span>
+    </div>
+    @php
+        // Build transaction lines: fee charges + real payment records
+        $transactions = [];
+
+        // Current month fee debits
+        foreach ($accountSummary['fee_lines'] as $line) {
+            $transactions[] = [
+                'date'   => now()->startOfMonth()->format('Y-m-d'),
+                'desc'   => $line['desc'] . ' — ' . now()->format('F Y'),
+                'ref'    => $line['reference'],
+                'debit'  => $line['amount'],
+                'credit' => 0,
+                'status' => 'charge',
+            ];
+        }
+
+        // Real payment rows (verified + pending + rejected)
+        foreach ($payments as $pmt) {
+            $transactions[] = [
+                'date'   => $pmt->payment_date->format('Y-m-d'),
+                'desc'   => match($pmt->status) {
+                    'verified' => 'Payment Received — Thank you',
+                    'pending'  => 'POP Submitted — Awaiting Verification',
+                    'rejected' => 'Payment Rejected — ' . ($pmt->admin_note ? strip_tags($pmt->admin_note) : 'Contact admin'),
+                    default    => 'Payment',
+                },
+                'ref'    => $pmt->reference,
+                'debit'  => 0,
+                'credit' => $pmt->status === 'verified' ? (float) $pmt->amount : 0,
+                'status' => $pmt->status,
+            ];
+        }
+
+        // Sort all rows by date ascending
+        usort($transactions, fn($a, $b) => strcmp($a['date'], $b['date']));
+
+        $runningBalance = 0;
+    @endphp
+    <table class="table txn-table mb-0">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Reference</th>
+                <th class="text-end">Debit</th>
+                <th class="text-end">Credit</th>
+                <th class="text-end">Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($transactions as $txn)
+            @php $runningBalance = $runningBalance + $txn['debit'] - $txn['credit']; @endphp
+            <tr>
+                <td style="color:#64748b;white-space:nowrap;">{{ \Carbon\Carbon::parse($txn['date'])->format('d M Y') }}</td>
+                <td style="font-weight:600;color:#1a1f2e;">
+                    {{ $txn['desc'] }}
+                    @if(($txn['status'] ?? '') === 'pending')
+                        <span style="font-size:.67rem;font-weight:700;background:#fff7ed;color:#d97706;border-radius:999px;padding:2px 8px;margin-left:6px;">Under Review</span>
+                    @elseif(($txn['status'] ?? '') === 'rejected')
+                        <span style="font-size:.67rem;font-weight:700;background:#fee2e2;color:#ef4444;border-radius:999px;padding:2px 8px;margin-left:6px;">Rejected</span>
+                    @endif
+                </td>
+                <td><code style="font-size:.78rem;color:#64748b;">{{ $txn['ref'] }}</code></td>
+                <td class="text-end">
+                    @if($txn['debit'] > 0)
+                        <span style="color:#ef4444;font-weight:600;">R {{ number_format($txn['debit'], 2) }}</span>
                     @else
-                    <small class="badge bg-success">Paid</small>
+                        <span style="color:#d1d5db;">—</span>
                     @endif
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="portal-card h-100">
-            <div class="portal-card-body text-center">
-                <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                    <i class="fas fa-calendar-check fa-2x text-primary"></i>
-                </div>
-                <h6 class="text-muted mb-1">Last Payment</h6>
-                <div class="h3 fw-bold text-primary">R {{ number_format($accountSummary['last_payment'], 2) }}</div>
-                <small class="text-muted">{{ $accountSummary['last_payment_date'] ?? 'Jan 5, 2026' }}</small>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="portal-card h-100">
-            <div class="portal-card-body text-center">
-                <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                    <i class="fas fa-clock fa-2x text-warning"></i>
-                </div>
-                <h6 class="text-muted mb-1">Next Due Date</h6>
-                <div class="h3 fw-bold text-warning">{{ $accountSummary['next_due'] }}</div>
-                <small class="text-muted">Monthly fee: R {{ number_format($accountSummary['monthly_fee'], 2) }}</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Quick Actions -->
-<div class="portal-card mb-4">
-    <div class="portal-card-body">
-        <div class="row g-3">
-            <div class="col-md-4">
-                <button class="btn btn-portal btn-portal-primary w-100" data-bs-toggle="modal" data-bs-target="#uploadPopModal">
-                    <i class="fas fa-upload me-2"></i> Upload Proof of Payment
-                </button>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="btn btn-outline-primary w-100">
-                    <i class="fas fa-download me-2"></i> Download Current Statement
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="btn btn-outline-secondary w-100">
-                    <i class="fas fa-envelope me-2"></i> Email Statement
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Statement -->
-<div class="portal-card mb-4">
-    <div class="portal-card-header d-flex justify-content-between align-items-center">
-        <span><i class="fas fa-file-invoice me-2"></i> Statement - {{ date('F Y') }}</span>
-        <select class="form-select form-select-sm w-auto">
-            <option>January 2026</option>
-            <option>December 2025</option>
-            <option>November 2025</option>
-        </select>
-    </div>
-    <div class="portal-card-body p-0">
-        <div class="table-responsive">
-            <table class="table mb-0">
-                <thead class="bg-light">
-                    <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Reference</th>
-                        <th class="text-end">Debit</th>
-                        <th class="text-end">Credit</th>
-                        <th class="text-end">Balance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $balance = 0;
-                        $transactions = [
-                            ['date' => '2026-01-01', 'desc' => 'Monthly Fee - January', 'ref' => 'INV-2026-001', 'debit' => 4200, 'credit' => 0],
-                            ['date' => '2026-01-01', 'desc' => 'Snack Box - January', 'ref' => 'INV-2026-001', 'debit' => 400, 'credit' => 0],
-                            ['date' => '2026-01-05', 'desc' => 'Payment Received - Thank You', 'ref' => 'EFT-123456', 'debit' => 0, 'credit' => 4600],
-                        ];
-                    @endphp
-                    @foreach($transactions as $txn)
-                    @php
-                        $balance = $balance + $txn['debit'] - $txn['credit'];
-                    @endphp
-                    <tr>
-                        <td>{{ date('d M Y', strtotime($txn['date'])) }}</td>
-                        <td>{{ $txn['desc'] }}</td>
-                        <td><code>{{ $txn['ref'] }}</code></td>
-                        <td class="text-end {{ $txn['debit'] > 0 ? 'text-danger' : '' }}">
-                            {{ $txn['debit'] > 0 ? 'R ' . number_format($txn['debit'], 2) : '-' }}
-                        </td>
-                        <td class="text-end {{ $txn['credit'] > 0 ? 'text-success' : '' }}">
-                            {{ $txn['credit'] > 0 ? 'R ' . number_format($txn['credit'], 2) : '-' }}
-                        </td>
-                        <td class="text-end fw-bold {{ $balance > 0 ? 'text-danger' : ($balance < 0 ? 'text-success' : '') }}">
-                            R {{ number_format(abs($balance), 2) }} {{ $balance < 0 ? 'CR' : '' }}
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-                <tfoot class="bg-light">
-                    <tr>
-                        <td colspan="5" class="text-end fw-bold">Current Balance:</td>
-                        <td class="text-end fw-bold {{ $balance > 0 ? 'text-danger' : 'text-success' }}">
-                            R {{ number_format(abs($balance), 2) }} {{ $balance < 0 ? 'CR' : ($balance == 0 ? '(Paid)' : '') }}
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- Payment History -->
-<div class="portal-card">
-    <div class="portal-card-header">
-        <i class="fas fa-history me-2"></i> Payment History
-    </div>
-    <div class="portal-card-body p-0">
-        <div class="table-responsive">
-            <table class="table mb-0">
-                <thead class="bg-light">
-                    <tr>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Method</th>
-                        <th>Reference</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($paymentHistory ?? [] as $payment)
-                    <tr>
-                        <td>{{ $payment['date'] }}</td>
-                        <td class="fw-bold text-success">R {{ number_format($payment['amount'], 2) }}</td>
-                        <td>{{ $payment['method'] }}</td>
-                        <td><code>{{ $payment['reference'] }}</code></td>
-                        <td><span class="badge bg-success">{{ $payment['status'] }}</span></td>
-                    </tr>
-                    @endforeach
-                    @if(empty($paymentHistory))
-                    <tr>
-                        <td>05 Jan 2026</td>
-                        <td class="fw-bold text-success">R 4,600.00</td>
-                        <td>EFT</td>
-                        <td><code>EFT-123456</code></td>
-                        <td><span class="badge bg-success">Confirmed</span></td>
-                    </tr>
-                    <tr>
-                        <td>03 Dec 2025</td>
-                        <td class="fw-bold text-success">R 4,600.00</td>
-                        <td>EFT</td>
-                        <td><code>EFT-122345</code></td>
-                        <td><span class="badge bg-success">Confirmed</span></td>
-                    </tr>
-                    <tr>
-                        <td>02 Nov 2025</td>
-                        <td class="fw-bold text-success">R 4,600.00</td>
-                        <td>EFT</td>
-                        <td><code>EFT-121234</code></td>
-                        <td><span class="badge bg-success">Confirmed</span></td>
-                    </tr>
+                </td>
+                <td class="text-end">
+                    @if($txn['credit'] > 0)
+                        <span style="color:#16a34a;font-weight:600;">R {{ number_format($txn['credit'], 2) }}</span>
+                    @else
+                        <span style="color:#d1d5db;">—</span>
                     @endif
-                </tbody>
-            </table>
-        </div>
-    </div>
+                </td>
+                <td class="text-end">
+                    <span style="font-weight:700;color:{{ $runningBalance > 0 ? '#ef4444' : '#16a34a' }};">
+                        R {{ number_format(abs($runningBalance), 2) }}
+                        @if($runningBalance < 0) <small>CR</small> @endif
+                    </span>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-end" style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;">
+                    Closing Balance
+                </td>
+                <td colspan="2" class="text-end">
+                    <span style="font-size:1rem;font-weight:800;color:{{ $runningBalance > 0 ? '#ef4444' : '#16a34a' }};">
+                        R {{ number_format(abs($runningBalance), 2) }}
+                        {{ $runningBalance == 0 ? '(Paid up)' : ($runningBalance < 0 ? 'CR' : '') }}
+                    </span>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
 </div>
 
-<!-- Upload POP Modal -->
-<div class="modal fade" id="uploadPopModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Upload Proof of Payment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Payment Amount</label>
-                        <div class="input-group">
-                            <span class="input-group-text">R</span>
-                            <input type="number" class="form-control" placeholder="0.00" step="0.01">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Payment Date</label>
-                        <input type="date" class="form-control" value="{{ date('Y-m-d') }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Bank Reference</label>
-                        <input type="text" class="form-control" placeholder="Enter bank reference">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Upload POP</label>
-                        <input type="file" class="form-control" accept="image/*,.pdf">
-                        <small class="text-muted">Accepted: JPG, PNG, PDF (max 5MB)</small>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-portal btn-portal-primary">
-                    <i class="fas fa-upload me-2"></i> Submit POP
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

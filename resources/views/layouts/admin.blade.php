@@ -7,14 +7,14 @@
     <title>@yield('title', 'Admin') - Peekaboo Admin</title>
 
     <link rel="icon" type="image/png" href="{{ asset('assets/img/peekaboo/logo.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}">
 
     <style>
         :root {
-            --sidebar-width: 260px;
-            --header-height: 65px;
+            --sidebar-w: 252px;
+            --header-h: 56px;
             --primary: #0077B6;
             --primary-dark: #005a8c;
             --secondary: #6c757d;
@@ -25,478 +25,714 @@
             --dark: #2D3436;
             --light: #f8f9fa;
             --border: #e9ecef;
+            --text: #1a1a2e;
+            --text-secondary: #697386;
+            --bg: #f7f8fa;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; }
+        body { font-family: 'Inter', -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f5f6fa;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Sidebar */
-        .admin-sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: var(--sidebar-width);
-            height: 100vh;
-            background: linear-gradient(180deg, var(--dark) 0%, #1a1f20 100%);
-            color: white;
+        /* ───────────── SIDEBAR ───────────── */
+        .sb {
+            position: fixed; top: 0; left: 0;
+            width: var(--sidebar-w); height: 100vh;
+            background: #fff;
+            border-right: 1px solid #eaedf0;
+            display: flex; flex-direction: column;
             z-index: 1000;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
+            transition: transform .25s ease;
         }
 
-        .sidebar-brand {
-            padding: 20px;
+        /* brand */
+        .sb-brand {
+            padding: 22px 20px 18px;
+            border-bottom: 1px solid #eaedf0;
             display: flex;
             align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            gap: 14px;
+            background: linear-gradient(135deg, #f0f7ff 0%, #fef1f2 100%);
+            position: relative;
         }
-
-        .sidebar-brand img {
-            height: 45px;
-            filter: brightness(0) invert(1);
+        .sb-brand::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), #00B4D8, #FFB5BA);
+            border-radius: 2px;
         }
-
-        .sidebar-brand span {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .sidebar-nav {
-            padding: 20px 0;
-        }
-
-        .nav-section {
-            padding: 0 15px;
-            margin-bottom: 10px;
-        }
-
-        .nav-section-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.4);
-            padding: 10px 15px;
-            margin-bottom: 5px;
-        }
-
-        .nav-item {
-            margin-bottom: 2px;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .nav-link:hover {
-            background: rgba(255,255,255,0.1);
-            color: white;
-        }
-
-        .nav-link.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .nav-link i {
-            width: 20px;
-            text-align: center;
-        }
-
-        .nav-link .badge {
-            margin-left: auto;
-            font-size: 0.7rem;
-        }
-
-        /* Main Content */
-        .admin-main {
-            margin-left: var(--sidebar-width);
-            min-height: 100vh;
-        }
-
-        .admin-header {
-            position: sticky;
-            top: 0;
-            background: white;
-            height: var(--header-height);
-            padding: 0 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
-            z-index: 100;
-        }
-
-        .admin-content {
-            padding: 30px;
-        }
-
-        /* Cards */
-        .stat-card {
-            background: white;
+        .sb-brand-logo {
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
-
-        .stat-card .icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 119, 182, 0.15);
+            border: 2px solid #fff;
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+        }
+        .sb-brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .sb-brand-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 0;
+        }
+        .sb-brand-title {
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--dark);
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+        .sb-brand-subtitle {
+            font-size: .65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            line-height: 1.3;
         }
 
-        .stat-card .value {
-            font-size: 2rem;
-            font-weight: 700;
+        /* scrollable nav */
+        .sb-nav {
+            flex: 1; overflow-y: auto; padding: 4px 0;
+            scrollbar-width: none;
+        }
+        .sb-nav::-webkit-scrollbar { display: none; }
+
+        /* section heading */
+        .sb-heading {
+            padding: 20px 20px 6px;
+            font-size: .65rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: .08em; color: #a3acb9;
+        }
+        .sb-heading:first-child { padding-top: 8px; }
+
+        /* link */
+        .sb-link {
+            display: flex; align-items: center; gap: 10px;
+            padding: 7px 20px; margin: 1px 8px;
+            font-size: .835rem; font-weight: 500; color: var(--text-secondary);
+            text-decoration: none; border-radius: 6px;
+            transition: background .12s, color .12s;
+            position: relative;
+        }
+        .sb-link i { width: 16px; text-align: center; font-size: .8rem; opacity: .55; transition: opacity .12s; }
+        .sb-link:hover { background: #f4f5f7; color: var(--text); }
+        .sb-link:hover i { opacity: .85; }
+
+        .sb-link.active {
+            background: #f0f7ff; color: var(--primary); font-weight: 600;
+        }
+        .sb-link.active i { opacity: 1; color: var(--primary); }
+        .sb-link.active::before {
+            content: ''; position: absolute; left: -8px; top: 6px; bottom: 6px;
+            width: 3px; border-radius: 0 3px 3px 0; background: var(--primary);
+        }
+
+        /* count badge */
+        .sb-count {
+            margin-left: auto;
+            min-width: 18px; height: 18px; padding: 0 5px;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: .65rem; font-weight: 700; border-radius: 9px;
+            background: #eff1f3; color: var(--text-secondary);
+        }
+        .sb-link.active .sb-count { background: #dbeafe; color: var(--primary); }
+
+        /* divider */
+        .sb-divider { height: 1px; background: #eaedf0; margin: 8px 20px; }
+
+        /* footer */
+        .sb-footer {
+            border-top: 1px solid #eaedf0;
+            padding: 14px 16px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .sb-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: var(--primary); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .72rem; font-weight: 700; flex-shrink: 0;
+        }
+        .sb-footer-name { font-size: .8rem; font-weight: 600; color: var(--text); line-height: 1.2; }
+        .sb-footer-role { font-size: .68rem; color: #a3acb9; }
+        .sb-footer-info { flex: 1; min-width: 0; }
+        .sb-footer-info > * { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+        .sb-logout {
+            width: 28px; height: 28px; border-radius: 6px;
+            border: 1px solid #eaedf0; background: #fff;
+            display: flex; align-items: center; justify-content: center;
+            color: #a3acb9; font-size: .7rem; cursor: pointer;
+            transition: border-color .15s, color .15s;
+        }
+        .sb-logout:hover { border-color: #d1d5db; color: var(--danger); }
+
+        /* ───────────── MAIN ───────────── */
+        .admin-main { margin-left: var(--sidebar-w); min-height: 100vh; }
+
+        .admin-header {
+            position: sticky; top: 0; height: var(--header-h);
+            background: rgba(255,255,255,.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #eaedf0;
+            padding: 0 28px; display: flex; align-items: center;
+            justify-content: space-between; z-index: 100;
+        }
+
+        .admin-content { padding: 28px; }
+
+        /* header left */
+        .hdr-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* breadcrumb */
+        .hdr-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: .8125rem;
+            color: var(--text-secondary);
+        }
+        .hdr-breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color .15s;
+        }
+        .hdr-breadcrumb a:hover { color: var(--primary); }
+        .hdr-breadcrumb .separator {
+            color: #d1d5db;
+            font-size: .65rem;
+        }
+        .hdr-breadcrumb .current {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* header search */
+        .hdr-search-wrap {
+            position: relative;
+        }
+        .hdr-search-wrap .search-icon {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a3acb9;
+            font-size: .78rem;
+            pointer-events: none;
+            transition: color .15s;
+        }
+        .hdr-search {
+            border: 1px solid #e3e5e8;
+            border-radius: 8px;
+            padding: 7px 12px 7px 32px;
+            font-size: .8125rem;
+            font-family: inherit;
+            width: 240px;
+            background: var(--bg);
+            color: var(--text);
+            transition: border-color .15s, background .15s, box-shadow .15s, width .2s;
+        }
+        .hdr-search:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(0,119,182,.08);
+            width: 280px;
+        }
+        .hdr-search:focus + .search-icon,
+        .hdr-search-wrap:focus-within .search-icon { color: var(--primary); }
+        .hdr-search::placeholder { color: #a3acb9; }
+
+        /* header right */
+        .hdr-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* header icon button (bell, etc.) */
+        .hdr-icon-btn {
+            position: relative;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            background: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: .95rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background .15s, border-color .15s, color .15s;
+        }
+        .hdr-icon-btn:hover {
+            background: #f4f5f7;
+            border-color: #eaedf0;
+            color: var(--text);
+        }
+        .hdr-icon-btn .notif-dot {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--danger);
+            border: 2px solid #fff;
+        }
+        .notif-count-badge {
+            position: absolute;
+            top: 4px; right: 4px;
+            min-width: 16px; height: 16px;
+            background: var(--danger);
+            color: #fff;
+            font-size: .6rem; font-weight: 700;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            padding: 0 3px;
+            border: 2px solid #fff;
             line-height: 1;
         }
 
-        .stat-card .label {
-            color: var(--secondary);
-            font-size: 0.85rem;
-        }
-
-        /* Tables */
-        .admin-table {
-            background: white;
+        /* notifications dropdown */
+        .notif-dropdown {
+            width: 360px;
             border-radius: 12px;
+            border: 1px solid #eaedf0;
+            box-shadow: 0 12px 40px rgba(0,0,0,.1), 0 2px 6px rgba(0,0,0,.04);
+            margin-top: 6px;
+            padding: 0;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        }
+        .notif-dropdown-head {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 16px 12px;
+            border-bottom: 1px solid #eaedf0;
+        }
+        .notif-dropdown-head .title {
+            font-size: .82rem; font-weight: 700; color: var(--text);
+        }
+        .notif-dropdown-head .mark-all {
+            font-size: .75rem; font-weight: 600; color: var(--primary);
+            text-decoration: none; border: none; background: none; cursor: pointer; padding: 0;
+        }
+        .notif-dropdown-head .mark-all:hover { text-decoration: underline; }
+        .notif-list { max-height: 320px; overflow-y: auto; }
+        .notif-list::-webkit-scrollbar { width: 4px; }
+        .notif-list::-webkit-scrollbar-track { background: transparent; }
+        .notif-list::-webkit-scrollbar-thumb { background: #e4e9f0; border-radius: 4px; }
+        .notif-item {
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 13px 16px;
+            border-bottom: 1px solid #f4f5f7;
+            text-decoration: none;
+            transition: background .12s;
+            cursor: pointer;
+            position: relative;
+        }
+        .notif-item:last-child { border-bottom: none; }
+        .notif-item:hover { background: #f8fafc; }
+        .notif-item.unread { background: #eff8ff; }
+        .notif-item.unread:hover { background: #e0f0fc; }
+        .notif-icon-wrap {
+            width: 34px; height: 34px; border-radius: 8px;
+            background: #dbeafe; color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: .78rem; flex-shrink: 0; margin-top: 1px;
+        }
+        .notif-item.unread .notif-icon-wrap { background: #bfdbfe; }
+        .notif-content { flex: 1; min-width: 0; }
+        .notif-title { font-size: .8rem; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 3px; }
+        .notif-msg { font-size: .75rem; color: var(--text-secondary); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .notif-time { font-size: .68rem; color: #a3acb9; margin-top: 4px; }
+        .unread-pip {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--primary); flex-shrink: 0; margin-top: 6px;
+        }
+        .notif-empty { padding: 32px 16px; text-align: center; color: #a3acb9; font-size: .82rem; }
+        .notif-empty i { font-size: 1.4rem; display: block; margin-bottom: 8px; opacity: .4; }
+
+        /* header divider */
+        .hdr-divider {
+            width: 1px;
+            height: 24px;
+            background: #eaedf0;
+            margin: 0 8px;
         }
 
-        .admin-table .table {
-            margin-bottom: 0;
-        }
-
-        .admin-table th {
-            background: #f8f9fa;
-            font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 2px solid var(--border);
-        }
-
-        .admin-table td {
-            vertical-align: middle;
-        }
-
-        /* Badges */
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .status-pending { background: #fff3cd; color: #856404; }
-        .status-approved { background: #d4edda; color: #155724; }
-        .status-rejected { background: #f8d7da; color: #721c24; }
-        .status-waiting_list { background: #d1ecf1; color: #0c5460; }
-
-        /* Buttons */
-        .btn-admin {
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-
-        .btn-admin-primary {
-            background: var(--primary);
-            color: white;
-            border: none;
-        }
-
-        .btn-admin-primary:hover {
-            background: var(--primary-dark);
-            color: white;
-        }
-
-        /* Page Title */
-        .page-title {
-            margin-bottom: 30px;
-        }
-
-        .page-title h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin: 0;
-        }
-
-        .page-title p {
-            color: var(--secondary);
-            margin: 5px 0 0;
-            font-size: 0.9rem;
-        }
-
-        /* Charts placeholder */
-        .chart-container {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-        }
-
-        /* User dropdown */
-        .user-dropdown {
+        /* header user */
+        .hdr-user {
             display: flex;
             align-items: center;
             gap: 10px;
             cursor: pointer;
-        }
-
-        .user-dropdown img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* Toast */
-        .admin-toast {
-            position: fixed;
-            top: 80px;
-            right: 30px;
-            z-index: 9999;
-            padding: 15px 25px;
+            padding: 4px 8px 4px 4px;
             border-radius: 8px;
-            color: white;
-            font-weight: 500;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            animation: slideInRight 0.3s ease;
+            border: 1px solid transparent;
+            transition: background .15s, border-color .15s;
+        }
+        .hdr-user:hover {
+            background: #f4f5f7;
+            border-color: #eaedf0;
+        }
+        .hdr-user-avatar {
+            width: 32px; height: 32px; border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary) 0%, #00B4D8 100%);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .7rem; font-weight: 700; flex-shrink: 0;
+        }
+        .hdr-user-info {
+            line-height: 1.2;
+        }
+        .hdr-user-name {
+            font-size: .8125rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .hdr-user-role {
+            font-size: .6875rem;
+            color: #a3acb9;
+        }
+        .hdr-user-chevron {
+            font-size: .55rem;
+            color: #a3acb9;
+            margin-left: 2px;
+            transition: transform .2s;
+        }
+        .hdr-user[aria-expanded="true"] .hdr-user-chevron {
+            transform: rotate(180deg);
         }
 
-        .admin-toast.success { background: var(--success); }
-        .admin-toast.error { background: var(--danger); }
-        .admin-toast.info { background: var(--info); }
-
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        /* dropdown menu */
+        .hdr-dropdown {
+            border-radius: 10px;
+            border: 1px solid #eaedf0;
+            box-shadow: 0 8px 30px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.04);
+            margin-top: 6px;
+            padding: 4px;
+            min-width: 200px;
+            overflow: hidden;
         }
-
-        /* Loading */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255,255,255,0.8);
+        .hdr-dropdown .dropdown-item {
+            font-size: .8125rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: var(--text);
             display: flex;
             align-items: center;
-            justify-content: center;
-            z-index: 9999;
+            gap: 10px;
+            transition: background .12s;
+        }
+        .hdr-dropdown .dropdown-item:hover {
+            background: #f4f5f7;
+        }
+        .hdr-dropdown .dropdown-item i {
+            width: 16px;
+            text-align: center;
+            font-size: .78rem;
+            color: #a3acb9;
+        }
+        .hdr-dropdown .dropdown-divider {
+            margin: 4px 0;
+            border-color: #eaedf0;
+        }
+        .hdr-dropdown .dropdown-item.text-danger {
+            color: var(--danger);
+        }
+        .hdr-dropdown .dropdown-item.text-danger i {
+            color: var(--danger);
         }
 
+        /* stat cards */
+        .stat-card {
+            background: #fff; border-radius: 10px; padding: 22px;
+            border: 1px solid #eaedf0;
+            transition: box-shadow .2s;
+        }
+        .stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.05); }
+        .stat-card .icon {
+            width: 44px; height: 44px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.15rem;
+        }
+        .stat-card .value { font-size: 1.75rem; font-weight: 700; line-height: 1; }
+        .stat-card .label { color: var(--text-secondary); font-size: .82rem; }
+
+        /* tables */
+        .admin-table { background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #eaedf0; }
+        .admin-table .table { margin-bottom: 0; }
+        .admin-table th {
+            background: #fafbfc; font-weight: 600; font-size: .75rem;
+            text-transform: uppercase; letter-spacing: .04em; color: #a3acb9;
+            border-bottom: 1px solid #eaedf0;
+        }
+        .admin-table td { vertical-align: middle; }
+
+        /* badges */
+        .status-badge { padding: 5px 10px; border-radius: 6px; font-size: .72rem; font-weight: 600; }
+        .status-pending { background: #fef9c3; color: #854d0e; }
+        .status-approved { background: #dcfce7; color: #166534; }
+        .status-rejected { background: #fee2e2; color: #991b1b; }
+        .status-waiting_list { background: #e0f2fe; color: #075985; }
+
+        /* buttons */
+        .btn-admin { padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: .84rem; transition: all .15s; }
+        .btn-admin-primary { background: var(--primary); color: #fff; border: none; }
+        .btn-admin-primary:hover { background: var(--primary-dark); color: #fff; }
+
+        /* page title */
+        .page-title { margin-bottom: 28px; }
+        .page-title h1 { font-size: 1.35rem; font-weight: 700; color: var(--text); margin: 0; }
+        .page-title p { color: var(--text-secondary); margin: 4px 0 0; font-size: .86rem; }
+
+        .chart-container { background: #fff; border-radius: 10px; padding: 22px; border: 1px solid #eaedf0; }
+
+        .user-dropdown { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+
+        /* toast */
+        .admin-toast {
+            position: fixed; top: 70px; right: 28px; z-index: 9999;
+            padding: 12px 20px; border-radius: 8px; color: #fff; font-weight: 500; font-size: .86rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,.12); animation: toastIn .3s ease;
+        }
+        .admin-toast.success { background: #059669; }
+        .admin-toast.error { background: #dc2626; }
+        .admin-toast.info { background: var(--primary); }
+        @@keyframes toastIn { from { transform: translateY(-12px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+        .loading-overlay {
+            position: fixed; inset: 0; background: rgba(255,255,255,.85);
+            display: flex; align-items: center; justify-content: center; z-index: 9999;
+        }
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            width: 32px; height: 32px; border: 3px solid #eaedf0;
+            border-top-color: var(--primary); border-radius: 50%; animation: spin .7s linear infinite;
         }
+        @@keyframes spin { to { transform: rotate(360deg); } }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @@media (max-width: 992px) {
+            .sb { transform: translateX(-100%); }
+            .sb.show { transform: none; }
+            .admin-main { margin-left: 0; }
+            .mobile-toggle { display: block !important; }
         }
-
-        /* Mobile */
-        @media (max-width: 992px) {
-            .admin-sidebar {
-                transform: translateX(-100%);
-            }
-            .admin-sidebar.show {
-                transform: translateX(0);
-            }
-            .admin-main {
-                margin-left: 0;
-            }
-            .mobile-toggle {
-                display: block !important;
-            }
-        }
-
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--dark);
-            cursor: pointer;
-        }
+        .mobile-toggle { display: none; background: none; border: none; font-size: 1.3rem; color: var(--text); cursor: pointer; }
     </style>
     @stack('styles')
 </head>
 <body>
-    <!-- Sidebar -->
-    <aside class="admin-sidebar" id="sidebar">
-        <div class="sidebar-brand">
-            <img src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo">
-            <span>Admin Panel</span>
+
+    {{-- ───── SIDEBAR ───── --}}
+    <aside class="sb" id="sidebar">
+        <div class="sb-brand">
+            <div class="sb-brand-logo">
+                <img src="{{ asset('assets/img/peekaboo/peekaboo_logo.png') }}" alt="Peekaboo" onerror="this.src='{{ asset('assets/img/peekaboo/logo.png') }}'">
+            </div>
+            <div class="sb-brand-text">
+                <span class="sb-brand-title">Peekaboo</span>
+                <span class="sb-brand-subtitle">Admin Portal</span>
+            </div>
         </div>
 
-        <nav class="sidebar-nav">
-            <div class="nav-section">
-                <div class="nav-section-title">Main</div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <i class="fas fa-home"></i> Dashboard
-                    </a>
-                </div>
-            </div>
+        <nav class="sb-nav">
+            <div class="sb-heading">Overview</div>
+            <a href="{{ route('admin.dashboard') }}" class="sb-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <i class="fas fa-th-large"></i> Dashboard
+            </a>
 
-            <div class="nav-section">
-                <div class="nav-section-title">Management</div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.admissions.index') }}" class="nav-link {{ request()->routeIs('admin.admissions.*') ? 'active' : '' }}">
-                        <i class="fas fa-user-plus"></i> Admissions
-                        <span class="badge bg-warning">5</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.crm.index') }}" class="nav-link {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
-                        <i class="fas fa-funnel-dollar"></i> CRM / Leads
-                        <span class="badge bg-info">4</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.parents.index') }}" class="nav-link {{ request()->routeIs('admin.parents.*') ? 'active' : '' }}">
-                        <i class="fas fa-users"></i> Parents & Children
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.payments.index') }}" class="nav-link {{ request()->routeIs('admin.payments.*') ? 'active' : '' }}">
-                        <i class="fas fa-credit-card"></i> Payments
-                        <span class="badge bg-danger">1</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.staff.index') }}" class="nav-link {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}">
-                        <i class="fas fa-chalkboard-teacher"></i> Staff & Classes
-                    </a>
-                </div>
-            </div>
+            <div class="sb-heading">Manage</div>
+            <a href="{{ route('admin.admissions.index') }}" class="sb-link {{ request()->routeIs('admin.admissions.*') ? 'active' : '' }}">
+                <i class="fas fa-user-plus"></i> Admissions
+                @php $pendingAppsCount = \App\Models\Application::whereIn('status', ['pending', 'under_review'])->count(); @endphp
+                @if($pendingAppsCount > 0)<span class="sb-count">{{ $pendingAppsCount }}</span>@endif
+            </a>
+            <a href="{{ route('admin.crm.index') }}" class="sb-link {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
+                <i class="fas fa-funnel-dollar"></i> Lead Pipeline
+                @php $newLeadsCount = \App\Models\Lead::where('status', 'new')->count(); @endphp
+                @if($newLeadsCount > 0)<span class="sb-count">{{ $newLeadsCount }}</span>@endif
+            </a>
+            <a href="{{ route('admin.parents.index') }}" class="sb-link {{ request()->routeIs('admin.parents.*') ? 'active' : '' }}">
+                <i class="fas fa-users"></i> Parents & Children
+            </a>
+            <a href="{{ route('admin.users.index') }}" class="sb-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                <i class="fas fa-lock"></i> Users & Access
+            </a>
 
-            <div class="nav-section">
-                <div class="nav-section-title">Communication</div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.communication.index') }}" class="nav-link {{ request()->routeIs('admin.communication.index') ? 'active' : '' }}">
-                        <i class="fas fa-envelope"></i> Messages
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.communication.announcements') }}" class="nav-link {{ request()->routeIs('admin.communication.announcements') ? 'active' : '' }}">
-                        <i class="fas fa-bullhorn"></i> Announcements
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.communication.automations') }}" class="nav-link {{ request()->routeIs('admin.communication.automations') ? 'active' : '' }}">
-                        <i class="fas fa-robot"></i> Automations
-                    </a>
-                </div>
-            </div>
+            {{-- Parent Portal: disabled --}}
+            {{-- <a href="{{ route('admin.parent-portal.index') }}" class="sb-link {{ request()->routeIs('admin.parent-portal.*') ? 'active' : '' }}">
+                <i class="fas fa-door-open"></i> Parent Portal
+            </a> --}}
 
-            <div class="nav-section">
-                <div class="nav-section-title">Reports</div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.reports.index') }}" class="nav-link {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
-                        <i class="fas fa-chart-bar"></i> Reports
-                    </a>
-                </div>
-            </div>
+            <a href="{{ route('admin.payments.index') }}" class="sb-link {{ request()->routeIs('admin.payments.*') ? 'active' : '' }}">
+                <i class="fas fa-credit-card"></i> Payments
+                @php $pendingPopsCount = \App\Models\Payment::pending()->count(); @endphp
+                @if($pendingPopsCount > 0)<span class="sb-count">{{ $pendingPopsCount }}</span>@endif
+            </a>
 
-            <div class="nav-section">
-                <div class="nav-section-title">System</div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings.index') ? 'active' : '' }}">
-                        <i class="fas fa-cog"></i> Settings
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.settings.audit-log') }}" class="nav-link {{ request()->routeIs('admin.settings.audit-log') ? 'active' : '' }}">
-                        <i class="fas fa-history"></i> Audit Log
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="{{ route('admin.settings.permissions') }}" class="nav-link {{ request()->routeIs('admin.settings.permissions') ? 'active' : '' }}">
-                        <i class="fas fa-shield-alt"></i> Permissions
-                    </a>
-                </div>
-            </div>
+            <div class="sb-heading">Insights</div>
+            <a href="{{ route('admin.reports.index') }}" class="sb-link {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
+                <i class="fas fa-chart-bar"></i> Reports
+            </a>
 
-            <div class="nav-section mt-4">
-                <div class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link" target="_blank">
-                        <i class="fas fa-external-link-alt"></i> View Website
-                    </a>
-                </div>
-            </div>
+            <div class="sb-heading">Settings</div>
+            <a href="{{ route('admin.settings.index') }}" class="sb-link {{ request()->routeIs('admin.settings.index') ? 'active' : '' }}">
+                <i class="fas fa-cog"></i> General
+            </a>
+            <a href="{{ route('admin.settings.audit-log') }}" class="sb-link {{ request()->routeIs('admin.settings.audit-log') ? 'active' : '' }}">
+                <i class="fas fa-scroll"></i> Audit Log
+            </a>
+            <a href="{{ route('admin.settings.permissions') }}" class="sb-link {{ request()->routeIs('admin.settings.permissions') ? 'active' : '' }}">
+                <i class="fas fa-shield-alt"></i> Permissions
+            </a>
+
+            <div class="sb-divider"></div>
+            <a href="{{ route('home') }}" class="sb-link" target="_blank">
+                <i class="fas fa-external-link-alt"></i> View website
+            </a>
         </nav>
+
+        <div class="sb-footer">
+            <div class="sb-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+            <div class="sb-footer-info">
+                <span class="sb-footer-name">{{ auth()->user()->name }}</span>
+                <span class="sb-footer-role">{{ ucfirst(auth()->user()->getRoleNames()->first() ?? 'User') }}</span>
+            </div>
+            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                @csrf
+                <button type="submit" class="sb-logout" title="Sign out"><i class="fas fa-sign-out-alt"></i></button>
+            </form>
+        </div>
     </aside>
 
-    <!-- Main Content -->
+    {{-- ───── MAIN ───── --}}
     <main class="admin-main">
         <header class="admin-header">
-            <div class="d-flex align-items-center gap-3">
+            <div class="hdr-left">
                 <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('show')">
                     <i class="fas fa-bars"></i>
                 </button>
-                <div class="d-none d-md-block">
-                    <input type="search" class="form-control" placeholder="Search..." style="width: 250px; border-radius: 8px;">
-                </div>
+
+                @hasSection('breadcrumb')
+                    <div class="hdr-breadcrumb d-none d-md-flex">
+                        @yield('breadcrumb')
+                    </div>
+                @else
+                    <div class="hdr-search-wrap d-none d-md-block">
+                        <input type="search" class="hdr-search" placeholder="Search anything…">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                @endif
             </div>
 
-            <div class="d-flex align-items-center gap-4">
-                <div class="position-relative">
-                    <a href="{{ route('admin.communication.index') }}" class="text-dark">
-                        <i class="fas fa-bell fa-lg"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">3</span>
-                    </a>
+            <div class="hdr-right">
+                <div class="hdr-search-wrap d-none d-md-none">
+                    {{-- Search moves here on breadcrumb pages if needed --}}
                 </div>
 
+                @php
+                    $unreadNotifications = auth()->user()->unreadNotifications()->latest()->take(8)->get();
+                    $unreadCount = auth()->user()->unreadNotifications()->count();
+                @endphp
                 <div class="dropdown">
-                    <div class="user-dropdown" data-bs-toggle="dropdown">
-                        <img src="{{ asset('assets/img/team/team-1-1.jpg') }}" alt="Admin">
-                        <div class="d-none d-md-block">
-                            <div class="fw-semibold">Sarah van der Merwe</div>
-                            <small class="text-muted">Principal</small>
+                    <button class="hdr-icon-btn" data-bs-toggle="dropdown" aria-expanded="false" title="Notifications">
+                        <i class="far fa-bell"></i>
+                        @if($unreadCount > 0)
+                            <span class="notif-count-badge">{{ $unreadCount > 9 ? '9+' : $unreadCount }}</span>
+                        @endif
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end notif-dropdown">
+                        <div class="notif-dropdown-head">
+                            <span class="title">Notifications @if($unreadCount > 0)<span style="color:#94a3b8;font-weight:500;">({{ $unreadCount }} new)</span>@endif</span>
+                            @if($unreadCount > 0)
+                                <form method="POST" action="{{ route('admin.notifications.mark-all-read') }}" style="margin:0;">
+                                    @csrf
+                                    <button type="submit" class="mark-all">Mark all read</button>
+                                </form>
+                            @endif
                         </div>
-                        <i class="fas fa-chevron-down ms-2 text-muted"></i>
+                        <div class="notif-list">
+                            @forelse($unreadNotifications as $notif)
+                                <a href="{{ route('admin.notifications.read', $notif->id) }}"
+                                   class="notif-item unread"
+                                   onclick="event.preventDefault(); document.getElementById('notif-form-{{ $notif->id }}').submit();">
+                                    <div class="notif-icon-wrap">
+                                        <i class="fas fa-calendar-check"></i>
+                                    </div>
+                                    <div class="notif-content">
+                                        <div class="notif-title">{{ $notif->data['title'] ?? 'Notification' }}</div>
+                                        <div class="notif-msg">{{ $notif->data['message'] ?? '' }}</div>
+                                        <div class="notif-time">{{ $notif->created_at->diffForHumans() }}</div>
+                                    </div>
+                                    <div class="unread-pip"></div>
+                                </a>
+                                <form id="notif-form-{{ $notif->id }}" method="POST"
+                                      action="{{ route('admin.notifications.read', $notif->id) }}" style="display:none;">
+                                    @csrf
+                                </form>
+                            @empty
+                                <div class="notif-empty">
+                                    <i class="far fa-bell"></i>
+                                    You're all caught up!
+                                </div>
+                            @endforelse
+                        </div>
                     </div>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
-                        <li><a class="dropdown-item" href="{{ route('admin.settings.index') }}"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                </div>
+
+                <a href="{{ route('admin.settings.index') }}" class="hdr-icon-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </a>
+
+                <div class="hdr-divider"></div>
+
+                <div class="dropdown">
+                    <div class="hdr-user" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="hdr-user-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+                        <div class="hdr-user-info d-none d-md-block">
+                            <div class="hdr-user-name">{{ auth()->user()->name }}</div>
+                            <div class="hdr-user-role">{{ ucfirst(auth()->user()->getRoleNames()->first() ?? 'User') }}</div>
+                        </div>
+                        <i class="fas fa-chevron-down hdr-user-chevron d-none d-md-block"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end hdr-dropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('admin.profile') }}">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('admin.settings.index') }}">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                        </li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="{{ route('home') }}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="fas fa-sign-out-alt"></i> Sign out
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -507,32 +743,85 @@
         </div>
     </main>
 
-    <!-- Toast Container -->
+    {{-- Toast --}}
     @if(session('success'))
-    <div class="admin-toast success" id="toast">
-        <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-    </div>
+    <div class="admin-toast success" id="toast"><i class="fas fa-check-circle me-2"></i>{{ session('success') }}</div>
     @endif
-
     @if(session('error'))
-    <div class="admin-toast error" id="toast">
-        <i class="fas fa-exclamation-circle me-2"></i> {{ session('error') }}
-    </div>
+    <div class="admin-toast error" id="toast"><i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}</div>
     @endif
 
     <script src="{{ asset('assets/js/vendor/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 
     <script>
-        // Auto-hide toast
         setTimeout(function() {
-            const toast = document.getElementById('toast');
-            if (toast) {
-                toast.style.animation = 'slideInRight 0.3s ease reverse';
-                setTimeout(() => toast.remove(), 300);
-            }
-        }, 5000);
+            var t = document.getElementById('toast');
+            if (t) { t.style.opacity = '0'; t.style.transform = 'translateY(-8px)'; t.style.transition = 'all .25s'; setTimeout(function(){ t.remove(); }, 250); }
+        }, 4500);
+
+        window.showToast = function(msg, type) {
+            type = type || 'success';
+            var icon = type === 'success' ? 'check-circle' : (type === 'error' ? 'exclamation-circle' : 'info-circle');
+            var old = document.getElementById('ajax-toast');
+            if (old) old.remove();
+            var d = document.createElement('div');
+            d.id = 'ajax-toast'; d.className = 'admin-toast ' + type;
+            d.innerHTML = '<i class="fas fa-' + icon + ' me-2"></i>' + msg;
+            document.body.appendChild(d);
+            setTimeout(function(){ d.style.opacity='0'; d.style.transform='translateY(-8px)'; d.style.transition='all .25s'; setTimeout(function(){ d.remove(); },250); }, 4000);
+        };
     </script>
+
+    {{-- Confirm Modal --}}
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width:380px;">
+            <div class="modal-content" style="border:none;border-radius:14px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.12);">
+                <div class="modal-body p-4 text-center">
+                    <div id="confirmModalIcon" style="font-size:1.6rem;margin-bottom:10px;"></div>
+                    <div id="confirmModalTitle" style="font-weight:700;color:var(--text);font-size:.92rem;margin-bottom:6px;"></div>
+                    <div id="confirmModalMessage" style="font-size:.82rem;color:var(--text-secondary);line-height:1.5;"></div>
+                </div>
+                <div class="modal-footer border-0 px-4 pb-4 pt-0 justify-content-center gap-2">
+                    <button type="button" class="btn px-4"
+                            style="background:#f4f5f7;color:var(--text);font-size:.82rem;border:1px solid #eaedf0;border-radius:8px;font-weight:600;"
+                            data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" id="confirmModalBtn"
+                            class="btn px-4 text-white"
+                            style="font-size:.82rem;border:none;border-radius:8px;font-weight:600;"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.showConfirm = function(o) {
+            document.getElementById('confirmModalIcon').textContent = o.icon || '⚠️';
+            document.getElementById('confirmModalTitle').textContent = o.title || 'Confirm';
+            document.getElementById('confirmModalMessage').textContent = o.message || 'Are you sure?';
+            var b = document.getElementById('confirmModalBtn');
+            b.textContent = o.btnText || 'Confirm';
+            b.style.background = o.btnColor || 'var(--primary)';
+            var m = new bootstrap.Modal(document.getElementById('confirmModal'));
+            b.onclick = function(){ m.hide(); (o.onConfirm || function(){})(); };
+            m.show();
+        };
+        document.addEventListener('click', function(e) {
+            var t = e.target.closest('[data-confirm]');
+            if (!t) return;
+            e.preventDefault();
+            var f = t.closest('form');
+            showConfirm({
+                title: t.dataset.confirmTitle || 'Confirm Action',
+                message: t.dataset.confirm,
+                icon: t.dataset.confirmIcon || '⚠️',
+                btnText: t.dataset.confirmBtn || 'Confirm',
+                btnColor: t.dataset.confirmColor || 'var(--primary)',
+                onConfirm: function(){ if (f) f.submit(); }
+            });
+        });
+    </script>
+
     @stack('scripts')
 </body>
 </html>

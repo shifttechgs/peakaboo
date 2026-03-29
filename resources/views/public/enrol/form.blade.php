@@ -1,459 +1,490 @@
 @extends('layouts.public')
 
-@section('title', 'Enrolment Form - Peekaboo Daycare')
+@section('title', 'Enrolment Application Form — Peekaboo Daycare Parklands, Cape Town')
+@section('canonical', route('enrol.form'))
+
+@push('schema')
+{{-- Form/thank-you pages: noindex to avoid duplicate content --}}
+@endpush
 
 @push('styles')
 <style>
-    .enrol-wizard {
-        margin-top: 80px;
-        background: #f9f6f2;
-        min-height: 100vh;
-        padding-bottom: 60px;
-    }
+/* ============================================================
+   ENROLMENT WIZARD — Peekaboo (Brand-consistent, flat design)
+============================================================ */
 
-    .step-indicator {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 40px;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
+.enrol-wizard {
+    margin-top: 80px;
+    background: var(--color-surface);
+    min-height: 100vh;
+    padding-bottom: 60px;
+}
 
-    .step-item {
-        display: flex;
-        align-items: center;
-        position: relative;
-    }
+/* ── Step Indicator ── */
+.step-indicator {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.step-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.step-item:not(:last-child)::after {
+    content: '';
+    width: 40px;
+    height: 4px;
+    background: #e0e4e8;
+    margin: 0 8px;
+    border-radius: 2px;
+}
+.step-item.completed:not(:last-child)::after {
+    background: var(--color-primary);
+}
+.step-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: var(--color-muted);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.4s ease;
+    border: 3px solid #e0e4e8;
+}
+.step-item:nth-child(1).active .step-circle,
+.step-item:nth-child(1).completed .step-circle,
+.step-item:nth-child(5).active .step-circle,
+.step-item:nth-child(5).completed .step-circle {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+.step-item:nth-child(2).active .step-circle,
+.step-item:nth-child(2).completed .step-circle,
+.step-item:nth-child(6).active .step-circle,
+.step-item:nth-child(6).completed .step-circle {
+    background: var(--color-warm);
+    color: #fff;
+    border-color: var(--color-warm);
+}
+.step-item:nth-child(3).active .step-circle,
+.step-item:nth-child(3).completed .step-circle {
+    background: var(--color-accent);
+    color: #fff;
+    border-color: var(--color-accent);
+}
+.step-item:nth-child(4).active .step-circle,
+.step-item:nth-child(4).completed .step-circle {
+    background: #E91E63;
+    color: #fff;
+    border-color: #E91E63;
+}
+.step-item:nth-child(7).active .step-circle,
+.step-item:nth-child(7).completed .step-circle {
+    background: var(--color-success);
+    color: #fff;
+    border-color: var(--color-success);
+}
+.step-item.completed .step-circle::after {
+    content: '✓';
+    position: absolute;
+    font-size: 1.2rem;
+}
+.step-item.completed .step-circle {
+    font-size: 0;
+}
 
-    .step-item:not(:last-child)::after {
-        content: '';
-        width: 40px;
-        height: 4px;
-        background: #e8e5ef;
-        margin: 0 8px;
-        border-radius: 2px;
-    }
+/* ── Step Content ── */
+.step-content {
+    display: none;
+}
+.step-content.active {
+    display: block;
+    animation: fadeInUp 0.5s ease;
+}
+@@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
 
-    .step-item.completed:not(:last-child)::after {
-        background: #0c508e;
-    }
+/* ── Form Sections (flat cards) ── */
+.form-section {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 50px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+.form-section h4 {
+    font-family: var(--font-heading);
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 1.6rem;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    border-bottom: 3px solid var(--color-primary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.form-section h4 i {
+    width: 45px;
+    height: 45px;
+    background: var(--color-primary);
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.2rem;
+}
+.step-content[data-step="2"] .form-section h4 { border-bottom-color: var(--color-warm); }
+.step-content[data-step="2"] .form-section h4 i { background: var(--color-warm); }
+.step-content[data-step="3"] .form-section h4 { border-bottom-color: var(--color-accent); }
+.step-content[data-step="3"] .form-section h4 i { background: var(--color-accent); }
+.step-content[data-step="4"] .form-section h4 { border-bottom-color: #E91E63; }
+.step-content[data-step="4"] .form-section h4 i { background: #E91E63; }
+.step-content[data-step="5"] .form-section h4 i { background: var(--color-primary); }
+.step-content[data-step="6"] .form-section h4 { border-bottom-color: var(--color-warm); }
+.step-content[data-step="6"] .form-section h4 i { background: var(--color-warm); }
+.step-content[data-step="7"] .form-section h4 { border-bottom-color: var(--color-success); }
+.step-content[data-step="7"] .form-section h4 i { background: var(--color-success); }
 
-    .step-circle {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: white;
-        color: #999;
-        font-weight: 700;
-        font-size: 1.1rem;
-        transition: all 0.4s ease;
-        border: 3px solid #e8e5ef;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
+/* ── Form Controls ── */
+.enrol-wizard .form-label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+.enrol-wizard .form-control,
+.enrol-wizard .form-select {
+    font-family: var(--font-body);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    border: 1px solid #e0e4e8;
+    transition: border-color 0.25s;
+    font-size: 16px;
+    background: #fff;
+    color: var(--color-text);
+}
+.enrol-wizard .form-control:hover,
+.enrol-wizard .form-select:hover {
+    border-color: var(--color-warm);
+}
+.enrol-wizard .form-control:focus,
+.enrol-wizard .form-select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0,119,182,0.08);
+    outline: none;
+}
+.enrol-wizard .form-control::placeholder {
+    color: var(--color-muted);
+    font-size: 15px;
+}
+.enrol-wizard .form-control.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220,53,69,0.08);
+}
 
-    .step-item:nth-child(1).active .step-circle,
-    .step-item:nth-child(1).completed .step-circle {
-        background: #0c508e;
-        color: white;
-        border-color: #0c508e;
-        box-shadow: 0 6px 20px rgba(12,80,142,0.3);
-    }
+/* ── Consent Boxes ── */
+.consent-box {
+    background: rgba(0,119,182,0.04);
+    border-radius: var(--radius-md);
+    padding: 25px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--color-primary);
+    transition: all 0.3s ease;
+}
+.consent-box:hover {
+    transform: translateX(5px);
+}
+.consent-box h6 {
+    font-family: var(--font-heading);
+    color: var(--color-text);
+    font-weight: 700;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+}
+.consent-box h6 i {
+    color: var(--color-primary);
+    margin-right: 8px;
+}
+.consent-box p {
+    font-family: var(--font-body);
+}
 
-    .step-item:nth-child(2).active .step-circle,
-    .step-item:nth-child(2).completed .step-circle {
-        background: #D18109;
-        color: white;
-        border-color: #D18109;
-        box-shadow: 0 6px 20px rgba(209,129,9,0.3);
-    }
+/* ── File Upload ── */
+.file-upload-box {
+    border: 3px dashed var(--color-warm);
+    border-radius: var(--radius-md);
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: #fff;
+}
+.file-upload-box:hover {
+    border-color: var(--color-primary);
+    background: var(--color-surface);
+}
+.file-upload-box.dragover {
+    border-color: var(--color-primary);
+    background: rgba(0,119,182,0.04);
+}
+.file-upload-box i {
+    color: var(--color-warm);
+    transition: all 0.3s ease;
+}
+.file-upload-box:hover i {
+    color: var(--color-primary);
+}
+.file-upload-box.has-file {
+    border-color: var(--color-success);
+    background: rgba(46,125,50,0.04);
+}
+.file-upload-box.has-file i {
+    color: var(--color-success);
+}
+.file-name-display {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #fff;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--color-success);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.file-name-display .file-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+.file-name-display .remove-file {
+    background: #E91E63;
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.file-name-display .remove-file:hover {
+    background: #c2185b;
+}
 
-    .step-item:nth-child(3).active .step-circle,
-    .step-item:nth-child(3).completed .step-circle {
-        background: #70167E;
-        color: white;
-        border-color: #70167E;
-        box-shadow: 0 6px 20px rgba(112,22,126,0.3);
-    }
+/* ── Signature Pad ── */
+.signature-pad {
+    border: 1px solid #e0e4e8;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    height: 150px;
+    width: 100%;
+}
 
-    .step-item:nth-child(4).active .step-circle,
-    .step-item:nth-child(4).completed .step-circle {
-        background: #e91e63;
-        color: white;
-        border-color: #e91e63;
-        box-shadow: 0 6px 20px rgba(233,30,99,0.3);
-    }
+/* ── Progress Bar ── */
+.progress-bar-custom {
+    height: 10px;
+    background: #e0e4e8;
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.progress-bar-fill {
+    height: 100%;
+    background: var(--color-primary);
+    transition: width 0.5s ease;
+    border-radius: var(--radius-pill);
+}
 
-    .step-item:nth-child(5).active .step-circle,
-    .step-item:nth-child(5).completed .step-circle {
-        background: #0c508e;
-        color: white;
-        border-color: #0c508e;
-        box-shadow: 0 6px 20px rgba(12,80,142,0.3);
-    }
+/* ── Autosave Indicator ── */
+.autosave-indicator {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: var(--color-success);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    z-index: 1000;
+    animation: slideInLeft 0.4s ease;
+}
+@@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-100px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
 
-    .step-item:nth-child(6).active .step-circle,
-    .step-item:nth-child(6).completed .step-circle {
-        background: #D18109;
-        color: white;
-        border-color: #D18109;
-        box-shadow: 0 6px 20px rgba(209,129,9,0.3);
-    }
+/* ── Checkboxes ── */
+.enrol-wizard .form-check-input {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #e0e4e8;
+    cursor: pointer;
+}
+.enrol-wizard .form-check-input:checked {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.enrol-wizard .form-check-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0,119,182,0.08);
+}
+.enrol-wizard .form-check-label {
+    cursor: pointer;
+    font-family: var(--font-body);
+    color: var(--color-text);
+    font-weight: 500;
+}
 
-    .step-item:nth-child(7).active .step-circle,
-    .step-item:nth-child(7).completed .step-circle {
-        background: #10b981;
-        color: white;
-        border-color: #10b981;
-        box-shadow: 0 6px 20px rgba(16,185,129,0.3);
-    }
+/* ── Alerts ── */
+.enrol-wizard .alert {
+    border-radius: var(--radius-md);
+    border: none;
+    padding: 20px;
+    font-family: var(--font-body);
+    font-weight: 500;
+}
+.enrol-wizard .alert-success {
+    background: rgba(46,125,50,0.06);
+    border-left: 4px solid var(--color-success);
+    color: #065f46;
+}
+.enrol-wizard .alert-info {
+    background: rgba(0,119,182,0.06);
+    border-left: 4px solid var(--color-primary);
+    color: var(--color-primary);
+}
 
-    .step-item.completed .step-circle::after {
-        content: '✓';
-        position: absolute;
-        font-size: 1.2rem;
-    }
+/* ── Navigation Buttons ── */
+.pb-wizard-btn {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 44px;
+    border-radius: var(--radius-pill);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.pb-wizard-btn:hover {
+    transform: translateY(-2px);
+}
+.pb-wizard-btn--prev {
+    background: #fff;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+}
+.pb-wizard-btn--prev:hover {
+    background: var(--color-accent);
+    color: #fff;
+}
+.pb-wizard-btn--next {
+    background: var(--color-primary);
+    color: #fff;
+    margin-left: auto;
+}
+.pb-wizard-btn--next:hover {
+    background: var(--color-primary-dk);
+}
+.pb-wizard-btn--submit {
+    background: var(--color-success);
+    color: #fff;
+    margin-left: auto;
+}
+.pb-wizard-btn--submit:hover {
+    background: #1b5e20;
+}
 
-    .step-item.completed .step-circle {
-        font-size: 0;
-    }
+/* ── Fee Option Cards ── */
+.pb-fee-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid #e0e4e8;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    background: #fff;
+    position: relative;
+}
+.pb-fee-card:hover {
+    border-color: var(--color-primary);
+}
+.pb-fee-card--popular {
+    border-color: var(--color-primary);
+    background: rgba(0,119,182,0.03);
+}
+.pb-fee-card--selected {
+    border-color: var(--color-primary);
+    border-width: 3px;
+    background: rgba(0,119,182,0.06);
+}
+.pb-fee-card__badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: var(--color-primary);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+}
+.pb-fee-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.pb-fee-card__name {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+.pb-fee-card__price {
+    background: var(--color-primary);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+}
+.pb-fee-card__hours {
+    font-family: var(--font-body);
+    color: var(--color-body);
+    font-size: 15px;
+}
 
-    .step-content {
-        display: none;
-    }
-
-    .step-content.active {
-        display: block;
-        animation: fadeInUp 0.5s ease;
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .form-section {
-        background: white;
-        border-radius: 24px;
-        padding: 50px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-        margin-bottom: 30px;
-        border: 2px solid #f9f6f2;
-        transition: all 0.3s ease;
-    }
-
-    .form-section:hover {
-        box-shadow: 0 12px 40px rgba(12,80,142,0.12);
-    }
-
-    .form-section h4 {
-        color: #4A2559;
-        font-weight: 700;
-        font-size: 1.6rem;
-        padding-bottom: 20px;
-        margin-bottom: 30px;
-        border-bottom: 3px solid #0c508e;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .form-section h4 i {
-        width: 45px;
-        height: 45px;
-        background: #0c508e;
-        border-radius: 12px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.2rem;
-    }
-
-    .step-content[data-step="2"] .form-section h4 i {
-        background: #D18109;
-    }
-
-    .step-content[data-step="3"] .form-section h4 i {
-        background: #70167E;
-    }
-
-    .step-content[data-step="4"] .form-section h4 i {
-        background: #e91e63;
-    }
-
-    .step-content[data-step="5"] .form-section h4 i {
-        background: #0c508e;
-    }
-
-    .step-content[data-step="6"] .form-section h4 i {
-        background: #D18109;
-    }
-
-    .step-content[data-step="7"] .form-section h4 i {
-        background: #10b981;
-    }
-
-    .form-label {
-        font-weight: 600;
-        color: #4A2559;
-        margin-bottom: 10px;
-        font-size: 0.95rem;
-    }
-
-    .form-control, .form-select {
-        border-radius: 12px;
-        padding: 14px 18px;
-        border: 2px solid #e8e5ef;
-        transition: all 0.3s ease;
-        font-size: 0.95rem;
-        background: white;
-    }
-
-    .form-control:hover, .form-select:hover {
-        border-color: #D18109;
-    }
-
-    .form-control:focus, .form-select:focus {
-        border-color: #0c508e;
-        box-shadow: 0 0 0 4px rgba(12,80,142,0.1);
-        outline: none;
-    }
-
-    .form-control.is-invalid {
-        border-color: #dc3545;
-        box-shadow: 0 0 0 4px rgba(220,53,69,0.1);
-    }
-
-    .consent-box {
-        background: rgba(12,80,142,0.05);
-        border-radius: 16px;
-        padding: 25px;
-        margin-bottom: 20px;
-        border-left: 4px solid #0c508e;
-        transition: all 0.3s ease;
-    }
-
-    .consent-box:hover {
-        transform: translateX(5px);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    }
-
-    .consent-box h6 {
-        color: #4A2559;
-        font-weight: 700;
-        margin-bottom: 12px;
-        font-size: 1.1rem;
-    }
-
-    .consent-box h6 i {
-        color: #0c508e;
-        margin-right: 8px;
-    }
-
-    .file-upload-box {
-        border: 3px dashed #D18109;
-        border-radius: 16px;
-        padding: 40px 30px;
-        text-align: center;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        background: white;
-    }
-
-    .file-upload-box:hover {
-        border-color: #0c508e;
-        background: #f9f6f2;
-        transform: scale(1.02);
-    }
-
-    .file-upload-box.dragover {
-        border-color: #0c508e;
-        background: rgba(12,80,142,0.05);
-        transform: scale(1.05);
-    }
-
-    .file-upload-box i {
-        color: #D18109;
-        transition: all 0.3s ease;
-    }
-
-    .file-upload-box:hover i {
-        color: #0c508e;
-        transform: scale(1.1);
-    }
-
-    .file-upload-box.has-file {
-        border-color: #10b981;
-        background: rgba(16,185,129,0.05);
-    }
-
-    .file-upload-box.has-file i {
-        color: #10b981;
-    }
-
-    .file-name-display {
-        margin-top: 10px;
-        padding: 10px 15px;
-        background: white;
-        border-radius: 8px;
-        border: 2px solid #10b981;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-    }
-
-    .file-name-display .file-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex: 1;
-    }
-
-    .file-name-display .remove-file {
-        background: #e91e63;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        padding: 6px 12px;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .file-name-display .remove-file:hover {
-        background: #c2185b;
-        transform: scale(1.05);
-    }
-
-    .signature-pad {
-        border: 2px solid #e8e5ef;
-        border-radius: 16px;
-        background: #f9f6f2;
-        height: 150px;
-        width: 100%;
-    }
-
-    .progress-bar-custom {
-        height: 12px;
-        background: #e8e5ef;
-        border-radius: 12px;
-        overflow: hidden;
-        margin-bottom: 15px;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .progress-bar-fill {
-        height: 100%;
-        background: #0c508e;
-        transition: width 0.5s ease;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(12,80,142,0.3);
-    }
-
-    .autosave-indicator {
-        position: fixed;
-        bottom: 30px;
-        left: 30px;
-        background: #10b981;
-        color: white;
-        padding: 15px 25px;
-        border-radius: 50px;
-        box-shadow: 0 6px 24px rgba(16,185,129,0.4);
-        font-size: 0.95rem;
-        font-weight: 600;
-        z-index: 1000;
-        animation: slideInLeft 0.4s ease;
-    }
-
-    @keyframes slideInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-100px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    .form-check-input {
-        width: 22px;
-        height: 22px;
-        border: 2px solid #D18109;
-        cursor: pointer;
-    }
-
-    .form-check-input:checked {
-        background-color: #0c508e;
-        border-color: #0c508e;
-    }
-
-    .form-check-input:focus {
-        border-color: #D18109;
-        box-shadow: 0 0 0 4px rgba(209,129,9,0.1);
-    }
-
-    .form-check-label {
-        cursor: pointer;
-        color: #4A2559;
-        font-weight: 500;
-    }
-
-    .alert {
-        border-radius: 16px;
-        border: none;
-        padding: 20px;
-        font-weight: 500;
-    }
-
-    .alert-success {
-        background: rgba(16,185,129,0.1);
-        border-left: 4px solid #10b981;
-        color: #065f46;
-    }
-
-    .alert-info {
-        background: rgba(12,80,142,0.1);
-        border-left: 4px solid #0c508e;
-        color: #0c508e;
-    }
-
-    .text-danger {
-        color: #e91e63 !important;
-    }
-
-    @media (max-width: 768px) {
-        .step-item:not(:last-child)::after {
-            width: 15px;
-        }
-        .step-circle {
-            width: 40px;
-            height: 40px;
-            font-size: 0.9rem;
-        }
-        .form-section {
-            padding: 30px 20px;
-        }
-        .form-section h4 {
-            font-size: 1.3rem;
-        }
-        .autosave-indicator {
-            bottom: 15px;
-            left: 15px;
-            font-size: 0.85rem;
-            padding: 12px 20px;
-        }
-    }
+/* ── Responsive ── */
+@@media (max-width: 768px) {
+    .step-item:not(:last-child)::after { width: 15px; }
+    .step-circle { width: 40px; height: 40px; font-size: 0.9rem; }
+    .form-section { padding: 30px 20px; }
+    .form-section h4 { font-size: 1.3rem; }
+    .autosave-indicator { bottom: 15px; left: 15px; font-size: 14px; padding: 12px 20px; }
+    .pb-wizard-btn { padding: 14px 32px; font-size: 15px; }
+}
 </style>
 @endpush
 
@@ -463,12 +494,12 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <!-- Welcome Banner -->
-                <div class="text-center mb-5 wow animate__fadeInUp" data-wow-delay="0.1s">
-                    <span style="background: #0c508e; color: white; padding: 8px 20px; border-radius: 25px; display: inline-block; font-weight: 600; font-size: 14px; margin-bottom: 15px;">
+                <div class="text-center mb-5 wow itfadeUp" data-wow-duration=".9s">
+                    <span style="background: var(--color-primary); color: #fff; padding: 8px 20px; border-radius: var(--radius-pill); display: inline-block; font-family: var(--font-body); font-weight: 600; font-size: 14px; margin-bottom: 15px;">
                         <i class="fas fa-paper-plane me-2"></i>Online Enrolment Form
                     </span>
-                    <h2 class="fw-bold mb-2" style="color: #4A2559; font-size: 2rem;">Welcome to Peekaboo!</h2>
-                    <p class="text-muted mb-0">Complete all 7 steps to submit your application. Your progress is saved automatically.</p>
+                    <h2 style="font-family: var(--font-heading); color: var(--color-text); font-size: 2rem; font-weight: 800; margin-bottom: 8px;">Welcome to Peekaboo!</h2>
+                    <p style="font-family: var(--font-body); color: var(--color-body); font-size: 16px; margin-bottom: 0;">Complete all 7 steps to submit your application. Your progress is saved automatically.</p>
                 </div>
 
                 <!-- Progress Bar -->
@@ -476,9 +507,9 @@
                     <div class="progress-bar-custom">
                         <div class="progress-bar-fill" id="progressBar" style="width: 14.28%;"></div>
                     </div>
-                    <div class="d-flex justify-content-between" style="font-size: 0.95rem; font-weight: 600;">
-                        <span style="color: #0c508e;">Step <span id="currentStepNum">1</span> of 7</span>
-                        <span style="color: #D18109;"><span id="progressPercent">14%</span> Complete</span>
+                    <div class="d-flex justify-content-between" style="font-family: var(--font-body); font-size: 15px; font-weight: 600;">
+                        <span style="color: var(--color-primary);">Step <span id="currentStepNum">1</span> of 7</span>
+                        <span style="color: var(--color-warm);"><span id="progressPercent">14%</span> Complete</span>
                     </div>
                 </div>
 
@@ -526,12 +557,23 @@
                       novalidate>
                     @csrf
 
+                    @if(isset($prefill) && $prefill)
+                    {{-- Pre-fill banner shown when the form was opened via enrolment invite link --}}
+                    <div class="alert alert-success d-flex align-items-center gap-3 mb-4" style="border-left:4px solid var(--color-success);">
+                        <i class="fas fa-magic fa-lg" style="color:var(--color-success);flex-shrink:0;"></i>
+                        <div>
+                            <strong>We've pre-filled some details for you</strong> from your tour booking.
+                            Please review and complete the remaining fields.
+                        </div>
+                    </div>
+                    @endif
+
                     <!-- Step 1: Program Selection -->
                     <div class="step-content active" data-step="1">
                         <div class="form-section">
                             <h4><i class="fas fa-school"></i> Program Selection</h4>
-                            <p class="text-muted mb-4" style="font-size: 1.05rem;">
-                                <i class="fas fa-info-circle me-2" style="color: #0c508e;"></i>
+                            <p style="font-family: var(--font-body); color: var(--color-body); font-size: 16px; margin-bottom: 24px;">
+                                <i class="fas fa-info-circle me-2" style="color: var(--color-primary);"></i>
                                 Choose the program and fee option that best suits your family's needs.
                             </p>
 
@@ -559,77 +601,36 @@
                                             @if(!isset($fee['addon']))
 
                                                 <div class="col-md-6">
-
-                                                    <div class="form-check border-3 rounded-4 p-4"
-                                                         style="
-                    cursor:pointer;
-                    transition:all .3s ease;
-                    border-color: {{ $fee['popular'] ? '#0c508e' : '#e8e5ef' }};
-                    background: {{ $fee['popular'] ? 'rgba(12,80,142,0.05)' : 'white' }};
-                    position: relative;
-                 "
-                                                         onmouseover="this.style.borderColor='#0c508e'; this.style.boxShadow='0 8px 24px rgba(12,80,142,.2)'; this.style.transform='translateY(-4px)'"
-                                                         onmouseout="this.style.borderColor='{{ $fee['popular'] ? '#0c508e' : '#e8e5ef' }}'; this.style.boxShadow='none'; this.style.transform='translateY(0)'"
-                                                    >
+                                                    <div class="pb-fee-card {{ $fee['popular'] ? 'pb-fee-card--popular' : '' }}">
                                                         @if($fee['popular'])
-                                                            <span style="position: absolute; top: -12px; right: 20px; background: #0c508e; color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; box-shadow: 0 4px 12px rgba(12,80,142,0.3);">
+                                                            <span class="pb-fee-card__badge">
                                                                 <i class="fas fa-star me-1"></i>Recommended
                                                             </span>
                                                         @endif
 
-                                                        <input class="form-check-input fee-option-radio"
-                                                               type="radio"
-                                                               name="fee_option"
-                                                               id="fee_{{ $fee['id'] }}"
-                                                               value="{{ $fee['id'] }}"
-                                                               data-name="{{ $fee['name'] }}"
-                                                               {{ $fee['popular'] ? 'checked' : '' }}
-                                                               style="margin-top:4px; width: 24px; height: 24px; cursor: pointer;"
-                                                        >
-
-                                                        <label class="form-check-label w-100 ms-2"
-                                                               for="fee_{{ $fee['id'] }}"
-                                                               style="cursor:pointer;"
-                                                        >
-
-                                                            <div style="
-                        display:flex;
-                        justify-content:space-between;
-                        align-items:center;
-                        margin-bottom:8px;
-                        margin-top: {{ $fee['popular'] ? '12px' : '0' }};
-                    ">
-
-                                                                <strong style="font-size:1.1rem; color:#4A2559;">
-                                                                    {{ $fee['name'] }}
-                                                                </strong>
-
-                                                                <span style="
-                            background:#0c508e;
-                            color:#fff;
-                            padding:8px 16px;
-                            border-radius:24px;
-                            font-size:.9rem;
-                            font-weight:700;
-                            box-shadow: 0 4px 12px rgba(12,80,142,0.3);
-                        ">
-                            R{{ number_format($fee['price']) }}/mo
-                        </span>
-
+                                                        <div class="form-check" style="padding-left: 0;">
+                                                            <div class="d-flex align-items-start gap-3">
+                                                                <input class="form-check-input fee-option-radio"
+                                                                       type="radio"
+                                                                       name="fee_option"
+                                                                       id="fee_{{ $fee['id'] }}"
+                                                                       value="{{ $fee['id'] }}"
+                                                                       data-name="{{ $fee['name'] }}"
+                                                                       {{ $fee['popular'] ? 'checked' : '' }}
+                                                                       style="margin-top: 4px; width: 24px; height: 24px; flex-shrink: 0;"
+                                                                >
+                                                                <label class="form-check-label w-100" for="fee_{{ $fee['id'] }}" style="cursor: pointer;">
+                                                                    <div class="pb-fee-card__header" style="{{ $fee['popular'] ? 'margin-top: 8px;' : '' }}">
+                                                                        <span class="pb-fee-card__name">{{ $fee['name'] }}</span>
+                                                                        <span class="pb-fee-card__price">R{{ number_format($fee['price']) }}/mo</span>
+                                                                    </div>
+                                                                    <span class="pb-fee-card__hours">
+                                                                        <i class="fas fa-clock me-1" style="color: var(--color-warm);"></i>{{ $fee['hours'] }}
+                                                                    </span>
+                                                                </label>
                                                             </div>
-
-                                                            <small style="
-                        color:#6c757d;
-                        display:block;
-                        font-size: 0.95rem;
-                    ">
-                                                                <i class="fas fa-clock me-1" style="color:#D18109;"></i>{{ $fee['hours'] }}
-                                                            </small>
-
-                                                        </label>
-
+                                                        </div>
                                                     </div>
-
                                                 </div>
 
                                             @endif
@@ -655,19 +656,21 @@
                     <div class="step-content" data-step="2">
                         <div class="form-section">
                             <h4><i class="fas fa-baby"></i> Child's Information</h4>
-                            <p class="text-muted mb-4" style="font-size: 1.05rem;">
-                                <i class="fas fa-info-circle me-2" style="color: #D18109;"></i>
+                            <p class="text-muted mb-4" style="font-family: var(--font-body); color: var(--color-body); font-size: 16px;">
+                                <i class="fas fa-info-circle me-2" style="color: var(--color-warm);"></i>
                                 Please provide your child's details exactly as they appear on their birth certificate.
                             </p>
 
                             <div class="row g-4">
                                 <div class="col-md-8">
                                     <label class="form-label">Full Name (as per birth certificate) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="child_name" required>
+                                    <input type="text" class="form-control" name="child_name"
+                                           value="{{ $prefill['child_name'] ?? '' }}" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Nickname</label>
-                                    <input type="text" class="form-control" name="child_nickname">
+                                    <input type="text" class="form-control" name="child_nickname"
+                                           value="{{ $prefill['child_nickname'] ?? '' }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Date of Birth <span class="text-danger">*</span></label>
@@ -706,12 +709,12 @@
                                 <h4 class="mb-0"><i class="fas fa-user-plus"></i> Second Child (Optional)</h4>
                                 <div class="form-check form-switch" style="padding-left: 0;">
                                     <input class="form-check-input" type="checkbox" id="hasSecondChild" name="has_second_child" style="width: 60px; height: 30px; cursor: pointer;">
-                                    <label class="form-check-label ms-3" for="hasSecondChild" style="cursor: pointer; font-weight: 600; color: #4A2559;">Add another child</label>
+                                    <label class="form-check-label ms-3" for="hasSecondChild" style="cursor: pointer; font-weight: 600; color: var(--color-text);">Add another child</label>
                                 </div>
                             </div>
 
                             <div id="secondChildFields" style="display: none;">
-                                <div class="alert alert-success mb-4" style="background: rgba(16,185,129,0.1); border-left: 5px solid #10b981;">
+                                <div class="alert alert-success mb-4" style="background: rgba(46,125,50,0.06); border-left: 5px solid var(--color-success);">
                                     <i class="fas fa-tags me-2" style="font-size: 1.2rem;"></i>
                                     <strong>Great news!</strong> Sibling discount applies for your second child.
                                 </div>
@@ -749,15 +752,16 @@
                     <div class="step-content" data-step="3">
                         <div class="form-section">
                             <h4><i class="fas fa-user"></i> Mother/Guardian Information</h4>
-                            <p class="text-muted mb-4" style="font-size: 1.05rem;">
-                                <i class="fas fa-info-circle me-2" style="color: #70167E;"></i>
+                            <p class="text-muted mb-4" style="font-family: var(--font-body); color: var(--color-body); font-size: 16px;">
+                                <i class="fas fa-info-circle me-2" style="color: var(--color-accent);"></i>
                                 We need contact details for both parents/guardians for emergency situations.
                             </p>
 
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <label class="form-label">Full Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="mother_name" required>
+                                    <input type="text" class="form-control" name="mother_name"
+                                           value="{{ $prefill['mother_name'] ?? '' }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">ID/Passport Number <span class="text-danger">*</span></label>
@@ -765,7 +769,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Cell Number <span class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control" name="mother_cell" required>
+                                    <input type="tel" class="form-control" name="mother_cell"
+                                           value="{{ $prefill['mother_cell'] ?? '' }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Work Number</label>
@@ -773,7 +778,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Email Address <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" name="mother_email" required>
+                                    <input type="email" class="form-control" name="mother_email"
+                                           value="{{ $prefill['mother_email'] ?? '' }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Occupation</label>
@@ -833,8 +839,8 @@
                     <div class="step-content" data-step="4">
                         <div class="form-section">
                             <h4><i class="fas fa-phone-alt"></i> Emergency Contact</h4>
-                            <p class="text-muted mb-4" style="font-size: 1.05rem;">
-                                <i class="fas fa-info-circle me-2" style="color: #e91e63;"></i>
+                            <p class="text-muted mb-4" style="font-family: var(--font-body); color: var(--color-body); font-size: 16px;">
+                                <i class="fas fa-info-circle me-2" style="color: #E91E63;"></i>
                                 Provide an emergency contact person we can reach if parents are unavailable.
                             </p>
 
@@ -852,8 +858,8 @@
 
                         <div class="form-section">
                             <h4><i class="fas fa-medkit"></i> Medical Information</h4>
-                            <p class="text-muted mb-4" style="font-size: 1.05rem;">
-                                <i class="fas fa-heartbeat me-2" style="color: #e91e63;"></i>
+                            <p class="text-muted mb-4" style="font-family: var(--font-body); color: var(--color-body); font-size: 16px;">
+                                <i class="fas fa-heartbeat me-2" style="color: #E91E63;"></i>
                                 Help us keep your child safe by providing complete medical information.
                             </p>
 
@@ -902,8 +908,8 @@
                     <div class="step-content" data-step="5">
                         <div class="form-section">
                             <h4><i class="fas fa-file-upload"></i> Document Upload</h4>
-                            <p class="text-muted mb-4" style="font-size: 1.05rem;">
-                                <i class="fas fa-cloud-upload-alt me-2" style="color: #0c508e;"></i>
+                            <p class="text-muted mb-4" style="font-family: var(--font-body); color: var(--color-body); font-size: 16px;">
+                                <i class="fas fa-cloud-upload-alt me-2" style="color: var(--color-primary);"></i>
                                 Upload required documents now or submit them later via email or WhatsApp.
                             </p>
 
@@ -921,9 +927,9 @@
                                         </div>
                                         <div class="file-name-display" id="birthCertDisplay" style="display: none;">
                                             <div class="file-info">
-                                                <i class="fas fa-file-check" style="color: #10b981; font-size: 1.3rem;"></i>
+                                                <i class="fas fa-file-check" style="color: var(--color-success); font-size: 1.3rem;"></i>
                                                 <div>
-                                                    <strong class="file-name" style="color: #4A2559;"></strong>
+                                                    <strong class="file-name" style="color: var(--color-text);"></strong>
                                                     <small class="file-size d-block text-muted"></small>
                                                 </div>
                                             </div>
@@ -946,9 +952,9 @@
                                         </div>
                                         <div class="file-name-display" id="clinicCardDisplay" style="display: none;">
                                             <div class="file-info">
-                                                <i class="fas fa-file-check" style="color: #10b981; font-size: 1.3rem;"></i>
+                                                <i class="fas fa-file-check" style="color: var(--color-success); font-size: 1.3rem;"></i>
                                                 <div>
-                                                    <strong class="file-name" style="color: #4A2559;"></strong>
+                                                    <strong class="file-name" style="color: var(--color-text);"></strong>
                                                     <small class="file-size d-block text-muted"></small>
                                                 </div>
                                             </div>
@@ -971,9 +977,9 @@
                                         </div>
                                         <div class="file-name-display" id="parentIdsDisplay" style="display: none;">
                                             <div class="file-info">
-                                                <i class="fas fa-file-check" style="color: #10b981; font-size: 1.3rem;"></i>
+                                                <i class="fas fa-file-check" style="color: var(--color-success); font-size: 1.3rem;"></i>
                                                 <div>
-                                                    <strong class="file-name" style="color: #4A2559;"></strong>
+                                                    <strong class="file-name" style="color: var(--color-text);"></strong>
                                                     <small class="file-size d-block text-muted"></small>
                                                 </div>
                                             </div>
@@ -996,9 +1002,9 @@
                                         </div>
                                         <div class="file-name-display" id="proofAddressDisplay" style="display: none;">
                                             <div class="file-info">
-                                                <i class="fas fa-file-check" style="color: #10b981; font-size: 1.3rem;"></i>
+                                                <i class="fas fa-file-check" style="color: var(--color-success); font-size: 1.3rem;"></i>
                                                 <div>
-                                                    <strong class="file-name" style="color: #4A2559;"></strong>
+                                                    <strong class="file-name" style="color: var(--color-text);"></strong>
                                                     <small class="file-size d-block text-muted"></small>
                                                 </div>
                                             </div>
@@ -1021,8 +1027,8 @@
                     <div class="step-content" data-step="6">
                         <div class="form-section">
                             <h4><i class="fas fa-file-signature"></i> Consent & Agreements</h4>
-                            <p class="text-muted mb-4" style="font-size: 1.05rem;">
-                                <i class="fas fa-shield-alt me-2" style="color: #D18109;"></i>
+                            <p class="text-muted mb-4" style="font-family: var(--font-body); color: var(--color-body); font-size: 16px;">
+                                <i class="fas fa-shield-alt me-2" style="color: var(--color-warm);"></i>
                                 Please read and accept the following agreements. Required consents are marked with *.
                             </p>
 
@@ -1104,8 +1110,8 @@
                     <div class="step-content" data-step="7">
                         <div class="form-section">
                             <h4><i class="fas fa-check-double"></i> Review & Submit</h4>
-                            <p class="text-muted mb-4" style="font-size: 1.05rem;">
-                                <i class="fas fa-clipboard-check me-2" style="color: #10b981;"></i>
+                            <p class="text-muted mb-4" style="font-family: var(--font-body); color: var(--color-body); font-size: 16px;">
+                                <i class="fas fa-clipboard-check me-2" style="color: var(--color-success);"></i>
                                 Please review your application details before final submission.
                             </p>
 
@@ -1123,7 +1129,7 @@
                                 <input type="hidden" name="signature_date" value="{{ date('Y-m-d') }}">
                             </div>
 
-                            <div class="alert alert-success" style="font-size: 1rem;">
+                            <div class="alert alert-success" style="font-size: 16px;">
                                 <i class="fas fa-envelope me-2" style="font-size: 1.2rem;"></i>
                                 <strong>What happens next?</strong> After submitting, you'll receive a confirmation email with your application reference number. We'll review your application and contact you within 2-3 business days.
                             </div>
@@ -1132,73 +1138,15 @@
 
                     <!-- Navigation Buttons -->
                     <div class="d-flex justify-content-between mt-5 gap-3">
-
-                        <!-- Previous -->
-                        <button type="button"
-                                id="prevBtn"
-                                class="btn-nav-prev"
-                                style="
-            display:none;
-            padding:16px 40px;
-            border-radius:50px;
-            border:3px solid #70167E;
-            background:white;
-            color:#70167E;
-            font-weight:700;
-            font-size:1rem;
-            transition:all .3s ease;
-            box-shadow: 0 4px 15px rgba(112,22,126,0.2);
-        "
-                                onmouseover="this.style.background='#70167E'; this.style.color='#fff'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 25px rgba(112,22,126,0.3)'"
-                                onmouseout="this.style.background='white'; this.style.color='#70167E'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(112,22,126,0.2)'"
-                        >
-                            <i class="fas fa-arrow-left me-2"></i> Previous
+                        <button type="button" id="prevBtn" class="pb-wizard-btn pb-wizard-btn--prev" style="display: none;">
+                            <i class="fas fa-arrow-left"></i> Previous
                         </button>
-
-                        <!-- Next -->
-                        <button type="button"
-                                id="nextBtn"
-                                style="
-            padding:16px 48px;
-            border-radius:50px;
-            border:none;
-            background:#0c508e;
-            color:#fff;
-            font-weight:700;
-            font-size:1rem;
-            box-shadow:0 6px 24px rgba(12,80,142,.4);
-            transition:all .3s ease;
-            margin-left:auto;
-        "
-                                onmouseover="this.style.background='#0a4070'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 32px rgba(12,80,142,.5)'"
-                                onmouseout="this.style.background='#0c508e'; this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 24px rgba(12,80,142,.4)'"
-                        >
-                            Next Step <i class="fas fa-arrow-right ms-2"></i>
+                        <button type="button" id="nextBtn" class="pb-wizard-btn pb-wizard-btn--next">
+                            Next Step <i class="fas fa-arrow-right"></i>
                         </button>
-
-                        <!-- Submit -->
-                        <button type="submit"
-                                id="submitBtn"
-                                onclick="console.log('Submit button clicked!')"
-                                style="
-            display:none;
-            padding:16px 48px;
-            border-radius:50px;
-            border:none;
-            background:#10b981;
-            color:#fff;
-            font-weight:700;
-            font-size:1rem;
-            box-shadow:0 6px 24px rgba(16,185,129,.4);
-            transition:all .3s ease;
-            margin-left:auto;
-        "
-                                onmouseover="this.style.background='#059669'; this.style.transform='translateY(-3px) scale(1.05)'; this.style.boxShadow='0 10px 32px rgba(16,185,129,.5)'"
-                                onmouseout="this.style.background='#10b981'; this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 6px 24px rgba(16,185,129,.4)'"
-                        >
-                            <i class="fas fa-paper-plane me-2"></i> Submit Application
+                        <button type="submit" id="submitBtn" class="pb-wizard-btn pb-wizard-btn--submit" style="display: none;">
+                            <i class="fas fa-paper-plane"></i> Submit Application
                         </button>
-
                     </div>
 
                 </form>
@@ -1215,54 +1163,24 @@
 
 @push('styles')
 <style>
-@keyframes slideIn {
-    from {
-        transform: translateX(400px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+@@keyframes slideIn {
+    from { transform: translateX(400px); opacity: 0; }
+    to   { transform: translateX(0); opacity: 1; }
 }
-
-@keyframes slideOut {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(400px);
-        opacity: 0;
-    }
+@@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to   { transform: translateX(400px); opacity: 0; }
 }
-
-@keyframes shake {
+@@keyframes shake {
     0%, 100% { transform: translateX(0); }
     10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
     20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
-
-.field-error {
-    animation: shake 0.5s;
-}
-
-/* Custom radio button styling */
+.field-error { animation: shake 0.5s; }
 .fee-option-radio {
-    accent-color: #0c508e;
-    transform: scale(1.2);
+    accent-color: var(--color-primary);
 }
-
-.fee-option-radio:checked + label {
-    font-weight: 600;
-}
-
-/* Selected fee option card pulse effect */
-@keyframes selectedPulse {
-    0% { box-shadow: 0 8px 32px rgba(12,80,142,0.3); }
-    50% { box-shadow: 0 8px 32px rgba(12,80,142,0.5); }
-    100% { box-shadow: 0 8px 32px rgba(12,80,142,0.3); }
-}
+.fee-option-radio:checked + label { font-weight: 600; }
 </style>
 @endpush
 
@@ -1308,19 +1226,12 @@
 
             function updateFeeOptionStyles() {
                 document.querySelectorAll('.fee-option-radio').forEach(radio => {
-                    const container = radio.closest('.form-check');
+                    const card = radio.closest('.pb-fee-card');
+                    if (!card) return;
                     if (radio.checked) {
-                        container.style.borderColor = '#0c508e';
-                        container.style.borderWidth = '4px';
-                        container.style.background = 'rgba(12,80,142,0.1)';
-                        container.style.boxShadow = '0 8px 32px rgba(12,80,142,0.3)';
-                        container.style.transform = 'scale(1.02)';
+                        card.classList.add('pb-fee-card--selected');
                     } else {
-                        container.style.borderColor = '#e8e5ef';
-                        container.style.borderWidth = '3px';
-                        container.style.background = 'white';
-                        container.style.boxShadow = 'none';
-                        container.style.transform = 'scale(1)';
+                        card.classList.remove('pb-fee-card--selected');
                     }
                 });
             }
@@ -1555,46 +1466,55 @@
             function generateReviewSummary() {
 
                 const fd = new FormData(form);
+                const cs = getComputedStyle(document.documentElement);
+                const cPrimary = cs.getPropertyValue('--color-primary').trim();
+                const cWarm    = cs.getPropertyValue('--color-warm').trim();
+                const cAccent  = cs.getPropertyValue('--color-accent').trim();
+                const cText    = cs.getPropertyValue('--color-text').trim();
+                const cMuted   = cs.getPropertyValue('--color-muted').trim() || '#6b7280';
+                const cSuccess = cs.getPropertyValue('--color-success').trim();
+                const cBody    = cs.getPropertyValue('--color-body').trim() || '#6b7280';
+                const rMd      = cs.getPropertyValue('--radius-md').trim() || '12px';
+                const rLg      = cs.getPropertyValue('--radius-lg').trim() || '20px';
 
-                // Get selected program details
                 const programSelect = document.querySelector('[name="program"]');
                 const programText = programSelect.options[programSelect.selectedIndex]?.text || 'Not selected';
 
-                // Get selected fee option details
                 const feeOption = document.querySelector('[name="fee_option"]:checked');
-                const feeLabel = feeOption?.closest('.form-check')?.querySelector('strong')?.textContent || 'Not selected';
-                const feePrice = feeOption?.closest('.form-check')?.querySelector('span[style*="background"]')?.textContent || '';
-                const feeHours = feeOption?.closest('.form-check')?.querySelector('small')?.textContent || '';
+                const feeCard = feeOption?.closest('.pb-fee-card');
+                const feeLabel = feeCard?.querySelector('.pb-fee-card__name')?.textContent || 'Not selected';
+                const feePrice = feeCard?.querySelector('.pb-fee-card__price')?.textContent || '';
+                const feeHours = feeCard?.querySelector('.pb-fee-card__hours')?.textContent || '';
+
+                const labelStyle = `color:${cMuted}; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:5px;`;
+                const valueStyle = `color:${cText}; font-weight:600; font-size:1.1rem; margin:0;`;
+                const cardStyle  = `background:#fff; border-radius:${rLg}; padding:30px; width:100%; display:flex; flex-direction:column;`;
+                const iconBox    = (bg) => `width:50px; height:50px; background:${bg}; border-radius:${rMd}; display:flex; align-items:center; justify-content:center;`;
 
                 let html = '<div class="row g-4">';
 
                 // Program Card
                 html += `
                 <div class="col-md-6 d-flex">
-                    <div style="background: white; border: 3px solid #0c508e; border-radius: 20px; padding: 30px; box-shadow: 0 8px 24px rgba(12,80,142,0.15); width: 100%; display: flex; flex-direction: column;">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                            <div style="width: 50px; height: 50px; background: #0c508e; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-school" style="color: white; font-size: 1.5rem;"></i>
-                            </div>
-                            <h5 style="color: #4A2559; font-weight: 700; margin: 0;">Program Selection</h5>
+                    <div style="${cardStyle}">
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                            <div style="${iconBox(cPrimary)}"><i class="fas fa-school" style="color:#fff; font-size:1.5rem;"></i></div>
+                            <h5 style="color:${cText}; font-weight:700; margin:0;">Program Selection</h5>
                         </div>
-
-                        <div style="margin-bottom: 15px;">
-                            <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 5px;">Start Date</label>
-                            <p style="color: #4A2559; font-weight: 600; font-size: 1.1rem; margin: 0;">${fd.get('start_date') || 'Not specified'}</p>
+                        <div style="margin-bottom:15px;">
+                            <label style="${labelStyle}">Start Date</label>
+                            <p style="${valueStyle}">${fd.get('start_date') || 'Not specified'}</p>
                         </div>
-
-                        <div style="margin-bottom: 15px;">
-                            <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 5px;">Program</label>
-                            <p style="color: #4A2559; font-weight: 600; font-size: 1.1rem; margin: 0;">${programText}</p>
+                        <div style="margin-bottom:15px;">
+                            <label style="${labelStyle}">Program</label>
+                            <p style="${valueStyle}">${programText}</p>
                         </div>
-
-                        <div style="background: rgba(12,80,142,0.05); padding: 15px; border-radius: 12px; border-left: 4px solid #0c508e;">
-                            <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 8px;">Fee Option</label>
-                            <p style="color: #4A2559; font-weight: 700; font-size: 1.2rem; margin: 0 0 5px 0;">${feeLabel}</p>
-                            <p style="color: #0c508e; font-weight: 700; font-size: 1.3rem; margin: 0 0 5px 0;">${feePrice}</p>
-                            <p style="color: #6c757d; font-size: 0.9rem; margin: 0;"><i class="fas fa-clock me-1" style="color: #D18109;"></i>${feeHours}</p>
-                            ${fd.get('snack_box') === 'on' ? '<p style="color: #10b981; font-weight: 600; margin-top: 10px; margin-bottom: 0;"><i class="fas fa-check-circle me-1"></i>Snack Box included (+R400/month)</p>' : ''}
+                        <div style="background:rgba(0,119,182,0.04); padding:15px; border-radius:${rMd}; border-left:4px solid ${cPrimary};">
+                            <label style="${labelStyle}">Fee Option</label>
+                            <p style="color:${cText}; font-weight:700; font-size:1.2rem; margin:0 0 5px 0;">${feeLabel}</p>
+                            <p style="color:${cPrimary}; font-weight:700; font-size:1.3rem; margin:0 0 5px 0;">${feePrice}</p>
+                            <p style="color:${cBody}; font-size:15px; margin:0;"><i class="fas fa-clock me-1" style="color:${cWarm};"></i>${feeHours}</p>
+                            ${fd.get('snack_box') === 'on' ? `<p style="color:${cSuccess}; font-weight:600; margin-top:10px; margin-bottom:0;"><i class="fas fa-check-circle me-1"></i>Snack Box included (+R400/month)</p>` : ''}
                         </div>
                     </div>
                 </div>`;
@@ -1602,85 +1522,71 @@
                 // Child Card
                 html += `
                 <div class="col-md-6 d-flex">
-                    <div style="background: white; border: 3px solid #D18109; border-radius: 20px; padding: 30px; box-shadow: 0 8px 24px rgba(209,129,9,0.15); width: 100%; display: flex; flex-direction: column;">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                            <div style="width: 50px; height: 50px; background: #D18109; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-baby" style="color: white; font-size: 1.5rem;"></i>
-                            </div>
-                            <h5 style="color: #4A2559; font-weight: 700; margin: 0;">Child's Details</h5>
+                    <div style="${cardStyle}">
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                            <div style="${iconBox(cWarm)}"><i class="fas fa-baby" style="color:#fff; font-size:1.5rem;"></i></div>
+                            <h5 style="color:${cText}; font-weight:700; margin:0;">Child's Details</h5>
                         </div>
-
-                        <div style="margin-bottom: 15px;">
-                            <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 5px;">Full Name</label>
-                            <p style="color: #4A2559; font-weight: 600; font-size: 1.1rem; margin: 0;">${fd.get('child_name') || 'Not specified'}</p>
-                            ${fd.get('child_nickname') ? `<small style="color: #6c757d;">(${fd.get('child_nickname')})</small>` : ''}
+                        <div style="margin-bottom:15px;">
+                            <label style="${labelStyle}">Full Name</label>
+                            <p style="${valueStyle}">${fd.get('child_name') || 'Not specified'}</p>
+                            ${fd.get('child_nickname') ? `<small style="color:${cMuted};">(${fd.get('child_nickname')})</small>` : ''}
                         </div>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
                             <div>
-                                <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 5px;">Date of Birth</label>
-                                <p style="color: #4A2559; font-weight: 600; margin: 0;">${fd.get('child_dob') || '-'}</p>
+                                <label style="${labelStyle}">Date of Birth</label>
+                                <p style="color:${cText}; font-weight:600; margin:0;">${fd.get('child_dob') || '-'}</p>
                             </div>
                             <div>
-                                <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 5px;">Gender</label>
-                                <p style="color: #4A2559; font-weight: 600; margin: 0;">${fd.get('child_gender') ? fd.get('child_gender').charAt(0).toUpperCase() + fd.get('child_gender').slice(1) : '-'}</p>
+                                <label style="${labelStyle}">Gender</label>
+                                <p style="color:${cText}; font-weight:600; margin:0;">${fd.get('child_gender') ? fd.get('child_gender').charAt(0).toUpperCase() + fd.get('child_gender').slice(1) : '-'}</p>
                             </div>
                         </div>
-
-                        <div style="margin-bottom: 15px;">
-                            <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 5px;">ID/Passport Number</label>
-                            <p style="color: #4A2559; font-weight: 600; margin: 0;">${fd.get('child_id') || '-'}</p>
+                        <div style="margin-bottom:15px;">
+                            <label style="${labelStyle}">ID/Passport Number</label>
+                            <p style="color:${cText}; font-weight:600; margin:0;">${fd.get('child_id') || '-'}</p>
                         </div>
-
-                        <div style="background: rgba(209,129,9,0.05); padding: 15px; border-radius: 12px; border-left: 4px solid #D18109;">
-                            <div style="margin-bottom: 8px;">
-                                <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 3px;">Home Language</label>
-                                <p style="color: #4A2559; font-weight: 600; font-size: 0.95rem; margin: 0;">${fd.get('child_language') || '-'}</p>
+                        <div style="background:rgba(209,129,9,0.04); padding:15px; border-radius:${rMd}; border-left:4px solid ${cWarm};">
+                            <div style="margin-bottom:8px;">
+                                <label style="${labelStyle}">Home Language</label>
+                                <p style="color:${cText}; font-weight:600; font-size:15px; margin:0;">${fd.get('child_language') || '-'}</p>
                             </div>
                             ${fd.get('child_religion') ? `
                             <div>
-                                <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 3px;">Religion</label>
-                                <p style="color: #4A2559; font-weight: 600; font-size: 0.95rem; margin: 0;">${fd.get('child_religion')}</p>
-                            </div>
-                            ` : ''}
+                                <label style="${labelStyle}">Religion</label>
+                                <p style="color:${cText}; font-weight:600; font-size:15px; margin:0;">${fd.get('child_religion')}</p>
+                            </div>` : ''}
                         </div>
-
                         ${fd.get('has_second_child') === 'on' ? `
-                        <div style="margin-top: 15px; padding: 12px; background: rgba(16,185,129,0.1); border-radius: 10px; border: 2px solid #10b981;">
-                            <p style="color: #10b981; font-weight: 600; margin: 0; font-size: 0.9rem;">
-                                <i class="fas fa-users me-2"></i>Second child included: ${fd.get('child2_name') || 'Details provided'}
-                            </p>
-                        </div>
-                        ` : ''}
+                        <div style="margin-top:15px; padding:12px; background:rgba(46,125,50,0.06); border-radius:${rMd}; border-left:4px solid ${cSuccess};">
+                            <p style="color:${cSuccess}; font-weight:600; margin:0; font-size:15px;"><i class="fas fa-users me-2"></i>Second child included: ${fd.get('child2_name') || 'Details provided'}</p>
+                        </div>` : ''}
                     </div>
                 </div>`;
 
                 // Parent/Guardian Information
                 html += `
                 <div class="col-12">
-                    <div style="background: white; border: 3px solid #70167E; border-radius: 20px; padding: 30px; box-shadow: 0 8px 24px rgba(112,22,126,0.15);">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                            <div style="width: 50px; height: 50px; background: #70167E; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-user-friends" style="color: white; font-size: 1.5rem;"></i>
-                            </div>
-                            <h5 style="color: #4A2559; font-weight: 700; margin: 0;">Parent/Guardian Contact</h5>
+                    <div style="background:#fff; border-radius:${rLg}; padding:30px;">
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                            <div style="${iconBox(cAccent)}"><i class="fas fa-user-friends" style="color:#fff; font-size:1.5rem;"></i></div>
+                            <h5 style="color:${cText}; font-weight:700; margin:0;">Parent/Guardian Contact</h5>
                         </div>
-
                         <div class="row g-4">
                             <div class="col-md-6">
-                                <div style="background: rgba(112,22,126,0.05); padding: 20px; border-radius: 12px; height: 100%;">
-                                    <h6 style="color: #70167E; font-weight: 700; margin-bottom: 15px;">Mother/Guardian</h6>
-                                    <p style="color: #4A2559; font-weight: 600; font-size: 1.05rem; margin-bottom: 8px;">${fd.get('mother_name') || 'Not specified'}</p>
-                                    <p style="color: #6c757d; margin-bottom: 5px; font-size: 0.9rem;"><i class="fas fa-phone me-2" style="color: #70167E;"></i>${fd.get('mother_cell') || '-'}</p>
-                                    <p style="color: #6c757d; margin-bottom: 0; font-size: 0.9rem;"><i class="fas fa-envelope me-2" style="color: #70167E;"></i>${fd.get('mother_email') || '-'}</p>
+                                <div style="background:rgba(112,22,126,0.04); padding:20px; border-radius:${rMd}; height:100%;">
+                                    <h6 style="color:${cAccent}; font-weight:700; margin-bottom:15px;">Mother/Guardian</h6>
+                                    <p style="color:${cText}; font-weight:600; font-size:1.05rem; margin-bottom:8px;">${fd.get('mother_name') || 'Not specified'}</p>
+                                    <p style="color:${cBody}; margin-bottom:5px; font-size:15px;"><i class="fas fa-phone me-2" style="color:${cAccent};"></i>${fd.get('mother_cell') || '-'}</p>
+                                    <p style="color:${cBody}; margin-bottom:0; font-size:15px;"><i class="fas fa-envelope me-2" style="color:${cAccent};"></i>${fd.get('mother_email') || '-'}</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div style="background: rgba(112,22,126,0.05); padding: 20px; border-radius: 12px; height: 100%;">
-                                    <h6 style="color: #70167E; font-weight: 700; margin-bottom: 15px;">Father/Guardian</h6>
-                                    <p style="color: #4A2559; font-weight: 600; font-size: 1.05rem; margin-bottom: 8px;">${fd.get('father_name') || 'Not specified'}</p>
-                                    <p style="color: #6c757d; margin-bottom: 5px; font-size: 0.9rem;"><i class="fas fa-phone me-2" style="color: #70167E;"></i>${fd.get('father_cell') || '-'}</p>
-                                    <p style="color: #6c757d; margin-bottom: 0; font-size: 0.9rem;"><i class="fas fa-envelope me-2" style="color: #70167E;"></i>${fd.get('father_email') || '-'}</p>
+                                <div style="background:rgba(112,22,126,0.04); padding:20px; border-radius:${rMd}; height:100%;">
+                                    <h6 style="color:${cAccent}; font-weight:700; margin-bottom:15px;">Father/Guardian</h6>
+                                    <p style="color:${cText}; font-weight:600; font-size:1.05rem; margin-bottom:8px;">${fd.get('father_name') || 'Not specified'}</p>
+                                    <p style="color:${cBody}; margin-bottom:5px; font-size:15px;"><i class="fas fa-phone me-2" style="color:${cAccent};"></i>${fd.get('father_cell') || '-'}</p>
+                                    <p style="color:${cBody}; margin-bottom:0; font-size:15px;"><i class="fas fa-envelope me-2" style="color:${cAccent};"></i>${fd.get('father_email') || '-'}</p>
                                 </div>
                             </div>
                         </div>
@@ -1690,43 +1596,37 @@
                 // Emergency Contact & Medical Summary
                 html += `
                 <div class="col-md-6">
-                    <div style="background: white; border: 3px solid #e91e63; border-radius: 20px; padding: 30px; box-shadow: 0 8px 24px rgba(233,30,99,0.15); height: 100%;">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                            <div style="width: 50px; height: 50px; background: #e91e63; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-phone-alt" style="color: white; font-size: 1.5rem;"></i>
-                            </div>
-                            <h5 style="color: #4A2559; font-weight: 700; margin: 0;">Emergency Contact</h5>
+                    <div style="background:#fff; border-radius:${rLg}; padding:30px; height:100%;">
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                            <div style="${iconBox('#E91E63')}"><i class="fas fa-phone-alt" style="color:#fff; font-size:1.5rem;"></i></div>
+                            <h5 style="color:${cText}; font-weight:700; margin:0;">Emergency Contact</h5>
                         </div>
-                        <p style="color: #4A2559; font-weight: 600; font-size: 1.05rem; margin-bottom: 8px;">${fd.get('emergency_name') || 'Not specified'}</p>
-                        <p style="color: #6c757d; margin: 0;"><i class="fas fa-phone me-2" style="color: #e91e63;"></i>${fd.get('emergency_tel') || '-'}</p>
+                        <p style="color:${cText}; font-weight:600; font-size:1.05rem; margin-bottom:8px;">${fd.get('emergency_name') || 'Not specified'}</p>
+                        <p style="color:${cBody}; margin:0;"><i class="fas fa-phone me-2" style="color:#E91E63;"></i>${fd.get('emergency_tel') || '-'}</p>
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <div style="background: white; border: 3px solid #e91e63; border-radius: 20px; padding: 30px; box-shadow: 0 8px 24px rgba(233,30,99,0.15); height: 100%;">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                            <div style="width: 50px; height: 50px; background: #e91e63; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-medkit" style="color: white; font-size: 1.5rem;"></i>
-                            </div>
-                            <h5 style="color: #4A2559; font-weight: 700; margin: 0;">Medical Information</h5>
+                    <div style="background:#fff; border-radius:${rLg}; padding:30px; height:100%;">
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                            <div style="${iconBox('#E91E63')}"><i class="fas fa-medkit" style="color:#fff; font-size:1.5rem;"></i></div>
+                            <h5 style="color:${cText}; font-weight:700; margin:0;">Medical Information</h5>
                         </div>
-                        <div style="margin-bottom: 10px;">
-                            <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">Doctor</label>
-                            <p style="color: #4A2559; font-weight: 600; margin: 0;">${fd.get('doctor_name') || 'Not specified'}</p>
-                            <small style="color: #6c757d;">${fd.get('doctor_tel') || ''}</small>
+                        <div style="margin-bottom:10px;">
+                            <label style="${labelStyle}">Doctor</label>
+                            <p style="color:${cText}; font-weight:600; margin:0;">${fd.get('doctor_name') || 'Not specified'}</p>
+                            <small style="color:${cBody};">${fd.get('doctor_tel') || ''}</small>
                         </div>
                         ${fd.get('medical_aid') ? `
-                        <div style="margin-top: 10px;">
-                            <label style="color: #6c757d; font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">Medical Aid</label>
-                            <p style="color: #4A2559; font-weight: 600; margin: 0;">${fd.get('medical_aid')}</p>
-                            ${fd.get('medical_aid_number') ? `<small style="color: #6c757d;">${fd.get('medical_aid_number')}</small>` : ''}
-                        </div>
-                        ` : ''}
+                        <div style="margin-top:10px;">
+                            <label style="${labelStyle}">Medical Aid</label>
+                            <p style="color:${cText}; font-weight:600; margin:0;">${fd.get('medical_aid')}</p>
+                            ${fd.get('medical_aid_number') ? `<small style="color:${cBody};">${fd.get('medical_aid_number')}</small>` : ''}
+                        </div>` : ''}
                         ${fd.get('allergies') ? `
-                        <div style="margin-top: 15px; padding: 10px; background: rgba(233,30,99,0.1); border-radius: 8px;">
-                            <p style="color: #e91e63; font-weight: 600; margin: 0; font-size: 0.9rem;"><i class="fas fa-exclamation-triangle me-2"></i>Has allergies noted</p>
-                        </div>
-                        ` : ''}
+                        <div style="margin-top:15px; padding:10px; background:rgba(233,30,99,0.06); border-radius:${rMd};">
+                            <p style="color:#E91E63; font-weight:600; margin:0; font-size:15px;"><i class="fas fa-exclamation-triangle me-2"></i>Has allergies noted</p>
+                        </div>` : ''}
                     </div>
                 </div>`;
 

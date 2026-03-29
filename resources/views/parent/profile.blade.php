@@ -5,294 +5,309 @@
 @section('page-title', 'My Profile')
 
 @section('sidebar-nav')
-<a href="{{ route('parent.dashboard') }}" class="nav-link">
-    <i class="fas fa-home"></i> Dashboard
-</a>
-<a href="{{ route('parent.children') }}" class="nav-link">
-    <i class="fas fa-child"></i> My Children
-</a>
-<a href="{{ route('parent.calendar') }}" class="nav-link">
-    <i class="fas fa-calendar-alt"></i> Calendar
-</a>
-<a href="{{ route('parent.newsletters') }}" class="nav-link">
-    <i class="fas fa-newspaper"></i> Newsletters
-</a>
-<a href="{{ route('parent.gallery') }}" class="nav-link">
-    <i class="fas fa-images"></i> Photo Gallery
-</a>
-
-<div class="nav-section-title">Billing</div>
-<a href="{{ route('parent.fees') }}" class="nav-link">
-    <i class="fas fa-file-invoice-dollar"></i> Fee Schedule
-</a>
-<a href="{{ route('parent.statements') }}" class="nav-link">
-    <i class="fas fa-receipt"></i> Statements
-</a>
-
-<div class="nav-section-title">Services</div>
-<a href="{{ route('parent.holiday-care') }}" class="nav-link">
-    <i class="fas fa-umbrella-beach"></i> Holiday Care
-</a>
-<a href="{{ route('parent.extra-murals') }}" class="nav-link">
-    <i class="fas fa-futbol"></i> Extra Murals
-</a>
-<a href="{{ route('parent.snack-box') }}" class="nav-link">
-    <i class="fas fa-apple-alt"></i> Snack Box
-</a>
-
-<div class="nav-section-title">Communication</div>
-<a href="{{ route('parent.messages') }}" class="nav-link">
-    <i class="fas fa-comments"></i> Messages
-</a>
-
-<div class="nav-section-title">Account</div>
-<a href="{{ route('parent.profile') }}" class="nav-link active">
-    <i class="fas fa-user-cog"></i> Profile
-</a>
+@include('parent.partials.sidebar')
 @endsection
 
+@push('styles')
+<style>
+/* ─── Micro label ──────────────────────────────────────────────────────── */
+.micro-label {
+    font-size:.63rem; font-weight:800; text-transform:uppercase;
+    letter-spacing:1.1px; color:#adb5bd; margin-bottom:12px;
+}
+
+/* ─── Panel ────────────────────────────────────────────────────────────── */
+.panel {
+    background:#fff; border-radius:16px;
+    box-shadow:0 1px 8px rgba(0,0,0,.06);
+    border:1px solid #f0f0f0; overflow:hidden; margin-bottom:24px;
+}
+.panel-header {
+    padding:15px 22px; border-bottom:1px solid #f3f4f6;
+    display:flex; align-items:center; justify-content:space-between;
+}
+.panel-header h6 { margin:0; font-weight:700; font-size:.9rem; color:#1a1f2e; }
+
+/* ─── Avatar ────────────────────────────────────────────────────────────── */
+.profile-avatar {
+    width:72px; height:72px; border-radius:18px;
+    background:linear-gradient(135deg,#0077B6,#00B4D8);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.8rem; font-weight:800; color:#fff;
+    box-shadow:0 4px 16px rgba(0,119,182,.25); flex-shrink:0;
+}
+
+/* ─── Form fields ──────────────────────────────────────────────────────── */
+.field-lbl {
+    font-size:.72rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:.5px; color:#94a3b8; margin-bottom:5px;
+}
+.form-control-premium {
+    border:1.5px solid #e0eeff; border-radius:10px;
+    font-size:.875rem; padding:9px 13px; color:#1a1f2e;
+    transition:border-color .15s, box-shadow .15s;
+}
+.form-control-premium:focus {
+    border-color:#0077B6; box-shadow:0 0 0 3px rgba(0,119,182,.08);
+    outline:none;
+}
+.form-control-premium::placeholder { color:#cbd5e1; }
+
+/* ─── Stat tiles ───────────────────────────────────────────────────────── */
+.stat-row { display:flex; border-top:1px solid #f3f4f6; }
+.stat-tile {
+    flex:1; padding:16px 18px; text-align:center;
+    border-right:1px solid #f3f4f6;
+}
+.stat-tile:last-child { border-right:none; }
+.st-val { font-size:1.4rem; font-weight:800; color:#1a1f2e; line-height:1; }
+.st-lbl { font-size:.64rem; font-weight:700; text-transform:uppercase;
+          letter-spacing:.5px; color:#94a3b8; margin-top:4px; }
+.st-val.good { color:#16a34a; }
+.st-val.bad  { color:#ef4444; }
+
+/* ─── Info row ─────────────────────────────────────────────────────────── */
+.info-row {
+    display:flex; align-items:center; gap:12px;
+    padding:11px 22px; border-bottom:1px solid #f9fafb;
+    font-size:.84rem;
+}
+.info-row:last-child { border-bottom:none; }
+.info-icon {
+    width:32px; height:32px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:.78rem; flex-shrink:0;
+    background:#f0f9ff; color:#0077B6;
+}
+.info-lbl { font-size:.7rem; font-weight:700; text-transform:uppercase;
+            letter-spacing:.4px; color:#94a3b8; }
+.info-val { font-size:.86rem; font-weight:600; color:#1a1f2e; }
+
+/* ─── Quick action link ────────────────────────────────────────────────── */
+.qa-link {
+    display:flex; align-items:center; gap:12px;
+    padding:12px 18px; border-radius:12px;
+    text-decoration:none; color:#374151; font-size:.84rem;
+    font-weight:600; transition:background .12s;
+    border:1.5px solid #f0f0f0;
+}
+.qa-link:hover { background:#f0f9ff; border-color:#bae6fd; color:#0077B6; }
+.qa-icon {
+    width:34px; height:34px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:.8rem; flex-shrink:0; background:#f0f9ff; color:#0077B6;
+}
+</style>
+@endpush
+
 @section('content')
+
+{{-- ── Page header ──────────────────────────────────────────────────────── --}}
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <div style="font-size:1.1rem;font-weight:800;color:#1a1f2e;letter-spacing:-.2px;">My Profile</div>
+        <div style="font-size:.82rem;color:#94a3b8;margin-top:2px;">Manage your account details and security</div>
+    </div>
+    <a href="{{ route('parent.dashboard') }}"
+       class="btn btn-sm rounded-pill px-3"
+       style="background:#f0f9ff;color:#0077B6;border:1.5px solid #bae6fd;font-weight:600;font-size:.8rem;">
+        <i class="fas fa-arrow-left me-1"></i> Dashboard
+    </a>
+</div>
+
+@if(session('success'))
+<div class="alert border-0 rounded-3 mb-4" style="background:#f0fdf4;color:#16a34a;font-size:.84rem;font-weight:600;padding:12px 18px;">
+    <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+</div>
+@endif
+@if($errors->any())
+<div class="alert border-0 rounded-3 mb-4" style="background:#fef2f2;color:#ef4444;font-size:.84rem;font-weight:600;padding:12px 18px;">
+    <i class="fas fa-exclamation-circle me-2"></i>{{ $errors->first() }}
+</div>
+@endif
+
 <div class="row g-4">
+
+    {{-- ── Left column ──────────────────────────────────────────────────── --}}
     <div class="col-lg-8">
-        <!-- Personal Information -->
-        <div class="portal-card mb-4">
-            <div class="portal-card-header">
-                <i class="fas fa-user me-2"></i> Personal Information
-            </div>
-            <div class="portal-card-body">
-                <form>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">First Name</label>
-                            <input type="text" class="form-control" value="{{ $parent['first_name'] ?? 'Sarah' }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Last Name</label>
-                            <input type="text" class="form-control" value="{{ $parent['last_name'] ?? 'Thompson' }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Email Address</label>
-                            <input type="email" class="form-control" value="{{ $parent['email'] ?? 'sarah.thompson@email.com' }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Phone Number</label>
-                            <input type="tel" class="form-control" value="{{ $parent['phone'] ?? '082 898 9967' }}">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-semibold">Home Address</label>
-                            <input type="text" class="form-control mb-2" placeholder="Street address" value="123 Main Street">
-                            <div class="row g-2">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Suburb" value="Parklands">
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="City" value="Cape Town">
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="Postal Code" value="7441">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-portal btn-portal-primary">
-                                <i class="fas fa-save me-2"></i> Save Changes
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
 
-        <!-- Emergency Contacts -->
-        <div class="portal-card mb-4">
-            <div class="portal-card-header d-flex justify-content-between align-items-center">
-                <span><i class="fas fa-phone-alt me-2"></i> Emergency Contacts</span>
-                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addContactModal">
-                    <i class="fas fa-plus me-1"></i> Add Contact
-                </button>
-            </div>
-            <div class="portal-card-body">
-                @php
-                    $emergencyContacts = [
-                        ['name' => 'John Thompson', 'relation' => 'Father', 'phone' => '082 123 4567', 'email' => 'john@email.com'],
-                        ['name' => 'Mary Johnson', 'relation' => 'Grandmother', 'phone' => '021 555 1234', 'email' => 'mary@email.com'],
-                    ];
-                @endphp
-                @foreach($emergencyContacts as $contact)
-                <div class="border rounded p-3 {{ !$loop->last ? 'mb-3' : '' }}">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <h6 class="fw-bold mb-1">{{ $contact['name'] }}</h6>
-                            <p class="text-muted small mb-2">{{ $contact['relation'] }}</p>
-                            <p class="small mb-0">
-                                <i class="fas fa-phone text-primary me-2"></i>{{ $contact['phone'] }}<br>
-                                <i class="fas fa-envelope text-primary me-2"></i>{{ $contact['email'] }}
-                            </p>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit</a></li>
-                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i> Remove</a></li>
-                            </ul>
-                        </div>
+        {{-- Profile hero --}}
+        <div class="panel" style="overflow:visible;">
+            <div style="height:5px;background:linear-gradient(90deg,#0077B6,#00B4D8,#FFB5BA);border-radius:16px 16px 0 0;"></div>
+            <div style="padding:22px 24px;display:flex;align-items:center;gap:20px;">
+                <div class="profile-avatar">{{ strtoupper(mb_substr($parent->name, 0, 1)) }}</div>
+                <div class="flex-grow-1">
+                    <div style="font-size:1.1rem;font-weight:800;color:#1a1f2e;letter-spacing:-.2px;">{{ $parent->name }}</div>
+                    <div style="font-size:.8rem;color:#94a3b8;margin-top:2px;">{{ $parent->email }}</div>
+                    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+                        <span style="font-size:.67rem;font-weight:700;background:#f0f9ff;color:#0077B6;border-radius:999px;padding:3px 11px;border:1px solid #bae6fd;">
+                            <i class="fas fa-user me-1"></i> Parent
+                        </span>
+                        <span style="font-size:.67rem;font-weight:700;background:#dcfce7;color:#16a34a;border-radius:999px;padding:3px 11px;">
+                            <i class="fas fa-check-circle me-1"></i> Active
+                        </span>
+                        <span style="font-size:.67rem;font-weight:700;background:#f8faff;color:#64748b;border-radius:999px;padding:3px 11px;border:1px solid #e2e8f0;">
+                            <i class="fas fa-calendar me-1"></i> Member since {{ $parent->created_at->format('M Y') }}
+                        </span>
                     </div>
                 </div>
-                @endforeach
             </div>
         </div>
 
-        <!-- Change Password -->
-        <div class="portal-card">
-            <div class="portal-card-header">
-                <i class="fas fa-lock me-2"></i> Change Password
+        {{-- Personal information --}}
+        <div class="micro-label"><i class="fas fa-user me-1"></i> Personal Information</div>
+        <div class="panel">
+            <div class="panel-header">
+                <h6>Account Details</h6>
+                <span style="font-size:.73rem;color:#94a3b8;">Changes apply immediately</span>
             </div>
-            <div class="portal-card-body">
-                <form>
+            <div style="padding:22px 24px;">
+                <form method="POST" action="{{ route('parent.profile.update') }}">
+                    @csrf
                     <div class="row g-3">
                         <div class="col-12">
-                            <label class="form-label fw-semibold">Current Password</label>
-                            <input type="password" class="form-control">
+                            <div class="field-lbl">Full Name</div>
+                            <input type="text" name="name"
+                                   class="form-control form-control-premium @error('name') is-invalid @enderror"
+                                   value="{{ old('name', $parent->name) }}" required>
+                            @error('name')<div class="invalid-feedback" style="font-size:.74rem;">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">New Password</label>
-                            <input type="password" class="form-control">
+                            <div class="field-lbl">Email Address</div>
+                            <input type="email" name="email"
+                                   class="form-control form-control-premium @error('email') is-invalid @enderror"
+                                   value="{{ old('email', $parent->email) }}" required>
+                            @error('email')<div class="invalid-feedback" style="font-size:.74rem;">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Confirm New Password</label>
-                            <input type="password" class="form-control">
+                            <div class="field-lbl">Phone Number</div>
+                            <input type="tel" name="phone"
+                                   class="form-control form-control-premium @error('phone') is-invalid @enderror"
+                                   value="{{ old('phone', $parent->phone) }}"
+                                   placeholder="e.g. 082 123 4567">
+                            @error('phone')<div class="invalid-feedback" style="font-size:.74rem;">{{ $message }}</div>@enderror
                         </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-portal btn-portal-primary">
-                                <i class="fas fa-key me-2"></i> Update Password
+                        <div class="col-12 pt-1">
+                            <button type="submit"
+                                    class="btn btn-sm rounded-pill px-4"
+                                    style="background:#0077B6;color:#fff;border:none;font-weight:600;font-size:.84rem;">
+                                <i class="fas fa-save me-1"></i> Save Changes
                             </button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+
+        {{-- Change password --}}
+        <div class="micro-label"><i class="fas fa-lock me-1"></i> Security</div>
+        <div class="panel">
+            <div class="panel-header">
+                <h6>Change Password</h6>
+            </div>
+            <div style="padding:22px 24px;">
+                <form method="POST" action="{{ route('parent.profile.update') }}">
+                    @csrf
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="field-lbl">Current Password</div>
+                            <input type="password" name="current_password"
+                                   class="form-control form-control-premium"
+                                   placeholder="Enter current password">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="field-lbl">New Password</div>
+                            <input type="password" name="password"
+                                   class="form-control form-control-premium"
+                                   placeholder="Min. 8 characters">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="field-lbl">Confirm New Password</div>
+                            <input type="password" name="password_confirmation"
+                                   class="form-control form-control-premium"
+                                   placeholder="Repeat new password">
+                        </div>
+                        <div class="col-12 pt-1">
+                            <button type="submit"
+                                    class="btn btn-sm rounded-pill px-4"
+                                    style="background:#f8faff;color:#374151;border:1.5px solid #e2e8f0;font-weight:600;font-size:.84rem;">
+                                <i class="fas fa-key me-1"></i> Update Password
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 
+    {{-- ── Right column ─────────────────────────────────────────────────── --}}
     <div class="col-lg-4">
-        <!-- Account Status -->
-        <div class="portal-card mb-4">
-            <div class="portal-card-header">Account Status</div>
-            <div class="portal-card-body text-center">
-                <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                    <i class="fas fa-check-circle fa-3x text-success"></i>
+
+        {{-- Account overview --}}
+        <div class="micro-label"><i class="fas fa-chart-pie me-1"></i> Account Overview</div>
+        <div class="panel" style="margin-bottom:24px;">
+            <div style="padding:18px 22px 14px;">
+                <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;margin-bottom:2px;">Account</div>
+                <div style="font-size:.92rem;font-weight:800;color:#1a1f2e;">{{ $parent->name }}</div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-tile">
+                    <div class="st-val">{{ $children->where('status','approved')->count() }}</div>
+                    <div class="st-lbl">Enrolled</div>
                 </div>
-                <h6 class="fw-bold">Account Active</h6>
-                <p class="text-muted small mb-3">Member since January 2025</p>
-                <div class="border-top pt-3">
-                    <div class="d-flex justify-content-between mb-2">
-                        <span class="text-muted small">Children Enrolled:</span>
-                        <span class="fw-semibold">{{ count($children) }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <span class="text-muted small">Account Balance:</span>
-                        <span class="fw-semibold text-success">R 0.00</span>
-                    </div>
+                <div class="stat-tile">
+                    <div class="st-val">{{ $children->whereIn('status',['pending','under_review'])->count() }}</div>
+                    <div class="st-lbl">Pending</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="st-val">{{ $children->count() }}</div>
+                    <div class="st-lbl">Total</div>
                 </div>
             </div>
         </div>
 
-        <!-- Notification Preferences -->
-        <div class="portal-card mb-4">
-            <div class="portal-card-header">
-                <i class="fas fa-bell me-2"></i> Notifications
-            </div>
-            <div class="portal-card-body">
-                <div class="mb-3">
-                    <div class="form-check form-switch mb-2">
-                        <input class="form-check-input" type="checkbox" id="emailNotif" checked>
-                        <label class="form-check-label" for="emailNotif">Email Notifications</label>
-                    </div>
-                    <div class="form-check form-switch mb-2">
-                        <input class="form-check-input" type="checkbox" id="smsNotif" checked>
-                        <label class="form-check-label" for="smsNotif">SMS Notifications</label>
-                    </div>
-                    <div class="form-check form-switch mb-2">
-                        <input class="form-check-input" type="checkbox" id="whatsappNotif">
-                        <label class="form-check-label" for="whatsappNotif">WhatsApp Updates</label>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="newsletterNotif" checked>
-                        <label class="form-check-label" for="newsletterNotif">Monthly Newsletter</label>
-                    </div>
+        {{-- Enrolled children --}}
+        @if($children->count())
+        <div class="micro-label"><i class="fas fa-child me-1"></i> My Children</div>
+        <div class="panel">
+            @foreach($children as $child)
+            <div class="info-row">
+                <div class="info-icon">{{ strtoupper(mb_substr($child['name'], 0, 1)) }}</div>
+                <div class="flex-grow-1">
+                    <div class="info-val">{{ $child['name'] }}</div>
+                    @if($child['child_number'])
+                        <div class="info-lbl"><code style="font-size:.7rem;color:#0077B6;">{{ $child['child_number'] }}</code></div>
+                    @endif
                 </div>
-                <button class="btn btn-sm btn-portal btn-portal-primary w-100">
-                    <i class="fas fa-save me-2"></i> Save Preferences
-                </button>
+                <span style="font-size:.67rem;font-weight:700;border-radius:999px;padding:3px 9px;
+                      background:{{ $child['status']==='approved' ? '#dcfce7' : '#fff7ed' }};
+                      color:{{ $child['status']==='approved' ? '#16a34a' : '#d97706' }};">
+                    {{ $child['status_label'] }}
+                </span>
             </div>
+            @endforeach
+        </div>
+        @endif
+
+        {{-- Quick actions --}}
+        <div class="micro-label"><i class="fas fa-bolt me-1"></i> Quick Actions</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+            <a href="{{ route('parent.fees.statements') }}" class="qa-link">
+                <div class="qa-icon"><i class="fas fa-receipt"></i></div>
+                View Statement
+            </a>
+            <a href="{{ route('parent.documents') }}" class="qa-link">
+                <div class="qa-icon"><i class="fas fa-folder-open"></i></div>
+                Document Vault
+            </a>
+            <a href="{{ route('parent.children') }}" class="qa-link">
+                <div class="qa-icon"><i class="fas fa-child"></i></div>
+                My Children
+            </a>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="portal-card">
-            <div class="portal-card-header">Quick Actions</div>
-            <div class="portal-card-body">
-                <div class="d-grid gap-2">
-                    <a href="{{ route('parent.statements') }}" class="btn btn-outline-primary btn-sm">
-                        <i class="fas fa-download me-2"></i> Download Statement
-                    </a>
-                    <a href="#" class="btn btn-outline-secondary btn-sm">
-                        <i class="fas fa-file-pdf me-2"></i> View Contract
-                    </a>
-                    <a href="#" class="btn btn-outline-secondary btn-sm">
-                        <i class="fas fa-question-circle me-2"></i> Help & Support
-                    </a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
-<!-- Add Emergency Contact Modal -->
-<div class="modal fade" id="addContactModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Add Emergency Contact</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Full Name</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Relationship</label>
-                        <select class="form-select" required>
-                            <option value="">Select relationship...</option>
-                            <option>Father</option>
-                            <option>Mother</option>
-                            <option>Grandfather</option>
-                            <option>Grandmother</option>
-                            <option>Aunt</option>
-                            <option>Uncle</option>
-                            <option>Family Friend</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Phone Number</label>
-                        <input type="tel" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Email Address</label>
-                        <input type="email" class="form-control">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-portal btn-portal-primary">
-                    <i class="fas fa-plus me-2"></i> Add Contact
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

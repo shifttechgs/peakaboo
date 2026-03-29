@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="vs-svg-assets" href="{{ route('home') }}#programs">
+                    <a class="vs-svg-assets" href="{{ route('programs') }}">
                         Programs
                         <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
                             <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
@@ -38,7 +38,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="vs-svg-assets" href="{{ route('home') }}#about">
+                    <a class="vs-svg-assets" href="{{ route('about') }}">
                         About
                         <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
                             <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="vs-svg-assets" href="{{ route('home') }}#fees">
+                    <a class="vs-svg-assets" href="{{ route('fees') }}">
                         Fees
                         <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
                             <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="vs-svg-assets" href="{{ route('home') }}#contact">
+                    <a class="vs-svg-assets" href="{{ route('contact') }}">
                         Contact
                         <svg xmlns="http://www.w3.org/2000/svg" width="87" height="31" viewBox="0 0 87 31" fill="none">
                             <path d="M0 4.14031C0 1.87713 1.87602 0.0646902 4.13785 0.142684L83.1379 2.86682C85.2921 2.94111 87 4.70896 87 6.86445V25.0909C87 27.2642 85.2647 29.0399 83.0919 29.0898L4.09193 30.9059C1.84739 30.9575 0 29.1521 0 26.907V4.14031Z" fill="#70167E"></path>
@@ -63,6 +63,38 @@
                 </li>
             </ul>
         </div>
+        <!-- ── Mobile Menu CTA Buttons ── -->
+        <div style="padding: 20px 20px 0; display: flex; flex-direction: column; gap: 10px;">
+{{--            <a href="{{ route('enrol.index') }}"--}}
+{{--               style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:#0077B6;color:#fff;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #0077B6;">--}}
+{{--                <i class="fa-solid fa-pen-to-square"></i> Enrol Now--}}
+{{--            </a>--}}
+            <a href="{{ route('book-tour') }}"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:transparent;color:#0077B6;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #0077B6;">
+                <i class="fa-regular fa-calendar-check"></i> Book a Tour
+            </a>
+            @auth
+                @php
+                    $mobilePortalUrl = match(true) {
+                        auth()->user()->hasRole('super_admin') => route('admin.dashboard'),
+                        auth()->user()->hasRole('admin')       => route('admin.dashboard'),
+                        auth()->user()->hasRole('teacher')     => route('teacher.dashboard'),
+                        auth()->user()->hasRole('child')       => route('child.dashboard'),
+                        default                                => route('parent.dashboard'),
+                    };
+                @endphp
+                <a href="{{ $mobilePortalUrl }}"
+                   style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:#f0f9ff;color:#0077B6;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #bae6fd;">
+                    <i class="fas fa-th-large"></i> My Portal
+                </a>
+            @else
+                <a href="{{ route('login') }}"
+                   style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;background:#f0f9ff;color:#0077B6;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:2px solid #bae6fd;">
+                    <i class="fas fa-sign-in-alt"></i> Portal Login
+                </a>
+            @endauth
+        </div>
+
         <div class="px-20 py-20">
             <div class="sidemenu-contact style2">
                 <ul>
@@ -188,10 +220,10 @@
                                          onmouseover="this.style.transform='translateY(-8px)'"
                                          onmouseout="this.style.transform='translateY(0)'">
 
-                                    <div style="position: absolute; top: -10px; left: -15px; width: 25px; height: 25px; background: linear-gradient(135deg, #D18109, #ffa726); border-radius: 50%; animation: float 3s ease-in-out infinite;"></div>
-                                    <div style="position: absolute; top: 5px; right: -10px; width: 18px; height: 18px; background: linear-gradient(135deg, #70167E, #9c27b0); border-radius: 50%; animation: float 4s ease-in-out infinite;"></div>
-                                    <div style="position: absolute; bottom: 0; left: 10px; width: 20px; height: 20px; background: linear-gradient(135deg, #0c508e, #2196f3); border-radius: 50%; animation: float 3.5s ease-in-out infinite;"></div>
-                                    <div style="position: absolute; bottom: 15px; right: 5px; width: 15px; height: 15px; background: linear-gradient(135deg, #D18109, #ffa726); border-radius: 50%; animation: float 4.5s ease-in-out infinite;"></div>
+                                    <div class="pb-logo-dot" style="top: -10px; left: -15px; width: 25px; height: 25px; background: var(--color-warm); animation-duration: 3s;"></div>
+                                    <div class="pb-logo-dot" style="top: 5px; right: -10px; width: 18px; height: 18px; background: var(--color-accent); animation-duration: 4s;"></div>
+                                    <div class="pb-logo-dot" style="bottom: 0; left: 10px; width: 20px; height: 20px; background: var(--color-primary); animation-duration: 3.5s;"></div>
+                                    <div class="pb-logo-dot" style="bottom: 15px; right: 5px; width: 15px; height: 15px; background: var(--color-warm); animation-duration: 4.5s;"></div>
                                 </div>
                             </a>
                         </div>
@@ -199,22 +231,38 @@
                     <div class="col-auto">
                         <nav class="main-menu d-none d-lg-block">
                             <ul>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}" style="color: #0c508e">HOME</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}#programs" style="color: #0c508e">Programs</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}#about" style="color: #0c508e">About</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('home') }}#fees" style="color: #0c508e">Fees</a></li>
-                                <li><a class="vs-svg-assets" href="{{ route('contact') }}" style="color: #0c508e">Contact</a></li>
+                                <li><a class="vs-svg-assets {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}" style="color: var(--color-text, #0E2A46)">HOME</a></li>
+                                <li><a class="vs-svg-assets {{ request()->routeIs('programs') || request()->routeIs('program.detail') ? 'active' : '' }}" href="{{ route('programs') }}" style="color: var(--color-text, #0E2A46)">Programs</a></li>
+                                <li><a class="vs-svg-assets {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}" style="color: var(--color-text, #0E2A46)">About</a></li>
+                                <li><a class="vs-svg-assets {{ request()->routeIs('fees') ? 'active' : '' }}" href="{{ route('fees') }}" style="color: var(--color-text, #0E2A46)">Fees</a></li>
+                                <li><a class="vs-svg-assets {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}" style="color: var(--color-text, #0E2A46)">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
                     <div class="col-auto">
                         <div class="vs-header__action">
-                            <div class="d-none d-xxl-inline-flex">
-                                <a href="{{ route('enrol.index') }}" class="vs-btn"><span class="vs-btn__border"></span>Enrol Now</a>
+                            <div class="d-none d-xl-inline-flex gap-2 align-items-center">
+                                <a href="{{ route('book-tour') }}" class="pb-header-btn pb-header-btn--outline">Book a Tour</a>
+{{--                                <a href="{{ route('enrol.index') }}" class="pb-header-btn pb-header-btn--primary">Enrol Now</a>--}}
+                                @auth
+                                    @php
+                                        $portalUrl = match(true) {
+                                            auth()->user()->hasRole('super_admin') => route('admin.dashboard'),
+                                            auth()->user()->hasRole('admin')       => route('admin.dashboard'),
+                                            auth()->user()->hasRole('teacher')     => route('teacher.dashboard'),
+                                            auth()->user()->hasRole('child')       => route('child.dashboard'),
+                                            default                                => route('parent.dashboard'),
+                                        };
+                                    @endphp
+                                    <a href="{{ $portalUrl }}" class="pb-header-btn pb-header-btn--portal">
+                                        <i class="fas fa-th-large me-1" style="font-size:13px;"></i> Portal
+                                    </a>
+                                @else
+                                    <a href="{{ route('login') }}" class="pb-header-btn pb-header-btn--portal">
+                                        <i class="fas fa-sign-in-alt me-1" style="font-size:13px;"></i> Portal
+                                    </a>
+                                @endauth
                             </div>
-{{--                            <div class="d-none d-xxl-inline-flex">--}}
-{{--                                <a href="{{ route('admin.dashboard') }}" class="vs-btn"><span class="vs-btn__border"></span>Portal</a>--}}
-{{--                            </div>--}}
 {{--                            <div class="d-inline-flex d-lg-none align-items-center">--}}
 {{--                                <button class="sideMenuToggler">--}}
 {{--                                    <svg width="31" height="23" viewBox="0 0 31 23" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
@@ -239,16 +287,69 @@
         </div>
     </div>
 
-    <!-- CSS Animations for decorative elements -->
     <style>
-        @keyframes twinkle {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
-
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
+        }
+        .pb-logo-dot {
+            position: absolute;
+            border-radius: 50%;
+            animation: float ease-in-out infinite;
+            opacity: 0.85;
+        }
+
+        /* ── Tighten header container ── */
+        .vs-header .container--custom {
+            --vs-main-container: 1280px;
+        }
+
+        /* ── Header CTA buttons ── */
+        .pb-header-btn {
+            display: inline-block;
+            padding: 0 28px;
+            height: 46px;
+            line-height: 42px;
+            border-radius: var(--radius-pill, 999px);
+            font-family: var(--font-body, 'Sora', sans-serif);
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .pb-header-btn--primary {
+            background: var(--color-primary, #0077B6);
+            color: #fff;
+            border-color: var(--color-primary, #0077B6);
+        }
+        .pb-header-btn--primary:hover {
+            background: var(--color-primary-dk, #0c508e);
+            border-color: var(--color-primary-dk, #0c508e);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .pb-header-btn--outline {
+            background: transparent;
+            color: var(--color-text, #0E2A46);
+            border-color: var(--color-primary, #0077B6);
+        }
+        .pb-header-btn--outline:hover {
+            background: var(--color-primary, #0077B6);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .pb-header-btn--portal {
+            background: #f0f9ff;
+            color: var(--color-primary, #0077B6);
+            border-color: #bae6fd;
+        }
+        .pb-header-btn--portal:hover {
+            background: var(--color-primary, #0077B6);
+            color: #fff;
+            border-color: var(--color-primary, #0077B6);
+            transform: translateY(-2px);
         }
     </style>
 </header>

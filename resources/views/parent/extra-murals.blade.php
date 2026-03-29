@@ -5,50 +5,7 @@
 @section('page-title', 'Extra Mural Activities')
 
 @section('sidebar-nav')
-<a href="{{ route('parent.dashboard') }}" class="nav-link">
-    <i class="fas fa-home"></i> Dashboard
-</a>
-<a href="{{ route('parent.children') }}" class="nav-link">
-    <i class="fas fa-child"></i> My Children
-</a>
-<a href="{{ route('parent.calendar') }}" class="nav-link">
-    <i class="fas fa-calendar-alt"></i> Calendar
-</a>
-<a href="{{ route('parent.newsletters') }}" class="nav-link">
-    <i class="fas fa-newspaper"></i> Newsletters
-</a>
-<a href="{{ route('parent.gallery') }}" class="nav-link">
-    <i class="fas fa-images"></i> Photo Gallery
-</a>
-
-<div class="nav-section-title">Billing</div>
-<a href="{{ route('parent.fees') }}" class="nav-link">
-    <i class="fas fa-file-invoice-dollar"></i> Fee Schedule
-</a>
-<a href="{{ route('parent.statements') }}" class="nav-link">
-    <i class="fas fa-receipt"></i> Statements
-</a>
-
-<div class="nav-section-title">Services</div>
-<a href="{{ route('parent.holiday-care') }}" class="nav-link">
-    <i class="fas fa-umbrella-beach"></i> Holiday Care
-</a>
-<a href="{{ route('parent.extra-murals') }}" class="nav-link active">
-    <i class="fas fa-futbol"></i> Extra Murals
-</a>
-<a href="{{ route('parent.snack-box') }}" class="nav-link">
-    <i class="fas fa-apple-alt"></i> Snack Box
-</a>
-
-<div class="nav-section-title">Communication</div>
-<a href="{{ route('parent.messages') }}" class="nav-link">
-    <i class="fas fa-comments"></i> Messages
-</a>
-
-<div class="nav-section-title">Account</div>
-<a href="{{ route('parent.profile') }}" class="nav-link">
-    <i class="fas fa-user-cog"></i> Profile
-</a>
+@include('parent.partials.sidebar')
 @endsection
 
 @section('content')

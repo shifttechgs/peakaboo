@@ -291,14 +291,18 @@ class MockData
     public static function dashboardStats(): array
     {
         return [
-            'total_enrolled' => 45,
-            'new_applications' => 8,
+            'total_enrolled'       => 45,
+            'new_applications'     => 8,
             'pending_applications' => 5,
-            'waiting_list' => 12,
-            'monthly_revenue' => 178500,
-            'outstanding_fees' => 15200,
-            'attendance_today' => 42,
-            'staff_count' => 8,
+            'waiting_list'         => 12,
+            'monthly_revenue'      => 178500,
+            'outstanding_fees'     => 15200,
+            'attendance_today'     => 42,
+            'staff_count'          => 8,
+            'avg_attendance'       => 93,
+            'confirmed_payments'   => 162300,
+            'pending_payments'     => 16200,
+            'revenue_growth'       => 8.5,
         ];
     }
 

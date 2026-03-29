@@ -1,0 +1,1511 @@
+/*
+ * ============================================================
+ *  PEEKABOO — Mobile Responsive Overrides
+ *  Loaded LAST so these rules win over template CSS.
+ *  Desktop (≥992px) is completely untouched.
+ *  Breakpoints used:
+ *    ≤1199px  (lg down)
+ *    ≤991px   (md down / tablets)
+ *    ≤767px   (sm down / large phones 414px+)
+ *    ≤575px   (xs  / standard phones 375px)
+ *    ≤400px   (very small phones 320px)
+ *  Last full audit: 2026-03-24
+ * ============================================================ */
+ */
+
+/* ============================================================
+   1. GLOBAL SAFE-AREA + OVERFLOW GUARD
+   ============================================================ */
+html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+/* ============================================================
+   2. PUBLIC HEADER
+   ============================================================ */
+
+/* 2a — Hide entire top bar below lg so the social strip
+         doesn't float alone on tablets */
+@media (max-width: 991px) {
+    .vs-header__top {
+        display: none !important;
+    }
+}
+
+/* 2b — Tighten logo padding on mobile
+   NOTE: logo has height:90px as an inline style, so we need !important */
+@media (max-width: 991px) {
+    .vs-header__logo {
+        padding: 10px 0 !important;
+    }
+    /* Override inline style height:90px */
+    .vs-header__logo img.logo,
+    .vs-header__logo a img {
+        height: 64px !important;
+        width: auto !important;
+    }
+    /* Shrink decorative dots proportionally */
+    .pb-logo-dot {
+        width: 12px !important;
+        height: 12px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .vs-header__logo {
+        padding: 8px 0 !important;
+    }
+    .vs-header__logo img.logo,
+    .vs-header__logo a img {
+        height: 56px !important;
+        width: auto !important;
+    }
+    .pb-logo-dot {
+        display: none !important; /* hide dots on small phones — too cluttered */
+    }
+}
+
+@media (max-width: 400px) {
+    .vs-header__logo img.logo,
+    .vs-header__logo a img {
+        height: 48px !important;
+        width: auto !important;
+    }
+}
+
+/* 2c — Header CTA buttons hidden below xl (hamburger takes over) */
+@media (max-width: 1199px) {
+    .pb-header-btn {
+        padding: 0 18px !important;
+        height: 40px !important;
+        line-height: 36px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* ============================================================
+   3. HERO SECTION  (C1, C2)
+   ============================================================ */
+
+/* 3a — Right image column: scale down the original overlapping
+   collage layout on mobile. Keep style-2 absolutely positioned so
+   the premium composition is preserved — just shrink everything
+   proportionally and centre the whole block. */
+@media (max-width: 991px) {
+    .ed-hero-2-right {
+        transform: none !important;
+        margin: 30px auto 0 !important;
+        max-width: 420px;
+        padding-bottom: 180px !important;
+    }
+    .ed-hero-2-thumb.style-1 img { width: 220px !important; }
+    .ed-hero-2-thumb.style-2 img { width: 280px !important; }
+    .ed-hero-2-thumb.style-2    { margin-right: 0 !important; }
+    .ed-hero-2-thumb::after     { transform: translateX(-50%) scale(0.8) !important; }
+}
+
+@media (max-width: 767px) {
+    .ed-hero-2-right {
+        max-width: 340px;
+        padding-bottom: 150px !important;
+    }
+    .ed-hero-2-thumb.style-1 img { width: 180px !important; }
+    .ed-hero-2-thumb.style-2 img { width: 230px !important; }
+    .ed-hero-2-thumb::after      { transform: translateX(-50%) scale(0.65) !important; }
+}
+
+@media (max-width: 480px) {
+    .ed-hero-2-right {
+        max-width: 280px;
+        padding-bottom: 120px !important;
+    }
+    .ed-hero-2-thumb.style-1 img { width: 150px !important; }
+    .ed-hero-2-thumb.style-2 img { width: 190px !important; }
+    .ed-hero-2-thumb::after      { transform: translateX(-50%) scale(0.55) !important; }
+}
+
+@media (max-width: 375px) {
+    .ed-hero-2-right {
+        max-width: 250px;
+        padding-bottom: 100px !important;
+    }
+    .ed-hero-2-thumb.style-1 img { width: 130px !important; }
+    .ed-hero-2-thumb.style-2 img { width: 165px !important; }
+    .ed-hero-2-thumb::after      { display: none !important; }
+}
+
+/* 3b — Hero heading: remove excess bottom padding + balance */
+@media (max-width: 767px) {
+    .ed-slider-title {
+        font-size: clamp(1.9rem, 7vw, 2.8rem) !important;
+        line-height: 1.15 !important;
+        /* pb-5 = 3rem bottom padding — too much on mobile */
+        padding-bottom: 1rem !important;
+    }
+    .ed-slider-title br { display: none; }
+    /* Lead paragraph br creates orphan */
+    .ed-hero-2-content p br { display: none; }
+    /* Reduce content bottom padding — template sets 70px */
+    .ed-hero-2-content { padding-bottom: 24px !important; }
+}
+
+/* 3c — CTA buttons: right-sized tap targets on mobile (min 48px) */
+@media (max-width: 767px) {
+    /* Side-by-side on 576–767px (template already unwraps them) */
+    .ed-btn-radius {
+        height: 52px !important;
+        line-height: 52px !important;
+        padding: 0 28px !important;
+        font-size: 14px !important;
+    }
+    /* Fix the excessive 25px margin-bottom between buttons when wrapped */
+    .ed-hero-2-button .ed-btn-radius {
+        margin-right: 14px !important;
+        margin-bottom: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Stack buttons full-width on small phones */
+    .ed-hero-2-button {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+    .ed-hero-2-button .ed-btn-radius {
+        display: block !important;
+        text-align: center !important;
+        margin-right: 0 !important;
+        margin-bottom: 0 !important;
+        width: 100% !important;
+        height: 54px !important;
+        line-height: 54px !important;
+        font-size: 15px !important;
+    }
+}
+
+/* 3d — Hero trust badges: tighter margin & wrap */
+@media (max-width: 767px) {
+    .pb-hero-trust {
+        margin-top: 20px !important;
+        gap: 8px !important;
+        flex-wrap: wrap;
+    }
+    .pb-hero-trust__item {
+        font-size: 12px !important;
+        padding: 6px 12px !important;
+    }
+}
+
+/* 3e — Hero section vertical padding */
+@media (max-width: 767px) {
+    .ed-hero-2-area {
+        padding-top: 36px !important;
+        padding-bottom: 36px !important;
+    }
+}
+
+/* ============================================================
+   3f. PROGRAM CARDS — Enrol Now CTA tap target
+   ============================================================ */
+@media (max-width: 991px) {
+    .pb-prog-card__cta {
+        min-height: 48px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 12px 24px !important;
+    }
+}
+
+/* ============================================================
+   4. TRUST STRIP  (H2)
+   ============================================================ */
+.pb-trust__track {
+    will-change: transform;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pb-trust__track {
+        animation-play-state: paused !important;
+    }
+}
+
+/* Reduce fade edges on small screens so items are readable */
+@media (max-width: 575px) {
+    .pb-trust::before,
+    .pb-trust::after {
+        width: 40px;
+    }
+    .pb-trust__item {
+        padding: 18px 16px;
+        gap: 10px;
+    }
+}
+
+/* ============================================================
+   5. ABOUT / WHY PARENTS CHOOSE US SECTION
+   ============================================================ */
+@media (max-width: 991px) {
+    .ed-hero-thumb-wrap {
+        max-width: 400px;
+        margin: 0 auto 40px;
+    }
+    .it-about-5-area {
+        padding-bottom: 70px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    /* Stack the two list columns into a single column */
+    .it-about-5-content .col-xl-6,
+    .it-about-5-content .col-lg-6 {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Make the <ul> stretch full-width instead of inline-block */
+    .ed-about-4-wrap .it-about-5-list ul {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    /* Stretch each list item to fill full width */
+    .ed-about-4-wrap .it-about-5-list ul li {
+        display: block !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Remove the negative pull on the second list */
+    .ed-about-4-wrap .it-about-5-list.list-style-2 {
+        margin-left: 0 !important;
+    }
+
+    /* Centre the Book a Tour button */
+    .it-feature-button {
+        text-align: center !important;
+    }
+    .it-feature-button .ed-btn-radius {
+        display: inline-block !important;
+        width: auto !important;
+        min-width: 200px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .it-about-5-area {
+        padding-bottom: 50px !important;
+    }
+    /* Full-width button on small phones */
+    .it-feature-button .ed-btn-radius {
+        width: 100% !important;
+        text-align: center !important;
+    }
+}
+
+/* ============================================================
+   6. PROGRAMS SECTION  (H3)
+   ============================================================ */
+
+/* On very small screens force single column */
+@media (max-width: 575px) {
+    .pb-programs .col-md-6 {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+    .pb-prog-card__photo {
+        height: 180px !important;
+    }
+    .pb-programs {
+        padding: 70px 0 80px !important;
+    }
+}
+
+/* ============================================================
+   7. FEES SECTION  (H4)
+   ============================================================ */
+
+/* Wrap any overflow tables */
+.pb-fees table,
+.pb-fees .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+    width: 100%;
+}
+
+@media (max-width: 575px) {
+    .pb-fees {
+        padding: 70px 0 80px !important;
+    }
+    .pb-fee-card {
+        padding: 32px 24px 28px !important;
+    }
+    .pb-fee-card__price {
+        font-size: 40px !important;
+    }
+    .pb-fees__note {
+        font-size: 13px !important;
+        padding: 14px 18px !important;
+    }
+}
+
+/* ============================================================
+   8. FUNFACT / STATS COUNTERS
+   ============================================================ */
+
+/* Tablet — tighten padding */
+@media (max-width: 991px) {
+    .ed-funfact-area {
+        padding-top: 60px !important;
+        padding-bottom: 60px !important;
+    }
+}
+
+/* Phone — compact 2×2 grid with smaller icons */
+@media (max-width: 767px) {
+    .ed-funfact-area {
+        padding-top: 50px !important;
+        padding-bottom: 40px !important;
+    }
+    /* Force 2 columns on phones (override full-width stacking) */
+    .ed-funfact-area .col-xl-3,
+    .ed-funfact-area .col-lg-3 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        width: 50% !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        margin-bottom: 20px !important;
+    }
+    /* Compact the item itself */
+    .it-funfact-item {
+        margin-bottom: 0 !important;
+    }
+    /* Smaller icon circles */
+    .it-funfact-icon {
+        margin-bottom: 16px !important;
+    }
+    .it-funfact-icon span {
+        height: 56px !important;
+        width: 56px !important;
+        line-height: 64px !important;
+        font-size: 26px !important;
+    }
+    .ed-funfact-wrap .it-funfact-icon span {
+        margin: 6px !important;
+        margin-bottom: 0 !important;
+    }
+    /* Smaller dashed ring around icon */
+    .ed-funfact-wrap .it-funfact-icon span::after {
+        transform: scale(1.2) !important;
+    }
+    /* Tighter numbers */
+    .it-funfact-content h6 {
+        font-size: 1.75rem !important;
+        margin-bottom: 6px !important;
+    }
+    .it-funfact-content span,
+    .ed-funfact-wrap .it-funfact-content span {
+        font-size: 13px !important;
+    }
+    /* Remove border divider since layout changed */
+    .ed-funfact-wrap .it-funfact-item.border-style-1::after {
+        display: none !important;
+    }
+}
+
+/* Very small phones — even more compact */
+@media (max-width: 400px) {
+    .it-funfact-icon span {
+        height: 48px !important;
+        width: 48px !important;
+        line-height: 56px !important;
+        font-size: 22px !important;
+    }
+    .it-funfact-content h6 {
+        font-size: 1.5rem !important;
+    }
+    .it-funfact-content span,
+    .ed-funfact-wrap .it-funfact-content span {
+        font-size: 12px !important;
+    }
+}
+
+/* ============================================================
+   9. TESTIMONIALS
+   ============================================================ */
+@media (max-width: 575px) {
+    .it-testimonial-area {
+        padding-top: 70px !important;
+    }
+    .it-testimonial-title-wrap {
+        margin-bottom: 36px !important;
+    }
+}
+
+/* ============================================================
+   10. TEACHERS SECTION
+   ============================================================ */
+
+/* Marquee: add will-change + reduced-motion */
+.t-marquee {
+    will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+    .t-marquee--fwd,
+    .t-marquee--rev {
+        animation-play-state: paused !important;
+    }
+}
+
+@media (max-width: 767px) {
+    #teachers {
+        padding: 70px 0 70px !important;
+    }
+    /* Reduce fade edges */
+    .t-marquee-wrap::before,
+    .t-marquee-wrap::after {
+        width: 50px;
+    }
+}
+
+@media (max-width: 575px) {
+    .t-qual {
+        padding: 22px 18px 22px 28px !important;
+    }
+}
+
+/* ============================================================
+   11. DAILY LIFE / GALLERY SECTION
+   ============================================================ */
+@media (max-width: 575px) {
+    .pb-daily {
+        padding: 70px 0 70px !important;
+    }
+    .pb-daily .col-md-6 {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* ============================================================
+   12. FAQ SECTION
+   ============================================================ */
+@media (max-width: 991px) {
+    .pb-faq {
+        padding: 70px 0 70px !important;
+    }
+    .pb-faq__contact {
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 575px) {
+    /* Accordion button: reduce font to prevent overflow */
+    .pb-faq .accordion .accordion-button.pb-faq__btn {
+        font-size: 15px !important;
+        padding: 16px 16px !important;
+        gap: 10px;
+    }
+    .pb-faq__body {
+        padding: 0 16px 18px 60px !important;
+        font-size: 14px !important;
+    }
+}
+
+/* ============================================================
+   13. FINAL CTA SECTION  (already has 991+575 rules,
+       add gap fix for phones)
+   ============================================================ */
+@media (max-width: 575px) {
+    .pb-cta__trust {
+        gap: 14px !important;
+    }
+    .pb-cta__card {
+        padding: 32px 20px 24px !important;
+    }
+    .pb-cta__card-contact-value {
+        font-size: 15px !important;
+    }
+}
+
+/* ============================================================
+   14. BACK TO TOP BUTTON
+   ============================================================ */
+#backToTop {
+    /* Respect iOS bottom safe area (notch/home indicator) */
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+}
+
+/* ============================================================
+   15. FOOTER  (H7, M5)
+   ============================================================ */
+@media (max-width: 991px) {
+    .pb-footer__main {
+        padding: 50px 0 36px !important;
+    }
+    /* Centre logo on mobile */
+    .pb-footer__logo {
+        display: block;
+        margin: 0 auto 20px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .pb-footer__hours-text {
+        word-break: normal;
+        overflow-wrap: break-word;
+    }
+    .pb-footer__desc {
+        max-width: 100% !important;
+        font-size: 13px;
+    }
+    .pb-footer__bottom {
+        text-align: center;
+    }
+    .pb-footer__bottom .d-flex {
+        flex-direction: column !important;
+        gap: 8px !important;
+        align-items: center !important;
+    }
+}
+
+/* ============================================================
+   16. CONTACT PAGE  (C6)
+   ============================================================ */
+@media (max-width: 991px) {
+    .pb-contact {
+        padding: 60px 0 50px !important;
+    }
+    .pb-contact__title {
+        font-size: 2rem !important;
+    }
+    /* Remove gx-5 excess gutter on mobile by overriding */
+    .pb-contact .row.gx-5 {
+        --bs-gutter-x: 1.5rem;
+    }
+    .pb-contact-form {
+        padding: 32px 28px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .pb-page-header {
+        padding: 48px 0 36px !important;
+    }
+    .pb-page-header__title {
+        font-size: clamp(1.6rem, 7vw, 2rem) !important;
+    }
+    .pb-contact__title {
+        font-size: 1.7rem !important;
+    }
+    .pb-contact-form {
+        padding: 24px 18px !important;
+    }
+    .pb-map iframe {
+        height: 260px !important;
+    }
+}
+
+/* ============================================================
+   17. BOOK A TOUR PAGE  (C5)
+   ============================================================ */
+@media (max-width: 991px) {
+    .pb-tour-hero {
+        padding: 56px 0 48px !important;
+    }
+    .pb-tour-form {
+        padding: 32px 28px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    /* Hero image badge: push down less, stays visible */
+    .pb-tour-hero__img-badge {
+        bottom: -12px;
+        left: 12px;
+        padding: 12px 16px !important;
+    }
+    .pb-tour-hero__img-badge-number {
+        font-size: 1.3rem !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .pb-tour-hero {
+        padding: 40px 0 32px !important;
+    }
+    /* Stats row: reduce vertical gap */
+    .pb-tour-hero__stats {
+        row-gap: 16px !important;
+        gap: 16px !important;
+    }
+    .pb-tour-form {
+        padding: 22px 16px !important;
+    }
+    .pb-tour-form__title {
+        font-size: 1.4rem !important;
+    }
+    /* Date picker grid: slightly smaller cells on very narrow */
+    .pb-date-picker__day {
+        font-size: 11px !important;
+        min-height: 28px !important;
+        border-radius: 6px !important;
+    }
+    .pb-date-picker__day-header {
+        font-size: 9px !important;
+    }
+    /* Submit button */
+    .pb-tour-form__btn {
+        padding: 16px 24px !important;
+        font-size: 15px !important;
+    }
+}
+
+/* ============================================================
+   18. ENROL LANDING PAGE  (C5)
+   ============================================================ */
+@media (max-width: 991px) {
+    .pb-enrol-hero {
+        padding: 56px 0 48px !important;
+    }
+    .pb-enrol-ready {
+        margin-top: 16px;
+    }
+}
+
+@media (max-width: 575px) {
+    .pb-enrol-hero {
+        padding: 40px 0 32px !important;
+    }
+    .pb-enrol-hero__stats {
+        row-gap: 16px !important;
+        gap: 16px !important;
+    }
+    .pb-enrol-ready {
+        padding: 24px 18px !important;
+    }
+}
+
+/* ============================================================
+   19. ENROLMENT WIZARD FORM  (C3, C4, H5)
+   ============================================================ */
+
+/* 19a — Step indicator: compact numbered pills on mobile */
+@media (max-width: 767px) {
+    .step-indicator {
+        gap: 6px !important;
+        flex-wrap: nowrap !important;
+        justify-content: center;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        /* Hide scrollbar but allow scroll */
+        scrollbar-width: none;
+    }
+    .step-indicator::-webkit-scrollbar {
+        display: none;
+    }
+    .step-circle {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 0.9rem !important;
+    }
+    .step-item:not(:last-child)::after {
+        width: 18px !important;
+        margin: 0 4px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .step-circle {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.8rem !important;
+    }
+    .step-item:not(:last-child)::after {
+        width: 10px !important;
+        margin: 0 2px !important;
+    }
+}
+
+/* 19b — Form section padding (C4) */
+@media (max-width: 991px) {
+    .form-section {
+        padding: 36px 28px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .enrol-wizard {
+        margin-top: 60px !important;
+    }
+    .form-section {
+        padding: 24px 18px !important;
+    }
+    .form-section h4 {
+        font-size: 1.3rem !important;
+    }
+    .form-section h4 i {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 1rem !important;
+    }
+}
+
+/* 19c — Wizard navigation buttons: stack on small phones (H5) */
+@media (max-width: 575px) {
+    /* The nav row uses d-flex justify-content-between —
+       we make it a column on mobile */
+    .enrol-wizard .d-flex.justify-content-between.mt-4,
+    .enrol-wizard .d-flex.justify-content-between.mt-5 {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    .pb-wizard-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        margin-left: 0 !important;
+        padding: 14px 24px !important;
+        font-size: 15px !important;
+    }
+    .pb-wizard-btn--next {
+        margin-left: 0 !important;
+        order: -1; /* Place Next above Prev on mobile */
+    }
+}
+
+/* 19d — Autosave indicator (M3) */
+@media (max-width: 575px) {
+    .autosave-indicator {
+        left: 12px !important;
+        bottom: 16px !important;
+        padding: 10px 18px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* 19e — File upload box */
+@media (max-width: 575px) {
+    .file-upload-box {
+        padding: 28px 18px !important;
+    }
+}
+
+/* ============================================================
+   20. APPLICATION STATUS PAGE  (H6)
+   ============================================================ */
+@media (max-width: 575px) {
+    .pb-status__ref-code {
+        font-size: clamp(1rem, 4vw, 1.4rem) !important;
+        word-break: break-all;
+        letter-spacing: 1.5px !important;
+    }
+    .pb-status__ref-block {
+        padding: 18px 18px !important;
+    }
+    .pb-status__card {
+        padding: 22px 18px !important;
+    }
+    .pb-status__btn {
+        padding: 12px 22px !important;
+        font-size: 14px !important;
+    }
+    /* Status button row: stack on mobile */
+    .d-flex.flex-column.gap-3 .pb-status__btn {
+        width: 100% !important;
+        justify-content: center;
+    }
+    .pb-page-header__breadcrumb {
+        flex-wrap: wrap;
+        font-size: 14px;
+    }
+}
+
+/* ============================================================
+   21. ENROL THANK-YOU PAGE
+   ============================================================ */
+@media (max-width: 575px) {
+    .pb-page-header {
+        padding: 40px 0 32px !important;
+    }
+}
+
+/* ============================================================
+   22. AUTH PAGES — Login, Forgot, Reset, Accept-Invite  (H8)
+       These use inline styles in their own <style> blocks,
+       but we add a safe fallback here for any shared class.
+   ============================================================ */
+
+/* The auth pages are standalone (no public.blade.php layout)
+   so we handle them via their own @media blocks already present.
+   This file only governs pages that load public.blade.php.
+   No changes needed here — auth pages already have
+   @media (max-width: 480px) rules built in. */
+
+/* ============================================================
+   23. SECTION PADDING — Global mobile rhythm
+   ============================================================ */
+
+/* Reduce heavy section padding across the board on phones
+   for a tighter, more natural mobile scroll rhythm */
+@media (max-width: 767px) {
+    .pb-programs,
+    .pb-fees,
+    #teachers,
+    .pb-daily,
+    .pb-faq,
+    .pb-cta {
+        padding-top: 70px !important;
+        padding-bottom: 70px !important;
+    }
+    .ed-funfact-area {
+        padding-bottom: 60px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .pb-programs,
+    .pb-fees,
+    #teachers,
+    .pb-daily,
+    .pb-faq,
+    .pb-cta {
+        padding-top: 56px !important;
+        padding-bottom: 56px !important;
+    }
+}
+
+/* ============================================================
+   24. GLOBAL TEXT READABILITY ON MOBILE
+   ============================================================ */
+@media (max-width: 575px) {
+    /* Prevent hero/section headings from being too big on phones */
+    .pb-programs__heading,
+    .pb-fees__heading,
+    .pb-teachers__heading,
+    .pb-daily__heading,
+    .pb-faq__heading,
+    .pb-cta__heading {
+        font-size: clamp(26px, 7vw, 36px) !important;
+    }
+    /* Remove <br> orphans in section headings (progressive) */
+    .ed-section-title br,
+    .pb-cta__heading br,
+    .pb-faq__heading br {
+        display: none;
+    }
+}
+
+/* ============================================================
+   25. MOBILE MENU AREA POLISH
+   ============================================================ */
+@media (max-width: 991px) {
+    .vs-menu-area {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    /* Ensure mobile menu links have good tap targets */
+    .vs-mobile-menu ul li a {
+        padding: 12px 20px;
+        display: block;
+        min-height: 48px;
+    }
+}
+
+/* ============================================================
+   26. STICKY HEADER — prevent layout jump on narrow screens
+   ============================================================ */
+/* The will-sticky wrapper needs explicit height so content
+   doesn't shift when it becomes position:fixed                */
+@media (max-width: 991px) {
+    .sticky-wrapper {
+        /* Prevent the sticky mechanism from creating horizontal overflow */
+        overflow: visible;
+    }
+    /* sticky-active padding: tighten so header is never taller than 70px */
+    .sticky-active .container--custom {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+    /* Ensure mobile hamburger button is a proper 48×48 tap target */
+    .vs-menu-toggle.style2 {
+        width: 48px !important;
+        height: 48px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 22px !important;
+        border-radius: 8px;
+        background: rgba(0,119,182,0.06);
+        border: 1px solid rgba(0,119,182,0.15);
+        color: var(--color-text, #0E2A46);
+        transition: background 0.2s;
+    }
+    .vs-menu-toggle.style2:active {
+        background: rgba(0,119,182,0.14);
+    }
+}
+
+/* ============================================================
+   27. HERO SECTION — 320px / 375px MICRO FIXES
+   ============================================================ */
+/* "Now Enrolling" pill: shrink on tiny screens */
+@media (max-width: 400px) {
+    .pb-hero-enrol-pill {
+        font-size: 11px !important;
+        padding: 6px 14px !important;
+    }
+}
+
+/* Hero heading: ensure it never overflows on 320px */
+@media (max-width: 360px) {
+    .ed-slider-title {
+        font-size: clamp(1.6rem, 8.5vw, 1.9rem) !important;
+        /* pb-5 = 3rem — way too large on 320px phones */
+        padding-bottom: 0.6rem !important;
+    }
+}
+
+/* Hero right column: on ≤991px, cap the image collage so it
+   doesn't push content off-screen on 320px-width devices      */
+@media (max-width: 480px) {
+    .ed-hero-2-area .col-xxl-6.col-xl-7.col-lg-6 {
+        overflow: hidden;
+    }
+}
+
+/* Trust badges: wrap naturally and lose gaps that cause overflow */
+@media (max-width: 400px) {
+    .pb-hero-trust {
+        justify-content: flex-start !important;
+    }
+    .pb-hero-trust__item {
+        font-size: 11px !important;
+        padding: 5px 10px !important;
+    }
+}
+
+/* ============================================================
+   28. ABOUT SECTION — image column overflow & text balance
+   ============================================================ */
+/* On ≤575px the about image collage (absolutely-positioned
+   decorative shapes) spills right and causes horizontal scroll */
+@media (max-width: 575px) {
+    .ed-hero-thumb-wrap {
+        overflow: hidden;
+        max-width: 100% !important;
+    }
+    /* Main portrait — keep it proportional, not too tall */
+    .ed-hero-thumb-main img {
+        max-height: 320px;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 16px;
+    }
+    /* Small overlapping secondary image */
+    .ed-hero-thumb-sm {
+        display: none !important; /* hides on <576px to avoid overflow */
+    }
+    /* Remove shape decorations that bleed out of viewport */
+    .ed-hero-thumb-shape-2,
+    .ed-hero-thumb-shape-3,
+    .ed-hero-thumb-shape-4 {
+        display: none !important;
+    }
+    /* About section heading: no forced <br> on narrow screens */
+    .it-about-5-title-box .ed-section-title br {
+        display: none;
+    }
+}
+
+/* ============================================================
+   29. VIDEO SECTION — padding & play button tap target
+   ============================================================ */
+@media (max-width: 767px) {
+    .ed-video-area {
+        padding-top: 60px !important;
+        padding-bottom: 60px !important;
+    }
+    /* Video wrap: aspect-ratio to prevent collapse */
+    .ed-video-wrap {
+        min-height: 220px !important;
+        border-radius: 16px !important;
+    }
+    /* Play button: must be ≥48px tap target */
+    .it-video-play-wrap .play {
+        width: 64px !important;
+        height: 64px !important;
+        line-height: 64px !important;
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .ed-video-area {
+        padding-top: 48px !important;
+        padding-bottom: 48px !important;
+    }
+    .ed-video-wrap {
+        min-height: 180px !important;
+    }
+}
+
+/* ============================================================
+   30. TESTIMONIALS SECTION — carousel text & layout
+   ============================================================ */
+/* Section heading: balance on phones (no floated nav arrows) */
+@media (max-width: 767px) {
+    .it-testimonial-title-wrap .row.align-items-end {
+        flex-direction: column !important;
+    }
+    .it-testimonial-title-wrap .ed-testimonial-nav {
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
+    }
+    .it-testimonial-title-wrap {
+        margin-bottom: 36px !important;
+    }
+    /* Testimonial cards: ensure text doesn't overflow */
+    .ed-testimonial-item {
+        padding: 28px 24px !important;
+    }
+    .ed-testimonial-text p {
+        font-size: 15px !important;
+        line-height: 1.7 !important;
+    }
+}
+
+@media (max-width: 575px) {
+    /* Author row: prevent overflow on 320px */
+    .ed-testimonial-author-box {
+        gap: 10px !important;
+    }
+    .ed-testimonial-author.ed-testimonial-initial {
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        font-size: 18px !important;
+        line-height: 44px !important;
+        flex-shrink: 0;
+    }
+    .ed-testimonial-item h5 {
+        font-size: 15px !important;
+    }
+    .it-testimonial-area {
+        padding-top: 60px !important;
+        padding-bottom: 70px !important;
+    }
+}
+
+/* ============================================================
+   31. PROGRAMS SECTION — 2-col grid fix on 320px
+   ============================================================ */
+/* col-md-6 stays 50% down to 575px — but at 320px the cards
+   become too narrow (≈120px). Force single column below 480px */
+@media (max-width: 480px) {
+    .pb-programs .col-md-6 {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+    /* Program card CTA: full-width, min 48px tall */
+    .pb-prog-card__cta {
+        display: block !important;
+        width: 100% !important;
+        padding: 14px 24px !important;
+        min-height: 48px !important;
+    }
+}
+
+/* ============================================================
+   32. FEES SECTION — card overflow & CTA tap targets
+   ============================================================ */
+/* Popular badge overflows above card top on narrow screens */
+@media (max-width: 400px) {
+    .pb-fee-card__badge {
+        font-size: 10px !important;
+        padding: 4px 14px !important;
+        top: -12px !important;
+    }
+    /* Price number: shrink on 320px */
+    .pb-fee-card__price {
+        font-size: 38px !important;
+    }
+    /* CTA buttons: full-width min 48px */
+    .pb-fee-card__cta-solid,
+    .pb-fee-card__cta-outline {
+        padding: 15px 20px !important;
+        font-size: 14px !important;
+    }
+}
+
+/* Fees note wraps at full width on phones */
+@media (max-width: 575px) {
+    .pb-fees__note {
+        display: block !important;
+        text-align: center;
+        padding: 16px 18px !important;
+        font-size: 13px !important;
+        line-height: 1.7;
+    }
+}
+
+/* ============================================================
+   33. FAQ SECTION — accordion overflow on 320px
+   ============================================================ */
+/* FAQ icon misaligns when question text is very long on 320px */
+@media (max-width: 400px) {
+    .pb-faq .accordion .accordion-button.pb-faq__btn {
+        font-size: 14px !important;
+        padding: 14px 14px !important;
+        gap: 8px !important;
+    }
+    .pb-faq .accordion-button .pb-faq__icon {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+    }
+    .pb-faq__body {
+        padding: 0 14px 16px 50px !important;
+        font-size: 13.5px !important;
+    }
+}
+
+/* ============================================================
+   34. CTA SECTION — contact card on 320px
+   ============================================================ */
+@media (max-width: 400px) {
+    .pb-cta__card {
+        padding: 28px 16px 22px !important;
+    }
+    .pb-cta__card-badge {
+        font-size: 10px !important;
+        padding: 5px 14px !important;
+    }
+    .pb-cta__card-title {
+        font-size: 18px !important;
+    }
+    .pb-cta__card-contact-value {
+        font-size: 14px !important;
+    }
+    /* CTA buttons: full-width on 320px */
+    .pb-cta__btn-primary,
+    .pb-cta__btn-secondary {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 15px 20px !important;
+    }
+}
+
+/* ============================================================
+   35. MOBILE CTA BAR — safe-area & height corrections
+   ============================================================ */
+/* On 320px the two buttons may be too cramped */
+@media (max-width: 360px) {
+    .pb-mobile-cta__btn {
+        font-size: 12px !important;
+        gap: 5px !important;
+        height: 44px !important;
+    }
+    .pb-mobile-cta__btn i {
+        font-size: 13px !important;
+    }
+}
+
+/* ============================================================
+   36. FOOTER — column stacking & social icons
+   ============================================================ */
+@media (max-width: 767px) {
+    /* Stack all footer columns to single column */
+    .pb-footer__main .row > [class*="col-"] {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 32px;
+    }
+    /* Logo: left-align since we're in a stacked single-col layout */
+    .pb-footer__logo {
+        max-height: 60px !important;
+    }
+    .pb-footer__desc {
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .pb-footer__main {
+        padding: 40px 0 28px !important;
+    }
+    .pb-footer__title {
+        font-size: 16px !important;
+    }
+    .pb-footer__links a {
+        font-size: 13.5px !important;
+    }
+}
+
+/* ============================================================
+   37. BOOK A TOUR PAGE — hero stats on 320px
+   ============================================================ */
+@media (max-width: 480px) {
+    /* Stats row: switch to 2×2 grid on narrow phones */
+    .pb-tour-hero__stats {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 16px !important;
+    }
+    .pb-tour-hero__stat {
+        gap: 10px !important;
+    }
+    .pb-tour-hero__stat-icon {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    .pb-tour-hero__stat-number {
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    /* Hero title: shrink on 320px */
+    .pb-tour-hero__title {
+        font-size: clamp(1.5rem, 7.5vw, 2rem) !important;
+    }
+    /* Hero desc: shrink slightly */
+    .pb-tour-hero__desc {
+        font-size: 15px !important;
+    }
+}
+
+/* ============================================================
+   38. ENROLMENT WIZARD — field label & input sizes on 320px
+   ============================================================ */
+@media (max-width: 400px) {
+    .form-section h4 {
+        font-size: 1.15rem !important;
+    }
+    /* Radio-button option cards: ensure tap target */
+    .pb-radio-card {
+        padding: 12px 14px !important;
+    }
+    /* Step label text: hide on 320px to avoid overflow */
+    .step-item .step-label {
+        display: none !important;
+    }
+}
+
+/* ============================================================
+   39. GLOBAL IMAGES — prevent overflow & ensure aspect ratios
+   ============================================================ */
+img {
+    max-width: 100%;
+    height: auto;
+}
+/* All section background images should cover properly */
+[data-background] {
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+/* ============================================================
+   40. TYPOGRAPHY FLOOR — minimum readable sizes on mobile
+   ============================================================ */
+@media (max-width: 575px) {
+    /* Section sub-labels */
+    .pb-programs__sub,
+    .pb-fees__sub,
+    .pb-teachers__sub,
+    .pb-daily__sub,
+    .pb-faq__sub,
+    .pb-cta__sub,
+    .it-section-subtitle-5 {
+        font-size: 11px !important;
+        letter-spacing: 1.5px !important;
+    }
+    /* Body text: 14px floor — nothing below this on mobile */
+    .pb-prog-card__desc,
+    .pb-fee-card__features li,
+    .pb-daily__desc,
+    .pb-faq__lead,
+    .pb-cta__lead,
+    .it-about-5-text p {
+        font-size: 14px !important;
+        line-height: 1.72 !important;
+    }
+    /* Buttons: 44px minimum height for all CTA buttons */
+    .ed-btn-radius,
+    .pb-fee-card__cta-solid,
+    .pb-fee-card__cta-outline,
+    .pb-cta__btn-primary,
+    .pb-cta__btn-secondary,
+    .pb-faq__contact-link {
+        min-height: 48px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
+
+/* ============================================================
+   41. PREVENT HORIZONTAL SCROLL — global catch-all
+   ============================================================ */
+/* Sections with position:relative + overflow:hidden
+   can still bleed on some browsers due to child transforms.
+   Enforce max-width:100% on all direct section children      */
+@media (max-width: 767px) {
+    .ed-hero-2-area,
+    .it-about-5-area,
+    .pb-programs,
+    .pb-fees,
+    #teachers,
+    .pb-daily,
+    .pb-faq,
+    .pb-cta,
+    .ed-funfact-area,
+    .it-testimonial-area,
+    .ed-video-area {
+        overflow-x: hidden !important;
+    }
+    /* Shapes & decorative elements: clip absolutely positioned
+       decorators that hang outside the viewport               */
+    .ed-hero-2-shape-1,
+    .ed-hero-2-shape-3,
+    .ed-hero-2-shape-4,
+    .ed-hero-2-shape-5 {
+        overflow: hidden;
+        max-width: 100vw;
+    }
+}
+
+/* ============================================================
+   42. TABLET (768px) — SPECIFIC LAYOUT IMPROVEMENTS
+   ============================================================ */
+/* Tablet: programs show as 2-up grid (not 4-up or 1-up) */
+@media (min-width: 576px) and (max-width: 767px) {
+    .pb-programs .col-lg-3 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+}
+
+/* Tablet: fee cards show 2-up so the layout isn't too spread */
+@media (min-width: 576px) and (max-width: 767px) {
+    .pb-fees .col-lg-4 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+    .pb-fees .col-lg-4:last-child {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Tablet: daily life cards 2×2 layout */
+@media (min-width: 576px) and (max-width: 767px) {
+    .pb-daily__timeline .col-lg-3 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+}
+
+/* ============================================================
+   43. CONTACT & BOOK-A-TOUR SIDEBAR — tablet layout fix
+   ============================================================ */
+/* On 768px the sidebar form can overflow its container        */
+@media (max-width: 991px) {
+    .pb-tour-form,
+    .pb-contact-form {
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+}
+
+/* ============================================================
+   44. PERFORMANCE — disable expensive animations on low-power
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    /* Kill all CSS animations and transitions */
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    /* But keep the trust marquee readable — just stop it */
+    .pb-trust__track,
+    .t-marquee--fwd,
+    .t-marquee--rev {
+        animation-play-state: paused !important;
+    }
+}
+
+/* ============================================================
+   45. iOS SAFARI — fix 100vw scrollbar bug & input zoom
+   ============================================================ */
+/* iOS Safari adds 100vw + scrollbar width = overflow.
+   This stops inputs from zoom-triggering on focus.            */
+@supports (-webkit-touch-callout: none) {
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="number"],
+    input[type="search"],
+    select,
+    textarea {
+        font-size: 16px !important; /* prevents iOS auto-zoom */
+    }
+}
+
+/* ============================================================
+   46. SECTION HEADING RESPONSIVE — clamp() on ALL headings
+   ============================================================ */
+/* Ensure ALL the section headings scale gracefully via clamp
+   without being over-ridden by inline font-size at 320px      */
+@media (max-width: 767px) {
+    .pb-programs__heading,
+    .pb-fees__heading,
+    .pb-teachers__heading,
+    .pb-daily__heading,
+    .pb-faq__heading,
+    .pb-cta__heading,
+    .ed-section-title {
+        font-size: clamp(22px, 7vw, 38px) !important;
+        line-height: 1.15 !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .pb-programs__heading,
+    .pb-fees__heading,
+    .pb-teachers__heading,
+    .pb-daily__heading,
+    .pb-faq__heading,
+    .pb-cta__heading,
+    .ed-section-title {
+        font-size: clamp(20px, 7vw, 26px) !important;
+    }
+    /* Sub-labels at 320px: don't wrap */
+    .pb-cta__sub {
+        flex-wrap: wrap;
+    }
+}
+
+
+
+
+
+
+
+
+
+
