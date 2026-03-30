@@ -1,47 +1,61 @@
+---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/seatafri/visionpluswealth.com/vision_plus_wealth
+    - export APPPATH=/home/peekaboodaycarec/peekaboo
+    - export PUBPATH=/home/peekaboodaycarec/public_html
 
-    # Put site in maintenance mode (optional but pro)
-    - php $DEPLOYPATH/artisan down || true
+    # ── Maintenance mode ─────────────────────────────────────────────────────
+    - php $APPPATH/artisan down --retry=15 || true
 
-    # Copy project files
-    - /bin/cp -R app $DEPLOYPATH
-    - /bin/cp -R bootstrap $DEPLOYPATH
-    - /bin/cp -R config $DEPLOYPATH
-    - /bin/cp -R database $DEPLOYPATH
-    - /bin/cp -R resources $DEPLOYPATH
-    - /bin/cp -R routes $DEPLOYPATH
-    - /bin/cp -R vendor $DEPLOYPATH
-    # Ensure public directory exists
-    - mkdir -p $DEPLOYPATH/public
+    # ── Sync Laravel app files (kept OUTSIDE public_html for security) ───────
+    - mkdir -p $APPPATH
+    - /bin/cp -R app $APPPATH
+    - /bin/cp -R bootstrap $APPPATH
+    - /bin/cp -R config $APPPATH
+    - /bin/cp -R database $APPPATH
+    - /bin/cp -R lang $APPPATH || true
+    - /bin/cp -R resources $APPPATH
+    - /bin/cp -R routes $APPPATH
+    - /bin/cp artisan $APPPATH
+    - /bin/cp composer.json $APPPATH
+    - /bin/cp composer.lock $APPPATH
 
-    # Copy public assets to domain root (where index.php serves from)
-    - /bin/cp -R public/assets $DEPLOYPATH/..
-    - /bin/cp -R public/build $DEPLOYPATH/.. || true
-    - /bin/cp public/.htaccess $DEPLOYPATH/..
-    - /bin/cp public/favicon.ico $DEPLOYPATH/.. || true
-    - /bin/cp public/robots.txt $DEPLOYPATH/.. || true
-    - /bin/cp public/sitemap.xml $DEPLOYPATH/.. || true
-    - /bin/cp public/brand-guide.html $DEPLOYPATH/.. || true
-    - /bin/cp -R public/images $DEPLOYPATH/.. || true
-    - /bin/cp -R public/branches $DEPLOYPATH/.. || true
+    # ── Install/update Composer dependencies ─────────────────────────────────
+    - cd $APPPATH && composer install --no-dev --optimize-autoloader --no-interaction
 
-    - /bin/cp artisan $DEPLOYPATH
+    # ── Ensure writable directories exist ────────────────────────────────────
+    - mkdir -p $APPPATH/storage/framework/sessions
+    - mkdir -p $APPPATH/storage/framework/views
+    - mkdir -p $APPPATH/storage/framework/cache/data
+    - mkdir -p $APPPATH/storage/logs
+    - mkdir -p $APPPATH/bootstrap/cache
+    - chmod -R 775 $APPPATH/storage
+    - chmod -R 775 $APPPATH/bootstrap/cache
 
-    # Fix permissions so web server can read all files
-    - find $DEPLOYPATH/../assets -type f -exec chmod 644 {} \;
-    - find $DEPLOYPATH/../assets -type d -exec chmod 755 {} \;
+    # ── Sync public assets to document root ──────────────────────────────────
+    - /bin/cp -R public/assets $PUBPATH || true
+    - /bin/cp -R public/build $PUBPATH || true
+    - /bin/cp public/.htaccess $PUBPATH
+    - /bin/cp public/favicon.ico $PUBPATH || true
+    - /bin/cp public/robots.txt $PUBPATH || true
+    - /bin/cp public/index.php $PUBPATH
 
+    # Fix index.php so it resolves paths to the app outside public_html
+    - sed -i "s|__DIR__\.'/../|'$APPPATH/|g" $PUBPATH/index.php
 
-    # Clear Laravel caches
-    - php $DEPLOYPATH/artisan config:clear
-    - php $DEPLOYPATH/artisan cache:clear
-    - php $DEPLOYPATH/artisan view:clear
-    - php $DEPLOYPATH/artisan route:clear
+    # ── Clear all Laravel caches ──────────────────────────────────────────────
+    - php $APPPATH/artisan config:clear
+    - php $APPPATH/artisan cache:clear
+    - php $APPPATH/artisan view:clear
+    - php $APPPATH/artisan route:clear
 
-    # Run migrations (safe for prod)
-    - php $DEPLOYPATH/artisan migrate --force
+    # ── Run migrations ────────────────────────────────────────────────────────
+    - php $APPPATH/artisan migrate --force
 
-    # Bring site back up
-    - php $DEPLOYPATH/artisan up || true
+    # ── Cache config/routes for production performance ────────────────────────
+    - php $APPPATH/artisan config:cache
+    - php $APPPATH/artisan route:cache
+    - php $APPPATH/artisan view:cache
+
+    # ── Bring site back up ────────────────────────────────────────────────────
+    - php $APPPATH/artisan up
