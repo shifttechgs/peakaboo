@@ -34,7 +34,7 @@ Route::get('/programs/{slug}', [HomeController::class, 'programDetail'])->name('
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/fees', [HomeController::class, 'fees'])->name('fees');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-Route::post('/contact', [HomeController::class, 'submitContact'])->name('contact.submit');
+Route::post('/contact', [HomeController::class, 'submitContact'])->name('contact.submit')->middleware('throttle:3,10');
 Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
 

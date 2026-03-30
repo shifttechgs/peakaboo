@@ -81,6 +81,11 @@ class HomeController extends Controller
 
     public function submitContact(Request $request)
     {
+        // Honeypot: bots fill hidden fields, humans don't
+        if ($request->filled('website')) {
+            return redirect()->route('contact')->with('success', 'Thank you for your message. We will be in touch soon!');
+        }
+
         $validated = $request->validate([
             'fname' => 'required|string|max:255',
             'lname' => 'required|string|max:255',

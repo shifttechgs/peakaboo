@@ -1,34 +1,32 @@
-@extends('layouts.public')
+<?php $__env->startSection('title', 'Contact Peekaboo Daycare — Parklands, Cape Town | 021 557 4999'); ?>
+<?php $__env->startSection('description', 'Contact Peekaboo Daycare & Preschool in Parklands, Cape Town. Call 021 557 4999 or 082 898 9967, email us, or visit us at 139B Humewood Drive, Parklands. Book a tour today.'); ?>
+<?php $__env->startSection('keywords', 'contact daycare Parklands, Peekaboo Daycare contact, preschool Cape Town phone number, childcare Parklands address, daycare near me Parklands contact'); ?>
+<?php $__env->startSection('canonical', route('contact')); ?>
+<?php $__env->startSection('og_title', 'Contact Peekaboo Daycare — Parklands, Cape Town'); ?>
+<?php $__env->startSection('og_description', 'Get in touch with Peekaboo Daycare in Parklands, Cape Town. Call 021 557 4999, email us, or visit 139B Humewood Drive, Parklands.'); ?>
 
-@section('title', 'Contact Peekaboo Daycare — Parklands, Cape Town | 021 557 4999')
-@section('description', 'Contact Peekaboo Daycare & Preschool in Parklands, Cape Town. Call 021 557 4999 or 082 898 9967, email us, or visit us at 139B Humewood Drive, Parklands. Book a tour today.')
-@section('keywords', 'contact daycare Parklands, Peekaboo Daycare contact, preschool Cape Town phone number, childcare Parklands address, daycare near me Parklands contact')
-@section('canonical', route('contact'))
-@section('og_title', 'Contact Peekaboo Daycare — Parklands, Cape Town')
-@section('og_description', 'Get in touch with Peekaboo Daycare in Parklands, Cape Town. Call 021 557 4999, email us, or visit 139B Humewood Drive, Parklands.')
-
-@push('schema')
+<?php $__env->startPush('schema'); ?>
 <script type="application/ld+json">
 {
-  "@@context": "https://schema.org",
-  "@@type": "ContactPage",
-  "@@id": "{{ route('contact') }}#webpage",
-  "url": "{{ route('contact') }}",
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "@id": "<?php echo e(route('contact')); ?>#webpage",
+  "url": "<?php echo e(route('contact')); ?>",
   "name": "Contact Peekaboo Daycare — Parklands, Cape Town",
   "description": "Contact Peekaboo Daycare & Preschool in Parklands, Cape Town by phone, email, or in person.",
-  "isPartOf": {"@@id": "{{ url('/') }}/#website"},
+  "isPartOf": {"@id": "<?php echo e(url('/')); ?>/#website"},
   "breadcrumb": {
-    "@@type": "BreadcrumbList",
+    "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@@type": "ListItem", "position": 1, "name": "Home", "item": "{{ route('home') }}"},
-      {"@@type": "ListItem", "position": 2, "name": "Contact Us", "item": "{{ route('contact') }}"}
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo e(route('home')); ?>"},
+      {"@type": "ListItem", "position": 2, "name": "Contact Us", "item": "<?php echo e(route('contact')); ?>"}
     ]
   }
 }
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
 /* ============================================================
    CONTACT PAGE — Peekaboo (Brand-consistent)
@@ -296,7 +294,7 @@
         <div class="container">
             <h1 class="pb-page-header__title">Contact Us</h1>
             <ul class="pb-page-header__breadcrumb">
-                <li><a href="{{ route('home') }}">Home</a></li>
+                <li><a href="<?php echo e(route('home')); ?>">Home</a></li>
                 <li>Contact Us</li>
             </ul>
         </div>
@@ -361,48 +359,83 @@
 
                 <!-- Right — Form -->
                 <div class="col-lg-7 mb-4">
-                    @if(session('success'))
-                        <div class="alert alert-success mb-3">{{ session('success') }}</div>
-                    @endif
-                    @if(session('error'))
-                        <div class="alert alert-danger mb-3">{{ session('error') }}</div>
-                    @endif
-                    @if($errors->any())
+                    <?php if(session('success')): ?>
+                        <div class="alert alert-success mb-3"><?php echo e(session('success')); ?></div>
+                    <?php endif; ?>
+                    <?php if(session('error')): ?>
+                        <div class="alert alert-danger mb-3"><?php echo e(session('error')); ?></div>
+                    <?php endif; ?>
+                    <?php if($errors->any()): ?>
                         <div class="alert alert-danger mb-3">
                             <ul class="mb-0">
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                    @endif
+                    <?php endif; ?>
 
                     <div class="pb-contact-form">
                         <h3 class="pb-contact-form__title">Send Us a Message</h3>
-                        <form action="{{ route('contact.submit') }}" method="POST">
-                            @csrf
+                        <form action="<?php echo e(route('contact.submit')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <label class="form-label" for="fname">First Name *</label>
-                                    <input class="form-control @error('fname') is-invalid @enderror" type="text" name="fname" id="fname" placeholder="Your first name" value="{{ old('fname') }}" required>
+                                    <input class="form-control <?php $__errorArgs = ['fname'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" type="text" name="fname" id="fname" placeholder="Your first name" value="<?php echo e(old('fname')); ?>" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="lname">Last Name *</label>
-                                    <input class="form-control @error('lname') is-invalid @enderror" type="text" name="lname" id="lname" placeholder="Your last name" value="{{ old('lname') }}" required>
+                                    <input class="form-control <?php $__errorArgs = ['lname'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" type="text" name="lname" id="lname" placeholder="Your last name" value="<?php echo e(old('lname')); ?>" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="email">Email Address *</label>
-                                    <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" id="email" placeholder="you@example.com" value="{{ old('email') }}" required>
+                                    <input class="form-control <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" type="email" name="email" id="email" placeholder="you@example.com" value="<?php echo e(old('email')); ?>" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="phone">Phone Number *</label>
-                                    <input class="form-control @error('phone') is-invalid @enderror" type="tel" name="phone" id="phone" placeholder="082 000 0000" value="{{ old('phone') }}" required>
+                                    <input class="form-control <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" type="tel" name="phone" id="phone" placeholder="082 000 0000" value="<?php echo e(old('phone')); ?>" required>
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label" for="message">Message *</label>
-                                    <textarea class="form-control @error('message') is-invalid @enderror" name="message" id="message" placeholder="How can we help you?" rows="5" required>{{ old('message') }}</textarea>
+                                    <textarea class="form-control <?php $__errorArgs = ['message'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="message" id="message" placeholder="How can we help you?" rows="5" required><?php echo e(old('message')); ?></textarea>
                                 </div>
-                                {{-- Honeypot: hidden from real users, bots fill it in --}}
+                                
                                 <div style="display:none" aria-hidden="true">
                                     <input type="text" name="website" tabindex="-1" autocomplete="off" value="">
                                 </div>
@@ -430,7 +463,7 @@
     </div>
 
 <script>
-document.querySelector('form[action="{{ route('contact.submit') }}"]').addEventListener('submit', function () {
+document.querySelector('form[action="<?php echo e(route('contact.submit')); ?>"]').addEventListener('submit', function () {
     var btn    = document.getElementById('contactSubmitBtn');
     var text   = document.getElementById('contactBtnText');
     var loader = document.getElementById('contactBtnLoader');
@@ -440,4 +473,6 @@ document.querySelector('form[action="{{ route('contact.submit') }}"]').addEventL
 });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\wamp64_3.3.4\www\projects\peekaboo\resources\views/public/contact.blade.php ENDPATH**/ ?>

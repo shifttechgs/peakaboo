@@ -1,0 +1,47 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/seatafri/visionpluswealth.com/vision_plus_wealth
+
+    # Put site in maintenance mode (optional but pro)
+    - php $DEPLOYPATH/artisan down || true
+
+    # Copy project files
+    - /bin/cp -R app $DEPLOYPATH
+    - /bin/cp -R bootstrap $DEPLOYPATH
+    - /bin/cp -R config $DEPLOYPATH
+    - /bin/cp -R database $DEPLOYPATH
+    - /bin/cp -R resources $DEPLOYPATH
+    - /bin/cp -R routes $DEPLOYPATH
+    - /bin/cp -R vendor $DEPLOYPATH
+    # Ensure public directory exists
+    - mkdir -p $DEPLOYPATH/public
+
+    # Copy public assets to domain root (where index.php serves from)
+    - /bin/cp -R public/assets $DEPLOYPATH/..
+    - /bin/cp -R public/build $DEPLOYPATH/.. || true
+    - /bin/cp public/.htaccess $DEPLOYPATH/..
+    - /bin/cp public/favicon.ico $DEPLOYPATH/.. || true
+    - /bin/cp public/robots.txt $DEPLOYPATH/.. || true
+    - /bin/cp public/sitemap.xml $DEPLOYPATH/.. || true
+    - /bin/cp public/brand-guide.html $DEPLOYPATH/.. || true
+    - /bin/cp -R public/images $DEPLOYPATH/.. || true
+    - /bin/cp -R public/branches $DEPLOYPATH/.. || true
+
+    - /bin/cp artisan $DEPLOYPATH
+
+    # Fix permissions so web server can read all files
+    - find $DEPLOYPATH/../assets -type f -exec chmod 644 {} \;
+    - find $DEPLOYPATH/../assets -type d -exec chmod 755 {} \;
+
+
+    # Clear Laravel caches
+    - php $DEPLOYPATH/artisan config:clear
+    - php $DEPLOYPATH/artisan cache:clear
+    - php $DEPLOYPATH/artisan view:clear
+    - php $DEPLOYPATH/artisan route:clear
+
+    # Run migrations (safe for prod)
+    - php $DEPLOYPATH/artisan migrate --force
+
+    # Bring site back up
+    - php $DEPLOYPATH/artisan up || true
