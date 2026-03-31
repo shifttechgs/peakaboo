@@ -1,21 +1,8 @@
 deployment:
   tasks:
-    - export APPPATH=/home/peekaboodaycarec/peekaboo
-    - export PUBPATH=/home/peekaboodaycarec/public_html
+    - export APPPATH=/home/peekaboodaycarec/public_html/peekaboo
 
     - php $APPPATH/artisan down --retry=15 || true
-
-    - mkdir -p $APPPATH
-    - /bin/cp -R app $APPPATH
-    - /bin/cp -R bootstrap $APPPATH
-    - /bin/cp -R config $APPPATH
-    - /bin/cp -R database $APPPATH
-    - /bin/cp -R lang $APPPATH || true
-    - /bin/cp -R resources $APPPATH
-    - /bin/cp -R routes $APPPATH
-    - /bin/cp artisan $APPPATH
-    - /bin/cp composer.json $APPPATH
-    - /bin/cp composer.lock $APPPATH
 
     - mkdir -p $APPPATH/storage/framework/sessions
     - mkdir -p $APPPATH/storage/framework/views
@@ -24,15 +11,6 @@ deployment:
     - mkdir -p $APPPATH/bootstrap/cache
     - chmod -R 775 $APPPATH/storage
     - chmod -R 775 $APPPATH/bootstrap/cache
-
-    - /bin/cp -R public/assets $PUBPATH || true
-    - /bin/cp -R public/build $PUBPATH || true
-    - /bin/cp public/.htaccess $PUBPATH
-    - /bin/cp public/favicon.ico $PUBPATH || true
-    - /bin/cp public/robots.txt $PUBPATH || true
-    - /bin/cp public/index.php $PUBPATH
-
-    - sed -i "s|__DIR__\.'/../|'/home/peekaboodaycarec/peekaboo/|g" $PUBPATH/index.php
 
     - php $APPPATH/artisan config:clear
     - php $APPPATH/artisan cache:clear
