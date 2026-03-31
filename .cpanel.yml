@@ -2,23 +2,23 @@ deployment:
   tasks:
     - export APPPATH=/home/peekaboodaycarec/public_html/peekaboo
 
-    - php $APPPATH/artisan down --retry=15 || true
+    # Maintenance mode (non-blocking)
+    - php $APPPATH/artisan down || true
 
-    - mkdir -p $APPPATH/storage/framework/sessions
-    - mkdir -p $APPPATH/storage/framework/views
-    - mkdir -p $APPPATH/storage/framework/cache/data
+    # Ensure required directories exist (only if missing)
+    - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data}
     - mkdir -p $APPPATH/storage/logs
     - mkdir -p $APPPATH/bootstrap/cache
+
+    # Fix permissions (important but quick)
     - chmod -R 775 $APPPATH/storage
     - chmod -R 775 $APPPATH/bootstrap/cache
 
-    - php $APPPATH/artisan config:clear
-    - php $APPPATH/artisan cache:clear
-    - php $APPPATH/artisan view:clear
-    - php $APPPATH/artisan route:clear
-    - php $APPPATH/artisan migrate --force
-    - php $APPPATH/artisan config:cache
-    - php $APPPATH/artisan route:cache
-    - php $APPPATH/artisan view:cache
+    # Clear only (fast)
+    - php $APPPATH/artisan optimize:clear
 
+    # Run migrations (keep this)
+    - php $APPPATH/artisan migrate --force
+
+    # Bring app back up ASAP
     - php $APPPATH/artisan up
