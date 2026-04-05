@@ -100,6 +100,7 @@ class HomeController extends Controller
 
             return redirect()->route('contact')->with('success', 'Thank you for your message. We will be in touch soon!');
         } catch (\Exception $e) {
+            Log::error('ContactFormMail failed', ['error' => $e->getMessage()]);
             return redirect()->route('contact')
                 ->with('error', 'Sorry, there was an error sending your message. Please try again or contact us directly.')
                 ->withInput();
@@ -130,6 +131,8 @@ class HomeController extends Controller
 
     public function submitTour(Request $request)
     {
+        Log::info('submitTour hit', ['email' => $request->input('email'), 'ip' => $request->ip()]);
+
         // Validate the form data
         $validated = $request->validate([
             'name'           => 'required|string|max:255',
@@ -163,18 +166,21 @@ class HomeController extends Controller
             $reference = 'TOUR-' . $year . '-' . str_pad($nextNum, 3, '0', STR_PAD_LEFT);
 
             return Lead::create([
-                'reference'      => $reference,
-                'name'           => $validated['name'],
-                'email'          => $validated['email'],
-                'phone'          => $validated['phone'],
-                'child_name'     => $validated['child_name'],
-                'child_nickname' => $validated['child_nickname'] ?? null,
-                'child_age'      => $validated['child_age'],
-                'preferred_date' => $validated['preferred_date'],
-                'preferred_time' => $validated['preferred_time'],
-                'message'        => $validated['message'] ?? null,
-                'source'         => $validated['source'] ?? null,
-                'status'         => 'new',
+                'reference'        => $reference,
+                'name'             => $validated['name'],
+                'email'            => $validated['email'],
+                'phone'            => $validated['phone'],
+                'child_name'       => $validated['child_name'],
+                'child_nickname'   => $validated['child_nickname'] ?? null,
+                'child_age'        => $validated['child_age'],
+                'preferred_date'   => $validated['preferred_date'],
+                'preferred_time'   => $validated['preferred_time'],
+                'message'          => $validated['message'] ?? null,
+                'source'           => $validated['source'] ?? null,
+                'status'           => 'tour_scheduled',
+                'tour_scheduled_at' => \Carbon\Carbon::parse(
+                    $validated['preferred_date'] . ' ' . $validated['preferred_time']
+                ),
             ]);
         });
 

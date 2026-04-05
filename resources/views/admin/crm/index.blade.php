@@ -25,7 +25,7 @@
 /* ── Pipeline stat tiles ─────────────────────────────────────────────── */
 .crm-pipeline {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 0;
     background: #fff; border-radius: 16px;
     box-shadow: 0 1px 8px rgba(0,0,0,.07);
@@ -168,19 +168,17 @@
 {{-- ── Pipeline Strip ──────────────────────────────────────────────────── --}}
 @php
     $pipeConfig = [
-        ['key'=>'new',            'label'=>'New',           'sub'=>'Awaiting contact',  'color'=>'#3b82f6', 'status'=>'new'],
-        ['key'=>'contacted',      'label'=>'Contacted',     'sub'=>'In dialogue',       'color'=>'#d97706', 'status'=>'contacted'],
         ['key'=>'tour_scheduled', 'label'=>'Tour Booked',   'sub'=>'Date confirmed',    'color'=>'#0097a7', 'status'=>'tour_scheduled'],
         ['key'=>'tour_completed', 'label'=>'Tour Done',     'sub'=>'Awaiting decision', 'color'=>'#7c3aed', 'status'=>'tour_completed'],
-        ['key'=>'converted',      'label'=>'Converted',     'sub'=>'Enrolled',          'color'=>'#16a34a', 'status'=>'converted'],
+        ['key'=>'converted',      'label'=>'Converted',     'sub'=>'Invitation sent',   'color'=>'#16a34a', 'status'=>'converted'],
         ['key'=>'waitlist',       'label'=>'Waitlist',      'sub'=>'Holding',           'color'=>'#6c757d', 'status'=>'waitlist'],
-        ['key'=>'overdue',        'label'=>'Overdue',       'sub'=>'>3 days no contact','color'=>'#ef4444', 'status'=>'new'],
+        ['key'=>'overdue',        'label'=>'Overdue',       'sub'=>'Tour date passed',  'color'=>'#ef4444', 'status'=>'tour_scheduled'],
     ];
 @endphp
 <div class="crm-pipeline">
     @foreach($pipeConfig as $tile)
     <a href="{{ route('admin.crm.leads', ['status' => $tile['status']]) }}" class="crm-pipe-tile">
-        @if(($stats[$tile['key']] ?? 0) > 0 && in_array($tile['key'], ['new','overdue']))
+        @if(($stats[$tile['key']] ?? 0) > 0 && $tile['key'] === 'overdue')
             <div class="crm-pipe-tile__dot" style="background:{{ $tile['color'] }};"></div>
         @endif
         <div class="crm-pipe-tile__val" style="color:{{ ($stats[$tile['key']] ?? 0) === 0 ? '#d1d5db' : $tile['color'] }};">
@@ -366,8 +364,6 @@
                     <td>
                         @php
                             $stMap = [
-                                'new'            => ['#dbeafe','#3b82f6'],
-                                'contacted'      => ['#fef3c7','#d97706'],
                                 'tour_scheduled' => ['#e0f7fa','#0097a7'],
                                 'tour_completed' => ['#f5f3ff','#7c3aed'],
                                 'converted'      => ['#dcfce7','#16a34a'],

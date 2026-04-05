@@ -440,7 +440,7 @@
     @if($application->lead)
     @php
         $lead = $application->lead;
-        $ldStMap = ['new'=>['#dbeafe','#3b82f6'],'contacted'=>['#fef3c7','#d97706'],'tour_scheduled'=>['#e0f7fa','#0097a7'],'tour_completed'=>['#f5f3ff','#7c3aed'],'converted'=>['#dcfce7','#16a34a'],'waitlist'=>['#f3f4f6','#6c757d'],'lost'=>['#fee2e2','#ef4444']];
+        $ldStMap = ['tour_scheduled'=>['#e0f7fa','#0097a7'],'tour_completed'=>['#f5f3ff','#7c3aed'],'converted'=>['#dcfce7','#16a34a'],'waitlist'=>['#f3f4f6','#6c757d'],'lost'=>['#fee2e2','#ef4444']];
         [$ldBg,$ldClr] = $ldStMap[$lead->status] ?? ['#f3f4f6','#6c757d'];
         $srcMap = ['google'=>['#fee2e2','#ef4444'],'facebook'=>['#dbeafe','#3b82f6'],'instagram'=>['#fef3c7','#d97706'],'referral'=>['#dcfce7','#16a34a'],'other'=>['#f3f4f6','#6c757d']];
         [$sBg,$sClr] = $srcMap[$lead->source] ?? ['#f3f4f6','#6c757d'];
@@ -509,9 +509,9 @@
                 <div class="app-doc-icon"><i class="fas {{ $meta['icon'] }}"></i></div>
                 <div class="flex-grow-1">
                     <div class="app-doc-name">{{ $meta['label'] }}</div>
-                    <div class="app-doc-sub">Click to download</div>
+                    <div class="app-doc-sub">Click to view</div>
                 </div>
-                <i class="fas fa-download" style="color:#adb5bd;"></i>
+                <i class="fas fa-eye" style="color:#adb5bd;"></i>
             </a>
             @else
             <div class="app-doc-btn missing">

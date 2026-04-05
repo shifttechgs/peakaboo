@@ -273,9 +273,9 @@
             <div class="rpt-panel-body">
                 @php
                     $funnelSteps = [
-                        ['label' => 'Total Leads',      'val' => $stats['leads_total'],     'color' => '#0097a7', 'bg' => '#e0f7fa'],
-                        ['label' => 'New / Uncontacted','val' => $stats['leads_new'],        'color' => '#d97706', 'bg' => '#fff7ed'],
-                        ['label' => 'Converted',        'val' => $stats['leads_converted'],  'color' => '#16a34a', 'bg' => '#dcfce7'],
+                        ['label' => 'Total Leads',       'val' => $stats['leads_total'],          'color' => '#0097a7', 'bg' => '#e0f7fa'],
+                        ['label' => 'Tours Scheduled',   'val' => $stats['leads_tour_scheduled'], 'color' => '#d97706', 'bg' => '#fff7ed'],
+                        ['label' => 'Converted',         'val' => $stats['leads_converted'],      'color' => '#16a34a', 'bg' => '#dcfce7'],
                     ];
                     $funnelMax = max($stats['leads_total'], 1);
                 @endphp

@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('child_nickname')->nullable();
             $table->string('child_age');                 // '1-3 years' etc.
             $table->date('preferred_date');
-            $table->string('preferred_time');            // '09:00', '11:00', '14:00'
+            $table->string('preferred_time');            // '09:00', '10:00'
             $table->text('message')->nullable();
             $table->string('source')->nullable();        // google, facebook, instagram, referral, other
-            $table->string('status')->default('new');    // new, contacted, tour_scheduled, tour_completed, converted, waitlist, lost
+            $table->string('status')->default('tour_scheduled');    // tour_scheduled, tour_completed, converted, waitlist, lost
             $table->text('notes')->nullable();           // admin internal notes
             $table->timestamps();
         });

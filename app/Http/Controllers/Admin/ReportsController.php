@@ -46,7 +46,7 @@ class ReportsController extends Controller
         // Lead stats
         $leadStats = Lead::selectRaw("
             COUNT(*) as total,
-            SUM(CASE WHEN status = 'new'       THEN 1 ELSE 0 END) as new,
+            SUM(CASE WHEN status = 'tour_scheduled' THEN 1 ELSE 0 END) as tour_scheduled,
             SUM(CASE WHEN status = 'converted' THEN 1 ELSE 0 END) as converted
         ")->first();
 
@@ -72,9 +72,9 @@ class ReportsController extends Controller
             'apps_actionable'  => ($appStats->pending ?? 0) + ($appStats->under_review ?? 0),
             'apps_this_month'  => $appsThisMonth,
             'apps_last_month'  => $appsLastMonth,
-            'leads_total'      => $leadStats->total ?? 0,
-            'leads_new'        => $leadStats->new ?? 0,
-            'leads_converted'  => $leadStats->converted ?? 0,
+            'leads_total'          => $leadStats->total ?? 0,
+            'leads_tour_scheduled' => $leadStats->tour_scheduled ?? 0,
+            'leads_converted'      => $leadStats->converted ?? 0,
             'conversion_rate'  => $conversionRate,
             'by_program'       => $byProgram,
             'trend'            => $trend,
@@ -193,6 +193,73 @@ class ReportsController extends Controller
 
     public function attendance()
     {
-        return view('admin.reports.attendance');
+        $classes   = \App\Data\MockData::classes();
+        $children  = \App\Data\MockData::enrolledChildren();
+        $todayAttendance = \App\Data\MockData::attendance();
+
+        // ── Today's summary ────────────────────────────────────────────
+        $totalEnrolled = collect($classes)->sum('enrolled');
+        $presentToday  = collect($todayAttendance)->where('status', 'present')->count();
+        $absentToday   = collect($todayAttendance)->where('status', 'absent')->count();
+        $lateToday     = collect($todayAttendance)->where('status', 'late')->count();
+        $todayRate     = $totalEnrolled > 0 ? round(($presentToday + $lateToday) / $totalEnrolled * 100) : 0;
+
+        // ── Per-class stats ────────────────────────────────────────────
+        $classSummary = collect($classes)->map(function ($cls) use ($todayAttendance) {
+            $classRecords = collect($todayAttendance)->where('class', $cls['name']);
+            $present = $classRecords->where('status', 'present')->count()
+                     + $classRecords->where('status', 'late')->count();
+
+            return [
+                'name'     => $cls['name'],
+                'teacher'  => $cls['teacher'],
+                'capacity' => $cls['capacity'],
+                'enrolled' => $cls['enrolled'],
+                'present'  => $present,
+                'absent'   => $classRecords->where('status', 'absent')->count(),
+                'rate'     => $cls['enrolled'] > 0 ? round($present / $cls['enrolled'] * 100) : 0,
+            ];
+        });
+
+        // ── Weekly trend (simulated) ───────────────────────────────────
+        $weekDays = collect();
+        for ($i = 0; $i <= 4; $i++) {
+            $date = now()->startOfWeek()->addDays($i);
+            $isPast = $date->lte(today());
+            $rate = $isPast ? rand(78, 98) : null;
+            $weekDays->push([
+                'date'  => $date,
+                'day'   => $date->format('D'),
+                'rate'  => $rate,
+                'label' => $date->format('d M'),
+            ]);
+        }
+
+        // ── Monthly trend (last 12 months, simulated) ──────────────────
+        $monthlyTrend = collect();
+        for ($i = 11; $i >= 0; $i--) {
+            $month = now()->subMonths($i);
+            $monthlyTrend->put($month->format('Y-m'), rand(80, 96));
+        }
+
+        // ── Frequently absent children (simulated) ─────────────────────
+        $frequentlyAbsent = collect([
+            ['name' => 'Sipho Khumalo', 'class' => 'Baby Room', 'days_absent' => 5, 'rate' => 75],
+            ['name' => 'Ava Williams',  'class' => 'Preschool', 'days_absent' => 4, 'rate' => 80],
+            ['name' => 'Noah Brown',    'class' => 'Preschool', 'days_absent' => 3, 'rate' => 85],
+        ]);
+
+        // ── Average stats ──────────────────────────────────────────────
+        $avgWeeklyRate = $weekDays->whereNotNull('rate')->avg('rate');
+        $avgMonthlyRate = $monthlyTrend->avg();
+        $totalClassCapacity = collect($classes)->sum('capacity');
+        $occupancyRate = $totalClassCapacity > 0 ? round($totalEnrolled / $totalClassCapacity * 100) : 0;
+
+        return view('admin.reports.attendance', compact(
+            'classes', 'children', 'todayAttendance',
+            'totalEnrolled', 'presentToday', 'absentToday', 'lateToday', 'todayRate',
+            'classSummary', 'weekDays', 'monthlyTrend',
+            'frequentlyAbsent', 'avgWeeklyRate', 'avgMonthlyRate', 'occupancyRate'
+        ));
     }
 }

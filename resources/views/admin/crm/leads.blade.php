@@ -257,8 +257,6 @@
                         'other'     => ['#f3f4f6','#6c757d'],
                     ];
                     $stMap = [
-                        'new'            => ['#dbeafe','#3b82f6'],
-                        'contacted'      => ['#fef3c7','#d97706'],
                         'tour_scheduled' => ['#e0f7fa','#0097a7'],
                         'tour_completed' => ['#f5f3ff','#7c3aed'],
                         'converted'      => ['#dcfce7','#16a34a'],
@@ -314,12 +312,7 @@
                         @endif
                     </td>
                     <td>
-                        @if($lead->follow_up_date)
-                            <span style="font-size:.78rem;{{ $lead->isFollowUpDue() ? 'color:#ef4444;font-weight:700;' : 'color:#adb5bd;' }}">
-                                {{ $lead->follow_up_date->format('d M') }}
-                                @if($lead->isFollowUpDue()) <i class="fas fa-bell ms-1"></i>@endif
-                            </span>
-                        @elseif($lead->last_activity_at)
+                        @if($lead->last_activity_at)
                             <span style="font-size:.78rem;color:#adb5bd;"
                                   title="{{ $lead->last_activity_at->format('d M Y H:i') }}">
                                 {{ $lead->last_activity_at->diffForHumans(null, true, true) }}
@@ -335,9 +328,9 @@
                         <form method="POST" action="{{ route('admin.crm.leads.status', $lead->id) }}" class="d-inline">
                             @csrf
                             <select name="status" class="status-select" onchange="this.form.submit()">
-                                @foreach(\App\Models\Lead::STATUSES as $s)
+                                @foreach(\App\Models\Lead::STATUS_LABELS as $s => $label)
                                     <option value="{{ $s }}" {{ $lead->status === $s ? 'selected' : '' }}>
-                                        {{ ucwords(str_replace('_', ' ', $s)) }}
+                                        {{ $label }}
                                     </option>
                                 @endforeach
                             </select>

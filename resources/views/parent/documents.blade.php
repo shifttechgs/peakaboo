@@ -221,7 +221,7 @@
         <div class="doc-actions">
             @if($doc['uploaded'])
                 <span class="status-pill uploaded"><i class="fas fa-check me-1" style="font-size:.6rem;"></i> Uploaded</span>
-                <a href="{{ asset('storage/' . $doc['path']) }}" target="_blank" class="btn-upload">
+                <a href="{{ route('parent.documents.view', [$entry['app_id'], $doc['type']]) }}" target="_blank" class="btn-upload">
                     <i class="fas fa-eye me-1"></i> View
                 </a>
                 <button type="button" class="btn-upload"

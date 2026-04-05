@@ -54,7 +54,7 @@
                 </td>
                 <td style="padding:12px 20px;border-bottom:1px solid #f9fafb;">
                     @if($pmt->pop_path)
-                        <a href="{{ Storage::disk('public')->url($pmt->pop_path) }}" target="_blank"
+                        <a href="{{ route('admin.payments.view-pop', $pmt) }}" target="_blank"
                            style="font-size:.74rem;font-weight:600;color:#0077B6;text-decoration:none;">
                             <i class="fas fa-file me-1"></i> View
                         </a>

@@ -567,8 +567,12 @@
             </a>
             <a href="{{ route('admin.crm.index') }}" class="sb-link {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
                 <i class="fas fa-funnel-dollar"></i> Lead Pipeline
-                @php $newLeadsCount = \App\Models\Lead::where('status', 'new')->count(); @endphp
-                @if($newLeadsCount > 0)<span class="sb-count">{{ $newLeadsCount }}</span>@endif
+                @php $overdueLeads = \App\Models\Lead::where('status', 'tour_scheduled')
+                    ->where(function($q) {
+                        $q->whereNotNull('tour_scheduled_at')->whereDate('tour_scheduled_at', '<', today())
+                          ->orWhere(function($q2) { $q2->whereNull('tour_scheduled_at')->whereDate('preferred_date', '<', today()); });
+                    })->count(); @endphp
+                @if($overdueLeads > 0)<span class="sb-count">{{ $overdueLeads }}</span>@endif
             </a>
             <a href="{{ route('admin.parents.index') }}" class="sb-link {{ request()->routeIs('admin.parents.*') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Parents & Children

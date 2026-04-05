@@ -157,8 +157,6 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
 {{-- ── Page Header ────────────────────────────────────────────────────── --}}
 @php
     $stMap = [
-        'new'            => ['#dbeafe','#3b82f6'],
-        'contacted'      => ['#fef3c7','#d97706'],
         'tour_scheduled' => ['#e0f7fa','#0097a7'],
         'tour_completed' => ['#f5f3ff','#7c3aed'],
         'converted'      => ['#dcfce7','#16a34a'],
@@ -199,11 +197,11 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
         <h4>
             {{ $lead->name }}
             <span class="ld-pill ms-2" style="background:{{ $stBg }};color:{{ $stClr }};font-size:.72rem;">
-                {{ ucwords(str_replace('_', ' ', $lead->status)) }}
+                {{ $lead->statusLabel() }}
             </span>
             @if($lead->isOverdue())
                 <span class="ld-pill ms-1" style="background:#fee2e2;color:#ef4444;font-size:.72rem;">
-                    <i class="fas fa-exclamation-triangle me-1"></i>Overdue
+                    <i class="fas fa-exclamation-triangle me-1"></i>Tour Overdue
                 </span>
             @endif
         </h4>
@@ -334,21 +332,10 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
                         <div class="ld-field-val {{ $lead->isOverdue() ? 'text-danger' : '' }}">
                             {{ $daysOld === 0 ? 'Today' : $daysOld . ($daysOld === 1 ? ' day' : ' days') . ' ago' }}
                             @if($lead->isOverdue())
-                                <span class="ld-pill ms-1" style="background:#fee2e2;color:#ef4444;">Overdue</span>
+                                <span class="ld-pill ms-1" style="background:#fee2e2;color:#ef4444;">Tour Overdue</span>
                             @endif
                         </div>
                     </div>
-                    @if($lead->follow_up_date)
-                    <div class="col-sm-6">
-                        <div class="ld-field-label">Follow-up Date</div>
-                        <div class="ld-field-val {{ $lead->isFollowUpDue() ? 'text-danger' : '' }}">
-                            {{ $lead->follow_up_date->format('d M Y') }}
-                            @if($lead->isFollowUpDue())
-                                <span class="ld-pill ms-1" style="background:#fee2e2;color:#ef4444;">Due</span>
-                            @endif
-                        </div>
-                    </div>
-                    @endif
                     @if($lead->tour_scheduled_at)
                     <div class="col-sm-6">
                         <div class="ld-field-label">Confirmed Tour</div>
@@ -360,10 +347,10 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
                     @endif
                     @if($lead->converted_at)
                     <div class="col-sm-6">
-                        <div class="ld-field-label">Converted</div>
+                        <div class="ld-field-label">Enrolled</div>
                         <div class="ld-field-val" style="color:#16a34a;">
                             {{ $lead->converted_at->format('d M Y') }}
-                            <span style="color:#adb5bd;font-weight:400;font-size:.78rem;"> ({{ $lead->daysToConvert() }}d to convert)</span>
+                            <span style="color:#adb5bd;font-weight:400;font-size:.78rem;"> ({{ $lead->daysToConvert() }}d to enrol)</span>
                         </div>
                     </div>
                     @endif
@@ -446,93 +433,180 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
     {{-- ════ RIGHT COLUMN — Action Panels ════ --}}
     <div class="col-lg-5">
 
-        {{-- ── Status ────────────────────────────────────────────────── --}}
-        <div class="ld-panel">
+        {{-- ── Next Step (smart contextual actions) ─────────────────────── --}}
+        <div class="ld-panel" style="border-left:3px solid {{ $stClr }};">
             <div class="ld-panel-header">
-                <h6><i class="fas fa-tag me-2" style="color:#3b82f6;"></i>Update Status</h6>
+                <h6><i class="fas fa-bolt me-2" style="color:{{ $stClr }};"></i>Next Step</h6>
+                <span class="ld-pill" style="background:{{ $stBg }};color:{{ $stClr }};font-size:.68rem;">{{ $lead->statusLabel() }}</span>
             </div>
             <div class="ld-panel-body">
-                <form method="POST" action="{{ route('admin.crm.leads.status', $lead->id) }}">
-                    @csrf
-                    <div class="mb-3">
-                        <label class="ld-form-label">Current Status</label>
-                        <select name="status" class="ld-form-select">
-                            @foreach(\App\Models\Lead::STATUSES as $s)
-                                <option value="{{ $s }}" {{ $lead->status === $s ? 'selected' : '' }}>
-                                    {{ ucwords(str_replace('_', ' ', $s)) }}
-                                </option>
-                            @endforeach
-                        </select>
+
+                @if($lead->status === 'tour_scheduled')
+                    {{-- ── TOUR SCHEDULED: show tour info + mark complete button ── --}}
+                    <div style="background:#f0fdfa;border:1px solid #ccfbf1;border-radius:10px;padding:14px 16px;margin-bottom:16px;">
+                        <div style="font-size:.72rem;font-weight:700;color:#0097a7;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">
+                            <i class="fas fa-calendar-check me-1"></i>Scheduled Tour
+                        </div>
+                        @if($lead->tour_scheduled_at)
+                            <div style="font-size:1rem;font-weight:700;color:#1a1f2e;">
+                                {{ $lead->tour_scheduled_at->format('l, d M Y') }}
+                            </div>
+                            <div style="font-size:.84rem;color:#6c757d;margin-top:2px;">
+                                <i class="fas fa-clock me-1"></i>{{ $lead->tour_scheduled_at->format('H:i') }}
+                            </div>
+                        @else
+                            <div style="font-size:.88rem;font-weight:600;color:#1a1f2e;">
+                                {{ $lead->preferred_date->format('l, d M Y') }} at {{ $lead->preferred_time }}
+                            </div>
+                        @endif
                     </div>
-                    <button type="submit" class="ld-btn ld-btn-primary">
-                        <i class="fas fa-save"></i> Save Status
-                    </button>
-                </form>
+
+                    <form method="POST" action="{{ route('admin.crm.leads.status', $lead->id) }}" class="mb-3">
+                        @csrf
+                        <input type="hidden" name="status" value="tour_completed">
+                        <button type="submit" class="ld-btn ld-btn-primary" style="width:100%;"
+                                data-confirm="Mark tour as completed for {{ $lead->name }}?"
+                                data-confirm-title="Tour Completed"
+                                data-confirm-icon="✅"
+                                data-confirm-btn="Mark Complete"
+                                data-confirm-color="#7c3aed">
+                            <i class="fas fa-check-circle"></i>Mark Tour Complete
+                        </button>
+                    </form>
+
+                    {{-- Update tour date/time --}}
+                    <details style="margin-top:8px;">
+                        <summary style="font-size:.78rem;color:#6c757d;cursor:pointer;font-weight:600;">
+                            <i class="fas fa-edit me-1"></i>Change Tour Date/Time
+                        </summary>
+                        <form method="POST" action="{{ route('admin.crm.leads.tour-date', $lead->id) }}" class="mt-3">
+                            @csrf
+                            <div class="row g-2 mb-3">
+                                <div class="col-7">
+                                    <label class="ld-form-label">Date <span style="color:#ef4444;">*</span></label>
+                                    <input type="date" name="tour_date" class="ld-form-control"
+                                           value="{{ $lead->tour_scheduled_at ? $lead->tour_scheduled_at->format('Y-m-d') : $lead->preferred_date->format('Y-m-d') }}"
+                                           required>
+                                </div>
+                                <div class="col-5">
+                                    <label class="ld-form-label">Time <span style="color:#ef4444;">*</span></label>
+                                    <select name="tour_time" class="ld-form-control" required>
+                                        <option value="09:00" {{ ($lead->tour_scheduled_at && $lead->tour_scheduled_at->format('H:i') == '09:00') ? 'selected' : '' }}>09:00 – 10:00</option>
+                                        <option value="10:00" {{ ($lead->tour_scheduled_at && $lead->tour_scheduled_at->format('H:i') == '10:00') ? 'selected' : '' }}>10:00 – 11:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="ld-btn ld-btn-ghost" style="width:100%;">
+                                <i class="fas fa-calendar-alt"></i>Update & Re-send Confirmation
+                            </button>
+                        </form>
+                    </details>
+
+                @elseif($lead->status === 'tour_completed')
+                    {{-- ── TOUR COMPLETED: send enrolment or waitlist ── --}}
+                    <p style="font-size:.82rem;color:#6c757d;margin-bottom:16px;">
+                        Tour is complete — what's next for <strong>{{ $lead->child_name }}</strong>?
+                    </p>
+
+                    <form method="POST" action="{{ route('admin.crm.leads.start-enrol', $lead->id) }}" class="mb-3">
+                        @csrf
+                        <button type="submit" class="ld-btn ld-btn-success" style="width:100%;"
+                                data-confirm="This will send an enrolment form to {{ $lead->email }}. The parent can fill it in online."
+                                data-confirm-title="Send Enrolment Invitation"
+                                data-confirm-icon="🎓"
+                                data-confirm-btn="Send Invitation"
+                                data-confirm-color="#16a34a">
+                            <i class="fas fa-user-plus"></i>Send Enrolment Invitation
+                            <small style="display:block;font-size:.68rem;opacity:.8;font-weight:400;margin-top:2px;">Auto-emails form link to parent</small>
+                        </button>
+                    </form>
+
+                    <form method="POST" action="{{ route('admin.crm.leads.waitlist', $lead->id) }}">
+                        @csrf
+                        <button type="submit" class="ld-btn ld-btn-amber" style="width:100%;">
+                            <i class="fas fa-clock"></i>Add to Waitlist
+                        </button>
+                    </form>
+
+                @elseif($lead->status === 'converted')
+                    {{-- ── CONVERTED: show linked application or re-send ── --}}
+                    @if($lead->application)
+                        @php $app = $lead->application; @endphp
+                        <div style="background:#f0fdf4;border:1px solid #dcfce7;border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+                            <div style="font-size:.72rem;font-weight:700;color:#16a34a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">
+                                <i class="fas fa-check-circle me-1"></i>Application Received
+                            </div>
+                            <div class="fw-semibold mb-1" style="color:#1a1f2e;">{{ $app->child_name }}</div>
+                            <code style="font-size:.76rem;color:#16a34a;">{{ $app->reference }}</code>
+                            <div class="mt-2" style="font-size:.8rem;color:#6c757d;">
+                                <i class="fas fa-graduation-cap me-1"></i>{{ $app->program_name }} &bull; {{ ucfirst($app->fee_option) }}
+                            </div>
+                            @php $dc = $app->documentsCount(); @endphp
+                            <div class="mt-1" style="font-size:.78rem;">
+                                <i class="fas fa-folder-open me-1" style="color:#adb5bd;"></i>Docs:
+                                <span style="color:{{ $dc >= 3 ? '#16a34a' : ($dc > 0 ? '#d97706' : '#ef4444') }};font-weight:700;">
+                                    {{ $dc > 0 ? $dc.'/4' : 'None' }}
+                                </span>
+                            </div>
+                        </div>
+                        <a href="{{ route('admin.admissions.show', $app->id) }}" class="ld-btn ld-btn-success" style="width:100%;">
+                            <i class="fas fa-external-link-alt"></i> View Application
+                        </a>
+                    @else
+                        <p style="font-size:.82rem;color:#6c757d;margin-bottom:14px;">
+                            Enrolment invitation sent — waiting for parent to submit the form.
+                        </p>
+                        <form method="POST" action="{{ route('admin.crm.leads.start-enrol', $lead->id) }}">
+                            @csrf
+                            <button type="submit" class="ld-btn ld-btn-amber" style="width:100%;"
+                                    data-confirm="Re-send enrolment form link to {{ $lead->email }}?"
+                                    data-confirm-title="Re-send Invitation"
+                                    data-confirm-icon="📧"
+                                    data-confirm-btn="Re-send"
+                                    data-confirm-color="#d97706">
+                                <i class="fas fa-paper-plane"></i>Re-send Enrolment Link
+                            </button>
+                        </form>
+                    @endif
+
+                @elseif($lead->status === 'waitlist')
+                    <p style="font-size:.82rem;color:#6c757d;margin-bottom:14px;">
+                        {{ $lead->child_name }} is on the waitlist. Move to enrolment when a spot opens.
+                    </p>
+                    <form method="POST" action="{{ route('admin.crm.leads.start-enrol', $lead->id) }}">
+                        @csrf
+                        <button type="submit" class="ld-btn ld-btn-success" style="width:100%;"
+                                data-confirm="Send enrolment invitation to {{ $lead->email }}?"
+                                data-confirm-title="Start Enrolment"
+                                data-confirm-icon="🎓"
+                                data-confirm-btn="Send & Enrol"
+                                data-confirm-color="#16a34a">
+                            <i class="fas fa-user-plus"></i>Send Enrolment Invitation
+                        </button>
+                    </form>
+
+                @elseif($lead->status === 'lost')
+                    @if($lead->lost_reason)
+                    <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 16px;">
+                        <div style="font-size:.72rem;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">
+                            <i class="fas fa-times-circle me-1"></i>Lost Reason
+                        </div>
+                        <div style="font-size:.88rem;font-weight:600;color:#1a1f2e;">
+                            {{ \App\Models\Lead::LOST_REASONS[$lead->lost_reason] ?? $lead->lost_reason }}
+                        </div>
+                    </div>
+                    @endif
+                @endif
             </div>
         </div>
 
-        {{-- ── Linked Enrolment ──────────────────────────────────────── --}}
-        @if($lead->application)
-        @php $app = $lead->application; @endphp
+        {{-- ── Mark as Lost (show for active statuses) ─────────────────── --}}
+        @if(!in_array($lead->status, ['lost', 'converted']))
         <div class="ld-panel">
-            <div class="ld-panel-header">
-                <h6><i class="fas fa-file-alt me-2" style="color:#16a34a;"></i>Enrolment Application</h6>
-                @php
-                    $appBadgeMap = [
-                        'pending'      => ['#fff7ed','#d97706'],
-                        'under_review' => ['#e0f7fa','#0097a7'],
-                        'approved'     => ['#dcfce7','#16a34a'],
-                        'waitlist'     => ['#f3f4f6','#6c757d'],
-                        'rejected'     => ['#fee2e2','#ef4444'],
-                    ];
-                    [$appBg, $appClr] = $appBadgeMap[$app->status] ?? ['#f3f4f6','#6c757d'];
-                @endphp
-                <span class="ld-pill" style="background:{{ $appBg }};color:{{ $appClr }};">{{ $app->statusLabel() }}</span>
-            </div>
-            <div class="ld-panel-body">
-                <div class="ld-enrol-card">
-                    <div class="fw-semibold mb-1" style="color:#1a1f2e;">{{ $app->child_name }}</div>
-                    <code style="font-size:.76rem;color:#16a34a;">{{ $app->reference }}</code>
-                    <div class="mt-2" style="font-size:.8rem;color:#6c757d;">
-                        <i class="fas fa-graduation-cap me-1"></i>{{ $app->program_name }}
-                        &bull; {{ ucfirst($app->fee_option) }}
-                    </div>
-                    <div style="font-size:.8rem;color:#6c757d;margin-top:3px;">
-                        <i class="fas fa-calendar me-1"></i>Start {{ $app->start_date->format('d M Y') }}
-                    </div>
-                    @php $dc = $app->documentsCount(); @endphp
-                    <div class="mt-2" style="font-size:.8rem;">
-                        <i class="fas fa-folder-open me-1" style="color:#adb5bd;"></i>Documents:
-                        <span style="color:{{ $dc >= 3 ? '#16a34a' : ($dc > 0 ? '#d97706' : '#ef4444') }};font-weight:700;">
-                            {{ $dc > 0 ? $dc.'/4 uploaded' : 'None uploaded' }}
-                        </span>
-                    </div>
-                </div>
-                <a href="{{ route('admin.admissions.show', $app->id) }}" class="ld-btn ld-btn-success">
-                    <i class="fas fa-external-link-alt"></i> View Full Application
-                </a>
-            </div>
-        </div>
-        @elseif($lead->status === 'converted')
-        <div class="ld-panel">
-            <div class="ld-panel-header">
-                <h6><i class="fas fa-file-alt me-2" style="color:#d97706;"></i>Enrolment Application</h6>
-            </div>
-            <div class="ld-panel-body">
-                <p style="font-size:.82rem;color:#6c757d;margin-bottom:14px;">
-                    This lead is <strong>Converted</strong> but no application has been received yet.
-                </p>
-                <form method="POST" action="{{ route('admin.crm.leads.start-enrol', $lead->id) }}">
-                    @csrf
-                    <button type="submit" class="ld-btn ld-btn-amber"
-                            data-confirm="Send a new enrolment invitation link to {{ $lead->email }}?"
-                            data-confirm-title="Re-send Enrolment Invitation"
-                            data-confirm-icon="📧"
-                            data-confirm-btn="Send"
-                            data-confirm-color="#d97706">
-                        <i class="fas fa-paper-plane"></i>Re-send Enrolment Link
-                    </button>
-                </form>
+            <div class="ld-panel-body" style="padding:14px 22px;">
+                <button type="button" class="ld-btn ld-btn-danger" style="width:100%;" data-bs-toggle="modal" data-bs-target="#markLostModal">
+                    <i class="fas fa-times"></i>Mark as Lost…
+                </button>
             </div>
         </div>
         @endif
@@ -562,169 +636,6 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
             </div>
         </div>
 
-        {{-- ── Follow-up Date ─────────────────────────────────────────── --}}
-        <div class="ld-panel">
-            <div class="ld-panel-header">
-                <h6>
-                    <i class="fas fa-calendar-alt me-2" style="color:#d97706;"></i>Follow-up Date
-                    @if($lead->isFollowUpDue())
-                        <span class="ld-pill ms-1" style="background:#fee2e2;color:#ef4444;font-size:.65rem;">Due</span>
-                    @endif
-                </h6>
-            </div>
-            <div class="ld-panel-body">
-                <form method="POST" action="{{ route('admin.crm.leads.follow-up', $lead->id) }}">
-                    @csrf
-                    <div class="mb-3">
-                        <input type="date" name="follow_up_date" class="ld-form-control"
-                               value="{{ $lead->follow_up_date?->format('Y-m-d') }}">
-                        <div style="font-size:.72rem;color:#adb5bd;margin-top:5px;">
-                            Set when this lead should next be contacted.
-                        </div>
-                    </div>
-                    <button type="submit" class="ld-btn ld-btn-amber">
-                        <i class="fas fa-save"></i> Save Follow-up Date
-                    </button>
-                </form>
-                @if($lead->last_activity_at)
-                <div class="mt-3 pt-3" style="border-top:1px solid #f3f4f6;font-size:.76rem;color:#adb5bd;">
-                    <i class="fas fa-clock me-1"></i>Last activity {{ $lead->last_activity_at->diffForHumans() }}
-                </div>
-                @endif
-            </div>
-        </div>
-
-        {{-- ── First Contact (New only) ───────────────────────────────── --}}
-        @if($lead->status === 'new')
-        <div class="ld-panel">
-            <div class="ld-panel-header">
-                <h6><i class="fas fa-phone-alt me-2" style="color:#3b82f6;"></i>First Contact</h6>
-            </div>
-            <div class="ld-panel-body">
-                <p style="font-size:.82rem;color:#6c757d;margin-bottom:14px;">
-                    Record that you've made first contact with {{ $lead->name }}.
-                </p>
-                <form method="POST" action="{{ route('admin.crm.leads.mark-contacted', $lead->id) }}">
-                    @csrf
-                    <button type="submit" class="ld-btn ld-btn-primary">
-                        <i class="fas fa-check"></i>Mark as Contacted
-                    </button>
-                </form>
-            </div>
-        </div>
-        @endif
-
-        {{-- ── Tour Actions ───────────────────────────────────────────── --}}
-        @if(in_array($lead->status, ['contacted', 'new', 'tour_scheduled']))
-        <div class="ld-panel">
-            <div class="ld-panel-header">
-                <h6><i class="fas fa-calendar-check me-2" style="color:#0097a7;"></i>Tour Actions</h6>
-            </div>
-            <div class="ld-panel-body">
-                <p style="font-size:.82rem;color:#6c757d;margin-bottom:14px;">
-                    Set the confirmed tour date and time.
-                    @if($lead->status !== 'tour_scheduled')
-                        Status will automatically update to <strong>Tour Scheduled</strong>.
-                    @endif
-                </p>
-                <form method="POST" action="{{ route('admin.crm.leads.tour-date', $lead->id) }}" class="mb-3">
-                    @csrf
-                    <div class="row g-2 mb-3">
-                        <div class="col-7">
-                            <label class="ld-form-label">Tour Date <span style="color:#ef4444;">*</span></label>
-                            <input type="date" name="tour_date" class="ld-form-control"
-                                   value="{{ $lead->tour_scheduled_at ? $lead->tour_scheduled_at->format('Y-m-d') : ($lead->preferred_date ? $lead->preferred_date->format('Y-m-d') : '') }}"
-                                   required>
-                        </div>
-                        <div class="col-5">
-                            <label class="ld-form-label">Time <span style="color:#ef4444;">*</span></label>
-                            <input type="time" name="tour_time" class="ld-form-control"
-                                   value="{{ $lead->tour_scheduled_at ? $lead->tour_scheduled_at->format('H:i') : '' }}"
-                                   required>
-                        </div>
-                    </div>
-                    <button type="submit" class="ld-btn ld-btn-teal">
-                        <i class="fas fa-calendar-alt"></i>
-                        {{ $lead->tour_scheduled_at ? 'Update Tour Date' : 'Set Tour Date' }}
-                    </button>
-                </form>
-                <form method="POST" action="{{ route('admin.crm.leads.notify-tour', $lead->id) }}">
-                    @csrf
-                    <button type="submit" class="ld-btn ld-btn-ghost"
-                            data-confirm="Send tour confirmation email to {{ $lead->email }}?"
-                            data-confirm-title="Send Confirmation Email"
-                            data-confirm-icon="📧"
-                            data-confirm-btn="Send Email"
-                            data-confirm-color="#0097a7">
-                        <i class="fas fa-paper-plane"></i>Send Confirmation Email
-                    </button>
-                </form>
-            </div>
-        </div>
-        @endif
-
-        {{-- ── Post-Tour Actions ──────────────────────────────────────── --}}
-        @if($lead->status === 'tour_completed')
-        <div class="ld-panel">
-            <div class="ld-panel-header">
-                <h6><i class="fas fa-graduation-cap me-2" style="color:#16a34a;"></i>Post-Tour Actions</h6>
-            </div>
-            <div class="ld-panel-body">
-                <p style="font-size:.82rem;color:#6c757d;margin-bottom:14px;">
-                    Tour is complete — what's the next step for {{ $lead->child_name }}?
-                </p>
-                <form method="POST" action="{{ route('admin.crm.leads.start-enrol', $lead->id) }}" class="mb-0">
-                    @csrf
-                    <button type="submit" class="ld-btn ld-btn-success"
-                            data-confirm="Send enrolment invitation link to {{ $lead->email }}?"
-                            data-confirm-title="Start Enrolment"
-                            data-confirm-icon="🎓"
-                            data-confirm-btn="Send & Enrol"
-                            data-confirm-color="#16a34a">
-                        <i class="fas fa-user-plus"></i>Start Enrolment
-                        <small style="font-size:.72rem;opacity:.8;font-weight:400;">Emails enrolment form link</small>
-                    </button>
-                </form>
-                <form method="POST" action="{{ route('admin.crm.leads.waitlist', $lead->id) }}">
-                    @csrf
-                    <button type="submit" class="ld-btn ld-btn-amber">
-                        <i class="fas fa-clock"></i>Add to Waitlist
-                    </button>
-                </form>
-            </div>
-        </div>
-        @endif
-
-        {{-- ── Mark as Lost ───────────────────────────────────────────── --}}
-        @if(!in_array($lead->status, ['lost', 'converted']))
-        <div class="ld-panel">
-            <div class="ld-panel-header">
-                <h6><i class="fas fa-times-circle me-2" style="color:#ef4444;"></i>Mark as Lost</h6>
-            </div>
-            <div class="ld-panel-body">
-                <p style="font-size:.82rem;color:#6c757d;margin-bottom:14px;">
-                    Record why this lead didn't convert.
-                </p>
-                <button type="button" class="ld-btn ld-btn-danger" data-bs-toggle="modal" data-bs-target="#markLostModal">
-                    <i class="fas fa-times"></i>Mark as Lost…
-                </button>
-            </div>
-        </div>
-        @endif
-
-        {{-- ── Lost Reason (if lost) ──────────────────────────────────── --}}
-        @if($lead->status === 'lost' && $lead->lost_reason)
-        <div class="ld-panel">
-            <div class="ld-panel-body">
-                <div class="ld-field-label">Lost Reason</div>
-                <div class="ld-field-val" style="color:#ef4444;">
-                    <i class="fas fa-times-circle me-1"></i>
-                    {{ \App\Models\Lead::LOST_REASONS[$lead->lost_reason] ?? $lead->lost_reason }}
-                </div>
-            </div>
-        </div>
-        @endif
-
         {{-- ── Internal Notes ─────────────────────────────────────────── --}}
         <div class="ld-panel">
             <div class="ld-panel-header">
@@ -734,7 +645,7 @@ textarea.ld-form-control { min-height: 100px; resize: vertical; }
                 <form method="POST" action="{{ route('admin.crm.leads.notes', $lead->id) }}">
                     @csrf
                     <div class="mb-3">
-                        <textarea name="notes" class="ld-form-control" rows="4"
+                        <textarea name="notes" class="ld-form-control" rows="3"
                                   placeholder="Add internal notes about this lead…">{{ old('notes', $lead->notes) }}</textarea>
                     </div>
                     <button type="submit" class="ld-btn ld-btn-ghost">

@@ -901,6 +901,14 @@
                 <!-- Form Column -->
                 <div class="col-lg-8 mb-4 wow itfadeUp" data-wow-duration=".9s">
 
+                    @if(session('info'))
+                        <div class="alert alert-info">{{ session('info') }}</div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+
                     @if($errors->any())
                         <div class="alert alert-danger">
                             <ul class="mb-0" style="padding-left: 20px;">
@@ -997,11 +1005,11 @@
                                     <div class="pb-form-section__label">Visit Details</div>
                                 </div>
 
-                                <!-- Preferred Date -->
-                                <div class="col-12">
+                                <!-- Preferred Date + Preferred Time (same row) -->
+                                <div class="col-md-6">
                                     <label class="form-label">Preferred Date <span class="req">*</span></label>
                                     <input type="hidden" name="preferred_date" id="preferred_date_input" value="{{ old('preferred_date') }}" required>
-                                    <div class="pb-date-picker" id="pbDatePicker" style="background:#fafbfc; border:1.5px solid #dde2e8; border-radius:10px; padding:12px 14px; max-width:340px;">
+                                    <div class="pb-date-picker" id="pbDatePicker" style="background:#fafbfc; border:1.5px solid #dde2e8; border-radius:10px; padding:12px 14px;">
                                         <div class="pb-date-picker__nav">
                                             <button type="button" class="pb-date-picker__arrow" id="pbDatePrev"><i class="fa-solid fa-chevron-left"></i></button>
                                             <span class="pb-date-picker__month" id="pbDateMonth">—</span>
@@ -1011,37 +1019,23 @@
                                     </div>
                                 </div>
 
-                                <!-- Preferred Time -->
-                                <div class="col-12">
+                                <div class="col-md-6">
                                     <label class="form-label">Preferred Time <span class="req">*</span></label>
-                                    <div class="row g-2">
-                                        <div class="col-md-4">
-                                            <label class="pb-time-slot">
-                                                <input type="radio" name="preferred_time" value="09:00" {{ old('preferred_time', '09:00') == '09:00' ? 'checked' : '' }}>
-                                                <span>
-                                                    <span class="pb-time-slot__label">Morning</span>
-                                                    <span class="pb-time-slot__time">09:00 – 10:00</span>
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="pb-time-slot">
-                                                <input type="radio" name="preferred_time" value="11:00" {{ old('preferred_time') == '11:00' ? 'checked' : '' }}>
-                                                <span>
-                                                    <span class="pb-time-slot__label">Late Morning</span>
-                                                    <span class="pb-time-slot__time">11:00 – 12:00</span>
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="pb-time-slot">
-                                                <input type="radio" name="preferred_time" value="14:00" {{ old('preferred_time') == '14:00' ? 'checked' : '' }}>
-                                                <span>
-                                                    <span class="pb-time-slot__label">Afternoon</span>
-                                                    <span class="pb-time-slot__time">14:00 – 15:00</span>
-                                                </span>
-                                            </label>
-                                        </div>
+                                    <div class="d-flex flex-column gap-2">
+                                        <label class="pb-time-slot">
+                                            <input type="radio" name="preferred_time" value="09:00" {{ old('preferred_time', '09:00') == '09:00' ? 'checked' : '' }}>
+                                            <span>
+                                                <span class="pb-time-slot__label">Morning</span>
+                                                <span class="pb-time-slot__time">09:00 – 10:00</span>
+                                            </span>
+                                        </label>
+                                        <label class="pb-time-slot">
+                                            <input type="radio" name="preferred_time" value="10:00" {{ old('preferred_time') == '10:00' ? 'checked' : '' }}>
+                                            <span>
+                                                <span class="pb-time-slot__label">Late Morning</span>
+                                                <span class="pb-time-slot__time">10:00 – 11:00</span>
+                                            </span>
+                                        </label>
                                     </div>
                                 </div>
 

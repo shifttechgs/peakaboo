@@ -247,6 +247,16 @@ class AdmissionsController extends Controller
             return redirect()->back()->with('error', 'Document not found on server.');
         }
 
-        return Storage::disk('public')->download($path);
+        $mime     = Storage::disk('public')->mimeType($path);
+        $filename = basename($path);
+
+        return response()->stream(
+            fn () => fpassthru(Storage::disk('public')->readStream($path)),
+            200,
+            [
+                'Content-Type'        => $mime,
+                'Content-Disposition' => "inline; filename=\"{$filename}\"",
+            ]
+        );
     }
 }

@@ -12,16 +12,30 @@
     border: 1px solid #f0f0f0;
     overflow: hidden;
     margin-bottom: 24px;
+    position: relative;
 }
 .overview-bar-header {
-    padding: 16px 24px 4px;
-    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 12px;
+    display: flex; align-items: stretch;
     border-bottom: 1px solid #f3f4f6;
 }
 .overview-bar-header .bar-section-label {
     font-size: .65rem; font-weight: 800; text-transform: uppercase;
     letter-spacing: 1.2px; color: #94a3b8;
     display: flex; align-items: center; gap: 5px;
+    padding: 14px 24px 8px;
+}
+.overview-bar-header .bar-section-leads {
+    flex: 3; /* matches 3 lead tiles */
+}
+.overview-bar-header .bar-section-enrol {
+    flex: 4; /* matches 4 enrolment tiles */
+}
+.overview-bar-header .bar-section-sep {
+    flex-shrink: 0; width: 22px; /* matches overview-section-sep width below */
+}
+.overview-bar-header .bar-live-stamp {
+    position: absolute; right: 24px; top: 14px;
 }
 .overview-stats {
     display: flex; padding: 4px 12px 4px;
@@ -257,13 +271,18 @@
 
 <div class="overview-bar">
     <div class="overview-bar-header">
-        <span class="bar-section-label">
-            <i class="fas fa-circle me-1" style="color:#3b82f6;font-size:.45rem;vertical-align:middle;"></i>Leads Pipeline
-        </span>
-        <span class="bar-section-label">
-            <i class="fas fa-circle me-1" style="color:#7c3aed;font-size:.45rem;vertical-align:middle;"></i>Enrolments
-        </span>
-        <span id="live-updated-stamp" style="margin-left:auto;font-size:.68rem;color:#a3acb9;display:flex;align-items:center;gap:5px;opacity:0;transition:opacity .4s;">
+        <div class="bar-section-leads">
+            <span class="bar-section-label">
+                <i class="fas fa-circle me-1" style="color:#3b82f6;font-size:.45rem;vertical-align:middle;"></i>Leads Pipeline
+            </span>
+        </div>
+        <div class="bar-section-sep"></div>
+        <div class="bar-section-enrol">
+            <span class="bar-section-label">
+                <i class="fas fa-circle me-1" style="color:#7c3aed;font-size:.45rem;vertical-align:middle;"></i>Enrolments
+            </span>
+        </div>
+        <span id="live-updated-stamp" class="bar-live-stamp" style="font-size:.68rem;color:#a3acb9;display:flex;align-items:center;gap:5px;opacity:0;transition:opacity .4s;">
             <span id="live-pulse" style="width:6px;height:6px;border-radius:50%;background:#16a34a;display:inline-block;"></span>
             <span id="live-updated-text">Updated just now</span>
         </span>
@@ -272,34 +291,26 @@
     <div class="overview-stats">
 
         {{-- ── LEADS ─────────────────────────────────────── --}}
-        <a href="{{ route('admin.crm.leads', ['status'=>'new']) }}" class="stat-tile st-blue leads-tile">
-            <div class="st-dot" id="live-dot-new" style="background:#3b82f6;{{ $pipeline['new'] > 0 ? '' : 'display:none;' }}"></div>
-            <div class="st-val" data-live="new-leads">{{ $pipeline['new'] }}</div>
-            <div class="st-label">New Leads</div>
-            <div class="st-trend">Awaiting contact</div>
-        </a>
-
-        <div class="overview-divider"></div>
-
         <a href="{{ route('admin.crm.leads', ['status'=>'tour_scheduled']) }}" class="stat-tile st-info leads-tile">
-            <div class="st-val" data-live="tours-booked">{{ $pipeline['tour_scheduled'] }}</div>
+            <div class="st-dot" id="live-dot-new" style="background:#0097a7;{{ ($pipeline['tour_scheduled'] ?? 0) > 0 ? '' : 'display:none;' }}"></div>
+            <div class="st-val" data-live="tours-booked">{{ $pipeline['tour_scheduled'] ?? 0 }}</div>
             <div class="st-label">Tours Booked</div>
-            <div class="st-trend">This pipeline</div>
+            <div class="st-trend">Upcoming tours</div>
         </a>
 
         <div class="overview-divider"></div>
 
-        <a href="{{ route('admin.crm.leads', ['status'=>'new']) }}" class="stat-tile leads-tile {{ $pipeline['overdue'] > 0 ? 'st-alert' : '' }}" id="live-tile-overdue">
-            <div class="st-dot" id="live-dot-overdue" style="background:#ef4444;{{ $pipeline['overdue'] > 0 ? '' : 'display:none;' }}"></div>
-            <div class="st-val" data-live="overdue" style="{{ $pipeline['overdue'] === 0 ? 'color:#adb5bd;' : '' }}">{{ $pipeline['overdue'] }}</div>
+        <a href="{{ route('admin.crm.leads', ['status'=>'tour_scheduled']) }}" class="stat-tile leads-tile {{ ($pipeline['overdue'] ?? 0) > 0 ? 'st-alert' : '' }}" id="live-tile-overdue">
+            <div class="st-dot" id="live-dot-overdue" style="background:#ef4444;{{ ($pipeline['overdue'] ?? 0) > 0 ? '' : 'display:none;' }}"></div>
+            <div class="st-val" data-live="overdue" style="{{ ($pipeline['overdue'] ?? 0) === 0 ? 'color:#adb5bd;' : '' }}">{{ $pipeline['overdue'] ?? 0 }}</div>
             <div class="st-label">Overdue</div>
-            <div class="st-trend">&gt; 3 days no contact</div>
+            <div class="st-trend">Tour date passed</div>
         </a>
 
         <div class="overview-divider"></div>
 
         <a href="{{ route('admin.crm.leads', ['status'=>'converted']) }}" class="stat-tile st-good leads-tile">
-            <div class="st-val" data-live="converted">{{ $pipeline['converted'] }}</div>
+            <div class="st-val" data-live="converted">{{ $pipeline['converted'] ?? 0 }}</div>
             <div class="st-label">Converted</div>
             <div class="st-bar-track">
                 <div class="st-bar-fill" id="live-bar-conv" style="width:{{ $convRate }}%;background:#16a34a;"></div>
@@ -484,8 +495,8 @@
                     <div class="micro-label mb-2">Lead Conversion</div>
                     @php $lostPct = $pipeline['total'] > 0 ? round(($pipeline['lost']/$pipeline['total'])*100) : 0; @endphp
                     @foreach([
-                        ['label'=>'Converted', 'pct'=>$convRate,  'color'=>'#16a34a', 'val'=>$pipeline['converted']],
-                        ['label'=>'Lost',      'pct'=>$lostPct,   'color'=>'#ef4444', 'val'=>$pipeline['lost']],
+                        ['label'=>'Converted', 'pct'=>$convRate,  'color'=>'#16a34a', 'val'=>$pipeline['converted'] ?? 0],
+                        ['label'=>'Lost',      'pct'=>$lostPct,   'color'=>'#ef4444', 'val'=>$pipeline['lost'] ?? 0],
                     ] as $bar)
                     <div class="d-flex align-items-center gap-2 mb-2">
                         <span style="width:60px;font-size:.74rem;color:#6c757d;">{{ $bar['label'] }}</span>
@@ -794,7 +805,6 @@
         const e = data.enrolments;
 
         // Leads
-        patchVal('new-leads',   p.new);
         patchVal('tours-booked', p.tour_scheduled);
         patchVal('overdue',     p.overdue);
         patchVal('converted',   p.converted);
@@ -810,7 +820,7 @@
         patchProgressBar('live-bar-approval', data.approval_rate);
 
         // Dots & tile states
-        patchNewLeadsDot(p.new);
+        patchNewLeadsDot(p.tour_scheduled);
         patchOverdueTile(p.overdue);
         patchPendingDot(e.pending);
         patchReviewDot(e.under_review);

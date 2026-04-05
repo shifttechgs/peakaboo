@@ -133,13 +133,11 @@ Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('ad
         Route::delete('/leads/{lead}', [CrmController::class, 'destroyLead'])->name('leads.destroy');
         Route::post('/leads/{lead}/status', [CrmController::class, 'updateLeadStatus'])->name('leads.status');
         Route::post('/leads/{lead}/notes', [CrmController::class, 'addLeadNotes'])->name('leads.notes');
-        Route::post('/leads/{lead}/follow-up', [CrmController::class, 'setFollowUpDate'])->name('leads.follow-up');
         Route::post('/leads/{lead}/tour-date', [CrmController::class, 'updateTourDate'])->name('leads.tour-date');
         Route::post('/leads/{lead}/notify-tour', [CrmController::class, 'notifyTour'])->name('leads.notify-tour');
         Route::post('/leads/{lead}/start-enrol', [CrmController::class, 'startEnrol'])->name('leads.start-enrol');
         Route::post('/leads/{lead}/waitlist', [CrmController::class, 'addToWaitlist'])->name('leads.waitlist');
         Route::post('/leads/{lead}/assign', [CrmController::class, 'assignLead'])->name('leads.assign');
-        Route::post('/leads/{lead}/mark-contacted', [CrmController::class, 'markContacted'])->name('leads.mark-contacted');
         Route::post('/leads/{lead}/mark-lost', [CrmController::class, 'markLost'])->name('leads.mark-lost');
 
         // Soft-delete recovery
@@ -187,6 +185,7 @@ Route::middleware(['auth', 'role:admin|super_admin'])->prefix('admin')->name('ad
         Route::post('/record', [PaymentsController::class, 'record'])->name('record');
         Route::post('/{payment}/verify', [PaymentsController::class, 'verify'])->name('verify');
         Route::post('/{payment}/reject', [PaymentsController::class, 'reject'])->name('reject');
+        Route::get('/{payment}/pop', [PaymentsController::class, 'viewPop'])->name('view-pop');
     });
 
     // Staff
@@ -273,6 +272,8 @@ Route::middleware(['auth', 'role:parent|admin|super_admin'])->prefix('parent')->
     Route::post('/profile/update', [ParentPortalController::class, 'updateProfile'])->name('profile.update');
     Route::get('/documents', [ParentPortalController::class, 'documents'])->name('documents');
     Route::post('/documents/upload', [ParentPortalController::class, 'uploadDocument'])->name('documents.upload');
+    Route::get('/documents/{application}/{type}', [ParentPortalController::class, 'viewDocument'])->name('documents.view');
+    Route::get('/payments/{payment}/pop', [ParentPortalController::class, 'viewPop'])->name('payments.view-pop');
     Route::get('/reports', [ParentPortalController::class, 'reports'])->name('reports');
     Route::get('/activities', [ParentPortalController::class, 'activities'])->name('activities');
     Route::post('/activities/register', [ParentPortalController::class, 'registerActivity'])->name('activities.register');
@@ -310,6 +311,27 @@ Route::get('reboot', function() {
     Artisan::call('route:clear');
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
-    return '✅ Caches cleared!';
+    Artisan::call('optimize');
+    return '✅ Caches cleared and optimized!';
+});
+
+Route::get('migrate', function() {
+    Artisan::call('migrate', ['--force' => true]);
+    $output = Artisan::output();
+
+    Artisan::call('db:seed', ['--force' => true]);
+    $output .= Artisan::output();
+
+    return '<pre>' . $output . '</pre>';
+});
+
+Route::get('migrate-refresh', function() {
+    Artisan::call('migrate:fresh', ['--force' => true]);
+    $output = Artisan::output();
+
+    Artisan::call('db:seed', ['--force' => true]);
+    $output .= Artisan::output();
+
+    return '<pre>' . $output . '</pre>';
 });
 

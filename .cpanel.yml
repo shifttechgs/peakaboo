@@ -22,3 +22,6 @@ deployment:
 
     # Bring app back up ASAP
     - php $APPPATH/artisan up
+
+    # Cache config, routes, views for performance
+    - php $APPPATH/artisan optimize

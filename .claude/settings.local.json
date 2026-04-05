@@ -32,7 +32,15 @@
       "Bash(mv \"WhatsApp Image 2026-03-26 at 08.23.33 \\(2\\).jpeg\" \"classroom-cubbies-activities.jpeg\")",
       "Bash(mv \"WhatsApp Image 2026-03-26 at 08.23.33 \\(3\\).jpeg\" \"classroom-group-learning.jpeg\")",
       "Bash(grep -v \"^$\")",
-      "Bash(cmd.exe /c \"mklink /J C:\\\\wamp64_3.3.4\\\\www\\\\projects\\\\peekaboo\\\\public\\\\storage C:\\\\wamp64_3.3.4\\\\www\\\\projects\\\\peekaboo\\\\storage\\\\app\\\\public\")"
+      "Bash(cmd.exe /c \"mklink /J C:\\\\wamp64_3.3.4\\\\www\\\\projects\\\\peekaboo\\\\public\\\\storage C:\\\\wamp64_3.3.4\\\\www\\\\projects\\\\peekaboo\\\\storage\\\\app\\\\public\")",
+      "Bash(composer search:*)",
+      "Bash(ls C:/wamp64_3.3.4/www/projects/peekaboo/*.md)",
+      "Bash(php -r \":*)",
+      "Bash(php -v)",
+      "Bash(php -i)",
+      "Read(//c/wamp64_3.3.4/bin/php/php8.3.14/**)",
+      "Read(//c/wamp64/bin/php/php8.3.14/**)",
+      "Bash(php:*)"
     ]
   }
 }

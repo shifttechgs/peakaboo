@@ -150,7 +150,7 @@
                 <td style="color:#94a3b8;font-size:.78rem;">{{ $pmt->created_at->format('d M Y H:i') }}</td>
                 <td>
                     @if($pmt->pop_path)
-                        <a href="{{ Storage::disk('public')->url($pmt->pop_path) }}" target="_blank"
+                        <a href="{{ route('admin.payments.view-pop', $pmt) }}" target="_blank"
                            class="btn btn-sm rounded-pill px-3"
                            style="background:#f0f9ff;color:#0077B6;border:1.5px solid #bae6fd;font-size:.74rem;font-weight:600;">
                             <i class="fas fa-eye me-1"></i> View

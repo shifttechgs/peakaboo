@@ -389,7 +389,7 @@
                     </div>
                     <div class="doc-name">{{ $label }}</div>
                     @if($isUploaded)
-                        <a href="{{ asset('storage/' . $uploaded[$key]) }}" target="_blank"
+                        <a href="{{ route('parent.documents.view', [$child['id'], $key]) }}" target="_blank"
                            class="doc-status-pill uploaded" style="text-decoration:none;">
                             <i class="fas fa-eye me-1" style="font-size:.62rem;"></i> View
                         </a>

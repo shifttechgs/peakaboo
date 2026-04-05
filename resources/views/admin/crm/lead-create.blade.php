@@ -226,8 +226,8 @@ textarea.lf-control { min-height: 90px; resize: vertical; }
                         <div class="col-sm-6">
                             <label class="lf-label">Preferred Time <span style="color:#ef4444;">*</span></label>
                             <select name="preferred_time" class="lf-select @error('preferred_time') is-invalid @enderror" required>
-                                @foreach(['09:00','10:00','11:00','14:00','15:00'] as $time)
-                                    <option value="{{ $time }}" {{ old('preferred_time') === $time ? 'selected' : '' }}>{{ $time }}</option>
+                                @foreach(['09:00' => '09:00 – 10:00', '10:00' => '10:00 – 11:00'] as $time => $label)
+                                    <option value="{{ $time }}" {{ old('preferred_time') === $time ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
                             </select>
                             @error('preferred_time')<div class="lf-feedback">{{ $message }}</div>@enderror
@@ -246,31 +246,23 @@ textarea.lf-control { min-height: 90px; resize: vertical; }
         <div class="col-lg-5">
 
             {{-- Pipeline --}}
-            <div class="lf-panel" style="border-left:3px solid #0077B6;">
+            <div class="lf-panel" style="border-left:3px solid #0097a7;">
                 <div class="lf-panel-header">
-                    <div class="lf-panel-icon" style="background:#eff6ff;color:#0077B6;">
-                        <i class="fas fa-funnel-dollar"></i>
+                    <div class="lf-panel-icon" style="background:#e0f7fa;color:#0097a7;">
+                        <i class="fas fa-bolt"></i>
                     </div>
-                    <h6>Pipeline</h6>
+                    <h6>Automation</h6>
                 </div>
                 <div class="lf-panel-body">
-                    <div class="mb-4">
-                        <label class="lf-label">Initial Status <span style="color:#ef4444;">*</span></label>
-                        <select name="status" class="lf-select @error('status') is-invalid @enderror" required>
-                            @foreach(\App\Models\Lead::STATUSES as $s)
-                                <option value="{{ $s }}" {{ old('status', 'new') === $s ? 'selected' : '' }}>
-                                    {{ ucwords(str_replace('_', ' ', $s)) }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('status')<div class="lf-feedback">{{ $message }}</div>@enderror
-                    </div>
-                    <div class="lf-divider"></div>
-                    <div>
-                        <label class="lf-label">Follow-up Date</label>
-                        <input type="date" name="follow_up_date" class="lf-control"
-                               value="{{ old('follow_up_date', now()->addDays(1)->format('Y-m-d')) }}">
-                        <div class="lf-hint">When should this lead be contacted next?</div>
+                    <div style="background:#f0fdfa;border:1px solid #ccfbf1;border-radius:10px;padding:14px 16px;">
+                        <div style="font-size:.78rem;font-weight:700;color:#0097a7;margin-bottom:6px;">
+                            <i class="fas fa-check-circle me-1"></i>What happens when you create this lead:
+                        </div>
+                        <ul style="font-size:.78rem;color:#374151;margin:0;padding-left:18px;line-height:1.8;">
+                            <li>Status set to <strong>Tour Scheduled</strong></li>
+                            <li>Tour confirmation email sent to parent</li>
+                            <li>Activity logged automatically</li>
+                        </ul>
                     </div>
                 </div>
             </div>

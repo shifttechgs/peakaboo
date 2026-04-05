@@ -7,6 +7,7 @@ use App\Models\Application;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentsController extends Controller
 {
@@ -154,6 +155,29 @@ class PaymentsController extends Controller
         ]);
 
         return redirect()->route('admin.payments.index')->with('success', 'Payment recorded and verified.');
+    }
+
+    /**
+     * Stream the proof-of-payment file inline (opens in browser tab).
+     * Works without the public/storage symlink.
+     */
+    public function viewPop(Payment $payment)
+    {
+        if (! $payment->pop_path || ! Storage::disk('public')->exists($payment->pop_path)) {
+            abort(404, 'Proof of payment file not found.');
+        }
+
+        $mime = Storage::disk('public')->mimeType($payment->pop_path);
+        $filename = basename($payment->pop_path);
+
+        return response()->stream(
+            fn () => fpassthru(Storage::disk('public')->readStream($payment->pop_path)),
+            200,
+            [
+                'Content-Type'        => $mime,
+                'Content-Disposition' => "inline; filename=\"{$filename}\"",
+            ]
+        );
     }
 
     // ─── Helper ─────────────────────────────────────────────────────────────

@@ -1029,7 +1029,7 @@
                             <h4><i class="fas fa-file-signature"></i> Consent & Agreements</h4>
                             <p class="text-muted mb-4" style="font-family: var(--font-body); color: var(--color-body); font-size: 16px;">
                                 <i class="fas fa-shield-alt me-2" style="color: var(--color-warm);"></i>
-                                Please read and accept the following agreements. Required consents are marked with *.
+                                Please read and review the following agreements. Check each box to indicate your acceptance.
                             </p>
 
                             <!-- Fee Agreement -->
@@ -1037,9 +1037,9 @@
                                 <h6><i class="fas fa-money-check-alt me-2"></i> Fee Agreement</h6>
                                 <p class="small mb-3">We, the undersigned, are responsible for the payment of school fees. A full month's notice in writing is required for withdrawal. Fees are payable in advance by the 1st of each month. A R50/day late fee applies.</p>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="consent_fees" id="consentFees" required>
+                                    <input class="form-check-input" type="checkbox" name="consent_fees" id="consentFees">
                                     <label class="form-check-label" for="consentFees">
-                                        I accept the fee payment terms and conditions <span class="text-danger">*</span>
+                                        I accept the fee payment terms and conditions
                                     </label>
                                 </div>
                             </div>
@@ -1049,9 +1049,9 @@
                                 <h6><i class="fas fa-heartbeat me-2"></i> Emergency Medical Treatment Consent</h6>
                                 <p class="small mb-3">I authorize Peekaboo Daycare & Preschool to consent to emergency medical treatment on my behalf should my child require it and I cannot be reached. I accept responsibility for any medical costs incurred.</p>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="consent_medical" id="consentMedical" required>
+                                    <input class="form-check-input" type="checkbox" name="consent_medical" id="consentMedical">
                                     <label class="form-check-label" for="consentMedical">
-                                        I consent to emergency medical treatment <span class="text-danger">*</span>
+                                        I consent to emergency medical treatment
                                     </label>
                                 </div>
                             </div>
@@ -1061,9 +1061,9 @@
                                 <h6><i class="fas fa-shield-alt me-2"></i> Letter of Indemnity</h6>
                                 <p class="small mb-3">I indemnify the principal and staff of Peekaboo Daycare & Preschool from any liability against incidents or accidents which might occur while my child is in their care. I understand that all reasonable precautions will be taken for the safety of my child.</p>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="consent_indemnity" id="consentIndemnity" required>
+                                    <input class="form-check-input" type="checkbox" name="consent_indemnity" id="consentIndemnity">
                                     <label class="form-check-label" for="consentIndemnity">
-                                        I accept the indemnity agreement <span class="text-danger">*</span>
+                                        I accept the indemnity agreement
                                     </label>
                                 </div>
                             </div>
@@ -1097,9 +1097,9 @@
                                 <h6><i class="fas fa-lock me-2"></i> POPIA Compliance</h6>
                                 <p class="small mb-3">Your personal information will be processed in accordance with the Protection of Personal Information Act (POPIA). We will only use your information for school-related purposes.</p>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="consent_popia" id="consentPopia" required>
+                                    <input class="form-check-input" type="checkbox" name="consent_popia" id="consentPopia">
                                     <label class="form-check-label" for="consentPopia">
-                                        I consent to the processing of my personal information <span class="text-danger">*</span>
+                                        I consent to the processing of my personal information
                                     </label>
                                 </div>
                             </div>

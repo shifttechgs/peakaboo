@@ -10,14 +10,29 @@ class Lead extends Model
 {
     use HasFactory, SoftDeletes;
 
+    // ── Simplified 3-step pipeline + 2 terminal states ──────────────────
     const STATUSES = [
-        'new',
-        'contacted',
         'tour_scheduled',
         'tour_completed',
         'converted',
         'waitlist',
         'lost',
+    ];
+
+    const STATUS_LABELS = [
+        'tour_scheduled' => 'Tour Scheduled',
+        'tour_completed' => 'Tour Completed',
+        'converted'      => 'Converted',
+        'waitlist'       => 'Waitlist',
+        'lost'           => 'Lost',
+    ];
+
+    const STATUS_COLORS = [
+        'tour_scheduled' => ['bg' => '#e0f7fa', 'color' => '#0097a7'],
+        'tour_completed' => ['bg' => '#f5f3ff', 'color' => '#7c3aed'],
+        'converted'      => ['bg' => '#dcfce7', 'color' => '#16a34a'],
+        'waitlist'       => ['bg' => '#f3f4f6', 'color' => '#6c757d'],
+        'lost'           => ['bg' => '#fee2e2', 'color' => '#ef4444'],
     ];
 
     const SOURCES = [
@@ -93,10 +108,28 @@ class Lead extends Model
 
     // ── Computed helpers ───────────────────────────────────────────────────────
 
+    public function statusLabel(): string
+    {
+        return self::STATUS_LABELS[$this->status] ?? ucwords(str_replace('_', ' ', $this->status));
+    }
+
+    public function statusColor(): array
+    {
+        return self::STATUS_COLORS[$this->status] ?? ['bg' => '#f3f4f6', 'color' => '#6c757d'];
+    }
+
     public function isOverdue(): bool
     {
-        return in_array($this->status, ['new', 'contacted'])
-            && $this->created_at->diffInDays(now()) > 3;
+        // A tour_scheduled lead is overdue if the tour date has passed
+        return $this->status === 'tour_scheduled'
+            && $this->tourDate()
+            && $this->tourDate()->isPast();
+    }
+
+    /** The effective tour date (confirmed or preferred). */
+    public function tourDate(): ?\Carbon\Carbon
+    {
+        return $this->tour_scheduled_at ?? $this->preferred_date;
     }
 
     /** True if a follow-up date is set and is today or in the past. */
@@ -120,5 +153,25 @@ class Lead extends Model
         $this->timestamps = false;
         $this->update(['last_activity_at' => now()]);
         $this->timestamps = true;
+    }
+
+    /** The logical next status in the pipeline. */
+    public function nextStatus(): ?string
+    {
+        return match ($this->status) {
+            'tour_scheduled' => 'tour_completed',
+            'tour_completed' => 'converted',
+            default          => null,
+        };
+    }
+
+    /** The next-step action label for the admin. */
+    public function nextActionLabel(): ?string
+    {
+        return match ($this->status) {
+            'tour_scheduled' => 'Mark Tour Complete',
+            'tour_completed' => 'Send Enrolment Invitation',
+            default          => null,
+        };
     }
 }

@@ -17,24 +17,31 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CrmController extends Controller
 {
+    // ──────────────────────────────────────────────────────────────────────
+    //  INDEX / LIST / KANBAN
+    // ──────────────────────────────────────────────────────────────────────
+
     public function index()
     {
         $stats = [];
         foreach (Lead::STATUSES as $status) {
             $stats[$status] = Lead::where('status', $status)->count();
         }
-        $stats['overdue'] = Lead::whereIn('status', ['new', 'contacted'])
-            ->where('created_at', '<', now()->subDays(3))
+        $stats['overdue'] = Lead::where('status', 'tour_scheduled')
+            ->where(function ($q) {
+                $q->whereNotNull('tour_scheduled_at')->whereDate('tour_scheduled_at', '<', today())
+                  ->orWhere(function ($q2) {
+                      $q2->whereNull('tour_scheduled_at')->whereDate('preferred_date', '<', today());
+                  });
+            })
             ->count();
 
         $recent = Lead::latest()->limit(5)->get();
 
-        // Source analytics
         $sourceStats = Lead::selectRaw('COALESCE(source, "unknown") as source, COUNT(*) as count')
             ->groupBy('source')
             ->pluck('count', 'source');
 
-        // Conversion stats
         $conversionStats = [
             'total'     => Lead::count(),
             'converted' => Lead::where('status', 'converted')->count(),
@@ -76,13 +83,37 @@ class CrmController extends Controller
         return view('admin.crm.leads', compact('leads', 'adminUsers'));
     }
 
-    /** Show form to manually create a lead from admin. */
+    public function kanban()
+    {
+        $kanbanStatuses = ['tour_scheduled', 'tour_completed', 'converted'];
+
+        $columns = [];
+        foreach ($kanbanStatuses as $status) {
+            $columns[$status] = Lead::where('status', $status)
+                ->with('assignee', 'application')
+                ->latest()
+                ->limit(30)
+                ->get();
+        }
+
+        $hiddenCounts = [
+            'waitlist' => Lead::where('status', 'waitlist')->count(),
+            'lost'     => Lead::where('status', 'lost')->count(),
+        ];
+
+        return view('admin.crm.kanban', compact('columns', 'hiddenCounts'));
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  CREATE / SHOW / EDIT / DELETE
+    // ──────────────────────────────────────────────────────────────────────
+
     public function createLead()
     {
         return view('admin.crm.lead-create');
     }
 
-    /** Store a manually created lead. */
+    /** Store a manually created lead — always starts as tour_scheduled. */
     public function storeLead(Request $request)
     {
         $validated = $request->validate([
@@ -96,37 +127,29 @@ class CrmController extends Controller
             'preferred_time' => 'required|string',
             'source'         => 'nullable|in:' . implode(',', Lead::SOURCES),
             'message'        => 'nullable|string|max:2000',
-            'status'         => 'required|in:' . implode(',', Lead::STATUSES),
-            'follow_up_date' => 'nullable|date',
             'assigned_to'    => 'nullable|exists:users,id',
         ]);
 
         $year = now()->year;
         $count = Lead::withTrashed()->whereYear('created_at', $year)->count() + 1;
-        $validated['reference'] = 'TOUR-' . $year . '-' . str_pad($count, 3, '0', STR_PAD_LEFT);
+        $validated['reference']        = 'TOUR-' . $year . '-' . str_pad($count, 3, '0', STR_PAD_LEFT);
+        $validated['status']           = 'tour_scheduled';
         $validated['last_activity_at'] = now();
+
+        // Set tour_scheduled_at from preferred date + time
+        $validated['tour_scheduled_at'] = \Carbon\Carbon::parse(
+            $validated['preferred_date'] . ' ' . $validated['preferred_time']
+        );
 
         $lead = Lead::create($validated);
 
         $this->logActivity($lead, 'created', 'Lead created manually by admin');
 
+        // Auto-send tour confirmation
+        $this->sendTourConfirmation($lead);
+
         return redirect()->route('admin.crm.leads.show', $lead)
-            ->with('success', "Lead created for {$lead->name}");
-    }
-
-    /** Set / update the follow-up date for a lead. */
-    public function setFollowUpDate(Request $request, Lead $lead)
-    {
-        $request->validate([
-            'follow_up_date' => 'required|date',
-        ]);
-
-        $lead->update(['follow_up_date' => $request->follow_up_date]);
-        $lead->touchActivity();
-
-        $this->logActivity($lead, 'note', 'Follow-up date set to ' . $request->follow_up_date);
-
-        return redirect()->back()->with('success', 'Follow-up date saved');
+            ->with('success', "Lead created — tour confirmation sent to {$lead->name}");
     }
 
     public function showLead(Lead $lead)
@@ -158,10 +181,8 @@ class CrmController extends Controller
             'preferred_time'  => 'required|string',
             'source'          => 'nullable|string',
             'message'         => 'nullable|string',
-            'follow_up_date'  => 'nullable|date',
         ]);
 
-        // Track which fields changed
         $changes = [];
         foreach ($validated as $key => $value) {
             $old = $key === 'preferred_date' ? $lead->preferred_date->format('Y-m-d') : $lead->$key;
@@ -183,7 +204,7 @@ class CrmController extends Controller
     public function destroyLead(Lead $lead)
     {
         $leadName = $lead->name;
-        $lead->delete(); // Soft delete — tasks and activity history are preserved
+        $lead->delete();
 
         return redirect()->route('admin.crm.leads')
             ->with('success', "{$leadName} has been archived");
@@ -210,6 +231,14 @@ class CrmController extends Controller
             ->with('success', "{$leadName} has been permanently deleted");
     }
 
+    // ──────────────────────────────────────────────────────────────────────
+    //  STATUS TRANSITIONS  (the core automation engine)
+    // ──────────────────────────────────────────────────────────────────────
+
+    /**
+     * Universal status update — handles all transitions + auto-emails.
+     * Used by the detail page form, the list page inline select, and bulk actions.
+     */
     public function updateLeadStatus(Request $request, Lead $lead)
     {
         $request->validate([
@@ -219,71 +248,122 @@ class CrmController extends Controller
         $previousStatus = $lead->status;
         $newStatus = $request->status;
 
-        $timestamps = ['last_activity_at' => now()];
-        if ($newStatus === 'converted' && ! $lead->converted_at) {
-            $timestamps['converted_at'] = now();
-        }
-        if ($newStatus === 'tour_scheduled' && ! $lead->tour_scheduled_at) {
-            $timestamps['tour_scheduled_at'] = now();
+        if ($previousStatus === $newStatus) {
+            return redirect()->back()->with('info', 'No change — status is already ' . $lead->statusLabel());
         }
 
-        $lead->update(array_merge(['status' => $newStatus], $timestamps));
-
-        $fromLabel = ucwords(str_replace('_', ' ', $previousStatus));
-        $toLabel   = ucwords(str_replace('_', ' ', $newStatus));
-        $message   = "Status updated to {$toLabel}";
-
-        $this->logActivity($lead, 'status_change', "Status changed from {$fromLabel} to {$toLabel}", [
-            'from' => $previousStatus,
-            'to'   => $newStatus,
-        ]);
-
-        if ($newStatus === 'tour_scheduled' && $previousStatus !== 'tour_scheduled') {
-            try {
-                Mail::to($lead->email)->send(new TourConfirmationMail($lead));
-                $message = "Status updated and tour confirmation sent to {$lead->name}";
-                $this->logActivity($lead, 'email_sent', 'Tour confirmation email sent', ['email_type' => 'TourConfirmationMail']);
-            } catch (\Exception $e) {
-                Log::error('TourConfirmationMail failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
-            }
-        }
-
-        if ($newStatus === 'converted' && $previousStatus !== 'converted') {
-            if ($lead->application()->exists()) {
-                $message = "Status updated (application already received — no email sent)";
-            } else {
-                $token = Str::random(64);
-                $lead->update(['enrolment_token' => $token]);
-                $enrolUrl = route('enrol.form', ['token' => $token]);
-                try {
-                    Mail::to($lead->email)->send(new EnrolmentStartMail($lead, $enrolUrl));
-                    $message = "Status updated and enrolment invitation sent to {$lead->name}";
-                    $this->logActivity($lead, 'email_sent', 'Enrolment invitation email sent', ['email_type' => 'EnrolmentStartMail']);
-                } catch (\Exception $e) {
-                    Log::error('EnrolmentStartMail failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
-                }
-            }
-        }
+        $message = $this->transitionTo($lead, $newStatus);
 
         return redirect()->back()->with('success', $message);
     }
 
-    public function addLeadNotes(Request $request, Lead $lead)
+    /** AJAX version for kanban drag & list inline select. */
+    public function ajaxUpdateStatus(Request $request, Lead $lead)
     {
-        $request->validate(['notes' => 'required|string']);
-
-        $oldNotes = $lead->notes;
-        $lead->update(['notes' => $request->notes, 'last_activity_at' => now()]);
-
-        $this->logActivity($lead, 'note', 'Internal notes updated', [
-            'from' => $oldNotes,
-            'to'   => $request->notes,
+        $request->validate([
+            'status' => 'required|in:' . implode(',', Lead::STATUSES),
         ]);
 
-        return redirect()->back()->with('success', 'Notes saved successfully');
+        $previousStatus = $lead->status;
+        if ($previousStatus === $request->status) {
+            return response()->json(['success' => true, 'message' => 'No change']);
+        }
+
+        $message = $this->transitionTo($lead, $request->status);
+
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+        ]);
     }
 
-    /** Set / update the actual scheduled tour date & time. */
+    /**
+     * Central transition engine — performs status change + auto-emails.
+     */
+    private function transitionTo(Lead $lead, string $newStatus): string
+    {
+        $previousStatus = $lead->status;
+        $fromLabel = Lead::STATUS_LABELS[$previousStatus] ?? ucwords(str_replace('_', ' ', $previousStatus));
+        $toLabel   = Lead::STATUS_LABELS[$newStatus] ?? ucwords(str_replace('_', ' ', $newStatus));
+
+        $timestamps = ['last_activity_at' => now()];
+
+        // ── Tour Scheduled ─────────────────────────────────────────────
+        if ($newStatus === 'tour_scheduled') {
+            if (! $lead->tour_scheduled_at) {
+                $timestamps['tour_scheduled_at'] = \Carbon\Carbon::parse(
+                    $lead->preferred_date->format('Y-m-d') . ' ' . $lead->preferred_time
+                );
+            }
+
+            $lead->update(array_merge(['status' => $newStatus], $timestamps));
+            $this->logActivity($lead, 'status_change', "Status changed from {$fromLabel} to {$toLabel}", [
+                'from' => $previousStatus, 'to' => $newStatus,
+            ]);
+
+            $this->sendTourConfirmation($lead);
+
+            return "Status updated to Tour Scheduled — confirmation sent to {$lead->name}";
+        }
+
+        // ── Tour Completed ────────────────────────────────────────────
+        if ($newStatus === 'tour_completed') {
+            $lead->update(array_merge(['status' => $newStatus], $timestamps));
+            $this->logActivity($lead, 'status_change', "Status changed from {$fromLabel} to {$toLabel}", [
+                'from' => $previousStatus, 'to' => $newStatus,
+            ]);
+
+            return "Tour marked complete for {$lead->name}";
+        }
+
+        // ── Converted (auto-send enrolment invitation) ─────────────────
+        if ($newStatus === 'converted') {
+            $timestamps['converted_at'] = $lead->converted_at ?? now();
+
+            if ($lead->application()->exists()) {
+                $lead->update(array_merge(['status' => $newStatus], $timestamps));
+                $this->logActivity($lead, 'status_change', "Status changed from {$fromLabel} to Converted", [
+                    'from' => $previousStatus, 'to' => $newStatus,
+                ]);
+                return "Status updated to Converted (application already received — no email sent)";
+            }
+
+            $token = Str::random(64);
+            $timestamps['enrolment_token'] = $token;
+            $lead->update(array_merge(['status' => $newStatus], $timestamps));
+
+            $this->logActivity($lead, 'status_change', "Status changed from {$fromLabel} to Converted", [
+                'from' => $previousStatus, 'to' => $newStatus,
+            ]);
+
+            $enrolUrl = route('enrol.form', ['token' => $token]);
+            try {
+                Mail::to($lead->email)->send(new EnrolmentStartMail($lead, $enrolUrl));
+                $this->logActivity($lead, 'email_sent', 'Enrolment invitation email sent automatically', [
+                    'email_type' => 'EnrolmentStartMail',
+                    'enrol_url'  => $enrolUrl,
+                ]);
+                return "Converted — enrolment invitation sent to {$lead->name}";
+            } catch (\Exception $e) {
+                Log::error('EnrolmentStartMail failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
+                return "Status updated to Converted (email failed — check logs)";
+            }
+        }
+
+        // ── Waitlist / Lost / any other ──────────────────────────────
+        $lead->update(array_merge(['status' => $newStatus], $timestamps));
+        $this->logActivity($lead, 'status_change', "Status changed from {$fromLabel} to {$toLabel}", [
+            'from' => $previousStatus, 'to' => $newStatus,
+        ]);
+
+        return "Status updated to {$toLabel}";
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  SPECIFIC ACTIONS (sidebar buttons on lead-detail)
+    // ──────────────────────────────────────────────────────────────────────
+
+    /** Update tour date/time and ensure status is tour_scheduled. */
     public function updateTourDate(Request $request, Lead $lead)
     {
         $request->validate([
@@ -303,111 +383,46 @@ class CrmController extends Controller
             'last_activity_at'  => now(),
         ]);
 
-        $this->logActivity($lead, 'note', 'Tour date set to ' . $tourDatetime->format('d M Y \a\t H:i'), [
+        $this->logActivity($lead, 'note', 'Tour date updated to ' . $tourDatetime->format('d M Y \a\t H:i'), [
             'tour_date' => $tourDatetime->toDateTimeString(),
         ]);
 
         if ($statusChanged) {
-            $fromLabel = ucwords(str_replace('_', ' ', $previousStatus));
+            $fromLabel = Lead::STATUS_LABELS[$previousStatus] ?? ucwords(str_replace('_', ' ', $previousStatus));
             $this->logActivity($lead, 'status_change', "Status changed from {$fromLabel} to Tour Scheduled", [
-                'from' => $previousStatus,
-                'to'   => 'tour_scheduled',
+                'from' => $previousStatus, 'to' => 'tour_scheduled',
             ]);
         }
 
-        return redirect()->back()->with('success', 'Tour date set and status updated to Tour Scheduled.');
+        // Auto-send tour confirmation email
+        $this->sendTourConfirmation($lead);
+
+        return redirect()->back()->with('success', 'Tour date updated — confirmation email sent to ' . $lead->name);
     }
 
+    /** Re-send tour confirmation email without changing anything else. */
     public function notifyTour(Lead $lead)
     {
-        $previousStatus = $lead->status;
-        $lead->update([
-            'status'             => 'tour_scheduled',
-            'tour_scheduled_at'  => $lead->tour_scheduled_at ?? now(),
-            'last_activity_at'   => now(),
-        ]);
-
-        $this->logActivity($lead, 'status_change', 'Status changed to Tour Scheduled', [
-            'from' => $previousStatus,
-            'to'   => 'tour_scheduled',
-        ]);
-
-        try {
-            Mail::to($lead->email)->send(new TourConfirmationMail($lead));
-            $this->logActivity($lead, 'email_sent', 'Tour confirmation email sent', ['email_type' => 'TourConfirmationMail']);
-        } catch (\Exception $e) {
-            Log::error('TourConfirmationMail failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
-        }
-
-        return redirect()->back()->with('success', "Tour confirmation sent to {$lead->name}");
+        $this->sendTourConfirmation($lead);
+        return redirect()->back()->with('success', "Tour confirmation re-sent to {$lead->name}");
     }
 
+    /** Manually trigger enrolment email (for re-sends). */
     public function startEnrol(Lead $lead)
     {
-        // Guard: if already converted AND an application already exists, don't re-send
-        if ($lead->status === 'converted' && $lead->application()->exists()) {
+        if ($lead->application()->exists()) {
             return redirect()->back()->with('info', "An application already exists for {$lead->name}. No email sent.");
         }
 
-        $previousStatus = $lead->status;
+        $message = $this->transitionTo($lead, 'converted');
 
-        // Generate a unique one-time token for this lead's enrolment URL
-        $token = Str::random(64);
-
-        $lead->update([
-            'status'           => 'converted',
-            'enrolment_token'  => $token,
-        ]);
-
-        $this->logActivity($lead, 'status_change', 'Status changed to Converted', [
-            'from' => $previousStatus,
-            'to'   => 'converted',
-        ]);
-
-        // Build the pre-filled enrolment URL with the token
-        $enrolUrl = route('enrol.form', ['token' => $token]);
-
-        try {
-            Mail::to($lead->email)->send(new EnrolmentStartMail($lead, $enrolUrl));
-            $this->logActivity($lead, 'email_sent', 'Enrolment invitation email sent', [
-                'email_type' => 'EnrolmentStartMail',
-                'enrol_url'  => $enrolUrl,
-            ]);
-        } catch (\Exception $e) {
-            Log::error('EnrolmentStartMail failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
-        }
-
-        return redirect()->back()->with('success', "Enrolment invitation sent to {$lead->name}");
+        return redirect()->back()->with('success', $message);
     }
 
     public function addToWaitlist(Lead $lead)
     {
-        $previousStatus = $lead->status;
-        $lead->update(['status' => 'waitlist']);
-
-        $this->logActivity($lead, 'status_change', 'Status changed to Waitlist', [
-            'from' => $previousStatus,
-            'to'   => 'waitlist',
-        ]);
-
-        return redirect()->back()->with('success', "{$lead->name} added to waitlist");
-    }
-
-    // Fix #17: one-click "Mark Contacted" action
-    public function markContacted(Lead $lead)
-    {
-        if ($lead->status !== 'new') {
-            return redirect()->back()->with('info', 'Lead is already past the New stage');
-        }
-
-        $lead->update(['status' => 'contacted', 'last_activity_at' => now()]);
-
-        $this->logActivity($lead, 'status_change', 'Status changed from New to Contacted', [
-            'from' => 'new',
-            'to'   => 'contacted',
-        ]);
-
-        return redirect()->back()->with('success', "{$lead->name} marked as contacted");
+        $message = $this->transitionTo($lead, 'waitlist');
+        return redirect()->back()->with('success', $message);
     }
 
     public function markLost(Request $request, Lead $lead)
@@ -424,7 +439,8 @@ class CrmController extends Controller
         ]);
 
         $reasonLabel = Lead::LOST_REASONS[$request->lost_reason];
-        $this->logActivity($lead, 'status_change', "Marked as Lost: {$reasonLabel}", [
+        $fromLabel = Lead::STATUS_LABELS[$previousStatus] ?? ucwords(str_replace('_', ' ', $previousStatus));
+        $this->logActivity($lead, 'status_change', "Marked as Lost from {$fromLabel}: {$reasonLabel}", [
             'from'        => $previousStatus,
             'to'          => 'lost',
             'lost_reason' => $reasonLabel,
@@ -433,53 +449,44 @@ class CrmController extends Controller
         return redirect()->back()->with('success', "{$lead->name} marked as lost ({$reasonLabel})");
     }
 
-    public function kanban()
+    public function addLeadNotes(Request $request, Lead $lead)
     {
-        $kanbanStatuses = ['new', 'contacted', 'tour_scheduled', 'tour_completed', 'converted'];
+        $request->validate(['notes' => 'required|string']);
 
-        $columns = [];
-        foreach ($kanbanStatuses as $status) {
-            $columns[$status] = Lead::where('status', $status)
-                ->with('assignee', 'application')
-                ->latest()
-                ->limit(30)
-                ->get();
-        }
+        $oldNotes = $lead->notes;
+        $lead->update(['notes' => $request->notes, 'last_activity_at' => now()]);
 
-        $hiddenCounts = [
-            'waitlist' => Lead::where('status', 'waitlist')->count(),
-            'lost'     => Lead::where('status', 'lost')->count(),
-        ];
+        $this->logActivity($lead, 'note', 'Internal notes updated', [
+            'from' => $oldNotes,
+            'to'   => $request->notes,
+        ]);
 
-        return view('admin.crm.kanban', compact('columns', 'hiddenCounts'));
+        return redirect()->back()->with('success', 'Notes saved successfully');
     }
 
-    public function ajaxUpdateStatus(Request $request, Lead $lead)
+    public function assignLead(Request $request, Lead $lead)
     {
         $request->validate([
-            'status' => 'required|in:' . implode(',', Lead::STATUSES),
+            'assigned_to' => 'nullable|exists:users,id',
         ]);
 
-        $previousStatus = $lead->status;
-        if ($previousStatus === $request->status) {
-            return response()->json(['success' => true, 'message' => 'No change']);
+        $oldAssignee = $lead->assignee?->name ?? 'Unassigned';
+        $lead->update(['assigned_to' => $request->assigned_to ?: null]);
+        $newAssignee = $lead->fresh()->assignee?->name ?? 'Unassigned';
+
+        if ($oldAssignee !== $newAssignee) {
+            $this->logActivity($lead, 'assigned', "Assigned from {$oldAssignee} to {$newAssignee}", [
+                'from' => $oldAssignee,
+                'to'   => $newAssignee,
+            ]);
         }
 
-        $lead->update(['status' => $request->status]);
-
-        $fromLabel = ucwords(str_replace('_', ' ', $previousStatus));
-        $toLabel = ucwords(str_replace('_', ' ', $request->status));
-
-        $this->logActivity($lead, 'status_change', "Status changed from {$fromLabel} to {$toLabel}", [
-            'from' => $previousStatus,
-            'to'   => $request->status,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => "Moved {$lead->name} to {$toLabel}",
-        ]);
+        return redirect()->back()->with('success', "Lead assigned to {$newAssignee}");
     }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  BULK & EXPORT
+    // ──────────────────────────────────────────────────────────────────────
 
     public function export(Request $request)
     {
@@ -510,48 +517,37 @@ class CrmController extends Controller
 
         if ($request->action === 'delete') {
             foreach ($leads as $lead) {
-                $lead->delete(); // Soft delete — tasks and history are preserved
+                $lead->delete();
             }
             return redirect()->back()->with('success', "{$count} lead(s) archived");
         }
 
         if (in_array($request->action, Lead::STATUSES)) {
             foreach ($leads as $lead) {
-                $previousStatus = $lead->status;
-                $lead->update(['status' => $request->action]);
-                $fromLabel = ucwords(str_replace('_', ' ', $previousStatus));
-                $toLabel = ucwords(str_replace('_', ' ', $request->action));
-                $this->logActivity($lead, 'status_change', "Bulk: Status changed from {$fromLabel} to {$toLabel}", [
-                    'from' => $previousStatus,
-                    'to'   => $request->action,
-                ]);
+                $this->transitionTo($lead, $request->action);
             }
-            $statusLabel = ucwords(str_replace('_', ' ', $request->action));
+            $statusLabel = Lead::STATUS_LABELS[$request->action] ?? ucwords(str_replace('_', ' ', $request->action));
             return redirect()->back()->with('success', "{$count} lead(s) updated to {$statusLabel}");
         }
 
         return redirect()->back()->with('error', 'Unknown action');
     }
 
-    public function assignLead(Request $request, Lead $lead)
+    // ──────────────────────────────────────────────────────────────────────
+    //  PRIVATE HELPERS
+    // ──────────────────────────────────────────────────────────────────────
+
+    /** Send the tour confirmation email and log it. */
+    private function sendTourConfirmation(Lead $lead): void
     {
-        $request->validate([
-            'assigned_to' => 'nullable|exists:users,id',
-        ]);
-
-        $oldAssignee = $lead->assignee?->name ?? 'Unassigned';
-        $lead->update(['assigned_to' => $request->assigned_to ?: null]);
-        $newAssignee = $lead->fresh()->assignee?->name ?? 'Unassigned';
-
-        if ($oldAssignee !== $newAssignee) {
-            // Fix #8: use 'assigned' type (not 'status_change') for proper timeline icon
-            $this->logActivity($lead, 'assigned', "Assigned from {$oldAssignee} to {$newAssignee}", [
-                'from' => $oldAssignee,
-                'to'   => $newAssignee,
+        try {
+            Mail::to($lead->email)->send(new TourConfirmationMail($lead));
+            $this->logActivity($lead, 'email_sent', 'Tour confirmation email sent', [
+                'email_type' => 'TourConfirmationMail',
             ]);
+        } catch (\Exception $e) {
+            Log::error('TourConfirmationMail failed', ['lead' => $lead->id, 'error' => $e->getMessage()]);
         }
-
-        return redirect()->back()->with('success', "Lead assigned to {$newAssignee}");
     }
 
     private function logActivity(Lead $lead, string $type, string $description, array $metadata = []): void
@@ -564,7 +560,6 @@ class CrmController extends Controller
             'metadata'    => $metadata ?: null,
         ]);
 
-        // Keep last_activity_at in sync without bumping updated_at
         $lead->timestamps = false;
         $lead->update(['last_activity_at' => now()]);
         $lead->timestamps = true;

@@ -10,6 +10,7 @@ use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PortalController extends Controller
 {
@@ -567,6 +568,69 @@ class PortalController extends Controller
 
         return redirect()->route('parent.documents')
             ->with('success', self::REQUIRED_DOCS[$request->doc_type] . ' uploaded successfully.');
+    }
+
+    /**
+     * Stream a document inline so it opens in the browser tab.
+     * Works without the public/storage symlink on production.
+     */
+    public function viewDocument(Application $application, string $type)
+    {
+        // Ensure the parent owns this application
+        if ($application->parent_user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $allowed = array_keys(self::REQUIRED_DOCS);
+        if (!in_array($type, $allowed)) {
+            abort(404);
+        }
+
+        $childDocs = $application->child?->documents ?? [];
+        $appDocs   = $application->documents ?? [];
+        $path = $childDocs[$type] ?? $appDocs[$type] ?? null;
+
+        if (!$path || !Storage::disk('public')->exists($path)) {
+            return redirect()->back()->with('error', 'Document not found.');
+        }
+
+        $mime     = Storage::disk('public')->mimeType($path);
+        $filename = basename($path);
+
+        return response()->stream(
+            fn () => fpassthru(Storage::disk('public')->readStream($path)),
+            200,
+            [
+                'Content-Type'        => $mime,
+                'Content-Disposition' => "inline; filename=\"{$filename}\"",
+            ]
+        );
+    }
+
+    /**
+     * Stream the proof-of-payment file inline for the parent.
+     */
+    public function viewPop(Payment $payment)
+    {
+        if ($payment->parent_user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if (!$payment->pop_path || !Storage::disk('public')->exists($payment->pop_path)) {
+            abort(404, 'Proof of payment file not found.');
+        }
+
+        $mime     = Storage::disk('public')->mimeType($payment->pop_path);
+        $filename = basename($payment->pop_path);
+
+        return response()->stream(
+            fn () => fpassthru(Storage::disk('public')->readStream($payment->pop_path)),
+            200,
+            [
+                'Content-Type'        => $mime,
+                'Content-Disposition' => "inline; filename=\"{$filename}\"",
+            ]
+        );
     }
 
     // ─── School Reports ────────────────────────────────────────────────────

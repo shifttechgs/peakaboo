@@ -120,7 +120,7 @@ class LeadsExport implements
             ExcelDate::dateTimeToExcel($lead->preferred_date),
             $lead->preferred_time,
             $lead->source ? ucfirst($lead->source) : '',
-            ucwords(str_replace('_', ' ', $lead->status)),
+            $lead->statusLabel(),
             $lead->assignee?->name ?? 'Unassigned',
             $lead->notes ?? '',
             (int) $lead->created_at->diffInDays(now()),
@@ -175,4 +175,5 @@ class LeadsExport implements
         return [];
     }
 }
+
 

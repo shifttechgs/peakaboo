@@ -67,7 +67,10 @@ class Payment extends Model
 
     public function popUrl(): string
     {
-        return Storage::disk('public')->url($this->pop_path);
+        if (! $this->pop_path) {
+            return '#';
+        }
+        return route('admin.payments.view-pop', $this);
     }
 
     public function statusLabel(): string

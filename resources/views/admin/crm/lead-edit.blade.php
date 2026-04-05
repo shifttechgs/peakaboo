@@ -199,9 +199,9 @@ textarea.lf-control { min-height: 90px; resize: vertical; }
                             <label class="lf-label">Preferred Time <span style="color:#ef4444;">*</span></label>
                             <select name="preferred_time" id="preferred_time"
                                     class="lf-select @error('preferred_time') is-invalid @enderror" required>
-                                @foreach(['09:00','10:00','11:00','14:00','15:00'] as $time)
+                                @foreach(['09:00' => '09:00 – 10:00', '10:00' => '10:00 – 11:00'] as $time => $label)
                                     <option value="{{ $time }}" {{ old('preferred_time', $lead->preferred_time) === $time ? 'selected' : '' }}>
-                                        {{ $time }}
+                                        {{ $label }}
                                     </option>
                                 @endforeach
                             </select>
@@ -215,19 +215,19 @@ textarea.lf-control { min-height: 90px; resize: vertical; }
                 </div>
             </div>
 
-            {{-- Pipeline --}}
-            <div class="lf-panel" style="border-left:3px solid #0077B6;">
+            {{-- Status Info --}}
+            <div class="lf-panel" style="border-left:3px solid {{ $lead->statusColor()['color'] }};">
                 <div class="lf-panel-header">
-                    <div class="lf-panel-icon" style="background:#eff6ff;color:#0077B6;">
-                        <i class="fas fa-funnel-dollar"></i>
+                    <div class="lf-panel-icon" style="background:{{ $lead->statusColor()['bg'] }};color:{{ $lead->statusColor()['color'] }};">
+                        <i class="fas fa-tag"></i>
                     </div>
-                    <h6>Pipeline</h6>
+                    <h6>Status</h6>
                 </div>
                 <div class="lf-panel-body">
-                    <label class="lf-label">Follow-up Date</label>
-                    <input type="date" name="follow_up_date" id="follow_up_date" class="lf-control"
-                           value="{{ old('follow_up_date', $lead->follow_up_date?->format('Y-m-d')) }}">
-                    <div class="lf-hint">When should this lead be contacted next?</div>
+                    <span style="font-size:.82rem;font-weight:700;border-radius:20px;padding:4px 14px;background:{{ $lead->statusColor()['bg'] }};color:{{ $lead->statusColor()['color'] }};">
+                        {{ $lead->statusLabel() }}
+                    </span>
+                    <div class="lf-hint mt-2">Status changes are managed from the lead detail page.</div>
                 </div>
             </div>
 

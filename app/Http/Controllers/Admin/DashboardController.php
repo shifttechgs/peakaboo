@@ -18,8 +18,13 @@ class DashboardController extends Controller
             $pipeline[$status] = Lead::where('status', $status)->count();
         }
         $pipeline['total']   = Lead::count();
-        $pipeline['overdue'] = Lead::whereIn('status', ['new', 'contacted'])
-            ->where('created_at', '<', now()->subDays(3))
+        $pipeline['overdue'] = Lead::where('status', 'tour_scheduled')
+            ->where(function ($q) {
+                $q->whereNotNull('tour_scheduled_at')->whereDate('tour_scheduled_at', '<', today())
+                  ->orWhere(function ($q2) {
+                      $q2->whereNull('tour_scheduled_at')->whereDate('preferred_date', '<', today());
+                  });
+            })
             ->count();
 
         // ── 1. TOUR CALENDAR ───────────────────────────────────────────
@@ -93,8 +98,13 @@ class DashboardController extends Controller
             $pipeline[$status] = Lead::where('status', $status)->count();
         }
         $pipeline['total']   = Lead::count();
-        $pipeline['overdue'] = Lead::whereIn('status', ['new', 'contacted'])
-            ->where('created_at', '<', now()->subDays(3))
+        $pipeline['overdue'] = Lead::where('status', 'tour_scheduled')
+            ->where(function ($q) {
+                $q->whereNotNull('tour_scheduled_at')->whereDate('tour_scheduled_at', '<', today())
+                  ->orWhere(function ($q2) {
+                      $q2->whereNull('tour_scheduled_at')->whereDate('preferred_date', '<', today());
+                  });
+            })
             ->count();
 
         $enrolments = [

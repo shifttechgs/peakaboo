@@ -253,11 +253,9 @@
 
 @php
     $kanbanColumns = [
-        'new'            => ['label'=>'New',            'color'=>'#3b82f6', 'icon'=>'fas fa-star',           'desc'=>'Fresh enquiries'],
-        'contacted'      => ['label'=>'Contacted',      'color'=>'#d97706', 'icon'=>'fas fa-phone-alt',      'desc'=>'Follow-up needed'],
         'tour_scheduled' => ['label'=>'Tour Scheduled', 'color'=>'#0097a7', 'icon'=>'fas fa-calendar-check', 'desc'=>'Upcoming tours'],
         'tour_completed' => ['label'=>'Tour Done',      'color'=>'#7c3aed', 'icon'=>'fas fa-flag-checkered', 'desc'=>'Awaiting decision'],
-        'converted'      => ['label'=>'Converted',      'color'=>'#16a34a', 'icon'=>'fas fa-trophy',         'desc'=>'Enrolled'],
+        'converted'      => ['label'=>'Converted',      'color'=>'#16a34a', 'icon'=>'fas fa-trophy',         'desc'=>'Enrolment sent'],
     ];
     $srcClass = [
         'google'    => 'kb-src--google',
@@ -315,8 +313,6 @@
                         {{-- Urgent badge --}}
                         @if($lead->isOverdue())
                             <span class="kb-pill kb-pill--overdue">Overdue</span>
-                        @elseif($lead->isFollowUpDue())
-                            <span class="kb-pill kb-pill--followup"><i class="fas fa-bell me-1"></i>Due</span>
                         @elseif($status === 'tour_scheduled')
                             @if($daysUntil === 0)
                                 <span class="kb-pill kb-pill--today">Today</span>
@@ -354,12 +350,6 @@
                             @endif
                         </div>
                     </div>
-
-                    @if($lead->follow_up_date)
-                    <div class="mt-1" style="font-size:.68rem;{{ $lead->isFollowUpDue() ? 'color:#ef4444;font-weight:700;' : 'color:#adb5bd;' }}">
-                        <i class="fas fa-calendar-check me-1"></i>Follow-up {{ $lead->follow_up_date->format('d M') }}
-                    </div>
-                    @endif
 
                     <a href="{{ route('admin.crm.leads.show', $lead) }}" class="stretched-link"></a>
                 </div>
