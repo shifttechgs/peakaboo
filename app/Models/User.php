@@ -26,6 +26,7 @@ class User extends Authenticatable
         'password',
         'phone',
         'avatar',
+        'email_verified_at',
     ];
 
     public function invitations(): HasMany

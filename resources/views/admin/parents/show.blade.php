@@ -9,11 +9,6 @@
     box-shadow: 0 1px 8px rgba(0,0,0,.07);
     border: 1px solid #f0f0f0; overflow: hidden; margin-bottom: 20px;
 }
-.pp-panel.accent-blue   { border-left: 3px solid #3b82f6; }
-.pp-panel.accent-green  { border-left: 3px solid #16a34a; }
-.pp-panel.accent-violet { border-left: 3px solid #7c3aed; }
-.pp-panel.accent-teal   { border-left: 3px solid #0097a7; }
-.pp-panel.accent-amber  { border-left: 3px solid #d97706; }
 .pp-panel-header {
     padding: 15px 22px; border-bottom: 1px solid #f3f4f6;
     display: flex; align-items: center; justify-content: space-between;
@@ -127,7 +122,7 @@
     <div class="col-lg-7">
 
         {{-- Parent Info --}}
-        <div class="pp-panel accent-blue">
+        <div class="pp-panel">
             <div class="pp-panel-header">
                 <h6><i class="fas fa-user me-2" style="color:#3b82f6;"></i>Parent Information</h6>
             </div>
@@ -196,7 +191,7 @@
         </div>
 
         {{-- Enrolment Applications --}}
-        <div class="pp-panel accent-teal">
+        <div class="pp-panel">
             <div class="pp-panel-header">
                 <h6><i class="fas fa-file-alt me-2" style="color:#0097a7;"></i>Enrolment Applications</h6>
                 <span class="pp-pill" style="background:#e0f7fa;color:#0097a7;">{{ $parent->applications->count() }}</span>
@@ -241,7 +236,7 @@
     <div class="col-lg-5">
 
         {{-- Send Message --}}
-        <div class="pp-panel accent-violet">
+        <div class="pp-panel">
             <div class="pp-panel-header">
                 <h6><i class="fas fa-paper-plane me-2" style="color:#7c3aed;"></i>Send Message</h6>
             </div>
@@ -259,7 +254,7 @@
         </div>
 
         {{-- Actions --}}
-        <div class="pp-panel accent-green">
+        <div class="pp-panel">
             <div class="pp-panel-header">
                 <h6><i class="fas fa-bolt me-2" style="color:#16a34a;"></i>Actions</h6>
             </div>
@@ -289,4 +284,9 @@
 </div>
 
 @endsection
+
+
+
+
+
 

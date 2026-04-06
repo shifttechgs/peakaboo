@@ -1,173 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Tour Confirmed — {{ $lead->reference }}</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-    background-color: #f6f9fc; color: #1a1a2e;
-    -webkit-font-smoothing: antialiased; font-size: 15px; line-height: 1.6;
-  }
-  .email-wrapper { background-color: #f6f9fc; padding: 48px 16px; }
-  .email-card { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e4e9f0; }
-  .accent-bar { height: 4px; background: linear-gradient(90deg, #0077B6 0%, #00B4D8 100%); }
-  .email-header { padding: 36px 40px 32px; border-bottom: 1px solid #f0f3f7; text-align: center; }
-  .brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 24px; }
-  .brand-dot { width: 8px; height: 8px; background: #0077B6; border-radius: 50%; flex-shrink: 0; }
-  .brand-name { font-size: 12px; font-weight: 700; color: #0077B6; letter-spacing: 0.08em; text-transform: uppercase; }
-  .icon-circle {
-    width: 60px; height: 60px; background: #eff8ff; border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    margin-bottom: 20px; border: 1px solid #bfdbfe;
-  }
-  .confirmed-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: #f0fdf4; color: #16a34a;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-    padding: 4px 12px; border-radius: 20px; border: 1px solid #bbf7d0; margin-bottom: 14px;
-  }
-  .email-header h1 { font-size: 22px; font-weight: 700; color: #0f172a; letter-spacing: -0.3px; line-height: 1.3; }
-  .email-header .subtitle { margin-top: 8px; font-size: 14px; color: #64748b; }
-  .email-body { padding: 32px 40px; }
-  .greeting { font-size: 15px; color: #334155; margin-bottom: 14px; }
-  .intro { font-size: 14px; color: #475569; line-height: 1.7; margin-bottom: 24px; }
-  .confirmed-block {
-    background: #eff8ff; border: 1px solid #bfdbfe; border-radius: 8px;
-    padding: 24px; margin-bottom: 24px; text-align: center;
-  }
-  .confirmed-block .date-large { font-size: 20px; font-weight: 700; color: #0077B6; margin-bottom: 4px; }
-  .confirmed-block .time-large { font-size: 15px; font-weight: 500; color: #334155; }
-  .confirmed-block .ref-small { margin-top: 12px; font-size: 12px; color: #64748b; }
-  .confirmed-block .ref-small strong { font-family: 'Courier New', Courier, monospace; color: #0077B6; font-size: 13px; }
-  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; margin-top: 24px; }
-  .detail-block { background: #f8fafc; border: 1px solid #e4e9f0; border-radius: 6px; overflow: hidden; }
-  .detail-row { display: flex; align-items: flex-start; padding: 11px 18px; border-bottom: 1px solid #f0f3f7; }
-  .detail-row:last-child { border-bottom: none; }
-  .detail-key { font-size: 13px; color: #64748b; min-width: 140px; flex-shrink: 0; }
-  .detail-val { font-size: 13px; font-weight: 600; color: #1e293b; }
-  .expect-list { list-style: none; padding: 0; margin: 0; background: #f8fafc; border: 1px solid #e4e9f0; border-radius: 6px; overflow: hidden; }
-  .expect-list li { display: flex; align-items: flex-start; gap: 12px; padding: 10px 18px; border-bottom: 1px solid #f0f3f7; font-size: 13px; color: #475569; }
-  .expect-list li:last-child { border-bottom: none; }
-  .expect-dot { min-width: 6px; height: 6px; background: #0077B6; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
-  .address-block {
-    margin-top: 16px; padding: 16px 18px;
-    background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px;
-    font-size: 13px; color: #78350f; line-height: 1.7;
-  }
-  .address-block strong { font-weight: 600; display: block; margin-bottom: 2px; }
-  .divider { height: 1px; background: #f0f3f7; margin: 28px 0; }
-  .closing { font-size: 14px; color: #475569; line-height: 1.8; }
-  .closing strong { color: #1e293b; font-weight: 600; }
-  .email-footer { padding: 20px 40px 28px; border-top: 1px solid #f0f3f7; }
-  .footer-text { font-size: 12px; color: #94a3b8; line-height: 1.7; text-align: center; }
-  @media (max-width: 600px) {
-    .email-header, .email-body, .email-footer { padding-left: 20px; padding-right: 20px; }
-    .detail-row { flex-direction: column; gap: 2px; }
-    .detail-key { min-width: unset; }
-  }
-</style>
+<!--[if mso]>
+<noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+<![endif]-->
 </head>
-<body>
-<div class="email-wrapper">
-  <div class="email-card">
+<body style="margin:0;padding:0;background-color:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;">
 
-    <div class="accent-bar"></div>
+@php
+  $tourDate = $lead->tour_scheduled_at ?? $lead->preferred_date;
+  $tourTime = $lead->tour_scheduled_at ? $lead->tour_scheduled_at->format('H:i') : $lead->preferred_time;
+@endphp
 
-    <div class="email-header">
-      <div class="brand">
-        <div class="brand-dot"></div>
-        <span class="brand-name">Peekaboo Early Learning Centre</span>
-      </div>
-      <div class="icon-circle">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="7" width="20" height="17" rx="2" stroke="#0077B6" stroke-width="2" fill="none"/>
-          <path d="M4 12H24" stroke="#0077B6" stroke-width="2"/>
-          <path d="M9 4V8M19 4V8" stroke="#0077B6" stroke-width="2" stroke-linecap="round"/>
-          <path d="M9 17L12 20L19 14" stroke="#0077B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="confirmed-badge">&#10003; Confirmed</div>
-      <h1>Your Tour is Confirmed</h1>
-      <p class="subtitle">We can't wait to show you around Peekaboo.</p>
-    </div>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f5" role="presentation">
+  <tr>
+    <td align="center" style="padding:40px 16px;">
 
-    <div class="email-body">
+      <!-- Logo -->
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;margin-bottom:24px;" role="presentation">
+        <tr>
+          <td align="center">
+            <img src="{{ asset('assets/img/peekaboo/logo.png') }}" alt="Peekaboo" width="140" style="display:block;border:0;outline:none;" />
+          </td>
+        </tr>
+      </table>
 
-      @php
-        $tourDate = $lead->tour_scheduled_at ?? $lead->preferred_date;
-        $tourTime = $lead->tour_scheduled_at ? $lead->tour_scheduled_at->format('H:i') : $lead->preferred_time;
-      @endphp
+      <!-- Card -->
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.06);" role="presentation">
 
-      <p class="greeting">Hi <strong>{{ $lead->name }}</strong>,</p>
-      <p class="intro">
-        Great news — your tour of Peekaboo Early Learning Centre is confirmed! We look forward to meeting you and {{ $lead->child_name }}.
-      </p>
+        <tr><td height="4" style="background:#0077B6;font-size:0;line-height:0;">&nbsp;</td></tr>
 
-      <!-- Confirmed date/time block -->
-      <div class="confirmed-block">
-        <div class="date-large">{{ $tourDate->format('l, d F Y') }}</div>
-        <div class="time-large">at {{ $tourTime }}</div>
-        <div class="ref-small">Reference: <strong>{{ $lead->reference }}</strong></div>
-      </div>
+        <!-- Header -->
+        <tr>
+          <td align="center" style="padding:36px 40px 28px;">
+            <!-- Confirmed icon -->
+            <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 20px;" role="presentation">
+              <tr>
+                <td width="56" height="56" align="center" valign="middle" bgcolor="#f0fdf4" style="border-radius:50%;border:2px solid #bbf7d0;text-align:center;font-size:28px;line-height:56px;">&#10003;</td>
+              </tr>
+            </table>
+            <!-- Confirmed badge -->
+            <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 16px;" role="presentation">
+              <tr>
+                <td style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:#16a34a;letter-spacing:0.05em;text-transform:uppercase;">Confirmed</td>
+              </tr>
+            </table>
+            <h1 style="margin:0 0 8px;font-size:24px;font-weight:700;color:#18181b;letter-spacing:-0.025em;line-height:1.25;">Your Tour is Confirmed</h1>
+            <p style="margin:0;font-size:14px;color:#71717a;line-height:1.5;">We can't wait to show you around Peekaboo.</p>
+          </td>
+        </tr>
 
-      <!-- Visit summary -->
-      <div class="section-label">Your Visit</div>
-      <div class="detail-block">
-        <div class="detail-row">
-          <span class="detail-key">Date</span>
-          <span class="detail-val">{{ $tourDate->format('l, d F Y') }}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-key">Time</span>
-          <span class="detail-val">{{ $tourTime }}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-key">Child</span>
-          <span class="detail-val">{{ $lead->child_name }} &mdash; {{ $lead->child_age }}</span>
-        </div>
-      </div>
+        <tr><td style="padding:0 40px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tr><td height="1" bgcolor="#e4e4e7" style="font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
 
-      <!-- What to expect -->
-      <div class="section-label" style="margin-top:20px;">What to Expect</div>
-      <ul class="expect-list">
-        <li><span class="expect-dot"></span>A guided tour of our classrooms and outdoor play areas</li>
-        <li><span class="expect-dot"></span>Meet our experienced teachers and care team</li>
-        <li><span class="expect-dot"></span>Learn about our programmes, curriculum, and daily routines</li>
-        <li><span class="expect-dot"></span>A Q&amp;A session — please bring your questions!</li>
-        <li><span class="expect-dot"></span>Information on fees, availability, and the enrolment process</li>
-      </ul>
+        <!-- Body -->
+        <tr>
+          <td style="padding:28px 40px 32px;">
 
-      <!-- Address -->
-      <div class="address-block">
-        <strong>Venue Address</strong>
-        Peekaboo Early Learning Centre<br>
-        139b Humewood Dr, Parklands, Cape Town, 7441<br>
-        <span style="margin-top:6px;display:block;font-size:12px;opacity:0.8;">Please arrive 5 minutes before your scheduled time.</span>
-      </div>
+            <p style="margin:0 0 14px;font-size:15px;color:#3f3f46;">Hi <strong>{{ $lead->name }}</strong>,</p>
+            <p style="margin:0 0 24px;font-size:14px;color:#52525b;line-height:1.7;">
+              Great news &mdash; your tour of Peekaboo Early Learning Centre is confirmed! We look forward to meeting you and {{ $lead->child_name }}.
+            </p>
 
-      <div class="divider"></div>
+            <!-- Tour date/time highlight -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;margin-bottom:24px;" role="presentation">
+              <tr>
+                <td align="center" style="padding:28px 24px;">
+                  <p style="margin:0 0 4px;font-size:22px;font-weight:700;color:#0077B6;letter-spacing:-0.02em;">{{ $tourDate->format('l, d F Y') }}</p>
+                  <p style="margin:0 0 14px;font-size:16px;font-weight:500;color:#3f3f46;">at {{ $tourTime }}</p>
+                  <table cellpadding="0" cellspacing="0" border="0" role="presentation">
+                    <tr>
+                      <td style="background:#fafafa;border:1px solid #e4e4e7;border-radius:6px;padding:6px 16px;">
+                        <p style="margin:0;font-size:12px;color:#71717a;">Reference: <strong style="font-family:'SFMono-Regular','Consolas','Liberation Mono','Menlo',monospace;color:#0077B6;font-size:13px;">{{ $lead->reference }}</strong></p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
 
-      <p class="closing">
-        If you need to reschedule or have any questions, please call us or simply reply to this email.<br><br>
-        See you soon,<br>
-        <strong>The Peekaboo Team</strong>
-      </p>
+            <!-- Your Visit -->
+            <p style="margin:0 0 10px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#a1a1aa;">Your Visit</p>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #e4e4e7;border-radius:8px;overflow:hidden;margin-bottom:24px;" role="presentation">
+              <tr>
+                <td style="padding:12px 20px;border-bottom:1px solid #f4f4f5;">
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>
+                    <td width="120" style="font-size:13px;color:#71717a;">Date</td>
+                    <td style="font-size:13px;font-weight:600;color:#18181b;">{{ $tourDate->format('l, d F Y') }}</td>
+                  </tr></table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:12px 20px;border-bottom:1px solid #f4f4f5;">
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>
+                    <td width="120" style="font-size:13px;color:#71717a;">Time</td>
+                    <td style="font-size:13px;font-weight:600;color:#18181b;">{{ $tourTime }}</td>
+                  </tr></table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:12px 20px;">
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>
+                    <td width="120" style="font-size:13px;color:#71717a;">Child</td>
+                    <td style="font-size:13px;font-weight:600;color:#18181b;">{{ $lead->child_name }} &mdash; {{ $lead->child_age }}</td>
+                  </tr></table>
+                </td>
+              </tr>
+            </table>
 
-    </div>
+            <!-- What to Expect -->
+            <p style="margin:0 0 10px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#a1a1aa;">What to Expect</p>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #e4e4e7;border-radius:8px;overflow:hidden;margin-bottom:24px;" role="presentation">
+              <tr>
+                <td style="padding:12px 20px;border-bottom:1px solid #f4f4f5;">
+                  <table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>
+                    <td width="6" height="6" valign="top" style="padding-top:6px;"><table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr><td width="6" height="6" bgcolor="#0077B6" style="border-radius:50%;font-size:0;line-height:0;">&nbsp;</td></tr></table></td>
+                    <td style="padding-left:12px;font-size:13px;color:#52525b;line-height:1.5;">A guided tour of our classrooms and outdoor play areas</td>
+                  </tr></table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:12px 20px;border-bottom:1px solid #f4f4f5;">
+                  <table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>
+                    <td width="6" height="6" valign="top" style="padding-top:6px;"><table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr><td width="6" height="6" bgcolor="#0077B6" style="border-radius:50%;font-size:0;line-height:0;">&nbsp;</td></tr></table></td>
+                    <td style="padding-left:12px;font-size:13px;color:#52525b;line-height:1.5;">Meet our experienced teachers and care team</td>
+                  </tr></table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:12px 20px;border-bottom:1px solid #f4f4f5;">
+                  <table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>
+                    <td width="6" height="6" valign="top" style="padding-top:6px;"><table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr><td width="6" height="6" bgcolor="#0077B6" style="border-radius:50%;font-size:0;line-height:0;">&nbsp;</td></tr></table></td>
+                    <td style="padding-left:12px;font-size:13px;color:#52525b;line-height:1.5;">Learn about our programmes, curriculum, and daily routines</td>
+                  </tr></table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:12px 20px;border-bottom:1px solid #f4f4f5;">
+                  <table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>
+                    <td width="6" height="6" valign="top" style="padding-top:6px;"><table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr><td width="6" height="6" bgcolor="#0077B6" style="border-radius:50%;font-size:0;line-height:0;">&nbsp;</td></tr></table></td>
+                    <td style="padding-left:12px;font-size:13px;color:#52525b;line-height:1.5;">A Q&amp;A session &mdash; please bring your questions!</td>
+                  </tr></table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:12px 20px;">
+                  <table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr>
+                    <td width="6" height="6" valign="top" style="padding-top:6px;"><table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr><td width="6" height="6" bgcolor="#0077B6" style="border-radius:50%;font-size:0;line-height:0;">&nbsp;</td></tr></table></td>
+                    <td style="padding-left:12px;font-size:13px;color:#52525b;line-height:1.5;">Information on fees, availability, and the enrolment process</td>
+                  </tr></table>
+                </td>
+              </tr>
+            </table>
 
-    <div class="email-footer">
-      <p class="footer-text">
-        Peekaboo Early Learning Centre &bull; 139b Humewood Dr, Parklands, Cape Town, 7441<br>
-        Reference: <strong>{{ $lead->reference }}</strong>
-      </p>
-    </div>
+            <!-- Address -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fafafa;border:1px solid #e4e4e7;border-left:3px solid #0077B6;border-radius:4px;margin-bottom:28px;" role="presentation">
+              <tr>
+                <td style="padding:16px 20px;">
+                  <p style="margin:0 0 4px;font-size:12px;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.04em;">Venue Address</p>
+                  <p style="margin:0;font-size:13px;color:#3f3f46;line-height:1.7;">
+                    Peekaboo Early Learning Centre<br>
+                    139b Humewood Dr, Parklands, Cape Town, 7441
+                  </p>
+                  <p style="margin:8px 0 0;font-size:12px;color:#a1a1aa;">Please arrive 5 minutes before your scheduled time.</p>
+                </td>
+              </tr>
+            </table>
 
-  </div>
-</div>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;" role="presentation"><tr><td height="1" bgcolor="#e4e4e7" style="font-size:0;line-height:0;">&nbsp;</td></tr></table>
+
+            <p style="margin:0;font-size:14px;color:#52525b;line-height:1.8;">
+              If you need to reschedule or have any questions, please call us or simply reply to this email.<br><br>
+              See you soon,<br>
+              <strong style="color:#18181b;">The Peekaboo Team</strong>
+            </p>
+
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr><td style="padding:0 40px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation"><tr><td height="1" bgcolor="#e4e4e7" style="font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
+        <tr>
+          <td style="padding:20px 40px 28px;">
+            <p style="margin:0;font-size:12px;color:#a1a1aa;line-height:1.7;text-align:center;">
+              Peekaboo Early Learning Centre &bull; 139b Humewood Dr, Parklands, Cape Town, 7441<br>
+              Reference: <strong>{{ $lead->reference }}</strong>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;margin-top:20px;" role="presentation">
+        <tr><td align="center"><p style="margin:0;font-size:11px;color:#a1a1aa;">&copy; {{ date('Y') }} Peekaboo Early Learning Centre. All rights reserved.</p></td></tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+
 </body>
 </html>

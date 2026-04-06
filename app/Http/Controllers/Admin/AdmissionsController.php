@@ -130,7 +130,52 @@ class AdmissionsController extends Controller
             $application->createChildUser();
         }
 
-        return redirect()->back()->with('success', "Application for {$application->child_name} has been approved.");
+        // ── Auto-send portal invitation on approval ──────────────────────
+        $email = $application->mother_email;
+        $inviteMessage = '';
+
+        if ($email) {
+            $existingUser = User::where('email', $email)->first();
+
+            if ($existingUser) {
+                // Parent already has an account — link directly, no invitation needed
+                if (! $existingUser->hasRole('parent')) {
+                    $existingUser->assignRole('parent');
+                }
+                // Backfill phone from application if missing
+                if (! $existingUser->phone && $application->mother_cell) {
+                    $existingUser->update(['phone' => $application->mother_cell]);
+                }
+                $application->update([
+                    'parent_user_id' => $existingUser->id,
+                    'invited_at'     => now(),
+                ]);
+                $application->createChildUser();
+                $inviteMessage = " Linked to existing account for {$existingUser->name}.";
+            } else {
+                // Invalidate any previous pending invitation for this application
+                Invitation::where('email', $email)
+                    ->whereNull('accepted_at')
+                    ->where('application_id', $application->id)
+                    ->delete();
+
+                $invitation = Invitation::create([
+                    'email'          => $email,
+                    'role'           => 'parent',
+                    'token'          => Str::random(64),
+                    'invited_by'     => Auth::id(),
+                    'application_id' => $application->id,
+                    'expires_at'     => now()->addDays(7),
+                ]);
+
+                Mail::to($invitation->email)->send(new InvitationMail($invitation));
+
+                $application->update(['invited_at' => now()]);
+                $inviteMessage = " Portal invitation sent to {$email}.";
+            }
+        }
+
+        return redirect()->back()->with('success', "Application for {$application->child_name} has been approved.{$inviteMessage}");
     }
 
     public function reject(Request $request, $id)

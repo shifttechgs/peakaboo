@@ -69,9 +69,11 @@ class InvitationController extends Controller
         ]);
 
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $invitation->email,
-            'password' => Hash::make($request->password),
+            'name'              => $request->name,
+            'email'             => $invitation->email,
+            'password'          => Hash::make($request->password),
+            'email_verified_at' => now(),
+            'phone'             => $invitation->application?->mother_cell,
         ]);
 
         $user->assignRole($invitation->role);

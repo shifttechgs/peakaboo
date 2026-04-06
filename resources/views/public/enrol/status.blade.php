@@ -428,7 +428,7 @@
                         <div>
                             <span class="pb-status__contact-label">Email</span>
                             <div class="pb-status__contact-value">
-                                <a href="mailto:info@peekaboodaycare.co.za">info@peekaboodaycare.co.za</a>
+                                <a href="mailto:admin@peekaboodaycare.co.za">admin@peekaboodaycare.co.za</a>
                             </div>
                         </div>
                     </div>

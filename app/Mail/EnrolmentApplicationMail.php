@@ -45,7 +45,7 @@ class EnrolmentApplicationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.enrolment-application',
+            view: 'emails.enrolment-application',
         );
     }
 

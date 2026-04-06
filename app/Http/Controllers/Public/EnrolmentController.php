@@ -199,6 +199,15 @@ class EnrolmentController extends Controller
             if (File::exists($oldDir)) {
                 File::copyDirectory($oldDir, $newDir);
                 File::deleteDirectory($oldDir);
+
+                // Rename files inside to replace the temp ID with the real application ID
+                foreach (File::files($newDir) as $file) {
+                    $oldName = $file->getFilename();
+                    $newName = str_replace($tempId, $applicationId, $oldName);
+                    if ($oldName !== $newName) {
+                        File::move($file->getPathname(), $newDir . '/' . $newName);
+                    }
+                }
             }
 
             // Update document paths to use the real applicationId
