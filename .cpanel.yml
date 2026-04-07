@@ -1,11 +1,13 @@
 deployment:
   tasks:
     - export HOMEDIR=/home/peekaboodaycarec
-    - export APPPATH=$HOMEDIR/public_html/peekaboo
+    - export REPODIR=/home/peekaboodaycarec/repositories/peakaboo
+    - export APPPATH=$HOMEDIR/peekaboo
     - export PUBPATH=$HOMEDIR/public_html
-    - export REPODIR=$(pwd)
+    - export LOG=$APPPATH/storage/logs/deploy.log
 
-    # ── 1. Ensure dirs + permissions ──
+    # ── 1. Create app dir outside public_html if missing ──
+    - mkdir -p $APPPATH
     - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data} $APPPATH/storage/logs $APPPATH/storage/app/public $APPPATH/bootstrap/cache
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
 
@@ -13,25 +15,39 @@ deployment:
     - rm -f $APPPATH/bootstrap/cache/config.php $APPPATH/bootstrap/cache/routes-v7.php $APPPATH/bootstrap/cache/events.php $APPPATH/bootstrap/cache/services.php $APPPATH/bootstrap/cache/packages.php 2>/dev/null || true
     - rm -rf $APPPATH/storage/framework/views/* 2>/dev/null || true
 
-    # ── 3. Sync app code (skip if repo IS the app dir) ──
-    - test "$(realpath $REPODIR)" = "$(realpath $APPPATH)" || rsync -a --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/"
+    # ── 3. Sync app code to SECURE location (outside public_html) ──
+    - echo "$(date) | Syncing code to $APPPATH" >> $LOG
+    - rsync -a --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/" >> $LOG 2>&1
+    - echo "$(date) | Code sync done" >> $LOG
 
-    # ── 4. ALWAYS sync assets from wherever the repo is to public_html ──
-    - rsync -a "$REPODIR/public/assets/" "$PUBPATH/assets/" 2>/dev/null || rsync -a "$APPPATH/public/assets/" "$PUBPATH/assets/" 2>/dev/null || true
-    - cp -f "$REPODIR/public/index-production.php" "$PUBPATH/index.php" 2>/dev/null || cp -f "$APPPATH/public/index-production.php" "$PUBPATH/index.php" 2>/dev/null || true
-    - cp -f "$REPODIR/public/robots.txt" "$PUBPATH/robots.txt" 2>/dev/null || cp -f "$APPPATH/public/robots.txt" "$PUBPATH/robots.txt" 2>/dev/null || true
-    - cp -f "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>/dev/null || cp -f "$APPPATH/public/favicon.ico" "$PUBPATH/favicon.ico" 2>/dev/null || true
-    - cp -f "$REPODIR/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || cp -f "$APPPATH/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || true
+    # ── 4. Sync ONLY public files to public_html ──
+    - echo "$(date) | Syncing assets to $PUBPATH" >> $LOG
+    - rsync -a "$REPODIR/public/assets/" "$PUBPATH/assets/" >> $LOG 2>&1
+    - cp -f "$REPODIR/public/index-production.php" "$PUBPATH/index.php" >> $LOG 2>&1
+    - cp -f "$REPODIR/public/robots.txt" "$PUBPATH/robots.txt" 2>/dev/null || true
+    - cp -f "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>/dev/null || true
+    - cp -f "$REPODIR/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || true
+    - echo "$(date) | Assets sync done" >> $LOG
 
-    # ── 5. Composer ONLY if vendor missing ──
-    - cd $APPPATH && test -f vendor/autoload.php || composer install --no-dev --optimize-autoloader --no-interaction
+    # ── 5. Migrate .env if it's still in old location ──
+    - test -f $APPPATH/.env || cp -f $PUBPATH/peekaboo/.env $APPPATH/.env 2>/dev/null || true
 
-    # ── 6. Rebuild caches on server ──
-    - php $APPPATH/artisan config:cache
-    - php $APPPATH/artisan route:cache
-    - php $APPPATH/artisan view:cache
-    - php $APPPATH/artisan migrate --force
+    # ── 6. Migrate vendor if it's still in old location ──
+    - test -d $APPPATH/vendor || (test -d $PUBPATH/peekaboo/vendor && mv $PUBPATH/peekaboo/vendor $APPPATH/vendor) 2>/dev/null || true
+
+    # ── 7. Migrate storage if it's still in old location ──
+    - test -d $APPPATH/storage/logs/laravel.log || cp -r $PUBPATH/peekaboo/storage/* $APPPATH/storage/ 2>/dev/null || true
+
+    # ── 8. Composer ONLY if vendor missing ──
+    - cd $APPPATH && test -f vendor/autoload.php || composer install --no-dev --optimize-autoloader --no-interaction >> $LOG 2>&1
+
+    # ── 9. Rebuild caches on server ──
+    - php $APPPATH/artisan config:cache >> $LOG 2>&1
+    - php $APPPATH/artisan route:cache >> $LOG 2>&1
+    - php $APPPATH/artisan view:cache >> $LOG 2>&1
+    - php $APPPATH/artisan migrate --force >> $LOG 2>&1
     - php $APPPATH/artisan storage:link 2>/dev/null || true
+    - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
 
     # ── Done ──
-    - echo "$(date) | Deploy complete" >> $APPPATH/storage/logs/deploy.log
+    - echo "$(date) | Deploy complete" >> $LOG

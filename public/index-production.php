@@ -5,8 +5,14 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-// ── cPanel path: public_html/index.php → app lives in public_html/peekaboo/ ──
-$appBase = __DIR__.'/peekaboo';
+// ── Secure cPanel layout: app lives OUTSIDE public_html ──
+// /home/peekaboodaycarec/public_html/index.php → /home/peekaboodaycarec/peekaboo/
+$appBase = dirname(__DIR__).'/peekaboo';
+
+// Fallback: if app is still inside public_html (migration period)
+if (!is_dir($appBase.'/vendor')) {
+    $appBase = __DIR__.'/peekaboo';
+}
 
 // Determine if the application is in maintenance mode...
 if (file_exists($maintenance = $appBase.'/storage/framework/maintenance.php')) {
@@ -21,4 +27,6 @@ require $appBase.'/vendor/autoload.php';
 $app = require_once $appBase.'/bootstrap/app.php';
 
 $app->handleRequest(Request::capture());
+
+
 
