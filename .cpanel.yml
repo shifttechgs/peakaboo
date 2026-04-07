@@ -17,12 +17,12 @@ deployment:
 
     # ── 4. Sync assets to public_html ──
     - rsync -a "$REPODIR/public/assets/" "$PUBPATH/assets/"
-    - cp -f "$REPODIR/public/index.php" "$PUBPATH/index.php" 2>/dev/null || true
+    - cp -f "$REPODIR/public/index-production.php" "$PUBPATH/index.php" 2>/dev/null || true
     - cp -f "$REPODIR/public/robots.txt" "$PUBPATH/robots.txt" 2>/dev/null || true
     - cp -f "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>/dev/null || true
 
     # ── 5. Composer ONLY if vendor missing ──
-    - cd $APPPATH && test -d vendor/autoload.php || composer install --no-dev --optimize-autoloader --no-interaction
+    - cd $APPPATH && test -f vendor/autoload.php || composer install --no-dev --optimize-autoloader --no-interaction
 
     # ── 6. Rebuild caches ──
     - php $APPPATH/artisan config:cache
