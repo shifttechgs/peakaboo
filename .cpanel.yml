@@ -10,12 +10,27 @@ deployment:
     - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data} $APPPATH/storage/logs $APPPATH/storage/app/public $APPPATH/bootstrap/cache
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
 
+    # ── DIAGNOSTIC: what exists where ──
+    - echo "=== $(date) ===" >> $LOG
+    - echo "REPO home.blade.php:" >> $LOG
+    - head -5 "$REPODIR/resources/views/public/home.blade.php" >> $LOG 2>&1
+    - echo "APP home.blade.php BEFORE sync:" >> $LOG
+    - head -5 "$APPPATH/resources/views/public/home.blade.php" >> $LOG 2>&1
+    - echo ".env: $(test -f $APPPATH/.env && echo YES || echo NO)" >> $LOG
+    - echo "vendor: $(test -f $APPPATH/vendor/autoload.php && echo YES || echo NO)" >> $LOG
+
     # ── 2. Wipe caches ──
     - rm -f $APPPATH/bootstrap/cache/*.php 2>/dev/null || true
     - rm -rf $APPPATH/storage/framework/views/* 2>/dev/null || true
 
     # ── 3. Sync code ──
-    - rsync -a --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/"
+    - rsync -av --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/" >> $LOG 2>&1
+    - echo "--- rsync exit code: $? ---" >> $LOG
+
+    # ── DIAGNOSTIC: verify file after sync ──
+    - echo "APP home.blade.php AFTER sync:" >> $LOG
+    - head -5 "$APPPATH/resources/views/public/home.blade.php" >> $LOG 2>&1
+    - grep -n "Tourss" "$APPPATH/resources/views/public/home.blade.php" >> $LOG 2>&1 || echo "Tourss NOT FOUND in app" >> $LOG
 
     # ── 4. Sync assets ──
     - rsync -a "$REPODIR/public/assets/" "$PUBPATH/assets/"
@@ -25,10 +40,10 @@ deployment:
     - cp -f "$REPODIR/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || true
 
     # ── 5. Rebuild caches (only if vendor exists) ──
-    - test -f $APPPATH/vendor/autoload.php && php $APPPATH/artisan view:cache >> $LOG 2>&1 || true
-    - test -f $APPPATH/vendor/autoload.php && php $APPPATH/artisan config:cache >> $LOG 2>&1 || true
-    - test -f $APPPATH/vendor/autoload.php && php $APPPATH/artisan route:cache >> $LOG 2>&1 || true
-    - test -f $APPPATH/vendor/autoload.php && php $APPPATH/artisan migrate --force >> $LOG 2>&1 || true
+    - test -f $APPPATH/vendor/autoload.php && php $APPPATH/artisan view:cache >> $LOG 2>&1 || echo "SKIP: no vendor, can't cache views" >> $LOG
+    - test -f $APPPATH/vendor/autoload.php && php $APPPATH/artisan config:cache >> $LOG 2>&1 || echo "SKIP: no vendor, can't cache config" >> $LOG
+    - test -f $APPPATH/vendor/autoload.php && php $APPPATH/artisan route:cache >> $LOG 2>&1 || echo "SKIP: no vendor, can't cache routes" >> $LOG
+    - test -f $APPPATH/vendor/autoload.php && php $APPPATH/artisan migrate --force >> $LOG 2>&1 || echo "SKIP: no vendor, can't migrate" >> $LOG
 
     # ── Done ──
     - echo "$(date) | Deploy complete" >> $LOG
