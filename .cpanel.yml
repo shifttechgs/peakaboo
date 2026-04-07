@@ -2,26 +2,37 @@ deployment:
   tasks:
     - export APPPATH=/home/peekaboodaycarec/public_html/peekaboo
 
-    # Maintenance mode (non-blocking)
-    - php $APPPATH/artisan down || true
+    # ── 1. Maintenance mode ──
+    - php $APPPATH/artisan down --refresh=15 || true
 
-    # Ensure required directories exist (only if missing)
+    # ── 2. Ensure required directories exist ──
     - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data}
     - mkdir -p $APPPATH/storage/logs
+    - mkdir -p $APPPATH/storage/app/public
     - mkdir -p $APPPATH/bootstrap/cache
 
-    # Fix permissions (important but quick)
+    # ── 3. Fix permissions ──
     - chmod -R 775 $APPPATH/storage
     - chmod -R 775 $APPPATH/bootstrap/cache
 
-    # Clear only (fast)
+    # ── 4. Install Composer dependencies (vendor is gitignored) ──
+    - cd $APPPATH && composer install --no-dev --optimize-autoloader --no-interaction 2>&1
+
+    # ── 5. Clear all caches (views, config, routes, events) ──
     - php $APPPATH/artisan optimize:clear
 
-    # Run migrations (keep this)
+    # ── 6. Run database migrations ──
     - php $APPPATH/artisan migrate --force
 
-    # Bring app back up ASAP
+    # ── 7. Create storage symlink (idempotent) ──
+    - php $APPPATH/artisan storage:link 2>/dev/null || true
+
+    # ── 8. Rebuild caches for performance ──
+    - php $APPPATH/artisan config:cache
+    - php $APPPATH/artisan route:cache
+    - php $APPPATH/artisan view:cache
+    - php $APPPATH/artisan event:cache
+
+    # ── 9. Bring app back online ──
     - php $APPPATH/artisan up
 
-    # Cache config, routes, views for performance
-    - php $APPPATH/artisan optimize
