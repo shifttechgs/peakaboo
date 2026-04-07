@@ -5,12 +5,17 @@ deployment:
     - export PUBPATH=$HOMEDIR/public_html
     - export REPODIR=$(pwd)
 
+    # ── Debug: log where we are deploying from ──
+    - echo "$(date) | REPO=$REPODIR" >> $APPPATH/storage/logs/deploy.log
+    - ls "$REPODIR/resources/views/public/" >> $APPPATH/storage/logs/deploy.log 2>&1
+
     # ── 1. Ensure dirs + permissions ──
     - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data} $APPPATH/storage/logs $APPPATH/storage/app/public $APPPATH/bootstrap/cache
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
 
     # ── 2. Wipe old caches ──
     - rm -f $APPPATH/bootstrap/cache/config.php $APPPATH/bootstrap/cache/routes-v7.php $APPPATH/bootstrap/cache/events.php $APPPATH/bootstrap/cache/services.php $APPPATH/bootstrap/cache/packages.php 2>/dev/null || true
+    - rm -rf $APPPATH/storage/framework/views/* 2>/dev/null || true
 
     # ── 3. Sync app code ──
     - rsync -a --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/"
@@ -20,6 +25,7 @@ deployment:
     - cp -f "$REPODIR/public/index-production.php" "$PUBPATH/index.php" 2>/dev/null || true
     - cp -f "$REPODIR/public/robots.txt" "$PUBPATH/robots.txt" 2>/dev/null || true
     - cp -f "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>/dev/null || true
+    - cp -f "$REPODIR/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || true
 
     # ── 5. Composer ONLY if vendor missing ──
     - cd $APPPATH && test -f vendor/autoload.php || composer install --no-dev --optimize-autoloader --no-interaction
@@ -30,3 +36,6 @@ deployment:
     - php $APPPATH/artisan view:cache
     - php $APPPATH/artisan migrate --force
     - php $APPPATH/artisan storage:link 2>/dev/null || true
+
+    # ── Done ──
+    - echo "$(date) | Deploy complete" >> $APPPATH/storage/logs/deploy.log
