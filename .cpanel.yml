@@ -18,7 +18,7 @@ deployment:
     - echo "caches wiped" >> $LOG
 
     # ── 3. Sync app code ──
-    - rsync -a --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/"
+    - rsync -a --exclude='.env' --exclude='/storage/' --exclude='/vendor/' --exclude='/.git/' --exclude='/node_modules/' --exclude='/public/' "$REPODIR/" "$APPPATH/"
     - echo "code synced" >> $LOG
 
     # ── 4. Copy public files ──
@@ -27,6 +27,7 @@ deployment:
     - cp -f "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>/dev/null || true
     - cp -f "$REPODIR/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || true
     - echo "public files synced" >> $LOG
+
 
     # ── 5. Permissions ──
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
