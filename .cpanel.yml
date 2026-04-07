@@ -1,30 +1,45 @@
 deployment:
   tasks:
-    - export APPPATH=/home/peekaboodaycarec/public_html/peekaboo
+    - export HOMEDIR=/home/peekaboodaycarec
+    - export APPPATH=$HOMEDIR/public_html/peekaboo
+    - export PUBPATH=$HOMEDIR/public_html
     - export LOG=$APPPATH/storage/logs/deploy.log
     - export REPODIR=$(pwd)
-    - echo "=== Deploy $(date) from $REPODIR ===" >> $LOG
+    - echo "=== Deploy $(date) ===" >> $LOG
+    - echo "REPODIR=$REPODIR APPPATH=$APPPATH PUBPATH=$PUBPATH" >> $LOG
 
     # ── 1. Maintenance mode ──
     - php $APPPATH/artisan down --refresh=15 2>>$LOG || true
 
-    # ── 2. Copy code from repo to live dir (skip if same dir) ──
-    - test "$REPODIR" = "$APPPATH" || rsync -a --delete --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' "$REPODIR/" "$APPPATH/" 2>>$LOG
-    - echo "rsync step done" >> $LOG
+    # ── 2. Sync app code (everything EXCEPT public/) into peekaboo/ ──
+    - rsync -a --delete --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/" >> $LOG 2>&1
+    - echo "app code synced" >> $LOG
 
-    # ── 3. Ensure directories + permissions ──
+    # ── 3. Sync public assets into public_html/assets/ ──
+    - rsync -a "$REPODIR/public/assets/" "$PUBPATH/assets/" >> $LOG 2>&1
+    - echo "assets synced" >> $LOG
+
+    # ── 4. Sync public root files (index.php, robots.txt, favicon etc) ──
+    - rsync -a "$REPODIR/public/index.php" "$PUBPATH/index.php" 2>>$LOG || true
+    - rsync -a "$REPODIR/public/robots.txt" "$PUBPATH/robots.txt" 2>>$LOG || true
+    - rsync -a "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>>$LOG || true
+
+    # ── 5. Verify assets landed ──
+    - ls $PUBPATH/assets/img/school/ >> $LOG 2>&1 || echo "school dir missing" >> $LOG
+
+    # ── 6. Ensure directories + permissions ──
     - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data} $APPPATH/storage/logs $APPPATH/storage/app/public $APPPATH/bootstrap/cache
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
 
-    # ── 4. Composer install only if vendor missing ──
+    # ── 7. Composer install only if vendor missing ──
     - cd $APPPATH && test -d vendor || composer install --no-dev --optimize-autoloader --no-interaction 2>>$LOG
 
-    # ── 5. Clear + rebuild caches ──
+    # ── 8. Clear + rebuild caches ──
     - php $APPPATH/artisan optimize:clear 2>>$LOG
     - php $APPPATH/artisan migrate --force 2>>$LOG
     - php $APPPATH/artisan storage:link 2>/dev/null || true
     - php $APPPATH/artisan optimize 2>>$LOG
 
-    # ── 6. Back online ──
+    # ── 9. Back online ──
     - php $APPPATH/artisan up 2>>$LOG
     - echo "=== Deploy complete $(date) ===" >> $LOG
