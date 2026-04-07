@@ -27,11 +27,11 @@ deployment:
     - cp -f "$REPODIR/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || true
     - echo "public files synced" >> $LOG
 
-    # ── 5. Rebuild caches ──
-    - php $APPPATH/artisan view:cache >> $LOG 2>&1 || echo "FAIL: view:cache" >> $LOG
-    - php $APPPATH/artisan config:cache >> $LOG 2>&1 || echo "FAIL: config:cache" >> $LOG
-    - php $APPPATH/artisan route:cache >> $LOG 2>&1 || echo "FAIL: route:cache" >> $LOG
-    - php $APPPATH/artisan migrate --force >> $LOG 2>&1 || echo "FAIL: migrate" >> $LOG
-    - php $APPPATH/artisan storage:link >> $LOG 2>&1 || true
+    # ── 5. Rebuild caches (capture errors) ──
+    - (php $APPPATH/artisan view:cache >> $LOG 2>&1) || echo "FAIL view:cache: $?" >> $LOG
+    - (php $APPPATH/artisan config:cache >> $LOG 2>&1) || echo "FAIL config:cache: $?" >> $LOG
+    - (php $APPPATH/artisan route:cache >> $LOG 2>&1) || echo "FAIL route:cache: $?" >> $LOG
+    - (php $APPPATH/artisan migrate --force >> $LOG 2>&1) || echo "FAIL migrate: $?" >> $LOG
+    - (php $APPPATH/artisan storage:link >> $LOG 2>&1) || true
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
     - echo "$(date) | Deploy complete" >> $LOG
