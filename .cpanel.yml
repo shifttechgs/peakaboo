@@ -16,18 +16,16 @@ deployment:
     - rm -rf $APPPATH/storage/framework/views/* 2>/dev/null || true
     - echo "caches wiped" >> $LOG
 
-    # ── 3. Sync app code ──
+    # ── 3. Sync app code only ──
     - rsync -a --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/"
     - echo "code synced" >> $LOG
 
-    # ── 4. Sync assets (skip unchanged files, skip large image dirs if exist) ──
-    - rsync -a --update --exclude='img/school/' "$REPODIR/public/assets/" "$PUBPATH/assets/"
-    - test -d "$PUBPATH/assets/img/school" || rsync -a "$REPODIR/public/assets/img/school/" "$PUBPATH/assets/img/school/"
+    # ── 4. Sync index.php + small public files only (NO assets) ──
     - cp -f "$REPODIR/public/index-production.php" "$PUBPATH/index.php"
     - cp -f "$REPODIR/public/robots.txt" "$PUBPATH/robots.txt" 2>/dev/null || true
     - cp -f "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>/dev/null || true
     - cp -f "$REPODIR/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || true
-    - echo "assets synced" >> $LOG
+    - echo "public files synced" >> $LOG
 
     # ── 5. Rebuild caches ──
     - php $APPPATH/artisan view:cache >> $LOG 2>&1 || echo "FAIL: view:cache" >> $LOG
