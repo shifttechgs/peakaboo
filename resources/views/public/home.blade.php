@@ -937,204 +937,385 @@
 </section>
 <!-- Fees Section End -->
 
-<!-- ========== VIDEO SECTION ==========
-     Layout mirrors Edunity ed-video-area / ed-video-bg
-     CSS lives in assets/css/edunity-hero.css
-======================================== -->
-<div class="ed-video-area fix ed-video-bg p-relative pt-160 pb-120"
-     data-background="{{ asset('assets/img/video/bg-4-3.jpg') }}">
+<!-- ========== TRUST & ACTION BANNER ========== -->
+<section class="pb-trust-banner">
+<style>
+/* ============================================================
+   TRUST & ACTION BANNER — Premium Post-Pricing Conversion
+============================================================ */
+.pb-trust-banner {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+.pb-trust__bg {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+/* Multi-layer overlay for depth */
+.pb-trust__bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(2,30,60,0.92) 0%, rgba(0,80,140,0.70) 40%, rgba(2,30,60,0.88) 100%),
+        radial-gradient(ellipse at 20% 80%, rgba(0,119,182,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(244,162,97,0.1) 0%, transparent 50%);
+    z-index: 1;
+}
 
-  <div class="ed-video-shape-1">
-    <img src="{{ asset('assets/img/video/shape-4-1.png') }}" alt="">
-  </div>
-  <div class="ed-video-shape-2">
-    <img src="{{ asset('assets/img/video/shape-4-2.png') }}" alt="">
-  </div>
+/* Floating decorative shapes */
+.pb-trust__shape {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+}
+.pb-trust__shape--1 {
+    width: 400px; height: 400px;
+    top: -120px; right: -80px;
+    background: radial-gradient(circle, rgba(244,162,97,0.08) 0%, transparent 70%);
+    animation: pbTrustFloat 8s ease-in-out infinite alternate;
+}
+.pb-trust__shape--2 {
+    width: 300px; height: 300px;
+    bottom: -80px; left: -60px;
+    background: radial-gradient(circle, rgba(0,119,182,0.1) 0%, transparent 70%);
+    animation: pbTrustFloat 10s ease-in-out infinite alternate-reverse;
+}
+.pb-trust__shape--3 {
+    width: 120px; height: 120px;
+    top: 20%; left: 8%;
+    border: 1px solid rgba(255,255,255,0.06);
+    animation: pbTrustSpin 20s linear infinite;
+}
+.pb-trust__shape--4 {
+    width: 80px; height: 80px;
+    bottom: 25%; right: 10%;
+    border: 1px solid rgba(244,162,97,0.08);
+    animation: pbTrustSpin 15s linear infinite reverse;
+}
+@@keyframes pbTrustFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-20px, 20px) scale(1.05); }
+}
+@@keyframes pbTrustSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-  <div class="container container-3">
-    <div class="row">
-      <div class="col-xl-12 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".3s">
-        <div class="ed-video-wrap"
-             data-background="{{ asset('assets/img/video/bg-4-2.jpg') }}">
-          <div class="it-video-play-wrap">
-            <div class="it-video-play">
-              <a class="popup-video play" href="#schoolVideoModal">
-                <i class="fas fa-play"></i>
-              </a>
+
+
+.pb-trust__content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 60px 20px 56px;
+    max-width: 880px;
+    margin: 0 auto;
+}
+
+/* Badge */
+.pb-trust__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 24px;
+    border-radius: 50px;
+    margin-bottom: 22px;
+    color: rgba(255,255,255,0.85);
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+.pb-trust__badge i {
+    color: var(--color-warm, #F4A261);
+    font-size: 13px;
+}
+
+/* Headline */
+.pb-trust__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(34px, 5vw, 54px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.12;
+    margin: 0 0 14px;
+    letter-spacing: -0.5px;
+}
+.pb-trust__heading span {
+    background: linear-gradient(135deg, var(--color-warm, #F4A261), #f7c99a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.pb-trust__sub {
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+    margin: 0 auto 32px;
+    max-width: 580px;
+}
+
+/* ── Trust signals as glass cards ── */
+.pb-trust__signals {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+.pb-trust__signal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 18px 24px 16px;
+    min-width: 140px;
+    transition: all 0.35s ease;
+}
+.pb-trust__signal:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(244,162,97,0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+}
+.pb-trust__signal-icon {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(244,162,97,0.15), rgba(244,162,97,0.05));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+.pb-trust__signal-icon i {
+    color: var(--color-warm, #F4A261);
+    font-size: 18px;
+}
+.pb-trust__signal-value {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+.pb-trust__signal-stars {
+    display: flex;
+    gap: 3px;
+    margin-top: 2px;
+}
+.pb-trust__signal-stars i {
+    color: #FFD700;
+    font-size: 12px;
+}
+.pb-trust__signal-label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Divider */
+.pb-trust__divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(244,162,97,0.5), transparent);
+    margin: 0 auto 28px;
+    border-radius: 2px;
+}
+
+/* CTA buttons */
+.pb-trust__actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.pb-trust__cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text, #1a1a2e);
+    background: #fff;
+    padding: 16px 42px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.35s ease;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    letter-spacing: 0.3px;
+}
+.pb-trust__cta-primary:hover {
+    background: var(--color-warm, #F4A261);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(244,162,97,0.3);
+}
+.pb-trust__cta-primary i {
+    font-size: 13px;
+    transition: transform 0.3s ease;
+}
+.pb-trust__cta-primary:hover i {
+    transform: translateX(4px);
+}
+
+.pb-trust__cta-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    padding: 15px 38px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.35s ease;
+    letter-spacing: 0.3px;
+}
+.pb-trust__cta-whatsapp:hover {
+    background: #25D366;
+    border-color: #25D366;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 32px rgba(37,211,102,0.3);
+}
+.pb-trust__cta-whatsapp i { font-size: 20px; }
+
+/* Responsive */
+@@media (max-width: 991px) {
+    .pb-trust__bg { background-attachment: scroll; }
+}
+@@media (max-width: 767px) {
+    .pb-trust__bg { min-height: auto; }
+    .pb-trust__content { padding: 48px 16px 44px; }
+    .pb-trust__signals { gap: 10px; }
+    .pb-trust__signal { padding: 14px 16px 12px; min-width: 120px; border-radius: 14px; }
+    .pb-trust__signal-icon { width: 36px; height: 36px; border-radius: 10px; }
+    .pb-trust__signal-icon i { font-size: 15px; }
+    .pb-trust__signal-value { font-size: 20px; }
+    .pb-trust__sub { font-size: 15px; margin-bottom: 24px; }
+    .pb-trust__cta-primary { padding: 13px 30px; font-size: 14px; }
+    .pb-trust__cta-whatsapp { padding: 12px 26px; font-size: 14px; }
+}
+@@media (max-width: 480px) {
+    .pb-trust__content { padding: 40px 14px 36px; }
+    .pb-trust__signals { gap: 8px; }
+    .pb-trust__signal { min-width: 105px; padding: 14px 12px 12px; }
+    .pb-trust__signal-value { font-size: 18px; }
+    .pb-trust__signal-label { font-size: 10px; }
+    .pb-trust__actions { flex-direction: column; align-items: center; }
+    .pb-trust__shape--1, .pb-trust__shape--2 { display: none; }
+}
+</style>
+
+    <div class="pb-trust__bg" style="background-image: url('{{ asset('assets/img/school/olympics/peekaboo-056.jpeg') }}');">
+
+        <!-- Floating decorative shapes -->
+        <div class="pb-trust__shape pb-trust__shape--1"></div>
+        <div class="pb-trust__shape pb-trust__shape--2"></div>
+        <div class="pb-trust__shape pb-trust__shape--3"></div>
+        <div class="pb-trust__shape pb-trust__shape--4"></div>
+
+        <div class="pb-trust__content wow itfadeUp" data-wow-duration=".9s">
+
+            <!-- Badge -->
+            <div class="pb-trust__badge">
+                <i class="fa-solid fa-shield-check"></i>
+                Trusted by Parklands Families Since 2010
             </div>
-          </div>
+
+            <!-- Headline -->
+            <h2 class="pb-trust__heading">
+                Join <span>150+</span> Happy Families<br>in Parklands
+            </h2>
+            <p class="pb-trust__sub">
+                Parents choose Peekaboo because they see the difference — confident, happy children who love coming to school every day.
+            </p>
+
+            <!-- Trust Signals -->
+            <div class="pb-trust__signals">
+                <div class="pb-trust__signal wow itfadeUp" data-wow-delay="0.1s">
+                    <div class="pb-trust__signal-icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <span class="pb-trust__signal-value">4.9</span>
+                    <div class="pb-trust__signal-stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <span class="pb-trust__signal-label">Google Rating</span>
+                </div>
+                <div class="pb-trust__signal wow itfadeUp" data-wow-delay="0.2s">
+                    <div class="pb-trust__signal-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <span class="pb-trust__signal-value">{{ date('Y') - 2010 }}+</span>
+                    <span class="pb-trust__signal-label">Years Experience</span>
+                </div>
+                <div class="pb-trust__signal wow itfadeUp" data-wow-delay="0.3s">
+                    <div class="pb-trust__signal-icon">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <span class="pb-trust__signal-value">27</span>
+                    <span class="pb-trust__signal-label">Qualified Staff</span>
+                </div>
+                <div class="pb-trust__signal wow itfadeUp" data-wow-delay="0.4s">
+                    <div class="pb-trust__signal-icon">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <span class="pb-trust__signal-value">100%</span>
+                    <span class="pb-trust__signal-label">Love &amp; Care</span>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="pb-trust__divider"></div>
+
+            <!-- CTAs -->
+            <div class="pb-trust__actions">
+                <a href="{{ route('book-tour') }}" class="pb-trust__cta-primary">
+                    Book a Tour <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20learn%20more%20about%20Peekaboo%20Day%20Care." class="pb-trust__cta-whatsapp" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-whatsapp"></i> Chat With Us
+                </a>
+            </div>
+
         </div>
-
-        <!-- Video Modal -->
-        <div id="schoolVideoModal" class="mfp-hide">
-          <div class="peekaboo-video-modal">
-            <button type="button" class="peekaboo-video-close" title="Close">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-            <video id="schoolVideo" controls playsinline preload="metadata">
-              <source src="{{ asset('assets/img/school/school_video.mp4') }}" type="video/mp4">
-            </video>
-          </div>
-        </div>
-
-        <style>
-          /* ── Premium Video Modal ── */
-          .peekaboo-video-modal {
-            position: relative;
-            width: 90vw;
-            max-width: 960px;
-            margin: 0 auto;
-            background: #000;
-            border-radius: var(--radius-lg, 20px);
-            overflow: hidden;
-            box-shadow: 0 24px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.06);
-          }
-          .peekaboo-video-modal video {
-            display: block;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: contain;
-            background: #000;
-          }
-
-          /* Close button */
-          .peekaboo-video-close {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            z-index: 10;
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 50%;
-            background: rgba(0,0,0,.55);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: #fff;
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background .25s, transform .25s;
-          }
-          .peekaboo-video-close:hover {
-            background: var(--color-primary, #0077B6);
-            transform: scale(1.1);
-          }
-
-          /* Override Magnific Popup backdrop for premium feel */
-          .mfp-bg.mfp-ready { opacity: .88 !important; background: #0a0a0a !important; }
-          .mfp-wrap .mfp-content { padding: 20px; }
-          .mfp-container { padding: 0; }
-
-          /* Hide default mfp close button since we have our own */
-          .mfp-inline-holder .mfp-close { display: none !important; }
-
-          /* Mobile */
-          @media (max-width: 575px) {
-            .peekaboo-video-modal { width: 96vw; border-radius: var(--radius-md, 12px); }
-            .peekaboo-video-close { width: 34px; height: 34px; font-size: 15px; top: 8px; right: 8px; }
-          }
-        </style>
-
-        <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            $('.popup-video[href="#schoolVideoModal"]').magnificPopup({
-              type: 'inline',
-              midClick: true,
-              removalDelay: 200,
-              mainClass: 'mfp-fade',
-              callbacks: {
-                open: function() {
-                  var video = document.getElementById('schoolVideo');
-                  video.currentTime = 0;
-                  video.play();
-                },
-                close: function() {
-                  var video = document.getElementById('schoolVideo');
-                  video.pause();
-                  video.currentTime = 0;
-                }
-              }
-            });
-
-            $(document).on('click', '.peekaboo-video-close', function() {
-              $.magnificPopup.close();
-            });
-          });
-        </script>
-      </div>
     </div>
-  </div>
-</div>
-<!-- Video Section End -->
 
-<!-- ========== FUNFACT SECTION ==========
-     Layout mirrors Edunity ed-funfact-area / ed-funfact-wrap
-     CSS lives in assets/css/edunity-hero.css
-========================================= -->
-<div class="ed-funfact-area ed-funfact-wrap p-relative pb-90" style="padding-top: 100px;">
-
-  <div class="ed-funfact-shape-1 d-none d-xl-block">
-    <img src="{{ asset('assets/img/about/shape-1-5.png') }}" alt="">
-  </div>
-
-  <div class="container container-3">
-    <div class="row">
-
-      <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".1s">
-        <div class="it-funfact-item text-center border-style-1">
-          <div class="it-funfact-icon mb-30">
-            <span><i class="flaticon-teacher"></i></span>
-          </div>
-          <div class="it-funfact-content">
-            <h6><i class="purecounter" data-purecounter-duration="1" data-purecounter-end="150">0</i>+</h6>
-            <span>Happy Families</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".3s">
-        <div class="it-funfact-item text-center border-style-1">
-          <div class="it-funfact-icon mb-30">
-            <span><i class="flaticon-class"></i></span>
-          </div>
-          <div class="it-funfact-content">
-            <h6><i class="purecounter" data-purecounter-duration="1" data-purecounter-end="{{ date('Y') - 2010 }}">0</i>+</h6>
-            <span>Years Experience</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".5s">
-        <div class="it-funfact-item text-center border-style-1">
-          <div class="it-funfact-icon mb-30">
-            <span><i class="flaticon-completed-task"></i></span>
-          </div>
-          <div class="it-funfact-content">
-            <h6><i class="purecounter" data-purecounter-duration="1" data-purecounter-end="27">0</i></h6>
-            <span>Staff Members</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow itfadeUp" data-wow-duration=".9s" data-wow-delay=".7s">
-        <div class="it-funfact-item text-center">
-          <div class="it-funfact-icon mb-30">
-            <span><i class="flaticon-customer-review"></i></span>
-          </div>
-          <div class="it-funfact-content">
-            <h6>4.9 ★</h6>
-            <span>Google Rating</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- Funfact Section End -->
+</section>
+<!-- Trust Banner End -->
 
 <!-- ========== TESTIMONIALS SECTION ========== -->
 <div id="testimonials" class="it-testimonial-area ed-testimonial-style-2 ed-testimonial-style-3 pb-120 fix p-relative" style="padding-top: 110px; background-color: #F0EDE8;">
@@ -2013,65 +2194,318 @@
             </div>
         </div>
 
-        <!-- ── Our Classrooms Gallery ── -->
-        <div class="row mt-5 wow itfadeUp" data-wow-delay="0.2s">
-            <div class="col-lg-6 mx-auto text-center mb-4">
+        <!-- ══════════════════════════════════════════════════════════
+             SEE OUR SPACES — Premium Tabbed Gallery
+             ══════════════════════════════════════════════════════════ -->
+        <div class="row mt-5 pt-4 wow itfadeUp" data-wow-delay="0.2s">
+            <div class="col-lg-7 mx-auto text-center mb-2">
                 <span class="pb-daily__sub">See Our Spaces</span>
-                <h3 class="pb-daily__heading" style="font-size:28px;">Inside Our Classrooms</h3>
+                <h3 class="pb-daily__heading" style="font-size:28px;">Explore <span>Our World</span></h3>
+                <p class="pb-daily__lead" style="font-size:15px;">Bright classrooms, safe play areas and nurturing spaces — take a peek inside where your little one will learn, grow and thrive.</p>
             </div>
         </div>
 
-        <div class="pb-gallery__grid wow itfadeUp" data-wow-delay="0.3s">
-            @php
-                $schoolPhotos = [
-                    ['src' => 'infant-nurture-room.jpeg',        'alt' => 'Infant nurture room with soft play mats'],
-                    ['src' => 'classroom-numbers-learning.jpeg',  'alt' => 'Numbers and literacy learning classroom'],
-                    ['src' => 'classroom-theme-wall.jpeg',        'alt' => 'Classroom with theme wall and activity tables'],
-                    ['src' => 'classroom-cubbies-activities.jpeg','alt' => 'Classroom with cubbies and group activity tables'],
-                    ['src' => 'classroom-group-learning.jpeg',    'alt' => 'Group learning classroom setup'],
-                    ['src' => 'classroom-creative-arts.jpeg',     'alt' => 'Creative arts and crafts classroom'],
-                    ['src' => 'classroom-sensory-play.jpeg',      'alt' => 'Sensory play area with colourful learning mat'],
-                ];
-            @endphp
+        <!-- Tab Pills -->
+        <div class="pb-tabs wow itfadeUp" data-wow-delay="0.25s">
+            <div class="pb-tabs__track">
+                <button class="pb-tabs__pill is-active" data-filter="all">
+                    <i class="fa-solid fa-border-all"></i> All
+                </button>
+                <button class="pb-tabs__pill" data-filter="classrooms">
+                    <i class="fa-solid fa-chalkboard"></i> Classrooms
+                </button>
+                <button class="pb-tabs__pill" data-filter="baby">
+                    <i class="fa-solid fa-baby"></i> Baby Class
+                </button>
+                <button class="pb-tabs__pill" data-filter="creative">
+                    <i class="fa-solid fa-palette"></i> Creative Arts
+                </button>
+                <button class="pb-tabs__pill" data-filter="events">
+                    <i class="fa-solid fa-star"></i> Events
+                </button>
+                <button class="pb-tabs__pill" data-filter="fun">
+                    <i class="fa-solid fa-sun"></i> Fun & Outdoors
+                </button>
+                <button class="pb-tabs__pill" data-filter="videos">
+                    <i class="fa-solid fa-video"></i> Videos
+                </button>
+            </div>
+        </div>
 
-            @foreach($schoolPhotos as $photo)
-                <a href="{{ asset('assets/img/school/' . $photo['src']) }}" class="pb-gallery__item popup-image">
-                    <img src="{{ asset('assets/img/school/' . $photo['src']) }}" alt="{{ $photo['alt'] }}" loading="lazy">
-                    <div class="pb-gallery__overlay">
-                        <i class="fa-solid fa-magnifying-glass-plus"></i>
+        <!-- Gallery Grid -->
+        <div class="pb-gallery wow itfadeUp" data-wow-delay="0.3s">
+            <div class="pb-gallery__grid" id="peekabooGallery">
+
+                @php
+                    $basePath = public_path('assets/img/school');
+                    $baseUrl  = 'assets/img/school';
+
+                    // ── Category → folder(s) + alt text template + SEO-friendly descriptions ──
+                    $categories = [
+                        'classrooms' => [
+                            'folders' => ['classrooms', 'classroom_fun'],
+                            'alts' => [
+                                'Children learning in a bright classroom at Peekaboo Day Care Parklands',
+                                'Fun classroom activities and group learning at Peekaboo',
+                                'Educational play and lessons in a colourful Peekaboo classroom',
+                                'Engaging learning environment for children at Peekaboo Cape Town',
+                                'Kids enjoying structured classroom activities at Peekaboo Day Care',
+                            ],
+                        ],
+                        'baby' => [
+                            'folders' => ['baby_class'],
+                            'alts' => [
+                                'Nurturing baby class for infants at Peekaboo Day Care Parklands',
+                                'Safe and gentle baby room with soft play mats',
+                                'Infant development activities at Peekaboo Cape Town',
+                                'Little ones exploring sensory play in the baby class',
+                                'Caring environment for babies at Peekaboo Day Care',
+                            ],
+                        ],
+                        'creative' => [
+                            'folders' => ['coloring_time', 'fun_face-paintings'],
+                            'alts' => [
+                                'Creative colouring time at Peekaboo Day Care Parklands',
+                                'Children painting and creating artwork at Peekaboo',
+                                'Fun face painting activities for kids at Peekaboo Cape Town',
+                                'Arts and crafts session at Peekaboo Day Care',
+                                'Kids expressing creativity through art at Peekaboo',
+                            ],
+                        ],
+                        'events' => [
+                            'folders' => ['olympics', 'easter_fun', 'valentine'],
+                            'alts' => [
+                                'Easter celebration and fun activities at Peekaboo Day Care',
+                                'Valentine\'s Day festivities with the children at Peekaboo',
+                                'Mini Olympics sports day at Peekaboo Day Care Parklands',
+                                'Special event celebrations at Peekaboo Cape Town',
+                                'Children enjoying themed event activities at Peekaboo',
+                            ],
+                        ],
+                        'fun' => [
+                            'folders' => ['fun_time'],
+                            'alts' => [
+                                'Fun time and free play at Peekaboo Day Care Parklands',
+                                'Happy children playing together at Peekaboo',
+                                'Outdoor and indoor fun activities at Peekaboo Cape Town',
+                                'Kids enjoying playtime at Peekaboo Day Care',
+                                'Active play and laughter at Peekaboo',
+                            ],
+                        ],
+                    ];
+
+                    // Scan each folder and build the gallery items array
+                    $galleryItems = [];
+                    foreach ($categories as $cat => $config) {
+                        $altIndex = 0;
+                        $altPool  = $config['alts'];
+                        foreach ($config['folders'] as $folder) {
+                            $dir = $basePath . DIRECTORY_SEPARATOR . $folder;
+                            if (!is_dir($dir)) continue;
+                            $files = array_filter(scandir($dir), function($f) {
+                                return preg_match('/\.(jpe?g|png|webp)$/i', $f);
+                            });
+                            sort($files);
+                            foreach ($files as $file) {
+                                $galleryItems[] = [
+                                    'src' => $folder . '/' . $file,
+                                    'cat' => $cat,
+                                    'alt' => $altPool[$altIndex % count($altPool)],
+                                ];
+                                $altIndex++;
+                            }
+                        }
+                    }
+
+                    // Add root-level loose images to 'fun' category
+                    $rootImages = array_filter(scandir($basePath), function($f) use ($basePath) {
+                        return preg_match('/\.(jpe?g|png|webp)$/i', $f) && is_file($basePath . DIRECTORY_SEPARATOR . $f);
+                    });
+                    sort($rootImages);
+                    $funAlts = $categories['fun']['alts'];
+                    foreach ($rootImages as $ri => $rootImg) {
+                        $galleryItems[] = [
+                            'src' => $rootImg,
+                            'cat' => 'fun',
+                            'alt' => $funAlts[$ri % count($funAlts)],
+                        ];
+                    }
+
+                    // Shuffle within each category so the "All" view looks varied
+                    // Group by category, pick items round-robin for "All" display order
+                    $grouped = [];
+                    foreach ($galleryItems as $item) {
+                        $grouped[$item['cat']][] = $item;
+                    }
+                    $sortedItems = [];
+                    $maxLen = max(array_map('count', $grouped));
+                    for ($i = 0; $i < $maxLen; $i++) {
+                        foreach ($grouped as $cat => $items) {
+                            if (isset($items[$i])) {
+                                $sortedItems[] = $items[$i];
+                            }
+                        }
+                    }
+
+                    // ── Videos — from out-door_fun folder + root ──
+                    $videoFiles = [];
+                    $outdoorDir = $basePath . DIRECTORY_SEPARATOR . 'out-door_fun';
+                    if (is_dir($outdoorDir)) {
+                        $vids = array_filter(scandir($outdoorDir), fn($f) => preg_match('/\.mp4$/i', $f));
+                        sort($vids);
+                        foreach ($vids as $v) {
+                            $videoFiles[] = 'out-door_fun/' . $v;
+                        }
+                    }
+                    // Root video
+                    if (file_exists($basePath . '/school_video.mp4')) {
+                        $videoFiles[] = 'school_video.mp4';
+                    }
+
+                    $videoAlts = [
+                        'Outdoor play and fun activities at Peekaboo Day Care Parklands',
+                        'Children enjoying outdoor time at Peekaboo Cape Town',
+                        'Active outdoor play at Peekaboo Day Care',
+                        'Fun outdoor adventures at Peekaboo',
+                        'Kids playing outside at Peekaboo Parklands',
+                        'Peekaboo Day Care school tour video',
+                        'A day at Peekaboo Day Care Centre',
+                    ];
+                @endphp
+
+                {{-- Image items (round-robin sorted for variety) --}}
+                @foreach($sortedItems as $idx => $item)
+                    <a href="{{ asset($baseUrl . '/' . $item['src']) }}"
+                       class="pb-gallery__item popup-image"
+                       data-category="{{ $item['cat'] }}"
+                       title="{{ $item['alt'] }}">
+                        <img src="{{ asset($baseUrl . '/' . $item['src']) }}"
+                             alt="{{ $item['alt'] }}"
+                             loading="lazy"
+                             width="400" height="300">
+                        <div class="pb-gallery__overlay">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                    </a>
+                @endforeach
+
+                {{-- Video items --}}
+                @foreach($videoFiles as $vi => $vidSrc)
+                    <div class="pb-gallery__item pb-gallery__item--video"
+                         data-category="videos"
+                         data-video-src="{{ asset($baseUrl . '/' . $vidSrc) }}">
+                        <video class="pb-gallery__thumb-video" muted playsinline preload="metadata">
+                            <source src="{{ asset($baseUrl . '/' . $vidSrc) }}#t=0.5" type="video/mp4">
+                        </video>
+                        <div class="pb-gallery__play-btn">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <div class="pb-gallery__vid-label"><i class="fa-solid fa-video"></i> Video</div>
                     </div>
-                </a>
-            @endforeach
+                @endforeach
+
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="pb-gallery__pagination" id="galleryPagination">
+                <div class="pb-gallery__counter" id="galleryCounter"></div>
+                <div class="pb-gallery__nav">
+                    <button class="pb-gallery__nav-btn" id="galleryPrev" aria-label="Previous page">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div class="pb-gallery__dots" id="galleryDots"></div>
+                    <button class="pb-gallery__nav-btn" id="galleryNext" aria-label="Next page">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <style>
-        /* ── School Photo Gallery Grid ── */
+        /* ══════════════════════════════════════════════════════════
+           TABBED GALLERY — Premium Pill Tabs + Filtered Grid
+           ══════════════════════════════════════════════════════════ */
+
+        /* ── Tab Pills ── */
+        .pb-tabs { text-align: center; margin: 32px 0 40px; }
+        .pb-tabs__track {
+            display: inline-flex;
+            gap: 10px;
+            background: #fff;
+            padding: 6px;
+            border-radius: var(--radius-pill, 50px);
+            box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+            overflow-x: auto;
+            max-width: 100%;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .pb-tabs__track::-webkit-scrollbar { display: none; }
+
+        .pb-tabs__pill {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 22px;
+            border: none;
+            border-radius: var(--radius-pill, 50px);
+            background: transparent;
+            color: var(--color-text-muted, #6b7280);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .pb-tabs__pill i { font-size: 12px; }
+        .pb-tabs__pill:hover {
+            color: var(--color-primary, #0077B6);
+            background: rgba(0,119,182,0.06);
+        }
+        .pb-tabs__pill.is-active {
+            background: var(--color-primary, #0077B6);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(0,119,182,0.3);
+        }
+
+        /* ── Gallery Grid ── */
         .pb-gallery__grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 260px;
             gap: 16px;
-        }
-        .pb-gallery__grid .pb-gallery__item:first-child {
-            grid-column: span 2;
-            grid-row: span 2;
         }
         .pb-gallery__item {
             position: relative;
-            border-radius: var(--radius-lg, 20px);
+            border-radius: 16px;
             overflow: hidden;
             display: block;
+            aspect-ratio: 4 / 3;
+            cursor: pointer;
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
-        .pb-gallery__item img {
+        .pb-gallery__item.is-hidden {
+            display: none;
+        }
+        .pb-gallery__item.is-fading {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .pb-gallery__item img,
+        .pb-gallery__item video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.5s ease;
+            transition: transform 0.55s cubic-bezier(0.22,0.61,0.36,1);
         }
-        .pb-gallery__item:hover img {
+        .pb-gallery__item:hover img,
+        .pb-gallery__item:hover video {
             transform: scale(1.06);
         }
+
+        /* Overlay */
         .pb-gallery__overlay {
             position: absolute;
             inset: 0;
@@ -2083,46 +2517,455 @@
         }
         .pb-gallery__overlay i {
             color: #fff;
-            font-size: 26px;
+            font-size: 24px;
             opacity: 0;
             transform: translateY(8px);
             transition: opacity 0.3s ease, transform 0.3s ease;
             text-shadow: 0 2px 8px rgba(0,0,0,.3);
         }
         .pb-gallery__item:hover .pb-gallery__overlay {
-            background: rgba(0, 119, 182, 0.35);
+            background: rgba(0, 119, 182, 0.3);
         }
         .pb-gallery__item:hover .pb-gallery__overlay i {
             opacity: 1;
             transform: translateY(0);
         }
-        @media (max-width: 991px) {
-            .pb-gallery__grid {
-                grid-template-columns: repeat(3, 1fr);
-                grid-auto-rows: 220px;
-            }
+
+        /* Video-specific */
+        .pb-gallery__item--video {
+            position: relative;
+            cursor: pointer;
+            background: #0a1628;
         }
-        @media (max-width: 767px) {
-            .pb-gallery__grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 200px;
-                gap: 12px;
-            }
-            .pb-gallery__grid .pb-gallery__item:first-child {
-                grid-column: span 2;
-                grid-row: span 1;
-            }
+        .pb-gallery__thumb-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.55s cubic-bezier(0.22,0.61,0.36,1);
         }
-        @media (max-width: 480px) {
-            .pb-gallery__grid {
-                grid-template-columns: 1fr;
-                grid-auto-rows: 220px;
-            }
-            .pb-gallery__grid .pb-gallery__item:first-child {
-                grid-column: span 1;
-            }
+        .pb-gallery__item--video:hover .pb-gallery__thumb-video {
+            transform: scale(1.06);
+        }
+        .pb-gallery__play-btn {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+        }
+        .pb-gallery__play-btn i {
+            color: var(--color-primary, #0077B6);
+            font-size: 22px;
+            margin-left: 3px;
+            transition: color 0.3s ease;
+        }
+        .pb-gallery__item--video:hover .pb-gallery__play-btn {
+            transform: translate(-50%, -50%) scale(1.12);
+            box-shadow: 0 8px 32px rgba(0,119,182,0.4);
+            background: var(--color-primary, #0077B6);
+        }
+        .pb-gallery__item--video:hover .pb-gallery__play-btn i {
+            color: #fff;
+        }
+        /* Pulsing ring effect */
+        .pb-gallery__play-btn::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4);
+            animation: pbPlayPulse 2s ease-in-out infinite;
+        }
+        @@keyframes pbPlayPulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 0; }
+        }
+
+        .pb-gallery__vid-label {
+            position: absolute;
+            bottom: 14px; left: 14px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: var(--radius-pill, 50px);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 3;
+        }
+        .pb-gallery__vid-label i { font-size: 10px; }
+
+        /* ── Video Modal ── */
+        .pb-video-modal {
+            position: relative;
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 900px;
+            width: 92vw;
+            margin: 0 auto;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+        }
+        .pb-video-modal video {
+            width: 100%;
+            display: block;
+            border-radius: 16px;
+            max-height: 80vh;
+        }
+        .pb-video-modal__close {
+            position: absolute;
+            top: 12px; right: 12px;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .pb-video-modal__close:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+        /* Magnific overrides for video modal */
+        .mfp-video-modal .mfp-content {
+            max-width: 900px;
+        }
+        .mfp-video-modal .mfp-close {
+            display: none;
+        }
+        .mfp-bg.mfp-ready { opacity: .88 !important; background: #0a0a0a !important; }
+        .mfp-wrap .mfp-content { padding: 20px; }
+        .mfp-inline-holder .mfp-close { display: none !important; }
+
+        /* Pagination area */
+        .pb-gallery__pagination {
+            text-align: center;
+            margin-top: 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .pb-gallery__counter {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-text-muted, #6b7280);
+            letter-spacing: 0.3px;
+        }
+        .pb-gallery__counter strong {
+            color: var(--color-primary, #0077B6);
+        }
+
+        /* Nav row: prev · dots · next */
+        .pb-gallery__nav {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .pb-gallery__nav-btn {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            border: 2px solid var(--color-primary, #0077B6);
+            background: transparent;
+            color: var(--color-primary, #0077B6);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .pb-gallery__nav-btn:hover:not(:disabled) {
+            background: var(--color-primary, #0077B6);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(0,119,182,0.3);
+        }
+        .pb-gallery__nav-btn:disabled {
+            opacity: 0.3;
+            cursor: default;
+            border-color: var(--color-text-muted, #aaa);
+            color: var(--color-text-muted, #aaa);
+        }
+
+        /* Page dots */
+        .pb-gallery__dots {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .pb-gallery__dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0,119,182,0.15);
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+        .pb-gallery__dot:hover {
+            background: rgba(0,119,182,0.35);
+            transform: scale(1.2);
+        }
+        .pb-gallery__dot.is-active {
+            background: var(--color-primary, #0077B6);
+            width: 28px;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,119,182,0.3);
+        }
+        /* When many pages, collapse middle dots */
+        .pb-gallery__dot--ellipsis {
+            width: auto; height: auto;
+            background: none !important;
+            cursor: default;
+            font-size: 12px;
+            color: var(--color-text-muted, #999);
+            letter-spacing: 2px;
+            transform: none !important;
+            box-shadow: none !important;
+            border-radius: 0;
+        }
+
+        /* ── Responsive ── */
+        @@media (max-width: 1199px) {
+            .pb-gallery__grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @@media (max-width: 767px) {
+            .pb-gallery__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .pb-tabs__track { padding: 4px; gap: 6px; }
+            .pb-tabs__pill { padding: 8px 16px; font-size: 12px; }
+            .pb-gallery__play-btn { width: 46px; height: 46px; }
+            .pb-gallery__play-btn i { font-size: 16px; }
+            .pb-gallery__play-btn::before { inset: -4px; }
+            .pb-video-modal { border-radius: 10px; }
+            .pb-video-modal video { border-radius: 10px; }
+            .pb-gallery__nav-btn { width: 36px; height: 36px; font-size: 12px; }
+            .pb-gallery__dots { gap: 6px; }
+            .pb-gallery__dot { width: 8px; height: 8px; }
+            .pb-gallery__dot.is-active { width: 22px; }
+        }
+        @@media (max-width: 480px) {
+            .pb-gallery__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .pb-gallery__item { border-radius: 12px; }
+            .pb-tabs__pill { padding: 7px 12px; font-size: 11px; }
+            .pb-tabs__pill i { display: none; }
+            .pb-gallery__nav { gap: 10px; }
         }
         </style>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const PER_PAGE = 8;
+            const gallery = document.getElementById('peekabooGallery');
+            const pills = document.querySelectorAll('.pb-tabs__pill');
+            const pagination = document.getElementById('galleryPagination');
+            const counter = document.getElementById('galleryCounter');
+            const dotsWrap = document.getElementById('galleryDots');
+            const prevBtn = document.getElementById('galleryPrev');
+            const nextBtn = document.getElementById('galleryNext');
+
+            let currentFilter = 'all';
+            let currentPage = 1;
+
+            function getFilteredItems(filter) {
+                const items = Array.from(gallery.querySelectorAll('.pb-gallery__item'));
+                if (filter === 'all') return items;
+                return items.filter(item => item.dataset.category === filter);
+            }
+
+            function getTotalPages(filtered) {
+                return Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+            }
+
+            // Build the page dots — show max ~7 dots with ellipsis for large page counts
+            function buildDots(totalPages) {
+                dotsWrap.innerHTML = '';
+                if (totalPages <= 1) return;
+
+                const maxVisible = 7;
+                let pages = [];
+
+                if (totalPages <= maxVisible) {
+                    for (let i = 1; i <= totalPages; i++) pages.push(i);
+                } else {
+                    // Always show first, last, current, and neighbors
+                    pages.push(1);
+                    if (currentPage > 3) pages.push('...');
+                    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                        pages.push(i);
+                    }
+                    if (currentPage < totalPages - 2) pages.push('...');
+                    pages.push(totalPages);
+                }
+
+                pages.forEach(p => {
+                    if (p === '...') {
+                        const el = document.createElement('span');
+                        el.className = 'pb-gallery__dot pb-gallery__dot--ellipsis';
+                        el.textContent = '•••';
+                        dotsWrap.appendChild(el);
+                    } else {
+                        const dot = document.createElement('button');
+                        dot.className = 'pb-gallery__dot' + (p === currentPage ? ' is-active' : '');
+                        dot.setAttribute('aria-label', 'Page ' + p);
+                        dot.addEventListener('click', function() {
+                            currentPage = p;
+                            render();
+                        });
+                        dotsWrap.appendChild(dot);
+                    }
+                });
+            }
+
+            function render() {
+                const allItems = Array.from(gallery.querySelectorAll('.pb-gallery__item'));
+                const filtered = getFilteredItems(currentFilter);
+                const total = filtered.length;
+                const totalPages = getTotalPages(filtered);
+
+                // Clamp page
+                if (currentPage > totalPages) currentPage = totalPages;
+                if (currentPage < 1) currentPage = 1;
+
+                const startIdx = (currentPage - 1) * PER_PAGE;
+                const endIdx = Math.min(startIdx + PER_PAGE, total);
+
+                // Pause any playing videos
+                gallery.querySelectorAll('.pb-gallery__item--video.is-playing').forEach(v => {
+                    v.querySelector('video')?.pause();
+                    v.classList.remove('is-playing');
+                });
+
+                // Hide everything
+                allItems.forEach(item => {
+                    item.classList.add('is-hidden');
+                    item.classList.remove('is-fading');
+                });
+
+                // Show only current page items with stagger animation
+                filtered.forEach((item, i) => {
+                    if (i >= startIdx && i < endIdx) {
+                        item.classList.remove('is-hidden');
+                        item.classList.add('is-fading');
+                        const delay = (i - startIdx) * 50;
+                        setTimeout(() => item.classList.remove('is-fading'), 30 + delay);
+                    }
+                });
+
+                // ── Update pagination UI ──
+                if (totalPages <= 1) {
+                    pagination.style.display = 'none';
+                } else {
+                    pagination.style.display = 'flex';
+
+                    // Counter
+                    const showStart = startIdx + 1;
+                    const showEnd = endIdx;
+                    counter.innerHTML = 'Page <strong>' + currentPage + '</strong> of <strong>' + totalPages + '</strong> &nbsp;·&nbsp; ' +
+                        showStart + '–' + showEnd + ' of ' + total + ' photos';
+
+                    // Dots
+                    buildDots(totalPages);
+
+                    // Prev / Next
+                    prevBtn.disabled = (currentPage <= 1);
+                    nextBtn.disabled = (currentPage >= totalPages);
+                }
+            }
+
+            // Tab click — reset to page 1
+            pills.forEach(pill => {
+                pill.addEventListener('click', function() {
+                    pills.forEach(p => p.classList.remove('is-active'));
+                    this.classList.add('is-active');
+                    currentFilter = this.dataset.filter;
+                    currentPage = 1;
+                    render();
+                });
+            });
+
+            // Prev / Next
+            prevBtn.addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    render();
+                }
+            });
+            nextBtn.addEventListener('click', function() {
+                const filtered = getFilteredItems(currentFilter);
+                if (currentPage < getTotalPages(filtered)) {
+                    currentPage++;
+                    render();
+                }
+            });
+
+            // Video — open in modal on click
+            gallery.querySelectorAll('.pb-gallery__item--video').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const videoSrc = this.getAttribute('data-video-src');
+                    if (!videoSrc) return;
+
+                    $.magnificPopup.open({
+                        items: {
+                            src: '<div class="pb-video-modal">' +
+                                    '<button class="pb-video-modal__close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>' +
+                                    '<video controls autoplay playsinline>' +
+                                        '<source src="' + videoSrc + '" type="video/mp4">' +
+                                        'Your browser does not support the video tag.' +
+                                    '</video>' +
+                                 '</div>',
+                            type: 'inline'
+                        },
+                        mainClass: 'mfp-fade mfp-video-modal',
+                        removalDelay: 200,
+                        closeBtnInside: false,
+                        closeOnBgClick: true,
+                        callbacks: {
+                            open: function() {
+                                // Focus the video
+                                var vid = document.querySelector('.pb-video-modal video');
+                                if (vid) vid.focus();
+                            },
+                            close: function() {
+                                // Pause on close
+                                var vid = document.querySelector('.pb-video-modal video');
+                                if (vid) { vid.pause(); vid.src = ''; }
+                            }
+                        }
+                    });
+
+                    // Close button handler
+                    $(document).off('click.pbVidClose').on('click.pbVidClose', '.pb-video-modal__close', function() {
+                        $.magnificPopup.close();
+                    });
+                });
+            });
+
+            // Initial render
+            render();
+        });
+        </script>
 
     </div>
 </section>
