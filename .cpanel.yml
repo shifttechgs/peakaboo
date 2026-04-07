@@ -1,24 +1,30 @@
 deployment:
   tasks:
     - export APPPATH=/home/peekaboodaycarec/public_html/peekaboo
+    - export LOG=$APPPATH/storage/logs/deploy.log
+    - export REPODIR=$(pwd)
+    - echo "=== Deploy $(date) from $REPODIR ===" >> $LOG
 
     # ── 1. Maintenance mode ──
-    - php $APPPATH/artisan down --refresh=15 || true
+    - php $APPPATH/artisan down --refresh=15 2>>$LOG || true
 
-    # ── 2. Ensure required directories exist ──
+    # ── 2. Copy code from repo to live dir (skip if same dir) ──
+    - test "$REPODIR" = "$APPPATH" || rsync -a --delete --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' "$REPODIR/" "$APPPATH/" 2>>$LOG
+    - echo "rsync step done" >> $LOG
+
+    # ── 3. Ensure directories + permissions ──
     - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data} $APPPATH/storage/logs $APPPATH/storage/app/public $APPPATH/bootstrap/cache
-
-    # ── 3. Fix permissions ──
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
 
-    # ── 4. Composer install ONLY if vendor missing or composer.lock changed ──
-    - cd $APPPATH && test -d vendor || composer install --no-dev --optimize-autoloader --no-interaction 2>&1
+    # ── 4. Composer install only if vendor missing ──
+    - cd $APPPATH && test -d vendor || composer install --no-dev --optimize-autoloader --no-interaction 2>>$LOG
 
-    # ── 5. Clear old caches + rebuild in one go ──
-    - php $APPPATH/artisan optimize:clear
-    - php $APPPATH/artisan migrate --force
+    # ── 5. Clear + rebuild caches ──
+    - php $APPPATH/artisan optimize:clear 2>>$LOG
+    - php $APPPATH/artisan migrate --force 2>>$LOG
     - php $APPPATH/artisan storage:link 2>/dev/null || true
-    - php $APPPATH/artisan optimize
+    - php $APPPATH/artisan optimize 2>>$LOG
 
     # ── 6. Back online ──
-    - php $APPPATH/artisan up
+    - php $APPPATH/artisan up 2>>$LOG
+    - echo "=== Deploy complete $(date) ===" >> $LOG
