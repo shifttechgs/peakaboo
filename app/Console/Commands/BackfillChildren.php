@@ -56,7 +56,7 @@ class BackfillChildren extends Command
                             'id_number'      => $app->child_id_number,
                             'language'       => $app->child_language,
                             'documents'      => $app->documents,
-                            'parent_user_id' => $app->parent_user_id ?? 0,
+                            'parent_user_id' => $app->parent_user_id,
                             'child_user_id'  => $app->child_user_id,
                         ]);
 

@@ -113,7 +113,7 @@ class AdmissionsController extends Controller
                 'id_number'      => $application->child_id_number,
                 'language'       => $application->child_language,
                 'documents'      => $application->documents,
-                'parent_user_id' => $application->parent_user_id ?? 0, // 0 = not yet linked; updated on parent invite accept
+                'parent_user_id' => $application->parent_user_id, // null until parent accepts invite
             ]);
 
             $application->child_id = $child->id;
@@ -150,6 +150,12 @@ class AdmissionsController extends Controller
                     'parent_user_id' => $existingUser->id,
                     'invited_at'     => now(),
                 ]);
+                // Back-fill child record with parent link
+                if ($application->child_id) {
+                    Child::where('id', $application->child_id)
+                        ->whereNull('parent_user_id')
+                        ->update(['parent_user_id' => $existingUser->id]);
+                }
                 $application->createChildUser();
                 $inviteMessage = " Linked to existing account for {$existingUser->name}.";
             } else {
@@ -237,6 +243,13 @@ class AdmissionsController extends Controller
                 'parent_user_id' => $existingUser->id,
                 'invited_at'     => now(),
             ]);
+
+            // Back-fill child record with parent link
+            if ($application->child_id) {
+                Child::where('id', $application->child_id)
+                    ->whereNull('parent_user_id')
+                    ->update(['parent_user_id' => $existingUser->id]);
+            }
 
             // Create child user from application data
             $application->createChildUser();

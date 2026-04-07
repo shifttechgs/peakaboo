@@ -28,7 +28,10 @@ deployment:
     - cp -f "$REPODIR/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || true
     - echo "public files synced" >> $LOG
 
+    # ── 5. Run migrations ──
+    - cd $APPPATH && php artisan migrate --force >> $LOG 2>&1 || echo "migration warning (check log)" >> $LOG
+    - echo "migrations done" >> $LOG
 
-    # ── 5. Permissions ──
+    # ── 6. Permissions ──
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
     - echo "$(date) | Deploy complete" >> $LOG
