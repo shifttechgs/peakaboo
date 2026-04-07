@@ -6,33 +6,19 @@ deployment:
     - php $APPPATH/artisan down --refresh=15 || true
 
     # ── 2. Ensure required directories exist ──
-    - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data}
-    - mkdir -p $APPPATH/storage/logs
-    - mkdir -p $APPPATH/storage/app/public
-    - mkdir -p $APPPATH/bootstrap/cache
+    - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data} $APPPATH/storage/logs $APPPATH/storage/app/public $APPPATH/bootstrap/cache
 
     # ── 3. Fix permissions ──
-    - chmod -R 775 $APPPATH/storage
-    - chmod -R 775 $APPPATH/bootstrap/cache
+    - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
 
-    # ── 4. Install Composer dependencies (vendor is gitignored) ──
-    - cd $APPPATH && composer install --no-dev --optimize-autoloader --no-interaction 2>&1
+    # ── 4. Composer install ONLY if vendor missing or composer.lock changed ──
+    - cd $APPPATH && test -d vendor || composer install --no-dev --optimize-autoloader --no-interaction 2>&1
 
-    # ── 5. Clear all caches (views, config, routes, events) ──
+    # ── 5. Clear old caches + rebuild in one go ──
     - php $APPPATH/artisan optimize:clear
-
-    # ── 6. Run database migrations ──
     - php $APPPATH/artisan migrate --force
-
-    # ── 7. Create storage symlink (idempotent) ──
     - php $APPPATH/artisan storage:link 2>/dev/null || true
+    - php $APPPATH/artisan optimize
 
-    # ── 8. Rebuild caches for performance ──
-    - php $APPPATH/artisan config:cache
-    - php $APPPATH/artisan route:cache
-    - php $APPPATH/artisan view:cache
-    - php $APPPATH/artisan event:cache
-
-    # ── 9. Bring app back online ──
+    # ── 6. Back online ──
     - php $APPPATH/artisan up
-
