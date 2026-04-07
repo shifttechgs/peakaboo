@@ -97,7 +97,7 @@
             <div class="ed-hero-2-button d-flex align-items-center flex-wrap">
 
               <a class="ed-btn-radius" href="{{ route('enrol.index') }}">
-                Enrol Nowss
+                Enrol Now
               </a>
 
               <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('book-tour') }}">
