@@ -101,7 +101,7 @@
               </a>
 
               <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('book-tour') }}">
-                <i class="fa-regular fa-calendar-check"></i> Book a Tourss
+                <i class="fa-regular fa-calendar-check"></i> Book a Tour
               </a>
 
             </div>

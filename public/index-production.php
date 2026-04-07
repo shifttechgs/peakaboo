@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 define('LARAVEL_START', microtime(true));
 
 // ── Secure cPanel layout: app lives OUTSIDE public_html ──
-// /home/peekaboodaycarec/public_html/index.php → /home/peekaboodaycarec/peekaboo/
 $appBase = dirname(__DIR__).'/peekaboo';
 
-// Fallback: if app is still inside public_html (migration period)
-if (!is_dir($appBase.'/vendor')) {
-    $appBase = __DIR__.'/peekaboo';
+// Debug: if something is missing, show what
+if (!is_dir($appBase)) {
+    die('App directory not found: '.$appBase);
+}
+if (!file_exists($appBase.'/vendor/autoload.php')) {
+    die('Vendor missing at: '.$appBase.'/vendor/autoload.php — Upload vendor/ to '.$appBase);
+}
+if (!file_exists($appBase.'/.env')) {
+    die('.env missing at: '.$appBase.'/.env — Copy your .env file to '.$appBase);
 }
 
 // Determine if the application is in maintenance mode...
@@ -27,6 +32,8 @@ require $appBase.'/vendor/autoload.php';
 $app = require_once $appBase.'/bootstrap/app.php';
 
 $app->handleRequest(Request::capture());
+
+
 
 
 
