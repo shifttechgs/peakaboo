@@ -97,7 +97,7 @@
             <div class="ed-hero-2-button d-flex align-items-center flex-wrap">
 
               <a class="ed-btn-radius" href="{{ route('enrol.index') }}">
-                Enrol Now
+                Enrol Nowss
               </a>
 
               <a class="ed-btn-radius ed-btn-radius--outline" href="{{ route('book-tour') }}">
@@ -148,7 +148,7 @@
           {{-- Floating badge: Google rating — top-right, ittranslateX2 drift --}}
           <div class="ed-hero-thumb-courses d-none d-md-block">
             <i>4.9 <span style="color:#FC9F0B;font-size:16px;letter-spacing:1px;">&#9733;&#9733;&#9733;&#9733;<span style="opacity:0.4;">&#9733;</span></span></i>
-            <span>Google RatingSS</span>
+            <span>Google Rating</span>
           </div>
 
           {{-- Inner decorative shape (swings, inside image area) --}}
