@@ -10,28 +10,24 @@ deployment:
     - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data} $APPPATH/storage/logs $APPPATH/storage/app/public $APPPATH/bootstrap/cache
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
 
-    # ── 2. Wipe caches ──
+    # ── 2. Wipe ALL caches (no artisan needed) ──
     - echo "=== $(date) ===" >> $LOG
     - rm -f $APPPATH/bootstrap/cache/*.php 2>/dev/null || true
     - rm -rf $APPPATH/storage/framework/views/* 2>/dev/null || true
+    - rm -rf $APPPATH/storage/framework/cache/data/* 2>/dev/null || true
     - echo "caches wiped" >> $LOG
 
-    # ── 3. Sync app code only ──
+    # ── 3. Sync app code ──
     - rsync -a --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/"
     - echo "code synced" >> $LOG
 
-    # ── 4. Sync index.php + small public files only (NO assets) ──
+    # ── 4. Copy public files ──
     - cp -f "$REPODIR/public/index-production.php" "$PUBPATH/index.php"
     - cp -f "$REPODIR/public/robots.txt" "$PUBPATH/robots.txt" 2>/dev/null || true
     - cp -f "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>/dev/null || true
     - cp -f "$REPODIR/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || true
     - echo "public files synced" >> $LOG
 
-    # ── 5. Rebuild caches (capture errors) ──
-    - (php $APPPATH/artisan view:cache >> $LOG 2>&1) || echo "FAIL view:cache: $?" >> $LOG
-    - (php $APPPATH/artisan config:cache >> $LOG 2>&1) || echo "FAIL config:cache: $?" >> $LOG
-    - (php $APPPATH/artisan route:cache >> $LOG 2>&1) || echo "FAIL route:cache: $?" >> $LOG
-    - (php $APPPATH/artisan migrate --force >> $LOG 2>&1) || echo "FAIL migrate: $?" >> $LOG
-    - (php $APPPATH/artisan storage:link >> $LOG 2>&1) || true
+    # ── 5. Permissions ──
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
     - echo "$(date) | Deploy complete" >> $LOG
