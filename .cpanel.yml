@@ -3,46 +3,30 @@ deployment:
     - export HOMEDIR=/home/peekaboodaycarec
     - export APPPATH=$HOMEDIR/public_html/peekaboo
     - export PUBPATH=$HOMEDIR/public_html
-    - export LOG=$APPPATH/storage/logs/deploy.log
     - export REPODIR=$(pwd)
-    - echo "=== Deploy $(date) ===" >> $LOG
 
-    # ── 1. Ensure critical dirs exist FIRST ──
+    # ── 1. Ensure dirs + permissions ──
     - mkdir -p $APPPATH/storage/framework/{sessions,views,cache/data} $APPPATH/storage/logs $APPPATH/storage/app/public $APPPATH/bootstrap/cache
     - chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
 
-    # ── 2. WIPE old cached config (may have wrong paths) ──
-    - rm -f $APPPATH/bootstrap/cache/config.php $APPPATH/bootstrap/cache/routes-v7.php $APPPATH/bootstrap/cache/events.php $APPPATH/bootstrap/cache/services.php $APPPATH/bootstrap/cache/packages.php 2>>$LOG || true
-    - echo "old caches wiped" >> $LOG
+    # ── 2. Wipe old caches ──
+    - rm -f $APPPATH/bootstrap/cache/config.php $APPPATH/bootstrap/cache/routes-v7.php $APPPATH/bootstrap/cache/events.php $APPPATH/bootstrap/cache/services.php $APPPATH/bootstrap/cache/packages.php 2>/dev/null || true
 
-    # ── 3. Maintenance mode ──
-    - php $APPPATH/artisan down --refresh=15 2>>$LOG || true
+    # ── 3. Sync app code ──
+    - rsync -a --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/"
 
-    # ── 4. Sync app code ──
-    - rsync -a --exclude='.env' --exclude='storage/' --exclude='vendor/' --exclude='.git/' --exclude='node_modules/' --exclude='public/' "$REPODIR/" "$APPPATH/" >> $LOG 2>&1
-    - echo "app code synced" >> $LOG
+    # ── 4. Sync assets to public_html ──
+    - rsync -a "$REPODIR/public/assets/" "$PUBPATH/assets/"
+    - cp -f "$REPODIR/public/index.php" "$PUBPATH/index.php" 2>/dev/null || true
+    - cp -f "$REPODIR/public/robots.txt" "$PUBPATH/robots.txt" 2>/dev/null || true
+    - cp -f "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>/dev/null || true
 
-    # ── 5. Sync public assets into public_html/ ──
-    - rsync -a "$REPODIR/public/assets/" "$PUBPATH/assets/" >> $LOG 2>&1
-    - rsync -a "$REPODIR/public/index.php" "$PUBPATH/index.php" 2>>$LOG || true
-    - rsync -a "$REPODIR/public/robots.txt" "$PUBPATH/robots.txt" 2>>$LOG || true
-    - rsync -a "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>>$LOG || true
-    - echo "assets synced" >> $LOG
+    # ── 5. Composer ONLY if vendor missing ──
+    - cd $APPPATH && test -d vendor/autoload.php || composer install --no-dev --optimize-autoloader --no-interaction
 
-    # ── 6. Composer install ──
-    - cd $APPPATH && composer install --no-dev --optimize-autoloader --no-interaction 2>>$LOG
-
-    # ── 7. Rebuild caches with CORRECT server paths ──
-    - php $APPPATH/artisan package:discover 2>>$LOG
-    - php $APPPATH/artisan config:cache 2>>$LOG
-    - php $APPPATH/artisan route:cache 2>>$LOG
-    - php $APPPATH/artisan view:cache 2>>$LOG
-    - php $APPPATH/artisan event:cache 2>>$LOG
-
-    # ── 8. Run migrations ──
-    - php $APPPATH/artisan migrate --force 2>>$LOG
+    # ── 6. Rebuild caches ──
+    - php $APPPATH/artisan config:cache
+    - php $APPPATH/artisan route:cache
+    - php $APPPATH/artisan view:cache
+    - php $APPPATH/artisan migrate --force
     - php $APPPATH/artisan storage:link 2>/dev/null || true
-
-    # ── 9. Back online ──
-    - php $APPPATH/artisan up 2>>$LOG
-    - echo "=== Deploy complete $(date) ===" >> $LOG
