@@ -227,7 +227,7 @@
                         </li>
                         <li class="pb-footer__contact-item">
                             <i class="fa-solid fa-phone"></i>
-                            <span><a href="tel:0215574999">021 557 4999</a> / <a href="tel:0828989967">082 898 9967</a></span>
+                            <span><a href="tel:0607930520">060 793 0520</a> / <a href="tel:0828989967">082 898 9967</a></span>
                         </li>
                         <li class="pb-footer__contact-item">
                             <i class="fa-solid fa-envelope"></i>

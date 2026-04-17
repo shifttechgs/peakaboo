@@ -33,9 +33,9 @@
   "name": "Peekaboo Daycare Programmes",
   "description": "All programmes offered at Peekaboo Daycare & Preschool in Parklands, Cape Town",
   "itemListElement": [
-    {"@@type": "ListItem", "position": 1, "name": "Baby Room (3 months – 18 months)", "url": "{{ route('program.detail', 'baby-room') }}"},
+    {"@@type": "ListItem", "position": 1, "name": "Baby Room (2 months – 18 months)", "url": "{{ route('program.detail', 'baby-room') }}"},
     {"@@type": "ListItem", "position": 2, "name": "Toddlers (18 months – 3 years)", "url": "{{ route('program.detail', 'toddlers') }}"},
-    {"@@type": "ListItem", "position": 3, "name": "Preschool (3 – 4 years)", "url": "{{ route('program.detail', 'preschool') }}"},
+    {"@@type": "ListItem", "position": 3, "name": "Preschool (4 – 5 years)", "url": "{{ route('program.detail', 'preschool') }}"},
     {"@@type": "ListItem", "position": 4, "name": "Grade R / Kindergarten (5 – 6 years)", "url": "{{ route('program.detail', 'kindergarten') }}"}
   ]
 }
@@ -137,21 +137,21 @@
                         <span class="pb-prog-chip__icon" style="background:var(--color-primary)"><i class="fa-solid fa-baby"></i></span>
                         <span>
                             <span class="pb-prog-chip__name">Baby Room</span>
-                            <span class="pb-prog-chip__age">3 months – 18 months &nbsp;·&nbsp; 1:4 ratio</span>
+                            <span class="pb-prog-chip__age">2 months – 18 months &nbsp;·&nbsp; 1:4 ratio</span>
                         </span>
                     </div>
                     <div class="pb-prog-chip">
                         <span class="pb-prog-chip__icon" style="background:var(--color-warm)"><i class="fa-solid fa-child-reaching"></i></span>
                         <span>
                             <span class="pb-prog-chip__name">Toddlers</span>
-                            <span class="pb-prog-chip__age">18 months – 3 years &nbsp;·&nbsp; 1:6 ratio</span>
+                            <span class="pb-prog-chip__age">18 months – 3 years &nbsp;·&nbsp; 1:7 ratio</span>
                         </span>
                     </div>
                     <div class="pb-prog-chip">
                         <span class="pb-prog-chip__icon" style="background:var(--color-accent)"><i class="fa-solid fa-palette"></i></span>
                         <span>
                             <span class="pb-prog-chip__name">Preschool</span>
-                            <span class="pb-prog-chip__age">3 – 4 years &nbsp;·&nbsp; 1:8 ratio</span>
+                            <span class="pb-prog-chip__age">4 – 5 years &nbsp;·&nbsp; 1:10 ratio</span>
                         </span>
                     </div>
                     <div class="pb-prog-chip">
@@ -246,7 +246,7 @@
                         <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-child-reaching"></i></div>
                         <h3 class="pb-prog-card__title">Toddlers</h3>
                         <p class="pb-prog-card__desc">Active exploration in a safe environment — building confidence, language, and social skills through purposeful play and gentle guidance.</p>
-                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:6 ratio</span>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:7 ratio</span>
                         <a href="#toddlers" class="pb-prog-card__cta">Learn More</a>
                     </div>
                 </div>
@@ -262,7 +262,7 @@
                         <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-palette"></i></div>
                         <h3 class="pb-prog-card__title">Preschool</h3>
                         <p class="pb-prog-card__desc">Building independence and curiosity — creative learning and early literacy skills that spark a lifelong love of discovery.</p>
-                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:8 ratio</span>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:10 ratio</span>
                         <a href="#preschool" class="pb-prog-card__cta">Learn More</a>
                     </div>
                 </div>
@@ -371,8 +371,8 @@
                 </div>
                 <div class="pb-prog-stats mb-20">
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-primary)">1:4</span><span class="pb-prog-stat__lbl">Ratio</span></div>
-                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-primary)">8</span><span class="pb-prog-stat__lbl">Max Babies</span></div>
-                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-primary)">100%</span><span class="pb-prog-stat__lbl">Qualified</span></div>
+                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-primary)">14</span><span class="pb-prog-stat__lbl">Max Babies</span></div>
+                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-primary)">100%</span><span class="pb-prog-stat__lbl">Experienced</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-primary)">Daily</span><span class="pb-prog-stat__lbl">Updates</span></div>
                 </div>
                 <div class="it-about-5-content">
@@ -424,7 +424,7 @@
                     </div>
                     <div class="pb-prog-float">
                         <span class="pb-prog-float__icon" style="background:var(--color-warm)"><i class="fa-solid fa-users"></i></span>
-                        <span><span class="pb-prog-float__num">1:6</span><span class="pb-prog-float__lbl">Teacher Ratio</span></span>
+                        <span><span class="pb-prog-float__num">1:7</span><span class="pb-prog-float__lbl">Teacher Ratio</span></span>
                     </div>
                 </div>
             </div>
@@ -440,8 +440,8 @@
                     <p>This is the age of big curiosity and even bigger energy. Our Toddler programme channels that natural drive into meaningful, play-based learning — building language, social skills, and the first sparks of independence.</p>
                 </div>
                 <div class="pb-prog-stats mb-20">
-                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">1:6</span><span class="pb-prog-stat__lbl">Ratio</span></div>
-                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">12</span><span class="pb-prog-stat__lbl">Max Children</span></div>
+                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">1:7</span><span class="pb-prog-stat__lbl">Ratio</span></div>
+                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">20</span><span class="pb-prog-stat__lbl">Max Children</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">Play</span><span class="pb-prog-stat__lbl">Based</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">Daily</span><span class="pb-prog-stat__lbl">Updates</span></div>
                 </div>
@@ -494,7 +494,7 @@
                     </div>
                     <div class="pb-prog-float">
                         <span class="pb-prog-float__icon" style="background:var(--color-accent)"><i class="fa-solid fa-users"></i></span>
-                        <span><span class="pb-prog-float__num">1:8</span><span class="pb-prog-float__lbl">Teacher Ratio</span></span>
+                        <span><span class="pb-prog-float__num">1:10</span><span class="pb-prog-float__lbl">Teacher Ratio</span></span>
                     </div>
                 </div>
             </div>
@@ -502,7 +502,7 @@
             <div class="col-lg-6 wow itfadeRight" data-wow-duration=".9s" data-wow-delay=".5s">
                 <div class="it-about-5-title-box pb-10">
                     <span class="it-section-subtitle-5 orange">
-                        <i class="fa-solid fa-palette"></i> Preschool &nbsp;·&nbsp; 3 – 4 years
+                        <i class="fa-solid fa-palette"></i> Preschool &nbsp;·&nbsp; 4 – 5 years
                     </span>
                     <h2 class="ed-section-title">Sparking Creativity &amp; <span>Lifelong Curiosity</span></h2>
                 </div>
@@ -511,7 +511,7 @@
                 </div>
                 <div class="pb-prog-stats mb-20">
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-accent)">1:8</span><span class="pb-prog-stat__lbl">Ratio</span></div>
-                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-accent)">15</span><span class="pb-prog-stat__lbl">Max Children</span></div>
+                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-accent)">20</span><span class="pb-prog-stat__lbl">Max Children</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-accent)">CAPS</span><span class="pb-prog-stat__lbl">Aligned</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-accent)">Term</span><span class="pb-prog-stat__lbl">Reports</span></div>
                 </div>
@@ -844,7 +844,7 @@
                             <span class="pb-cta__card-contact-icon"><i class="fa-solid fa-phone"></i></span>
                             <span>
                                 <span class="pb-cta__card-contact-label">Call Us</span>
-                                <span class="pb-cta__card-contact-value">021 557 4999</span>
+                                <span class="pb-cta__card-contact-value">060 793 0520</span>
                             </span>
                         </a>
                         <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20enquire%20about%20Peekaboo%20Daycare." target="_blank" rel="noopener" class="pb-cta__card-contact">

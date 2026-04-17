@@ -329,7 +329,7 @@
                         <div>
                             <span class="pb-contact__label">Phone</span>
                             <span class="pb-contact__value">
-                                <a href="tel:0215574999">021 557 4999</a> / <a href="tel:0828989967">082 898 9967</a>
+                                <a href="tel:0215574999">060 793 0520</a> / <a href="tel:0828989967">082 898 9967</a>
                             </span>
                         </div>
                     </div>

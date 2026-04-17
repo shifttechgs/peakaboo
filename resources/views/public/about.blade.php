@@ -100,7 +100,7 @@
                     <li>About Us</li>
                 </ul>
                 <span class="it-section-subtitle-5 orange" style="margin-bottom:18px;display:inline-flex;align-items:center;gap:8px;">
-                    <i class="fa-light fa-book"></i> Established 2010
+                    <i class="fa-light fa-book"></i> Established 2001
                 </span>
                 <h1 class="ed-slider-title" style="font-size:clamp(2.2rem,4.5vw,3.5rem);margin-bottom:22px;">
                     A Trusted Home<br><span style="color:var(--color-primary)">Away From Home</span>
@@ -124,7 +124,7 @@
                     <div class="pb-about-hero-stat">
                         <span class="pb-about-hero-stat__icon" style="background:var(--color-primary)"><i class="fa-solid fa-calendar-check"></i></span>
                         <span>
-                            <span class="pb-about-hero-stat__num">{{ date('Y') - 2010 }}+ Years</span>
+                            <span class="pb-about-hero-stat__num">{{ date('Y') - 2001 }}+ Years</span>
                             <span class="pb-about-hero-stat__label">of trusted early childhood care</span>
                         </span>
                     </div>
@@ -215,8 +215,8 @@
                         </h2>
                     </div>
                     <div class="it-about-5-text mb-30">
-                        <p>Peekaboo Daycare & Preschool was founded in 2010 with a simple but powerful vision: to create a safe, nurturing environment where every child feels loved, valued, and inspired to learn. Over {{ date('Y') - 2010 }} years on, that vision drives everything we do.</p>
-                        <p style="margin-top:14px;">Nestled in the heart of Parklands, Cape Town, we welcome children from 3 months through to Grade R — guiding each one through the most formative years of their life with qualified educators, a warm Christian ethos, and a curriculum that celebrates every stage of development.</p>
+                        <p>Peekaboo Daycare & Preschool was founded in 2001 with a simple but powerful vision: to create a safe, nurturing environment where every child feels loved, valued, and inspired to learn. Over {{ date('Y') - 2010 }} years on, that vision drives everything we do.</p>
+                        <p style="margin-top:14px;">Nestled in the heart of Parklands, Cape Town, we welcome children from 2 months through to Grade R — guiding each one through the most formative years of their life with qualified educators, a warm Christian ethos, and a curriculum that celebrates every stage of development.</p>
                     </div>
                     <div class="it-about-5-content">
                         <div class="row">
@@ -553,7 +553,7 @@
         <div class="t-qual wow itfadeUp" data-wow-delay=".25s">
             <div class="row align-items-center gy-4">
                 <div class="col-lg-7">
-                    <h4 class="t-qual__title">Every Teacher is Qualified, Vetted &amp; Passionate</h4>
+                    <h4 class="t-qual__title">Every Teacher is Qualified/Experienced, Vetted &amp; Passionate</h4>
                     <p class="t-qual__body">All our educators hold recognised ECD qualifications, undergo police clearance checks, and commit to ongoing professional development. Your child's safety and growth are in expert, caring hands.</p>
                 </div>
                 <div class="col-lg-5">
@@ -562,7 +562,7 @@
                         <div class="t-stat-sep"></div>
                         <div class="t-stat"><span class="t-stat__num">100%</span><span class="t-stat__label">Vetted</span></div>
                         <div class="t-stat-sep"></div>
-                        <div class="t-stat"><span class="t-stat__num">10+</span><span class="t-stat__label">Avg. Years</span></div>
+                        <div class="t-stat"><span class="t-stat__num">20+</span><span class="t-stat__label">Avg. Years</span></div>
                         <div class="t-stat-sep"></div>
                         <div class="t-stat"><span class="t-stat__num">27</span><span class="t-stat__label">Staff Members</span></div>
                     </div>
@@ -743,7 +743,7 @@
                             <span class="pb-cta__card-contact-icon"><i class="fa-solid fa-phone"></i></span>
                             <span>
                                 <span class="pb-cta__card-contact-label">Call Us</span>
-                                <span class="pb-cta__card-contact-value">021 557 4999</span>
+                                <span class="pb-cta__card-contact-value">060 793 0520</span>
                             </span>
                         </a>
                         <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20enquire%20about%20Peekaboo%20Daycare." target="_blank" rel="noopener" class="pb-cta__card-contact">

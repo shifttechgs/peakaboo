@@ -610,7 +610,7 @@
                             <span class="pb-cta__card-contact-icon"><i class="fa-solid fa-phone"></i></span>
                             <span>
                                 <span class="pb-cta__card-contact-label">Call Us</span>
-                                <span class="pb-cta__card-contact-value">021 557 4999</span>
+                                <span class="pb-cta__card-contact-value">060 793 0520</span>
                             </span>
                         </a>
                         <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20enquire%20about%20fees%20at%20Peekaboo%20Daycare." target="_blank" rel="noopener" class="pb-cta__card-contact">

@@ -438,7 +438,7 @@
           </div>
 
           <div class="it-about-5-text mb-30">
-            <p>Since 2010, we've been more than just a daycare — a trusted partner in your child's early years, offering peace of mind and a foundation for lifelong learning.</p>
+            <p>Since 2001, we've been more than just a daycare — a trusted partner in your child's early years, offering peace of mind and a foundation for lifelong learning.</p>
           </div>
 
           <div class="it-about-5-content">
@@ -657,7 +657,7 @@
                         <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-child-reaching"></i></div>
                         <h3 class="pb-prog-card__title">Toddlers</h3>
                         <p class="pb-prog-card__desc">Active exploration in a safe environment — building confidence, language, and social skills through purposeful play and gentle guidance.</p>
-                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:6 ratio</span>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:7 ratio</span>
                         <a href="{{ route('enrol.index') }}" class="pb-prog-card__cta">Enrol Now</a>
                     </div>
                 </div>
@@ -669,13 +669,13 @@
                     <div class="pb-prog-card__bar"></div>
                     <div class="pb-prog-card__photo">
                         <img src="{{ asset('assets/img/class/class-1-3.jpg') }}" alt="Preschool" loading="lazy">
-                        <span class="pb-prog-card__age-pill">3 – 4 years</span>
+                        <span class="pb-prog-card__age-pill">4 – 5 years</span>
                     </div>
                     <div class="pb-prog-card__body">
                         <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-palette"></i></div>
                         <h3 class="pb-prog-card__title">Preschool</h3>
                         <p class="pb-prog-card__desc">Building independence and curiosity — creative learning, problem-solving, and early literacy skills that spark a lifelong love of discovery.</p>
-                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:8 ratio</span>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:10 ratio</span>
                         <a href="{{ route('enrol.index') }}" class="pb-prog-card__cta">Enrol Now</a>
                     </div>
                 </div>
@@ -1906,7 +1906,7 @@
         <div class="t-qual wow itfadeUp" data-wow-delay="0.25s">
             <div class="row align-items-center gy-4">
                 <div class="col-lg-7">
-                    <h4 class="t-qual__title">Every Teacher is Qualified, Vetted &amp; Passionate</h4>
+                    <h4 class="t-qual__title">Every Teacher is Qualified / Experienced Vetted &amp; Passionate</h4>
                     <p class="t-qual__body">All our educators hold recognized ECD qualifications, undergo police clearance checks, and commit to ongoing professional development. Your child's safety and growth are in expert, caring hands.</p>
                 </div>
                 <div class="col-lg-5">
@@ -1922,7 +1922,7 @@
                         </div>
                         <div class="t-stat-sep"></div>
                         <div class="t-stat">
-                            <span class="t-stat__num">10+</span>
+                            <span class="t-stat__num">25</span>
                             <span class="t-stat__label">Avg. Years</span>
                         </div>
                         <div class="t-stat-sep"></div>
@@ -3513,7 +3513,7 @@
                             <span class="pb-cta__card-contact-icon"><i class="fa-solid fa-phone"></i></span>
                             <span>
                                 <span class="pb-cta__card-contact-label">Call Us</span>
-                                <span class="pb-cta__card-contact-value">021 557 4999</span>
+                                <span class="pb-cta__card-contact-value">060 793 0520</span>
                             </span>
                         </a>
                         <a href="https://wa.me/27828989967?text=Hi!%20I'd%20like%20to%20enquire%20about%20Peekaboo%20Daycare." target="_blank" rel="noopener" class="pb-cta__card-contact">

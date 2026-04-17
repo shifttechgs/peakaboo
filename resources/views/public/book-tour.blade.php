@@ -1097,7 +1097,7 @@
                         <div class="pb-tour-sidebar__card">
                             <h3 class="pb-tour-sidebar__title">Your Tour Includes</h3>
                             <ul class="pb-tour-sidebar__list">
-                                <li><i class="fa-solid fa-check"></i> 30–45 minute guided walkthrough</li>
+                                <li><i class="fa-solid fa-check"></i> 15–30 minutes guided walkthrough</li>
                                 <li><i class="fa-solid fa-check"></i> Meet the teachers for your child's age group</li>
                                 <li><i class="fa-solid fa-check"></i> See classrooms and outdoor play areas</li>
                                 <li><i class="fa-solid fa-check"></i> Review curriculum, fees and daily schedule</li>
@@ -1126,8 +1126,8 @@
                         <div class="pb-tour-help">
                             <h3 class="pb-tour-help__title">Prefer to Call?</h3>
                             <p class="pb-tour-help__desc">Our team is happy to schedule your tour over the phone or WhatsApp.</p>
-                            <a href="tel:0215574999" class="pb-tour-help__btn pb-tour-help__btn--phone">
-                                <i class="fa-solid fa-phone"></i>&ensp;021 557 4999
+                            <a href="tel:0607930520" class="pb-tour-help__btn pb-tour-help__btn--phone">
+                                <i class="fa-solid fa-phone"></i>&ensp;060 793 0520
                             </a>
                             <a href="https://wa.me/27828989967" target="_blank" rel="noopener" class="pb-tour-help__btn pb-tour-help__btn--whatsapp">
                                 <i class="fa-brands fa-whatsapp"></i>&ensp;WhatsApp Us
