@@ -40,4 +40,8 @@ return [
         'secret_key' => env('RECAPTCHA_SECRET_KEY'),
     ],
 
+    'geoblock' => [
+        'enabled' => env('GEO_BLOCK_ENABLED', true),
+    ],
+
 ];

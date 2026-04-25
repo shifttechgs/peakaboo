@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role'       => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'geoblock'   => \App\Http\Middleware\GeoBlock::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
