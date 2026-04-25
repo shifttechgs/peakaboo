@@ -71,7 +71,7 @@ Route::prefix('enrol')->name('enrol.')->group(function () {
 
 // Book Tour
 Route::get('/book-tour', [HomeController::class, 'bookTour'])->name('book-tour');
-Route::post('/book-tour', [HomeController::class, 'submitTour'])->name('book-tour.submit');
+Route::post('/book-tour', [HomeController::class, 'submitTour'])->name('book-tour.submit')->middleware('throttle:3,10');
 
 // ─── Auth Routes ─────────────────────────────────────────────────────────────
 

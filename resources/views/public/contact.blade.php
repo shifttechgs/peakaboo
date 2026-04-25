@@ -406,6 +406,8 @@
                                 <div style="display:none" aria-hidden="true">
                                     <input type="text" name="website" tabindex="-1" autocomplete="off" value="">
                                 </div>
+                                {{-- reCAPTCHA v3 token (populated by JS before submit) --}}
+                                <input type="hidden" name="recaptcha_token" id="recaptcha_token">
                                 <div class="col-12 mt-3">
                                     <button type="submit" class="pb-contact-form__btn" id="contactSubmitBtn">
                                         <span id="contactBtnText">Send Message</span>
@@ -430,14 +432,27 @@
     </div>
 
 <script>
-document.querySelector('form[action="{{ route('contact.submit') }}"]').addEventListener('submit', function () {
+document.querySelector('form[action="{{ route('contact.submit') }}"]').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var form   = this;
     var btn    = document.getElementById('contactSubmitBtn');
     var text   = document.getElementById('contactBtnText');
     var loader = document.getElementById('contactBtnLoader');
     btn.disabled = true;
     text.style.display  = 'none';
     loader.style.display = 'inline';
+
+    grecaptcha.ready(function () {
+        grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'contact' }).then(function (token) {
+            document.getElementById('recaptcha_token').value = token;
+            form.submit();
+        });
+    });
 });
 </script>
+
+@push('scripts')
+<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+@endpush
 
 @endsection

@@ -40,7 +40,8 @@
       "Bash(php -i)",
       "Read(//c/wamp64_3.3.4/bin/php/php8.3.14/**)",
       "Read(//c/wamp64/bin/php/php8.3.14/**)",
-      "Bash(php:*)"
+      "Bash(php:*)",
+      "Bash(grep -E \"\\\\.\\(blade\\\\.php|html\\)$\")"
     ]
   }
 }

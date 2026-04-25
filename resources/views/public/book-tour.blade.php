@@ -1064,6 +1064,9 @@
                                     </div>
                                 </div>
 
+                                {{-- reCAPTCHA v3 token (populated by JS before submit) --}}
+                                <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+
                                 <!-- Submit -->
                                 <div class="col-12 mt-3">
                                     <button type="submit" class="pb-tour-form__btn" id="tourSubmitBtn">
@@ -1298,14 +1301,23 @@
     const spinner = document.getElementById('tourBtnSpinner');
     const btnText = document.getElementById('tourBtnText');
 
-    form.addEventListener('submit', function () {
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
         btn.disabled = true;
         icon.classList.add('d-none');
         spinner.classList.remove('d-none');
         btnText.textContent = 'Sending…';
+
+        grecaptcha.ready(function () {
+            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'book_tour' }).then(function (token) {
+                document.getElementById('recaptcha_token').value = token;
+                form.submit();
+            });
+        });
     });
 })();
 </script>
+<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 @endpush
 
 @endsection

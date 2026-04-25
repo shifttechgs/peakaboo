@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Notifications\NewTourBookingNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
@@ -86,6 +87,14 @@ class HomeController extends Controller
             return redirect()->route('contact')->with('success', 'Thank you for your message. We will be in touch soon!');
         }
 
+        // reCAPTCHA v3: verify the token and reject low-score submissions
+        $recaptchaToken = $request->input('recaptcha_token');
+        if (!$recaptchaToken || !$this->verifyRecaptcha($recaptchaToken)) {
+            return redirect()->route('contact')
+                ->with('error', 'We could not verify that you are human. Please try again.')
+                ->withInput();
+        }
+
         $validated = $request->validate([
             'fname' => 'required|string|max:255',
             'lname' => 'required|string|max:255',
@@ -132,6 +141,14 @@ class HomeController extends Controller
     public function submitTour(Request $request)
     {
         Log::info('submitTour hit', ['email' => $request->input('email'), 'ip' => $request->ip()]);
+
+        // reCAPTCHA v3: verify the token and reject low-score submissions
+        $recaptchaToken = $request->input('recaptcha_token');
+        if (!$recaptchaToken || !$this->verifyRecaptcha($recaptchaToken)) {
+            return redirect()->route('book-tour')
+                ->with('error', 'We could not verify that you are human. Please try again.')
+                ->withInput();
+        }
 
         // Validate the form data
         $validated = $request->validate([
@@ -255,5 +272,43 @@ class HomeController extends Controller
                 'email_sent'  => $emailSent,
                 'email_error' => $emailError,
             ]);
+    }
+
+    private function verifyRecaptcha(string $token): bool
+    {
+        $secretKey = config('services.recaptcha.secret_key');
+
+        if (empty($secretKey)) {
+            Log::warning('reCAPTCHA secret key not configured — skipping verification');
+            return true;
+        }
+
+        try {
+            $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret'   => $secretKey,
+                'response' => $token,
+                'remoteip' => request()->ip(),
+            ]);
+
+            $data = $response->json();
+
+            if (!($data['success'] ?? false)) {
+                Log::warning('reCAPTCHA verification failed', ['errors' => $data['error-codes'] ?? []]);
+                return false;
+            }
+
+            $score = $data['score'] ?? 0;
+
+            if ($score < 0.5) {
+                Log::warning('reCAPTCHA score too low', ['score' => $score, 'ip' => request()->ip()]);
+                return false;
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            Log::error('reCAPTCHA request failed', ['error' => $e->getMessage()]);
+            // Fail open: don't block the user if Google's API is unreachable
+            return true;
+        }
     }
 }
