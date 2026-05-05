@@ -442,17 +442,35 @@ document.querySelector('form[action="{{ route('contact.submit') }}"]').addEventL
     text.style.display  = 'none';
     loader.style.display = 'inline';
 
+    @if(app()->environment('production') && config('services.recaptcha.site_key'))
     grecaptcha.ready(function () {
-        grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'contact' }).then(function (token) {
-            document.getElementById('recaptcha_token').value = token;
-            form.submit();
-        });
+        try {
+            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'contact' }).then(function (token) {
+                document.getElementById('recaptcha_token').value = token;
+                form.submit();
+            }).catch(function () {
+                btn.disabled = false;
+                text.style.display  = 'inline';
+                loader.style.display = 'none';
+                alert('Security check failed. Please refresh the page and try again.');
+            });
+        } catch (e) {
+            btn.disabled = false;
+            text.style.display  = 'inline';
+            loader.style.display = 'none';
+            alert('Security check failed. Please refresh the page and try again.');
+        }
     });
+    @else
+    form.submit();
+    @endif
 });
 </script>
 
 @push('scripts')
+@if(app()->environment('production') && config('services.recaptcha.site_key'))
 <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+@endif
 @endpush
 
 @endsection

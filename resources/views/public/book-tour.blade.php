@@ -1308,16 +1308,36 @@
         spinner.classList.remove('d-none');
         btnText.textContent = 'Sending…';
 
+        @if(app()->environment('production') && config('services.recaptcha.site_key'))
         grecaptcha.ready(function () {
-            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'book_tour' }).then(function (token) {
-                document.getElementById('recaptcha_token').value = token;
-                form.submit();
-            });
+            try {
+                grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'book_tour' }).then(function (token) {
+                    document.getElementById('recaptcha_token').value = token;
+                    form.submit();
+                }).catch(function () {
+                    btn.disabled = false;
+                    icon.classList.remove('d-none');
+                    spinner.classList.add('d-none');
+                    btnText.textContent = 'Send Request';
+                    alert('Security check failed. Please refresh the page and try again.');
+                });
+            } catch (e) {
+                btn.disabled = false;
+                icon.classList.remove('d-none');
+                spinner.classList.add('d-none');
+                btnText.textContent = 'Send Request';
+                alert('Security check failed. Please refresh the page and try again.');
+            }
         });
+        @else
+        form.submit();
+        @endif
     });
 })();
 </script>
+@if(app()->environment('production') && config('services.recaptcha.site_key'))
 <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+@endif
 @endpush
 
 @endsection

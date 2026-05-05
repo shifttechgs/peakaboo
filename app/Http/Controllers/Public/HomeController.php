@@ -87,12 +87,14 @@ class HomeController extends Controller
             return redirect()->route('contact')->with('success', 'Thank you for your message. We will be in touch soon!');
         }
 
-        // reCAPTCHA v3: verify the token and reject low-score submissions
-        $recaptchaToken = $request->input('recaptcha_token');
-        if (!$recaptchaToken || !$this->verifyRecaptcha($recaptchaToken)) {
-            return redirect()->route('contact')
-                ->with('error', 'We could not verify that you are human. Please try again.')
-                ->withInput();
+        // reCAPTCHA v3: only enforce in production
+        if (app()->environment('production')) {
+            $recaptchaToken = $request->input('recaptcha_token');
+            if (!$recaptchaToken || !$this->verifyRecaptcha($recaptchaToken)) {
+                return redirect()->route('contact')
+                    ->with('error', 'We could not verify that you are human. Please try again.')
+                    ->withInput();
+            }
         }
 
         $validated = $request->validate([
@@ -142,12 +144,14 @@ class HomeController extends Controller
     {
         Log::info('submitTour hit', ['email' => $request->input('email'), 'ip' => $request->ip()]);
 
-        // reCAPTCHA v3: verify the token and reject low-score submissions
-        $recaptchaToken = $request->input('recaptcha_token');
-        if (!$recaptchaToken || !$this->verifyRecaptcha($recaptchaToken)) {
-            return redirect()->route('book-tour')
-                ->with('error', 'We could not verify that you are human. Please try again.')
-                ->withInput();
+        // reCAPTCHA v3: only enforce in production
+        if (app()->environment('production')) {
+            $recaptchaToken = $request->input('recaptcha_token');
+            if (!$recaptchaToken || !$this->verifyRecaptcha($recaptchaToken)) {
+                return redirect()->route('book-tour')
+                    ->with('error', 'We could not verify that you are human. Please try again.')
+                    ->withInput();
+            }
         }
 
         // Validate the form data

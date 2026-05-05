@@ -41,7 +41,15 @@
       "Read(//c/wamp64_3.3.4/bin/php/php8.3.14/**)",
       "Read(//c/wamp64/bin/php/php8.3.14/**)",
       "Bash(php:*)",
-      "Bash(grep -E \"\\\\.\\(blade\\\\.php|html\\)$\")"
+      "Bash(grep -E \"\\\\.\\(blade\\\\.php|html\\)$\")",
+      "PowerShell(robocopy *)",
+      "Bash(mysql -u root -e \"CREATE DATABASE IF NOT EXISTS kiddies_city_educare CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\")",
+      "PowerShell(& \"C:\\\\wamp64_3.3.4\\\\bin\\\\mysql\\\\mysql9.1.0\\\\bin\\\\mysql.exe\" -u root -e \"CREATE DATABASE IF NOT EXISTS kiddies_city_educare CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\" 2>&1)",
+      "Bash(xargs -I '{}' python3 -c ' *)",
+      "Read(//c/wamp64_3.3.4/bin/apache/**)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }
