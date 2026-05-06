@@ -184,7 +184,7 @@ class HomeController extends Controller
         $lead = DB::transaction(function () use ($validated) {
             $year    = date('Y');
             $nextNum = Lead::whereYear('created_at', $year)->lockForUpdate()->count() + 1;
-            $reference = 'TOUR-' . $year . '-' . str_pad($nextNum, 3, '0', STR_PAD_LEFT);
+            $reference = 'TOUR-' . date('Y') . '-' . strtoupper(Str::random(6));
 
             return Lead::create([
                 'reference'        => $reference,
