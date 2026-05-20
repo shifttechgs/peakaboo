@@ -277,7 +277,7 @@
                     <div class="mb-1">
                         <label class="form-label fw-semibold" style="font-size:.84rem;">Select File</label>
                         <input type="file" name="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required>
-                        <div class="form-text" style="font-size:.74rem;">Accepted: PDF, JPG, PNG &mdash; max 5 MB</div>
+                        <div class="form-text" style="font-size:.74rem;">Accepted: PDF, JPG, PNG &mdash; max 20 MB</div>
                     </div>
                 </div>
                 <div class="modal-footer" style="border-top:1px solid #f3f4f6;padding:14px 24px;gap:8px;">

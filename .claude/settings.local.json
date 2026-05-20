@@ -49,7 +49,17 @@
       "Read(//c/wamp64_3.3.4/bin/apache/**)",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(026)",
+      "Bash(036)",
+      "Bash(038)",
+      "Bash(074\")",
+      "PowerShell(Get-ChildItem \"C:\\\\wamp64_3.3.4\\\\www\\\\projects\\\\peekaboo\\\\public\\\\assets\\\\img\\\\school\\\\classroom_fun\\\\\" | Where-Object { $_.Name -match \"025|026|036|038|074\" })",
+      "PowerShell(Get-ChildItem \"C:\\\\wamp64_3.3.4\\\\www\\\\projects\\\\peekaboo\\\\public\\\\assets\\\\img\\\\school\\\\coloring_time\\\\\" | Where-Object { $_.Name -match \"233|235\" })",
+      "PowerShell(Get-ChildItem \"C:\\\\wamp64_3.3.4\\\\www\\\\projects\\\\peekaboo\\\\public\\\\assets\\\\img\\\\school\\\\fun_face-paintings\\\\\" | Where-Object { $_.Name -match \"197\" })",
+      "Bash(Get-ChildItem *)",
+      "PowerShell(php -r \"echo 'upload_max_filesize: ' . ini_get\\('upload_max_filesize'\\) . PHP_EOL . 'post_max_size: ' . ini_get\\('post_max_size'\\) . PHP_EOL . 'memory_limit: ' . ini_get\\('memory_limit'\\) . PHP_EOL;\")",
+      "Bash(xargs grep -l \"program\\\\|class\\\\|ratio\")"
     ]
   }
 }

@@ -192,7 +192,7 @@
                     <div class="pb-fee-card__divider"></div>
                     <ul class="pb-fee-card__features">
                         <li><i class="fa-solid fa-circle-check"></i> Qualified, dedicated teachers</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Morning snack included</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Breakfast &amp; Lunch included</li>
                         <li><i class="fa-solid fa-circle-check"></i> All educational activities</li>
                         <li><i class="fa-solid fa-circle-check"></i> Safe, supervised environment</li>
                         <li><i class="fa-solid fa-circle-check"></i> 06:00–12:00 (babies–3 yrs)</li>
@@ -214,9 +214,8 @@
                     <div class="pb-fee-card__divider"></div>
                     <ul class="pb-fee-card__features">
                         <li><i class="fa-solid fa-circle-check"></i> All Half Day features included</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Nutritious lunch provided</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Breakfast &amp; Lunch included</li>
                         <li><i class="fa-solid fa-circle-check"></i> Afternoon activities &amp; rest</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Afternoon snack included</li>
                         <li><i class="fa-solid fa-circle-check"></i> Extended care until 18:00</li>
                         <li><i class="fa-solid fa-circle-check"></i> 06:00–18:00 all age groups</li>
                     </ul>
@@ -310,7 +309,7 @@
                 <div class="pb-extra-card w-100">
                     <span class="pb-extra-card__icon" style="background:var(--color-warm)"><i class="fa-solid fa-umbrella-beach"></i></span>
                     <h3 class="pb-extra-card__name">Holiday Care</h3>
-                    <p class="pb-extra-card__desc">Full-day supervised care during school holidays — special themed activities, outings, and holiday fun all day long.</p>
+                    <p class="pb-extra-card__desc">Full-day supervised care during school holidays — special themed activities and holiday fun all day long.</p>
                     <div class="pb-extra-card__divider"></div>
                     <span class="pb-extra-card__price">R150</span>
                     <span class="pb-extra-card__period">per day</span>
@@ -468,7 +467,7 @@
                             </button>
                         </h3>
                         <div id="feesFaq2" class="accordion-collapse collapse" data-bs-parent="#feesFaqAccordion">
-                            <div class="pb-faq__body">Full Day enrolment includes a <strong>nutritious lunch and afternoon snack</strong>. Half Day includes a morning snack. You can add our Snack Box (R400/month) for morning and afternoon snacks on the Half Day option. All meals are freshly prepared on-site by our kitchen team.</div>
+                            <div class="pb-faq__body">Both Half Day and Full Day include <strong>Breakfast and Lunch</strong>. No snack is included in either package — snacks are not part of the standard fee. You can add our optional Snack Box (R400/month) for morning and afternoon snacks. All meals are freshly prepared on-site by our kitchen team.</div>
                         </div>
                     </div>
 

@@ -922,7 +922,7 @@
                                             <label for="birthCert" class="mb-0 w-100 cursor-pointer">
                                                 <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
                                                 <p class="mb-0 text-muted"><strong>Click to upload</strong> or drag & drop</p>
-                                                <small class="text-muted">PDF, JPG, PNG (Max 5MB)</small>
+                                                <small class="text-muted">PDF, JPG, PNG (Max 20MB)</small>
                                             </label>
                                         </div>
                                         <div class="file-name-display" id="birthCertDisplay" style="display: none;">
@@ -947,7 +947,7 @@
                                             <label for="clinicCard" class="mb-0 w-100 cursor-pointer">
                                                 <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
                                                 <p class="mb-0 text-muted"><strong>Click to upload</strong> or drag & drop</p>
-                                                <small class="text-muted">PDF, JPG, PNG (Max 5MB)</small>
+                                                <small class="text-muted">PDF, JPG, PNG (Max 20MB)</small>
                                             </label>
                                         </div>
                                         <div class="file-name-display" id="clinicCardDisplay" style="display: none;">
@@ -997,7 +997,7 @@
                                             <label for="proofAddress" class="mb-0 w-100 cursor-pointer">
                                                 <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
                                                 <p class="mb-0 text-muted"><strong>Click to upload</strong> or drag & drop</p>
-                                                <small class="text-muted">PDF, JPG, PNG (Max 5MB)</small>
+                                                <small class="text-muted">PDF, JPG, PNG (Max 20MB)</small>
                                             </label>
                                         </div>
                                         <div class="file-name-display" id="proofAddressDisplay" style="display: none;">

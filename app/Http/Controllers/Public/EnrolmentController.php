@@ -133,10 +133,10 @@ class EnrolmentController extends Controller
             'consent_popia'     => 'nullable|string',
             'signature'         => 'required|string|max:255',
             'signature_date'    => 'required|date',
-            'birth_certificate' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
-            'clinic_card'       => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
-            'parent_ids'        => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
-            'proof_address'     => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'birth_certificate' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:20480',
+            'clinic_card'       => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:20480',
+            'parent_ids'        => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:20480',
+            'proof_address'     => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:20480',
         ]);
 
         // Resolve the linked lead from the session token (set when the form was opened)

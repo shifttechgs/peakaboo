@@ -367,7 +367,7 @@ class PortalController extends Controller
             'amount'    => 'required|numeric|min:1',
             'date'      => 'required|date',
             'reference' => 'required|string|max:100',
-            'pop_file'  => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'pop_file'  => 'required|file|mimes:pdf,jpg,jpeg,png|max:20480',
         ]);
 
         $user = $this->parentUser();
@@ -543,7 +543,7 @@ class PortalController extends Controller
         $request->validate([
             'app_id'   => 'required|integer',
             'doc_type' => 'required|string|in:' . implode(',', array_keys(self::REQUIRED_DOCS)),
-            'file'     => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file'     => 'required|file|mimes:pdf,jpg,jpeg,png|max:20480',
         ]);
 
         $app = Application::where('parent_user_id', Auth::id())

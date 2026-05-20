@@ -31,7 +31,7 @@ class MockData
                 'name' => 'Half Day',
                 'hours' => '06:00 - 12:00 (Babies-3yrs) / 06:00 - 13:00 (4yrs-Gr.R)',
                 'price' => 3800,
-                'features' => ['Qualified teachers', 'Educational activities', 'Morning snack', 'Safe environment', 'Daily feedback'],
+                'features' => ['Qualified teachers', 'Educational activities', 'Breakfast & Lunch included', 'Safe environment', 'Daily feedback'],
                 'popular' => false,
             ],
             [
@@ -75,7 +75,7 @@ class MockData
                 'features' => ['Potty training support', 'Language development', 'Creative arts', 'Outdoor play', 'Music and movement'],
                 'image' => 'assets/img/peekaboo/toddlers.jpg',
                 'capacity' => 12,
-                'ratio' => '1:6',
+                'ratio' => '1:4',
             ],
             [
                 'id' => 'preschool',
@@ -85,7 +85,7 @@ class MockData
                 'features' => ['Pre-reading skills', 'Number concepts', 'Science exploration', 'Social development', 'Fine motor skills'],
                 'image' => 'assets/img/peekaboo/preschool.jpg',
                 'capacity' => 15,
-                'ratio' => '1:8',
+                'ratio' => '1:3',
             ],
             [
                 'id' => 'kindergarten',
@@ -95,7 +95,7 @@ class MockData
                 'features' => ['CAPS curriculum', 'Reading & writing', 'Mathematics', 'Life skills', 'School readiness'],
                 'image' => 'assets/img/peekaboo/kindergarten.jpg',
                 'capacity' => 20,
-                'ratio' => '1:10',
+                'ratio' => '1:2',
             ],
         ];
     }
@@ -113,7 +113,7 @@ class MockData
             [
                 'id' => 'holiday-care',
                 'name' => 'Holiday Care',
-                'description' => 'Full-day care during school holidays with special activities and outings.',
+                'description' => 'Full-day care during school holidays with special activities and holiday fun.',
                 'price' => 250,
                 'icon' => 'fa-sun',
             ],
@@ -250,12 +250,12 @@ class MockData
                 'answer' => 'For the health and safety of all children, we regret that sick children cannot attend school. Children with fever, vomiting, or contagious conditions must stay home.',
             ],
             [
-                'question' => 'Do you provide meals?',
-                'answer' => 'We offer an optional Snack Box service for R400/month which provides healthy snacks throughout the day. Parents can also send their own food.',
+                'question' => 'Are meals included?',
+                'answer' => 'Yes — Breakfast and Lunch are included in both the Half Day and Full Day packages. No snack is included in either package. The Snack Box (R400/month) is an optional add-on for parents who would like snacks provided throughout the day.',
             ],
             [
                 'question' => 'What is your teacher-to-child ratio?',
-                'answer' => 'We maintain low ratios: 1:4 for babies, 1:6 for toddlers, 1:8 for preschool, and 1:10 for Grade R.',
+                'answer' => 'We maintain low ratios: 1:4 for babies, 1:4 for toddlers, 1:3 for preschool, and 1:2 for Grade R.',
             ],
             [
                 'question' => 'Is there a registration fee?',

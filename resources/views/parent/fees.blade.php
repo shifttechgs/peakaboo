@@ -273,7 +273,7 @@
             <div class="plan-time">Excludes lunch &bull; Snack box available separately</div>
             <div>
                 <div class="plan-feature"><i class="fas fa-check-circle"></i> Morning care (06:00 – 13:00)</div>
-                <div class="plan-feature"><i class="fas fa-check-circle"></i> Morning snack included</div>
+                <div class="plan-feature"><i class="fas fa-check-circle"></i> Breakfast &amp; Lunch included</div>
                 <div class="plan-feature"><i class="fas fa-check-circle"></i> Full CAPS learning programme</div>
                 <div class="plan-feature"><i class="fas fa-check-circle"></i> Qualified & registered teachers</div>
             </div>
@@ -292,7 +292,7 @@
             <div class="plan-time">All meals included &bull; 06:00 – 18:00</div>
             <div>
                 <div class="plan-feature"><i class="fas fa-check-circle"></i> Full day care (06:00 – 18:00)</div>
-                <div class="plan-feature"><i class="fas fa-check-circle"></i> Breakfast, lunch & afternoon snack</div>
+                <div class="plan-feature"><i class="fas fa-check-circle"></i> Breakfast &amp; Lunch included</div>
                 <div class="plan-feature"><i class="fas fa-check-circle"></i> Afternoon rest / nap time</div>
                 <div class="plan-feature"><i class="fas fa-check-circle"></i> Full CAPS learning programme</div>
                 <div class="plan-feature"><i class="fas fa-check-circle"></i> Qualified & registered teachers</div>

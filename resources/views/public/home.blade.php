@@ -657,7 +657,7 @@
                         <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-child-reaching"></i></div>
                         <h3 class="pb-prog-card__title">Toddlers</h3>
                         <p class="pb-prog-card__desc">Active exploration in a safe environment — building confidence, language, and social skills through purposeful play and gentle guidance.</p>
-                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:7 ratio</span>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:4 ratio</span>
                         <a href="{{ route('enrol.index') }}" class="pb-prog-card__cta">Enrol Now</a>
                     </div>
                 </div>
@@ -675,7 +675,7 @@
                         <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-palette"></i></div>
                         <h3 class="pb-prog-card__title">Preschool</h3>
                         <p class="pb-prog-card__desc">Building independence and curiosity — creative learning, problem-solving, and early literacy skills that spark a lifelong love of discovery.</p>
-                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:10 ratio</span>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:3 ratio</span>
                         <a href="{{ route('enrol.index') }}" class="pb-prog-card__cta">Enrol Now</a>
                     </div>
                 </div>
@@ -693,7 +693,7 @@
                         <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-graduation-cap"></i></div>
                         <h3 class="pb-prog-card__title">Grade R</h3>
                         <p class="pb-prog-card__desc">Fully prepared for big school — CAPS-aligned curriculum, confidence-building, and a deep love for learning that lasts a lifetime.</p>
-                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:10 ratio</span>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:2 ratio</span>
                         <a href="{{ route('enrol.index') }}" class="pb-prog-card__cta">Enrol Now</a>
                     </div>
                 </div>

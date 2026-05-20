@@ -15,7 +15,7 @@
         <div class="row align-items-center">
             <div class="col-md-8">
                 <h5 class="fw-bold mb-2">School Holiday Care Programme</h5>
-                <p class="mb-2">We provide safe, fun supervision during school holidays so you can work with peace of mind. Activities include arts & crafts, outdoor play, movies, and special outings.</p>
+                <p class="mb-2">We provide safe, fun supervision during school holidays so you can work with peace of mind. Activities include arts & crafts, outdoor play, movies, and holiday fun.</p>
                 <p class="mb-0"><strong>Rate:</strong> R250 per day | <strong>Hours:</strong> 07:30 - 17:30</p>
             </div>
             <div class="col-md-4 text-end d-none d-md-block">

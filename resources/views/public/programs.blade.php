@@ -144,21 +144,21 @@
                         <span class="pb-prog-chip__icon" style="background:var(--color-warm)"><i class="fa-solid fa-child-reaching"></i></span>
                         <span>
                             <span class="pb-prog-chip__name">Toddlers</span>
-                            <span class="pb-prog-chip__age">18 months – 3 years &nbsp;·&nbsp; 1:7 ratio</span>
+                            <span class="pb-prog-chip__age">18 months – 3 years &nbsp;·&nbsp; 1:4 ratio</span>
                         </span>
                     </div>
                     <div class="pb-prog-chip">
                         <span class="pb-prog-chip__icon" style="background:var(--color-accent)"><i class="fa-solid fa-palette"></i></span>
                         <span>
                             <span class="pb-prog-chip__name">Preschool</span>
-                            <span class="pb-prog-chip__age">4 – 5 years &nbsp;·&nbsp; 1:10 ratio</span>
+                            <span class="pb-prog-chip__age">4 – 5 years &nbsp;·&nbsp; 1:3 ratio</span>
                         </span>
                     </div>
                     <div class="pb-prog-chip">
                         <span class="pb-prog-chip__icon" style="background:var(--color-success)"><i class="fa-solid fa-graduation-cap"></i></span>
                         <span>
                             <span class="pb-prog-chip__name">Grade R</span>
-                            <span class="pb-prog-chip__age">5 – 6 years &nbsp;·&nbsp; 1:10 ratio</span>
+                            <span class="pb-prog-chip__age">5 – 6 years &nbsp;·&nbsp; 1:2 ratio</span>
                         </span>
                     </div>
                 </div>
@@ -246,7 +246,7 @@
                         <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-child-reaching"></i></div>
                         <h3 class="pb-prog-card__title">Toddlers</h3>
                         <p class="pb-prog-card__desc">Active exploration in a safe environment — building confidence, language, and social skills through purposeful play and gentle guidance.</p>
-                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:7 ratio</span>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:4 ratio</span>
                         <a href="#toddlers" class="pb-prog-card__cta">Learn More</a>
                     </div>
                 </div>
@@ -262,7 +262,7 @@
                         <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-palette"></i></div>
                         <h3 class="pb-prog-card__title">Preschool</h3>
                         <p class="pb-prog-card__desc">Building independence and curiosity — creative learning and early literacy skills that spark a lifelong love of discovery.</p>
-                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:10 ratio</span>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:3 ratio</span>
                         <a href="#preschool" class="pb-prog-card__cta">Learn More</a>
                     </div>
                 </div>
@@ -278,7 +278,7 @@
                         <div class="pb-prog-card__icon-wrap"><i class="fa-solid fa-graduation-cap"></i></div>
                         <h3 class="pb-prog-card__title">Grade R</h3>
                         <p class="pb-prog-card__desc">Fully prepared for big school — CAPS-aligned curriculum, confidence-building, and a deep love for learning that lasts a lifetime.</p>
-                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:10 ratio</span>
+                        <span class="pb-prog-card__ratio"><i class="fa-solid fa-users"></i> 1:2 ratio</span>
                         <a href="#grade-r" class="pb-prog-card__cta">Learn More</a>
                     </div>
                 </div>
