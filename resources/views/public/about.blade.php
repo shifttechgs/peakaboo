@@ -523,28 +523,37 @@
         </div>
 
         {{-- Full team marquee — exact home structure --}}
+        @php
+            $staffDir = public_path('assets/img/peekaboo_staff');
+            $staffFiles = [];
+            foreach (scandir($staffDir) as $file) {
+                if (preg_match('/^(\d+)\.(png|jpg|jpeg)$/i', $file, $m)) {
+                    $staffFiles[(int)$m[1]] = 'assets/img/peekaboo_staff/' . $file;
+                }
+            }
+        @endphp
         <div class="wow itfadeUp" data-wow-delay=".2s">
             <div class="t-team-header">
                 <span class="t-team-label">Meet the Rest of Our Wonderful Team</span>
             </div>
             <div class="t-marquee-wrap">
                 <div class="t-marquee t-marquee--fwd">
-                    @foreach(range(4,15) as $n)
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/'.$n.'.png') }}" alt="Peekaboo staff"></div>
-                    @endforeach
-                    @foreach(range(4,15) as $n)
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/'.$n.'.png') }}" alt="Peekaboo staff"></div>
-                    @endforeach
+                    @foreach(range(4,15) as $n) @if(isset($staffFiles[$n]))
+                    <div class="t-bubble"><img src="{{ asset($staffFiles[$n]) }}" alt="Peekaboo staff"></div>
+                    @endif @endforeach
+                    @foreach(range(4,15) as $n) @if(isset($staffFiles[$n]))
+                    <div class="t-bubble"><img src="{{ asset($staffFiles[$n]) }}" alt="Peekaboo staff"></div>
+                    @endif @endforeach
                 </div>
             </div>
             <div class="t-marquee-wrap">
                 <div class="t-marquee t-marquee--rev">
-                    @foreach(range(16,30) as $n)
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/'.$n.'.png') }}" alt="Peekaboo staff"></div>
-                    @endforeach
-                    @foreach(range(16,30) as $n)
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/'.$n.'.png') }}" alt="Peekaboo staff"></div>
-                    @endforeach
+                    @foreach(range(16,30) as $n) @if(isset($staffFiles[$n]))
+                    <div class="t-bubble"><img src="{{ asset($staffFiles[$n]) }}" alt="Peekaboo staff"></div>
+                    @endif @endforeach
+                    @foreach(range(16,30) as $n) @if(isset($staffFiles[$n]))
+                    <div class="t-bubble"><img src="{{ asset($staffFiles[$n]) }}" alt="Peekaboo staff"></div>
+                    @endif @endforeach
                 </div>
             </div>
         </div>
