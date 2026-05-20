@@ -135,7 +135,7 @@ class MockData
                 'id' => 'birthday-parties',
                 'name' => 'Birthday Parties',
                 'description' => 'Celebrate your child\'s special day with friends at our venue.',
-                'price' => 1500,
+                'price' => 2200,
                 'icon' => 'fa-cake-candles',
             ],
         ];

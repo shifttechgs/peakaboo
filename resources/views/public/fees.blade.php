@@ -335,7 +335,7 @@
                     <h3 class="pb-extra-card__name">Birthday Parties</h3>
                     <p class="pb-extra-card__desc">Celebrate your child's special day at our venue — a magical party with friends in a safe, familiar space they love.</p>
                     <div class="pb-extra-card__divider"></div>
-                    <span class="pb-extra-card__price">R1,500</span>
+                    <span class="pb-extra-card__price">R2,200</span>
                     <span class="pb-extra-card__period">from · enquire for packages</span>
                 </div>
             </div>
