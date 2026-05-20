@@ -1868,7 +1868,7 @@
                 </div>
             </div>
 
-            <!-- Row 2 — reverse scroll (images 16–27, duplicated for seamless loop) -->
+            <!-- Row 2 — reverse scroll (images 16–30, duplicated for seamless loop) -->
             <div class="t-marquee-wrap">
                 <div class="t-marquee t-marquee--rev">
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/16.png') }}" alt="Peekaboo staff member"></div>
@@ -1883,6 +1883,9 @@
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/25.png') }}" alt="Peekaboo staff member"></div>
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/26.png') }}" alt="Peekaboo staff member"></div>
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/27.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/28.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/29.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/30.png') }}" alt="Peekaboo staff member"></div>
                     <!-- duplicate set for seamless infinite loop -->
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/16.png') }}" alt="Peekaboo staff member"></div>
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/17.png') }}" alt="Peekaboo staff member"></div>
@@ -1896,6 +1899,9 @@
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/25.png') }}" alt="Peekaboo staff member"></div>
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/26.png') }}" alt="Peekaboo staff member"></div>
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/27.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/28.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/29.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/30.png') }}" alt="Peekaboo staff member"></div>
                 </div>
             </div>
 
