@@ -539,10 +539,10 @@
             </div>
             <div class="t-marquee-wrap">
                 <div class="t-marquee t-marquee--rev">
-                    @foreach(range(16,27) as $n)
+                    @foreach(range(16,30) as $n)
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/'.$n.'.png') }}" alt="Peekaboo staff"></div>
                     @endforeach
-                    @foreach(range(16,27) as $n)
+                    @foreach(range(16,30) as $n)
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/'.$n.'.png') }}" alt="Peekaboo staff"></div>
                     @endforeach
                 </div>
