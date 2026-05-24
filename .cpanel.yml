@@ -26,6 +26,7 @@ deployment:
     - cp -f "$REPODIR/public/robots.txt" "$PUBPATH/robots.txt" 2>/dev/null || true
     - cp -f "$REPODIR/public/favicon.ico" "$PUBPATH/favicon.ico" 2>/dev/null || true
     - cp -f "$REPODIR/public/sitemap.xml" "$PUBPATH/sitemap.xml" 2>/dev/null || true
+    - rsync -a --delete "$REPODIR/public/assets/" "$PUBPATH/assets/"
     - echo "public files synced" >> $LOG
 
     # ── 5. Run migrations ──
