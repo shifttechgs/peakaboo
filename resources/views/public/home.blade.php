@@ -1884,8 +1884,8 @@
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/26.png') }}" alt="Peekaboo staff member"></div>
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/27.png') }}" alt="Peekaboo staff member"></div>
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/28.png') }}" alt="Peekaboo staff member"></div>
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/29.png') }}" alt="Peekaboo staff member"></div>
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/30.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/29.jpg') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/30.jpg') }}" alt="Peekaboo staff member"></div>
                     <!-- duplicate set for seamless infinite loop -->
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/16.png') }}" alt="Peekaboo staff member"></div>
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/17.png') }}" alt="Peekaboo staff member"></div>
@@ -1900,8 +1900,8 @@
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/26.png') }}" alt="Peekaboo staff member"></div>
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/27.png') }}" alt="Peekaboo staff member"></div>
                     <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/28.png') }}" alt="Peekaboo staff member"></div>
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/29.png') }}" alt="Peekaboo staff member"></div>
-                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/30.png') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/29.jpg') }}" alt="Peekaboo staff member"></div>
+                    <div class="t-bubble"><img src="{{ asset('assets/img/peekaboo_staff/30.jpg') }}" alt="Peekaboo staff member"></div>
                 </div>
             </div>
 
