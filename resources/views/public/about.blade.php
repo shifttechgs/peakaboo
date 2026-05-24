@@ -591,14 +591,14 @@
     <div class="ed-testimonial-shape-2 d-none d-xxl-block"><img src="{{ asset('assets/img/testimonial/shape-5-3.png') }}" alt=""></div>
     <div class="container container-3">
         <div class="it-testimonial-title-wrap" style="margin-bottom:60px;">
-            <div class="row align-items-end">
-                <div class="col-lg-6">
+            <div class="row">
+                <div class="col-12 text-center">
                     <div class="it-testimonial-title-box">
                         <span class="pb-daily__sub">What Parents Say</span>
                         <h4 class="ed-section-title">Real Words from <span>Real Families</span></h4>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-12 d-flex justify-content-center mt-3">
                     <div class="ed-testimonial-nav">
                         <button class="ed-testimonial-prev"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9.57031 5.92969L3.50031 11.9997L9.57031 18.0697" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.5 12H3.67" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                         <button class="ed-testimonial-next"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14.4297 5.92969L20.4997 11.9997L14.4297 18.0697" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 12H20.33" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -607,7 +607,7 @@
             </div>
         </div>
         <div class="row"><div class="col-xl-12">
-            <div class="ed-testimonial-wrapper p-relative">
+            <div class="ed-testimonial-wrapper p-relative" style="overflow:hidden;">
                 <div class="swiper-container pb-about-testi">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide"><div class="ed-testimonial-item p-relative">

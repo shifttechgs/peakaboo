@@ -424,7 +424,7 @@
                     </div>
                     <div class="pb-prog-float">
                         <span class="pb-prog-float__icon" style="background:var(--color-warm)"><i class="fa-solid fa-users"></i></span>
-                        <span><span class="pb-prog-float__num">1:7</span><span class="pb-prog-float__lbl">Teacher Ratio</span></span>
+                        <span><span class="pb-prog-float__num">1:4</span><span class="pb-prog-float__lbl">Teacher Ratio</span></span>
                     </div>
                 </div>
             </div>
@@ -440,7 +440,7 @@
                     <p>This is the age of big curiosity and even bigger energy. Our Toddler programme channels that natural drive into meaningful, play-based learning — building language, social skills, and the first sparks of independence.</p>
                 </div>
                 <div class="pb-prog-stats mb-20">
-                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">1:7</span><span class="pb-prog-stat__lbl">Ratio</span></div>
+                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">1:4</span><span class="pb-prog-stat__lbl">Ratio</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">20</span><span class="pb-prog-stat__lbl">Max Children</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">Play</span><span class="pb-prog-stat__lbl">Based</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-warm)">Daily</span><span class="pb-prog-stat__lbl">Updates</span></div>
@@ -494,7 +494,7 @@
                     </div>
                     <div class="pb-prog-float">
                         <span class="pb-prog-float__icon" style="background:var(--color-accent)"><i class="fa-solid fa-users"></i></span>
-                        <span><span class="pb-prog-float__num">1:10</span><span class="pb-prog-float__lbl">Teacher Ratio</span></span>
+                        <span><span class="pb-prog-float__num">1:3</span><span class="pb-prog-float__lbl">Teacher Ratio</span></span>
                     </div>
                 </div>
             </div>
@@ -510,7 +510,7 @@
                     <p>Our Preschool blends structured learning with imaginative play to develop pre-reading, number, and social skills — building the confidence and creativity your child needs to thrive in school and in life.</p>
                 </div>
                 <div class="pb-prog-stats mb-20">
-                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-accent)">1:8</span><span class="pb-prog-stat__lbl">Ratio</span></div>
+                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-accent)">1:3</span><span class="pb-prog-stat__lbl">Ratio</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-accent)">20</span><span class="pb-prog-stat__lbl">Max Children</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-accent)">CAPS</span><span class="pb-prog-stat__lbl">Aligned</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-accent)">Term</span><span class="pb-prog-stat__lbl">Reports</span></div>
@@ -580,7 +580,7 @@
                     <p>Our CAPS-aligned Grade R is a comprehensive school-readiness journey. Children leave Peekaboo confident readers, writers, and thinkers — fully prepared and genuinely excited for Grade 1.</p>
                 </div>
                 <div class="pb-prog-stats mb-20">
-                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-success)">1:10</span><span class="pb-prog-stat__lbl">Ratio</span></div>
+                    <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-success)">1:2</span><span class="pb-prog-stat__lbl">Ratio</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-success)">20</span><span class="pb-prog-stat__lbl">Max Children</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-success)">CAPS</span><span class="pb-prog-stat__lbl">Curriculum</span></div>
                     <div class="pb-prog-stat"><span class="pb-prog-stat__num" style="color:var(--color-success)">Term</span><span class="pb-prog-stat__lbl">Reports</span></div>
@@ -627,14 +627,14 @@
    <div class="ed-testimonial-shape-2 d-none d-xxl-block"><img src="{{ asset('assets/img/testimonial/shape-5-3.png') }}" alt=""></div>
    <div class="container container-3">
       <div class="it-testimonial-title-wrap" style="margin-bottom:60px;">
-         <div class="row align-items-end">
-            <div class="col-lg-6">
+         <div class="row">
+            <div class="col-12 text-center">
                <div class="it-testimonial-title-box">
                   <span class="pb-programs__sub">What Parents Say</span>
                   <h4 class="ed-section-title">Real Words from <span>Real Families</span></h4>
                </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-12 d-flex justify-content-center mt-3">
                <div class="ed-testimonial-nav">
                   <button class="ed-testimonial-prev"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9.57031 5.92969L3.50031 11.9997L9.57031 18.0697" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.5 12H3.67" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                   <button class="ed-testimonial-next"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14.4297 5.92969L20.4997 11.9997L14.4297 18.0697" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 12H20.33" stroke="currentcolor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -643,7 +643,7 @@
          </div>
       </div>
       <div class="row"><div class="col-xl-12">
-         <div class="ed-testimonial-wrapper p-relative">
+         <div class="ed-testimonial-wrapper p-relative" style="overflow:hidden;">
             <div class="swiper-container pb-testi-slider">
                <div class="swiper-wrapper">
                   <div class="swiper-slide"><div class="ed-testimonial-item p-relative">

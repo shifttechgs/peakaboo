@@ -1354,7 +1354,7 @@
       </div>
       <div class="row">
          <div class="col-xl-12">
-            <div class="ed-testimonial-wrapper p-relative">
+            <div class="ed-testimonial-wrapper p-relative" style="overflow:hidden;">
                <div class="swiper-container ed-testimonial-active">
                   <div class="swiper-wrapper">
 
@@ -2337,12 +2337,15 @@
                         ];
                     }
 
-                    // Shuffle within each category so the "All" view looks varied
-                    // Group by category, pick items round-robin for "All" display order
+                    // Group by category, cap each category at 8, then interleave for "All" view
                     $grouped = [];
                     foreach ($galleryItems as $item) {
                         $grouped[$item['cat']][] = $item;
                     }
+                    foreach ($grouped as $cat => &$catItems) {
+                        $catItems = array_slice($catItems, 0, 8);
+                    }
+                    unset($catItems);
                     $sortedItems = [];
                     $maxLen = max(array_map('count', $grouped));
                     for ($i = 0; $i < $maxLen; $i++) {
@@ -2367,6 +2370,8 @@
                     if (file_exists($basePath . '/school_video.mp4')) {
                         $videoFiles[] = 'school_video.mp4';
                     }
+
+                    $videoFiles = array_slice($videoFiles, 0, 8);
 
                     $videoAlts = [
                         'Outdoor play and fun activities at Peekaboo Day Care Parklands',
