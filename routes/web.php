@@ -307,10 +307,12 @@ Route::middleware(['auth', 'role:child|admin|super_admin'])->prefix('child')->na
 });
 
 Route::get('reboot', function() {
+    Artisan::call('optimize:clear');
     Artisan::call('view:clear');
     Artisan::call('route:clear');
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
+    Artisan::call('event:clear');
     Artisan::call('optimize');
     return '✅ Caches cleared and optimized!';
 });
