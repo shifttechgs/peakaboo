@@ -2279,13 +2279,13 @@
                             ],
                         ],
                         'events' => [
-                            'folders' => ['olympics', 'easter_fun', 'valentine'],
+                            'folders' => ['olympics'],
                             'alts' => [
-                                'Easter celebration and fun activities at Peekaboo Day Care',
-                                'Valentine\'s Day festivities with the children at Peekaboo',
                                 'Mini Olympics sports day at Peekaboo Day Care Parklands',
-                                'Special event celebrations at Peekaboo Cape Town',
-                                'Children enjoying themed event activities at Peekaboo',
+                                'Children competing in fun Olympic activities at Peekaboo',
+                                'Kids enjoying sports day events at Peekaboo Cape Town',
+                                'Olympic games and team activities at Peekaboo Day Care',
+                                'Active sports day fun at Peekaboo Parklands',
                             ],
                         ],
                         'fun' => [
