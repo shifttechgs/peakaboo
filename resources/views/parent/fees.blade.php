@@ -353,32 +353,32 @@
             </div>
             <div style="padding: 6px 22px 14px;">
                 <div class="bank-row">
-                    <div class="bank-lbl">Bank</div>
-                    <div class="bank-val">First National Bank (FNB)</div>
-                </div>
-                <div class="bank-row">
                     <div class="bank-lbl">Account Name</div>
                     <div class="bank-val">Peekaboo Daycare</div>
                 </div>
                 <div class="bank-row">
-                    <div class="bank-lbl">Account Number</div>
-                    <div class="bank-val" id="accNum" style="font-family:monospace;letter-spacing:.5px;">62123456789</div>
+                    <div class="bank-lbl">Bank</div>
+                    <div class="bank-val">Absa Bank</div>
+                </div>
+                <div class="bank-row">
+                    <div class="bank-lbl">Branch Name</div>
+                    <div class="bank-val">Table View</div>
                 </div>
                 <div class="bank-row">
                     <div class="bank-lbl">Branch Code</div>
-                    <div class="bank-val" style="font-family:monospace;">250655</div>
+                    <div class="bank-val" style="font-family:monospace;">632005</div>
+                </div>
+                <div class="bank-row">
+                    <div class="bank-lbl">Account Number</div>
+                    <div class="bank-val" id="accNum" style="font-family:monospace;letter-spacing:.5px;">92 3309 2112</div>
+                </div>
+                <div class="bank-row">
+                    <div class="bank-lbl">Send POP</div>
+                    <div class="bank-val" style="font-family:monospace;">082 8989 967</div>
                 </div>
                 <div class="bank-row">
                     <div class="bank-lbl">Reference</div>
-                    <div class="bank-val">
-                        @if($children->count())
-                            <span style="color:#0077B6;font-family:monospace;letter-spacing:.5px;">
-                                {{ $children->first()['child_number'] ?? $children->first()['reference'] }}
-                            </span>
-                        @else
-                            <span style="color:#0077B6;">Your Child Number</span>
-                        @endif
-                    </div>
+                    <div class="bank-val"><span style="color:#0077B6;">Child's Name and Surname</span></div>
                 </div>
             </div>
         </div>
@@ -419,7 +419,7 @@
 @push('scripts')
 <script>
 function copyBankDetails() {
-    const text = `Bank: First National Bank (FNB)\nAccount Name: Peekaboo Daycare\nAccount Number: 62123456789\nBranch Code: 250655`;
+    const text = `Account Name: Peekaboo Daycare\nBank: Absa Bank\nBranch Name: Table View\nBranch Code: 632005\nAccount Number: 92 3309 2112\nSend POP: 082 8989 967\nReference: Child's Name and Surname`;
     navigator.clipboard.writeText(text).then(() => {
         const btn = event.currentTarget;
         btn.innerHTML = '<i class="fas fa-check me-1"></i> Copied!';

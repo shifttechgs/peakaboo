@@ -174,7 +174,7 @@
             <div class="d-flex align-items-center justify-content-between mt-3 pt-3" style="border-top:1px solid #f3f4f6;">
                 <div style="font-size:.76rem;color:#94a3b8;">
                     <i class="fas fa-info-circle me-1" style="color:#bae6fd;"></i>
-                    Use <strong style="color:#374151;font-family:monospace;">{{ $children->first()['child_number'] ?? $children->first()['reference'] ?? 'your child number' }}</strong> as your EFT reference.
+                    Use <strong style="color:#374151;">your child's name and surname</strong> as your EFT reference.
                     We'll verify and update your account within <strong style="color:#374151;">1–2 business days</strong>.
                 </div>
                 <button type="submit" class="btn btn-sm rounded-pill px-4 ms-3"
@@ -191,11 +191,13 @@
 <div class="panel">
     <div style="display:flex;flex-wrap:wrap;padding:4px 0 4px;">
         @foreach([
-            ['Bank',           'First National Bank (FNB)'],
             ['Account Name',   'Peekaboo Daycare'],
-            ['Account Number', '62123456789'],
-            ['Branch Code',    '250655'],
-            ['Reference',      $children->first()['child_number'] ?? $children->first()['reference'] ?? 'Your Child Number'],
+            ['Bank',           'Absa Bank'],
+            ['Branch Name',    'Table View'],
+            ['Branch Code',    '632005'],
+            ['Account Number', '92 3309 2112'],
+            ['Send POP',       '082 8989 967'],
+            ['Reference',      "Child's Name and Surname"],
         ] as [$lbl, $val])
         <div style="flex:1;min-width:140px;padding:14px 22px;border-right:1px solid #f3f4f6;">
             <div style="font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;margin-bottom:3px;">{{ $lbl }}</div>
